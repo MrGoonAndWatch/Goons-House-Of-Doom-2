@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://lndxrv03bc67"]
+
+[ext_resource type="Script" path="res://scripts/camera-change.gd" id="1_a6i20"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ibwqi"]
+
+[node name="CameraChange" type="Area3D"]
+script = ExtResource("1_a6i20")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ibwqi")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

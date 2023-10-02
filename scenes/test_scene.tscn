@@ -1,18 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://vrh82cg0vlit"]
+[gd_scene load_steps=5 format=3 uid="uid://vrh82cg0vlit"]
 
-[ext_resource type="Material" uid="uid://uberhyf5v3uw" path="res://materials/flat_red_material.tres" id="1_5q31d"]
+[ext_resource type="PackedScene" uid="uid://d16nlp5v3jup6" path="res://prefabs/scenery/tile.tscn" id="1_tlo88"]
+[ext_resource type="PackedScene" uid="uid://b37mrskomqbhs" path="res://prefabs/player/player.tscn" id="2_m2n1s"]
+[ext_resource type="PackedScene" uid="uid://lndxrv03bc67" path="res://prefabs/scenery/camera_change.tscn" id="3_yjef3"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1mhia"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ghe43"]
-material = ExtResource("1_5q31d")
+[sub_resource type="BoxShape3D" id="BoxShape3D_b3oye"]
+size = Vector3(12, 1, 9)
 
 [node name="Node3D" type="Node3D"]
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="Cameras" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-shape = SubResource("BoxShape3D_1mhia")
+[node name="Init-Camera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 0.980741, 0.195313, 0, -0.195313, 0.980741, 0, 1.28321, 4.23567)
+current = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-mesh = SubResource("BoxMesh_ghe43")
+[node name="Camera2" type="Camera3D" parent="Cameras"]
+transform = Transform3D(-0.0291633, 0.611089, -0.791025, 0.0144844, 0.791536, 0.61095, 0.99947, 0.00635981, -0.031935, -8.42644, 4.11527, -0.502417)
+
+[node name="Camera-Triggers" type="Node3D" parent="."]
+
+[node name="Camera2Change" parent="Camera-Triggers" node_paths=PackedStringArray("target_camera") instance=ExtResource("3_yjef3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.42667, 0, 0)
+target_camera = NodePath("../../Cameras/Camera2")
+
+[node name="CameraInitChange" parent="Camera-Triggers" node_paths=PackedStringArray("target_camera") instance=ExtResource("3_yjef3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8114, 0, 0)
+target_camera = NodePath("../../Cameras/Init-Camera")
+
+[node name="Tile" parent="." instance=ExtResource("1_tlo88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.47102, 0)
+
+[node name="CollisionShape3D" parent="Tile" index="0"]
+shape = SubResource("BoxShape3D_b3oye")
+
+[node name="MeshInstance3D" parent="Tile" index="1"]
+transform = Transform3D(12, 0, 0, 0, 1, 0, 0, 0, 9, 0, 0, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.366729, 0.930328, 0, -0.930328, 0.366729, 0, 4.61138, 2.3795)
+
+[node name="Player" parent="." instance=ExtResource("2_m2n1s")]
+
+[editable path="Tile"]
