@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://brhfdv1dqc6ll"]
+
+[ext_resource type="PackedScene" uid="uid://bs66k1sk4vpqr" path="res://models/Person.fbx" id="1_bn0g6"]
+[ext_resource type="Material" uid="uid://uberhyf5v3uw" path="res://materials/flat_red_material.tres" id="2_lxkc5"]
+
+[node name="Person" instance=ExtResource("1_bn0g6")]
+
+[node name="Body-Upper" parent="RootNode" index="0"]
+surface_material_override/0 = ExtResource("2_lxkc5")
+
+[node name="Arm-R-Upper" parent="RootNode" index="6"]
+surface_material_override/0 = ExtResource("2_lxkc5")
+
+[node name="Arm-L-Upper" parent="RootNode" index="9"]
+surface_material_override/0 = ExtResource("2_lxkc5")

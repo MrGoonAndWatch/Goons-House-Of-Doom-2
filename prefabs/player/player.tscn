@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b37mrskomqbhs"]
+[gd_scene load_steps=6 format=3 uid="uid://b37mrskomqbhs"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_8wpko"]
+[ext_resource type="PackedScene" uid="uid://brhfdv1dqc6ll" path="res://models/person.tscn" id="2_chhtv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dadhp"]
 
@@ -15,9 +16,14 @@ script = ExtResource("1_8wpko")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_dadhp")
 
+[node name="Person" parent="." instance=ExtResource("2_chhtv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.952113, 0)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_xnsjq")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.00834678, 0.0962918, 0, -0.164257, 0.0048931, 0, 0, 0, 0.201981, 0.508836, 0.479016, 0)
+visible = false
 mesh = SubResource("CylinderMesh_pv3t5")
