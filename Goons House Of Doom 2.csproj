@@ -2,6 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
-    <RootNamespace>GoonsHouseofDoom2</RootNamespace>
+    <RootNamespace>GoonsHouseOfDoom2</RootNamespace>
   </PropertyGroup>
 </Project>
