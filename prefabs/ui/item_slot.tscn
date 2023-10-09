@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn8w4qmysed00"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/ItemSlot.cs" id="1_87pgj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cq1dx"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="ItemSlot" type="Control" node_paths=PackedStringArray("ItemSprite")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 75.0
+offset_bottom = 75.0
+script = ExtResource("1_87pgj")
+ItemSprite = NodePath("ItemImage")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 80.0
+offset_bottom = 80.0
+
+[node name="ItemImage" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 80.0
+offset_bottom = 80.0
+expand_mode = 1
+
+[node name="Qty" type="Label" parent="."]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 54.0
+offset_right = 80.0
+offset_bottom = 80.0
+text = "0"
+label_settings = SubResource("LabelSettings_cq1dx")
+horizontal_alignment = 2
+vertical_alignment = 2

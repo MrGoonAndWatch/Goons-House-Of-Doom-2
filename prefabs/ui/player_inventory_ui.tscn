@@ -1,0 +1,401 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3u3gh2hf3vs7"]
+
+[ext_resource type="PackedScene" uid="uid://dn8w4qmysed00" path="res://prefabs/ui/item_slot.tscn" id="1_mlpxx"]
+[ext_resource type="Script" path="res://scripts/game_ui/MenuAction.cs" id="2_sdnk2"]
+[ext_resource type="Texture2D" uid="uid://d2vp8an608wqg" path="res://textures/medieval-art1.jpg" id="3_7co6t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jng7x"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n8uul"]
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0vscq"]
+font_size = 12
+
+[node name="PlayerInventoryUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryBg" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0.443137, 0.886275, 0.447059)
+
+[node name="ItemWindow" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.234
+anchor_top = 0.285
+anchor_right = 0.234
+anchor_bottom = 0.285
+offset_left = -0.568024
+offset_top = 0.319977
+offset_right = 39.432
+offset_bottom = 40.32
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemBg" type="ColorRect" parent="ItemWindow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.825
+anchor_top = 2.9
+anchor_right = 5.825
+anchor_bottom = 2.9
+offset_left = -233.0
+offset_top = -116.0
+offset_right = 233.0
+offset_bottom = 116.0
+color = Color(0, 0, 0, 1)
+
+[node name="ItemTextureRect" type="TextureRect" parent="ItemWindow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 6.075
+anchor_top = 2.875
+anchor_right = 6.075
+anchor_bottom = 2.875
+offset_left = -103.0
+offset_top = -103.0
+offset_right = 103.0
+offset_bottom = 103.0
+
+[node name="ItemDescription" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.234
+anchor_top = 0.67
+anchor_right = 0.234
+anchor_bottom = 0.67
+offset_left = -0.568024
+offset_top = -0.160004
+offset_right = 39.432
+offset_bottom = 39.84
+
+[node name="ColorRect" type="ColorRect" parent="ItemDescription"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.825
+anchor_top = 0.5
+anchor_right = 5.825
+anchor_bottom = 0.5
+offset_left = -233.0
+offset_top = -20.0
+offset_right = 233.0
+offset_bottom = 20.0
+color = Color(0, 0, 0, 1)
+
+[node name="ItemDescriptionLabel" type="Label" parent="ItemDescription"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.825
+anchor_top = 0.5
+anchor_right = 5.825
+anchor_bottom = 0.5
+offset_left = -227.0
+offset_top = -20.0
+offset_right = 226.0
+offset_bottom = 20.0
+text = "Pee pee poo poo"
+vertical_alignment = 1
+
+[node name="ItemSlots" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.908
+anchor_top = 0.498
+anchor_right = 0.908
+anchor_bottom = 0.498
+offset_left = -81.0161
+offset_top = -125.704
+offset_right = 81.9839
+offset_bottom = 126.296
+
+[node name="ItemCursor" type="ColorRect" parent="ItemSlots"]
+layout_mode = 0
+offset_right = 85.0
+offset_bottom = 85.0
+color = Color(1, 1, 0, 1)
+
+[node name="ItemSlot-1" parent="ItemSlots" instance=ExtResource("1_mlpxx")]
+layout_mode = 0
+
+[node name="ItemSlot-2" parent="ItemSlots" instance=ExtResource("1_mlpxx")]
+layout_mode = 0
+offset_left = 88.0
+offset_right = 163.0
+
+[node name="ItemSlot-3" parent="ItemSlots" instance=ExtResource("1_mlpxx")]
+layout_mode = 0
+offset_top = 88.0
+offset_bottom = 163.0
+
+[node name="ItemSlot-4" parent="ItemSlots" instance=ExtResource("1_mlpxx")]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 88.0
+offset_right = 163.0
+offset_bottom = 163.0
+
+[node name="ItemSlot-5" parent="ItemSlots" instance=ExtResource("1_mlpxx")]
+layout_mode = 0
+offset_top = 177.0
+offset_bottom = 252.0
+
+[node name="ItemSlot-6" parent="ItemSlots" instance=ExtResource("1_mlpxx")]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 177.0
+offset_right = 163.0
+offset_bottom = 252.0
+
+[node name="Actions" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.743
+anchor_top = 0.5
+anchor_right = 0.743
+anchor_bottom = 0.5
+offset_left = -64.936
+offset_top = -115.0
+offset_right = 65.064
+offset_bottom = 123.0
+
+[node name="ActionCursor" type="ColorRect" parent="Actions"]
+layout_mode = 0
+offset_right = 130.0
+offset_bottom = 50.0
+color = Color(1, 1, 0, 1)
+
+[node name="Action-Use" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+anchors_preset = 0
+offset_right = 130.0
+offset_bottom = 50.0
+script = ExtResource("2_sdnk2")
+Textbox = NodePath("ActionLabel")
+
+[node name="ActionBg" type="ColorRect" parent="Actions/Action-Use"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+color = Color(0.603922, 0.603922, 0.603922, 1)
+
+[node name="ActionLabel" type="Label" parent="Actions/Action-Use"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+text = "USE"
+label_settings = SubResource("LabelSettings_jng7x")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action-Combine" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+anchors_preset = 0
+offset_top = 60.0
+offset_right = 130.0
+offset_bottom = 110.0
+script = ExtResource("2_sdnk2")
+ActionType = 1
+Textbox = NodePath("ActionLabel")
+
+[node name="ActionBg" type="ColorRect" parent="Actions/Action-Combine"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+color = Color(0.603922, 0.603922, 0.603922, 1)
+
+[node name="ActionLabel" type="Label" parent="Actions/Action-Combine"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+text = "USE"
+label_settings = SubResource("LabelSettings_jng7x")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action-Examine" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+anchors_preset = 0
+offset_top = 120.0
+offset_right = 130.0
+offset_bottom = 170.0
+script = ExtResource("2_sdnk2")
+ActionType = 2
+Textbox = NodePath("ActionLabel")
+
+[node name="ActionBg" type="ColorRect" parent="Actions/Action-Examine"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+color = Color(0.603922, 0.603922, 0.603922, 1)
+
+[node name="ActionLabel" type="Label" parent="Actions/Action-Examine"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+text = "USE"
+label_settings = SubResource("LabelSettings_jng7x")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action-Discard" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+anchors_preset = 0
+offset_top = 180.0
+offset_right = 130.0
+offset_bottom = 230.0
+script = ExtResource("2_sdnk2")
+ActionType = 3
+Textbox = NodePath("ActionLabel")
+
+[node name="ActionBg" type="ColorRect" parent="Actions/Action-Discard"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+color = Color(0.603922, 0.603922, 0.603922, 1)
+
+[node name="ActionLabel" type="Label" parent="Actions/Action-Discard"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 125.0
+offset_bottom = 45.0
+text = "DISCARD"
+label_settings = SubResource("LabelSettings_jng7x")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusBar" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.124
+anchor_top = 0.369
+anchor_right = 0.124
+anchor_bottom = 0.369
+offset_left = -98.848
+offset_top = -52.112
+offset_right = 99.152
+offset_bottom = 51.888
+
+[node name="StatusBg" type="ColorRect" parent="StatusBar"]
+layout_mode = 1
+offset_right = 198.0
+offset_bottom = 104.0
+color = Color(0, 0, 0, 1)
+
+[node name="StatusImg" type="ColorRect" parent="StatusBar"]
+layout_mode = 0
+offset_right = 198.0
+offset_bottom = 75.0
+color = Color(1, 1, 0, 1)
+
+[node name="StatusText" type="Label" parent="StatusBar"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 75.0
+offset_right = 196.0
+offset_bottom = 104.0
+text = "Tummy Ache"
+label_settings = SubResource("LabelSettings_n8uul")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Portrait" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.124
+anchor_top = 0.58
+anchor_right = 0.124
+anchor_bottom = 0.58
+offset_left = -98.848
+offset_top = -57.84
+offset_right = 99.152
+offset_bottom = 58.16
+
+[node name="ColorRect" type="ColorRect" parent="Portrait"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = -58.0
+offset_right = 99.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Portrait"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -58.0
+offset_right = 59.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_7co6t")
+expand_mode = 1
+
+[node name="EquippedItem" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.536
+anchor_top = 0.455
+anchor_right = 0.536
+anchor_bottom = 0.455
+offset_left = 380.528
+offset_top = -261.84
+offset_right = 480.528
+offset_bottom = -161.84
+
+[node name="Label" type="Label" parent="EquippedItem"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 20.0
+text = "Equipped"
+label_settings = SubResource("LabelSettings_0vscq")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="EquippedItem"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.55
+anchor_right = 0.5
+anchor_bottom = 0.55
+offset_left = -40.0
+offset_top = -35.0
+offset_right = 40.0
+offset_bottom = 45.0
+
+[node name="TextureRect" type="TextureRect" parent="EquippedItem"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.6
+anchor_right = 0.5
+anchor_bottom = 0.6
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1

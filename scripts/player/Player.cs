@@ -34,8 +34,7 @@ public partial class Player : CharacterBody3D
 
     private Vector3 ProcessMovement(double delta, Vector3 velocity)
     {
-        var input_dir = Input.GetVector("left", "right", "up", "down");
-
+        var input_dir = Input.GetVector(GameConstants.Controls.Left, GameConstants.Controls.Right, GameConstants.Controls.Up, GameConstants.Controls.Down);
 
         var inputRotation = input_dir.X;
 
@@ -46,7 +45,7 @@ public partial class Player : CharacterBody3D
 
         if (inputMovement != 0 && !IsQuickTurning)
         {
-            var running = Input.IsActionPressed("run");
+            var running = Input.IsActionPressed(GameConstants.Controls.Run);
 
             var runMod = 1.0f;
 
@@ -59,7 +58,7 @@ public partial class Player : CharacterBody3D
                 backwardsMod = BACKWARDS_MODIFIER;
 
 
-            if (inputMovement > 0 && Input.IsActionJustPressed("run"))
+            if (inputMovement > 0 && Input.IsActionJustPressed(GameConstants.Controls.Run))
                 StartQuickTurn();
 
             var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod;

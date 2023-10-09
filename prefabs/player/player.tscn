@@ -1,29 +1,61 @@
-[gd_scene load_steps=6 format=3 uid="uid://b37mrskomqbhs"]
+[gd_scene load_steps=9 format=3 uid="uid://b37mrskomqbhs"]
 
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_g2oao"]
+[ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://brhfdv1dqc6ll" path="res://models/person.tscn" id="2_chhtv"]
+[ext_resource type="PackedScene" uid="uid://c3u3gh2hf3vs7" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
+[ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
+[ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
+[ext_resource type="Script" path="res://scripts/player/PlayerStatus.cs" id="5_5exnn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dadhp"]
+height = 2.1
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_xnsjq"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_pv3t5"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
+size = Vector3(1, 2.1, 1)
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19162, 0)
-script = ExtResource("1_g2oao")
+script = ExtResource("1_wlo0u")
+
+[node name="PlayerInventoryUi" parent="." instance=ExtResource("2_q6hdo")]
+
+[node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemQtys", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
+script = ExtResource("4_h7s4o")
+ExamineText = NodePath("../PlayerInventoryUi/Actions/Action-Examine/ActionLabel")
+ExamineTexture = NodePath("../PlayerInventoryUi/ItemWindow/ItemTextureRect")
+Items = [NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-1"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-2"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-3"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-4"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-5"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-6")]
+ItemQtys = [NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-1/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-2/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-3/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-4/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-5/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-6/Qty")]
+ItemCursor = NodePath("../PlayerInventoryUi/ItemSlots/ItemCursor")
+MenuActionRoot = NodePath("../PlayerInventoryUi/Actions")
+MenuActions = [NodePath("../PlayerInventoryUi/Actions/Action-Use"), NodePath("../PlayerInventoryUi/Actions/Action-Combine"), NodePath("../PlayerInventoryUi/Actions/Action-Examine"), NodePath("../PlayerInventoryUi/Actions/Action-Discard")]
+ActionCursor = NodePath("../PlayerInventoryUi/Actions/ActionCursor")
+MenuPrefab = NodePath("../PlayerInventoryUi")
+EquipSlot = NodePath("../PlayerInventoryUi/EquippedItem/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
 
 [node name="Person" parent="." instance=ExtResource("2_chhtv")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.952113, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("CapsuleMesh_xnsjq")
+[node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
+script = ExtResource("3_gxx5q")
+_inventory = NodePath("../PlayerInventory")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.00834678, 0.0962918, 0, -0.164257, 0.0048931, 0, 0, 0, 0.201981, 0.508836, 0.479016, 0)
-visible = false
-mesh = SubResource("CylinderMesh_pv3t5")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractHitbox"]
+shape = SubResource("BoxShape3D_mv370")
+
+[node name="PlayerStatus" type="Node3D" parent="."]
+script = ExtResource("5_5exnn")
+
+[connection signal="body_entered" from="InteractHitbox" to="InteractHitbox" method="_OnBodyEntered"]
+[connection signal="body_exited" from="InteractHitbox" to="InteractHitbox" method="_OnBodyExited"]
+
+[editable path="PlayerInventoryUi"]
+[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-1"]
+[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-2"]
+[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-3"]
+[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-4"]
+[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-5"]
+[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-6"]

@@ -15,6 +15,10 @@ run/main_scene="res://scenes/test_scene.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlayerStatus="*res://scripts/player/PlayerStatus.cs"
+
 [dotnet]
 
 project/assembly_name="Goons House Of Doom 2"
