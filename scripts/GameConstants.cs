@@ -27,6 +27,23 @@ public partial class GameConstants : GodotObject
         Discard,
     }
 
+    public enum KeyType
+    {
+        None = 0,
+        BigKey = 1,
+    }
+
+    public enum DoorLoadType
+    {
+        None = 0,
+        WoodDoor1 = 1,
+    }
+
+    public enum GlobalEvent
+    {
+        None = 0,
+    }
+
     public static class Controls
     {
         public const string Left = "left";
@@ -43,17 +60,14 @@ public partial class GameConstants : GodotObject
 
     public static class NodePaths
     {
-        public static class FromPlayerRoot
-        {
-            public const string PlayerInventory = "PlayerInventory";
-            public const string InspectTextUi = "InspectTextUi";
-        }
-
         public static class FromSceneRoot
         {
-            public const string Player = "/root/Player";
-            public const string PlayerStatus = "/root/PlayerStatus";
-            public const string HordeModeManager = "/root/HordeModeManager";
+            public const string Player = "/root/root/Player";
+            public const string PlayerInventory = Player + "/PlayerInventory";
+            public const string PlayerInteract = Player + "/InteractHitbox";
+            public const string InspectTextUi = Player + "/InspectTextUi";
+            public const string PlayerStatus = "/root/root/PlayerStatus";
+            public const string HordeModeManager = "/root/root/HordeModeManager";
         }
     }
 }

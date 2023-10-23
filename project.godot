@@ -17,7 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+DataSaver="*res://scripts/data/DataSaver.cs"
 PlayerStatus="*res://scripts/player/PlayerStatus.cs"
+SceneChanger="*res://scripts/data/SceneChanger.cs"
+ItemGenerator="*res://scripts/data/ItemGenerator.cs"
 
 [dotnet]
 

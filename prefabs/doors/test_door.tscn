@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvfvy25qajjm1"]
+
+[ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="1_i2r5f"]
+[ext_resource type="Script" path="res://scripts/puzzles/Door.cs" id="2_5oeo1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mpk02"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dpp81"]
+size = Vector3(1, 2, 0.25)
+
+[node name="test_door" type="Node3D"]
+
+[node name="DoorMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 0.25, 0, 0, 0)
+material_override = ExtResource("1_i2r5f")
+mesh = SubResource("BoxMesh_mpk02")
+
+[node name="DoorBody" type="StaticBody3D" parent="."]
+script = ExtResource("2_5oeo1")
+GoesToRoom = "test_scene2"
+
+[node name="DoorCollisionShape" type="CollisionShape3D" parent="DoorBody"]
+shape = SubResource("BoxShape3D_dpp81")

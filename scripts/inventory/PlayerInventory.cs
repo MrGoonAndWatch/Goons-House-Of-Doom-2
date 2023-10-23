@@ -9,7 +9,7 @@ public partial class PlayerInventory : Node3D
     private TextureRect ExamineTexture;
 
     [Export]
-    private ItemSlot[] Items;
+    public ItemSlot[] Items;
     [Export]
     private Label[] ItemQtys;
     [Export]
@@ -40,7 +40,7 @@ public partial class PlayerInventory : Node3D
     private bool firstActionMenuOpen = true;
 
     public bool EquipDirty;
-    private bool[] _itemDirty;
+    public bool[] ItemDirty;
 
     private PlayerStatus _playerStatus;
 
@@ -51,10 +51,10 @@ public partial class PlayerInventory : Node3D
         _playerStatus = PlayerStatus.GetInstance();
         MenuPrefab.Visible = false;
 
-        _itemDirty = new bool[6];
-        for (var i = 0; i < _itemDirty.Length; i++)
+        ItemDirty = new bool[6];
+        for (var i = 0; i < ItemDirty.Length; i++)
         {
-            _itemDirty[i] = true;
+            ItemDirty[i] = true;
         }
 
         EquipDirty = true;
@@ -81,9 +81,9 @@ public partial class PlayerInventory : Node3D
         if (!_playerStatus.MenuOpened)
             return;
 
-        for (var i = 0; i < _itemDirty.Length; i++)
+        for (var i = 0; i < ItemDirty.Length; i++)
         {
-            if (_itemDirty[i])
+            if (ItemDirty[i])
                 UpdateItemUi(i);
         }
         if (EquipDirty)
@@ -115,7 +115,7 @@ public partial class PlayerInventory : Node3D
         }
 
         ItemQtys[i].Text = targetItem.GetQtyDisplay();
-        _itemDirty[i] = false;
+        ItemDirty[i] = false;
     }
 
     void UpdateEquipUi()
@@ -290,7 +290,7 @@ public partial class PlayerInventory : Node3D
                 break;
             case GameConstants.MenuActionType.Discard:
                 Items[_currentItemIndex].DiscardItem();
-                _itemDirty[_currentItemIndex] = true;
+                ItemDirty[_currentItemIndex] = true;
                 CloseActionMenu();
                 break;
         }
@@ -316,8 +316,8 @@ public partial class PlayerInventory : Node3D
     void CombineItems(int itemA, int itemB)
     {
         Items[itemA].Combine(Items[itemB]);
-        _itemDirty[itemA] = true;
-        _itemDirty[itemB] = true;
+        ItemDirty[itemA] = true;
+        ItemDirty[itemB] = true;
         _combiningItems = false;
         CloseActionMenu();
     }
@@ -373,7 +373,7 @@ public partial class PlayerInventory : Node3D
                     var qtyToAddToStack = Math.Min(qty, remainingQtyInStack);
                     qty -= qtyToAddToStack;
                     itemSlot.Qty += qtyToAddToStack;
-                    _itemDirty[i] = true;
+                    ItemDirty[i] = true;
                 }
                 i++;
             }
@@ -389,7 +389,7 @@ public partial class PlayerInventory : Node3D
                 {
                     itemSlot.Item = item;
                     itemSlot.Qty = qty;
-                    _itemDirty[i] = true;
+                    ItemDirty[i] = true;
                     qty = 0;
                     break;
                 }
@@ -410,14 +410,14 @@ public partial class PlayerInventory : Node3D
         }
         else
             Items[_currentItemIndex].DiscardItem();
-        _itemDirty[_currentItemIndex] = true;
+        ItemDirty[_currentItemIndex] = true;
     }
 
     public void RefreshItemUi()
     {
-        for (var i = 0; i < _itemDirty.Length; i++)
+        for (var i = 0; i < ItemDirty.Length; i++)
         {
-            _itemDirty[i] = true;
+            ItemDirty[i] = true;
         }
     }
 

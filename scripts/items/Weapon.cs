@@ -37,7 +37,7 @@ public abstract partial class Weapon : Item
     {
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.EquipWeapon(this);
-        var menu = GetNode<PlayerInventory>($"{GameConstants.NodePaths.FromSceneRoot.Player}/{GameConstants.NodePaths.FromPlayerRoot.PlayerInventory}");
+        var menu = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
         menu.EquipDirty = true;
         return false;
     }

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c3u3gh2hf3vs7" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
-[ext_resource type="Script" path="res://scripts/player/PlayerStatus.cs" id="5_5exnn"]
+[ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dadhp"]
 height = 2.1
@@ -46,8 +46,8 @@ _inventory = NodePath("../PlayerInventory")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractHitbox"]
 shape = SubResource("BoxShape3D_mv370")
 
-[node name="PlayerStatus" type="Node3D" parent="."]
-script = ExtResource("5_5exnn")
+[node name="InspectTextUI" type="Node3D" parent="."]
+script = ExtResource("6_fksfj")
 
 [connection signal="body_entered" from="InteractHitbox" to="InteractHitbox" method="_OnBodyEntered"]
 [connection signal="body_exited" from="InteractHitbox" to="InteractHitbox" method="_OnBodyExited"]

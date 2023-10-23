@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public abstract partial class Item : Node3D
 {
@@ -13,7 +12,7 @@ public abstract partial class Item : Node3D
 
     public abstract string GetDescription();
 
-    protected const string ItemPrefabFolderPath = "Items/";
+    protected const string ItemPrefabFolderPath = "res://prefabs/spawnables/items/";
 
     public abstract string GetPrefabPath();
     public abstract bool IsStackable();

@@ -15,9 +15,12 @@ public partial class Player : CharacterBody3D
 
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 100;
 
+    private PlayerStatus _playerStatus;
+
     public override void _PhysicsProcess(double delta)
     {
-		var velocity = Velocity;
+        _playerStatus = PlayerStatus.GetInstance();
+        var velocity = Velocity;
 		velocity = ProcessGravity(delta, velocity);
 		velocity = ProcessMovement(delta, velocity);
 		Velocity = velocity;
@@ -34,6 +37,8 @@ public partial class Player : CharacterBody3D
 
     private Vector3 ProcessMovement(double delta, Vector3 velocity)
     {
+        if (_playerStatus.IsMovementPrevented()) return velocity;
+
         var input_dir = Input.GetVector(GameConstants.Controls.Left, GameConstants.Controls.Right, GameConstants.Controls.Up, GameConstants.Controls.Down);
 
         var inputRotation = input_dir.X;

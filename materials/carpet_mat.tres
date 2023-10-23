@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dk4u4btd2slx3"]
+
+[ext_resource type="Texture2D" uid="uid://bp8gwi7r57txk" path="res://textures/cc0/Fabric026_1K-PNG_Color.png" id="1_xbacb"]
+[ext_resource type="Texture2D" uid="uid://73plpvlblaew" path="res://textures/cc0/Fabric026_1K-PNG_NormalGL.png" id="2_opyfl"]
+
+[resource]
+albedo_texture = ExtResource("1_xbacb")
+normal_enabled = true
+normal_texture = ExtResource("2_opyfl")
+uv1_scale = Vector3(2, 2, 2)

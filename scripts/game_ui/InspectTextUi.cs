@@ -20,16 +20,17 @@ public partial class InspectTextUi : Node
     private bool _justMovedChoice;
 
     public float AdvanceTextCooldown;
-    private double _advanceTextCooldownRemaining;
+    private double _advanceTextCooldownRemaining = 0.0;
 
     private bool _queuedText = false;
     private string[] _queuedLines = null;
     private string[] _queuedChoices = null;
     private Action _queuedOnChoiceConfirmed = null;
 
-    void Start()
+    public override void _Ready()
     {
-        DescriptiveText.Visible = false;
+        // TODO: Set once available...
+        //DescriptiveText.Visible = false;
         _playerStatus = PlayerStatus.GetInstance();
     }
 

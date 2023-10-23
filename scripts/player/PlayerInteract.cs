@@ -9,38 +9,57 @@ public partial class PlayerInteract : Node
     private PlayerStatus _playerStatus;
 
     private List<Item> _touchingItems;
+    private List<SimpleLock> _collidedSimpleLocks;
+    private List<Door> _collidedDoors;
 
     public override void _Ready()
 	{
-        //_inventory = GetParent().GetNode<PlayerInventory>(GameConstants.NodePaths.FromPlayerRoot.PlayerInventory);
         _playerStatus = PlayerStatus.GetInstance();
-
         _touchingItems = new List<Item>();
+        _collidedSimpleLocks = new List<SimpleLock>();
+        _collidedDoors = new List<Door>();
     }
 
 	public override void _Process(double delta)
 	{
-        if (/*_playerStatus.CanInteract() &&*/ _touchingItems.Any() &&
+        if (_playerStatus.CanInteract() &&
             !Input.IsActionPressed(GameConstants.Controls.Aim) &&
             Input.IsActionJustPressed(GameConstants.Controls.Confirm))
-            PickupCurrentItem();
+        {
+            if(_touchingItems.Any())
+                PickupCurrentItem();
+            else if (_collidedSimpleLocks.Any())
+                _collidedSimpleLocks.First().Inspect();
+            else if (_collidedDoors.Any())
+                _collidedDoors.First().Inspect();
+        }
     }
 
     public void ResetState()
     {
         _touchingItems.RemoveAll(i => true);
+        _collidedDoors.RemoveAll(d => true);
+        _collidedSimpleLocks.RemoveAll(l => true);
     }
 
-    public void _OnBodyEntered(Node3D item)
+    public void _OnBodyEntered(Node3D obj)
     {
-        if(item is Item)
-            _touchingItems.Add(item as Item);
+        if(obj is Item)
+            _touchingItems.Add(obj as Item);
+        if (obj is SimpleLock)
+            _collidedSimpleLocks.Add(obj as SimpleLock);
+        if (obj is Door)
+            _collidedDoors.Add(obj as Door);
     }
 
-    public void _OnBodyExited(Node3D item)
+    public void _OnBodyExited(Node3D obj)
     {
-        if(item is Item)
-            RemoveItem(item);
+        if(obj is Item)
+            RemoveItem(obj);
+        if (obj is SimpleLock)
+            _collidedSimpleLocks.RemoveAll(l => l.GetInstanceId() == obj.GetInstanceId());
+        if (obj is Door)
+            _collidedDoors.RemoveAll(d => d.GetInstanceId() == obj.GetInstanceId());
     }
 
     void PickupCurrentItem()
@@ -69,5 +88,13 @@ public partial class PlayerInteract : Node
     private void RemoveItem(Node3D item)
     {
         _touchingItems.RemoveAll(i => i.GetInstanceId() == item.GetInstanceId());
+    }
+
+    public void Use(Key key)
+    {
+        if (_collidedSimpleLocks.Any())
+            _collidedSimpleLocks.First().Unlock(key);
+        else if (_collidedDoors.Any())
+            _collidedDoors.First().Unlock(key);
     }
 }

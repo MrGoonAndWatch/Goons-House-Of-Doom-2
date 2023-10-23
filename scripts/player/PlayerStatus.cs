@@ -1,11 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using static GameConstants;
 
 public partial class PlayerStatus : Node
 {
     public Weapon EquipedWeapon;
     //public Animator PlayerAnimator;
+    // TODO: Need to hook this up with non-export since this is an autoloaded component.
     [Export]
     private Node3D GameOverUi;
 
@@ -23,7 +25,7 @@ public partial class PlayerStatus : Node
     public bool Paused;
 
     public List<int> KilledEnemies;
-    //public List<GlobalEvent> TriggeredEvents;
+    public List<GlobalEvent> TriggeredEvents;
     public List<int> GrabbedItems;
     public List<int> DoorsUnlocked;
 
@@ -51,7 +53,7 @@ public partial class PlayerStatus : Node
         _instance = this;
 
         KilledEnemies = new List<int>();
-        //TriggeredEvents = new List<GlobalEvent>();
+        TriggeredEvents = new List<GlobalEvent>();
         GrabbedItems = new List<int>();
         DoorsUnlocked = new List<int>();
 
@@ -87,7 +89,7 @@ public partial class PlayerStatus : Node
 
     private void EnableGameOverUi()
     {
-        var hordeModeManager = GetNode<HordeModeManager>(GameConstants.NodePaths.FromSceneRoot.HordeModeManager);
+        var hordeModeManager = GetNode<HordeModeManager>(NodePaths.FromSceneRoot.HordeModeManager);
         if (hordeModeManager == null)
         {
             GameOverUi.Visible = true;
@@ -102,7 +104,7 @@ public partial class PlayerStatus : Node
         if (!_showingGameOverUi)
             return;
 
-        if (Input.IsActionJustPressed(GameConstants.Controls.Pause))
+        if (Input.IsActionJustPressed(Controls.Pause))
             GetTree().Quit();
     }
 
@@ -131,14 +133,14 @@ public partial class PlayerStatus : Node
         GrabbedItems.Add(itemId);
     }
 
-    //public void TriggeredEvent(GlobalEvent eventTriggered)
-    //{
-    //    TriggeredEvents.Add(eventTriggered);
-    //}
+    public void TriggeredEvent(GlobalEvent eventTriggered)
+    {
+        TriggeredEvents.Add(eventTriggered);
+    }
 
     public void HitByAttack(double damage, string hitAnimationVariable)
     {
-        if (GetHealthStatus() == GameConstants.HealthStatus.Dead)
+        if (GetHealthStatus() == HealthStatus.Dead)
             return;
 
         //SoundManager.PlayHitSfx();
@@ -173,15 +175,14 @@ public partial class PlayerStatus : Node
         if (MenuOpened)
         {
             // Note: Getting node here instead of _Ready() or something because this is a singleton and we need to recalc this every scene!
-            var inv = GetNode<PlayerInventory>($"{GameConstants.NodePaths.FromSceneRoot.Player}/{GameConstants.NodePaths.FromPlayerRoot.PlayerInventory}");
+            var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
             inv.ToggleMenu();
         }
 
         if (Reading)
         {
             // Note: Getting node here instead of _Ready() or something because this is a singleton and we need to recalc this every scene!
-            var textReader = GetTree().Root.GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player)
-                .GetNode<InspectTextUi>(GameConstants.NodePaths.FromPlayerRoot.InspectTextUi);
+            var textReader = GetNode<InspectTextUi>(NodePaths.FromSceneRoot.InspectTextUi);
             textReader.ForceCloseTextbox();
         }
 
@@ -201,19 +202,19 @@ public partial class PlayerStatus : Node
         //PlayerAnimator.SetLayerWeight(layerIndex, weight);
     }
 
-    public GameConstants.HealthStatus GetHealthStatus()
+    public HealthStatus GetHealthStatus()
     {
         if (Health == 0)
-            return GameConstants.HealthStatus.Dead;
+            return HealthStatus.Dead;
         if (Health <= 1)
-            return GameConstants.HealthStatus.Special;
+            return HealthStatus.Special;
         if (Health <= 40)
-            return GameConstants.HealthStatus.SpeedyBoi;
+            return HealthStatus.SpeedyBoi;
         if (Health <= 80)
-            return GameConstants.HealthStatus.BadTummyAche;
+            return HealthStatus.BadTummyAche;
         if (Health <= 120)
-            return GameConstants.HealthStatus.TummyAche;
-        return GameConstants.HealthStatus.Healthy;
+            return HealthStatus.TummyAche;
+        return HealthStatus.Healthy;
     }
 
     public bool CanPause()

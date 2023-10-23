@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://j5x5dxkd2r3i"]
+
+[ext_resource type="PackedScene" uid="uid://dilo8xppuws2k" path="res://models/stairs-r.fbx" id="1_u1l32"]
+[ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="2_cfjgs"]
+[ext_resource type="Material" uid="uid://dk4u4btd2slx3" path="res://materials/carpet_mat.tres" id="3_nlgv0"]
+
+[node name="stairs-r" instance=ExtResource("1_u1l32")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.25, -0.39, 0)
+
+[node name="Carpet1" parent="RootNode" index="0"]
+surface_material_override/0 = ExtResource("3_nlgv0")
+
+[node name="Carpet2" parent="RootNode" index="1"]
+surface_material_override/0 = ExtResource("3_nlgv0")
+
+[node name="Carpet3" parent="RootNode" index="2"]
+surface_material_override/0 = ExtResource("3_nlgv0")
+
+[node name="Carpet4" parent="RootNode" index="3"]
+surface_material_override/0 = ExtResource("3_nlgv0")
+
+[node name="Step1" parent="RootNode" index="4"]
+surface_material_override/0 = ExtResource("2_cfjgs")
+
+[node name="Step2" parent="RootNode" index="5"]
+surface_material_override/0 = ExtResource("2_cfjgs")
+
+[node name="Step3" parent="RootNode" index="6"]
+surface_material_override/0 = ExtResource("2_cfjgs")
+
+[node name="Step4" parent="RootNode" index="7"]
+surface_material_override/0 = ExtResource("2_cfjgs")
+
+[node name="Carpet5" parent="RootNode" index="8"]
+surface_material_override/0 = ExtResource("3_nlgv0")
+
+[node name="Carpet6" parent="RootNode" index="9"]
+surface_material_override/0 = ExtResource("3_nlgv0")
+
+[node name="Carpet7" parent="RootNode" index="10"]
+surface_material_override/0 = ExtResource("3_nlgv0")
+
+[node name="Carpet8" parent="RootNode" index="11"]
+surface_material_override/0 = ExtResource("3_nlgv0")
