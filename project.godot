@@ -22,6 +22,11 @@ PlayerStatus="*res://scripts/player/PlayerStatus.cs"
 SceneChanger="*res://scripts/data/SceneChanger.cs"
 ItemGenerator="*res://scripts/data/ItemGenerator.cs"
 
+[display]
+
+window/size/viewport_width=2560
+window/size/viewport_height=1440
+
 [dotnet]
 
 project/assembly_name="Goons House Of Doom 2"

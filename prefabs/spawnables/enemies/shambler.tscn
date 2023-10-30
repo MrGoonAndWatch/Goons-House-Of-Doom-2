@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://b057sa1sa7tkp"]
+
+[ext_resource type="PackedScene" uid="uid://cgbt2ni46da1j" path="res://models/shambler.tscn" id="1_4inkg"]
+[ext_resource type="Script" path="res://scripts/enemies/Shambler.cs" id="1_m8x22"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sk8gk"]
+radius = 1.328
+height = 2.934
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lnypk"]
+size = Vector3(3, 3, 2)
+
+[node name="shambler" type="CharacterBody3D" node_paths=PackedStringArray("_navigation")]
+script = ExtResource("1_m8x22")
+_navigation = NodePath("NavigationAgent3D")
+_speed = 1.5
+
+[node name="Model" parent="." instance=ExtResource("1_4inkg")]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_height_offset = 1.12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55084, 0)
+shape = SubResource("CapsuleShape3D_sk8gk")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53742, 0.928881)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_lnypk")
+
+[connection signal="body_entered" from="Area3D" to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="Area3D" to="." method="OnBodyExited"]

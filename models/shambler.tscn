@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgbt2ni46da1j"]
+
+[ext_resource type="PackedScene" uid="uid://bdc21riguccie" path="res://models/Shambler.fbx" id="1_0fwkq"]
+[ext_resource type="Material" uid="uid://dk4u4btd2slx3" path="res://materials/carpet_mat.tres" id="2_65ucq"]
+[ext_resource type="Material" uid="uid://uberhyf5v3uw" path="res://materials/flat_red_material.tres" id="3_lntw0"]
+
+[node name="Model" instance=ExtResource("1_0fwkq")]
+
+[node name="Body-Upper" parent="RootNode" index="0"]
+material_override = ExtResource("2_65ucq")
+
+[node name="Body-Lower" parent="RootNode" index="1"]
+material_override = ExtResource("3_lntw0")

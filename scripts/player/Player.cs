@@ -83,7 +83,7 @@ public partial class Player : CharacterBody3D
 
         var tween = CreateTween();
 
-        tween.TweenProperty(this, "rotation:y", Rotation.Y + Math.PI, QUICK_TURN_DURATION);
+        tween.TweenProperty(this, "rotation:y", Rotation.Y + Mathf.Pi, QUICK_TURN_DURATION);
 
         tween.SetTrans(Tween.TransitionType.Linear);
         tween.TweenCallback(Callable.From(EndQuickTurn));

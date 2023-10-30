@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bwxpj6jkn4be5"
-path="res://.godot/imported/stairs-l.fbx-82bafd5ebf09a4b4b64ecfb4a8009b50.scn"
+uid="uid://bdc21riguccie"
+path="res://.godot/imported/Shambler.fbx-17e44a6f07ed2369865a3580e8d430fc.scn"
 
 [deps]
 
-source_file="res://models/stairs-l.fbx"
-dest_files=["res://.godot/imported/stairs-l.fbx-82bafd5ebf09a4b4b64ecfb4a8009b50.scn"]
+source_file="res://models/Shambler.fbx"
+dest_files=["res://.godot/imported/Shambler.fbx-17e44a6f07ed2369865a3580e8d430fc.scn"]
 
 [params]
 

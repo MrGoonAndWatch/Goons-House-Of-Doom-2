@@ -12,7 +12,7 @@ public partial class PlayerStatus : Node
     private Node3D GameOverUi;
 
     public double Health;
-    public const double MaxHealth = 200.22;
+    public const double MaxHealth = 100;
 
     public bool MenuOpened;
     public bool Reading;
@@ -140,6 +140,8 @@ public partial class PlayerStatus : Node
 
     public void HitByAttack(double damage, string hitAnimationVariable)
     {
+        GD.Print($"Player was hit for {damage} damage and started animation '{hitAnimationVariable}'");
+
         if (GetHealthStatus() == HealthStatus.Dead)
             return;
 
@@ -168,6 +170,7 @@ public partial class PlayerStatus : Node
         if (Health > 0)
             return;
 
+        GD.Print("Player died!");
         //SoundManager.PauseSong();
 
         _timeUntilShowGameOverUi = GameOverUiDelay;
@@ -208,11 +211,11 @@ public partial class PlayerStatus : Node
             return HealthStatus.Dead;
         if (Health <= 1)
             return HealthStatus.Special;
-        if (Health <= 40)
+        if (Health <= 20)
             return HealthStatus.SpeedyBoi;
-        if (Health <= 80)
+        if (Health <= 40)
             return HealthStatus.BadTummyAche;
-        if (Health <= 120)
+        if (Health <= 80)
             return HealthStatus.TummyAche;
         return HealthStatus.Healthy;
     }
