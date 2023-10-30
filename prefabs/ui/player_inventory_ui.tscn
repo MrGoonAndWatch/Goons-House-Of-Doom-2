@@ -23,21 +23,25 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="InventoryBg" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0.443137, 0.886275, 0.447059)
 
 [node name="ItemWindow" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.234
-anchor_top = 0.285
-anchor_right = 0.234
-anchor_bottom = 0.285
-offset_left = -0.568024
-offset_top = 0.319977
-offset_right = 39.432
-offset_bottom = 40.32
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = -229.0
+offset_right = -176.0
+offset_bottom = -189.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -68,14 +72,17 @@ offset_bottom = 103.0
 
 [node name="ItemDescription" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.234
-anchor_top = 0.67
-anchor_right = 0.234
-anchor_bottom = 0.67
-offset_left = -0.568024
-offset_top = -0.160004
-offset_right = 39.432
-offset_bottom = 39.84
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = 103.0
+offset_right = -170.0
+offset_bottom = 143.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="ItemDescription"]
 layout_mode = 1
@@ -106,14 +113,17 @@ vertical_alignment = 1
 
 [node name="ItemSlots" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.908
-anchor_top = 0.498
-anchor_right = 0.908
-anchor_bottom = 0.498
-offset_left = -81.0161
-offset_top = -125.704
-offset_right = 81.9839
-offset_bottom = 126.296
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -321.0
+offset_top = -135.0
+offset_right = -158.0
+offset_bottom = 117.0
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="ItemCursor" type="ColorRect" parent="ItemSlots"]
 layout_mode = 0
@@ -155,14 +165,17 @@ offset_bottom = 252.0
 
 [node name="Actions" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.743
+anchors_preset = 6
+anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 0.743
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -64.936
-offset_top = -115.0
-offset_right = 65.064
-offset_bottom = 123.0
+offset_left = -554.0
+offset_top = -117.0
+offset_right = -424.0
+offset_bottom = 121.0
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="ActionCursor" type="ColorRect" parent="Actions"]
 layout_mode = 0
@@ -282,14 +295,14 @@ vertical_alignment = 1
 
 [node name="StatusBar" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.124
-anchor_top = 0.369
-anchor_right = 0.124
-anchor_bottom = 0.369
-offset_left = -98.848
-offset_top = -52.112
-offset_right = 99.152
-offset_bottom = 51.888
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 226.0
+offset_top = -275.0
+offset_right = 424.0
+offset_bottom = -171.0
+grow_vertical = 2
 
 [node name="StatusBg" type="ColorRect" parent="StatusBar"]
 layout_mode = 1
@@ -316,14 +329,14 @@ vertical_alignment = 1
 
 [node name="Portrait" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.124
-anchor_top = 0.58
-anchor_right = 0.124
-anchor_bottom = 0.58
-offset_left = -98.848
-offset_top = -57.84
-offset_right = 99.152
-offset_bottom = 58.16
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 233.0
+offset_top = 133.0
+offset_right = 431.0
+offset_bottom = 249.0
+grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="Portrait"]
 layout_mode = 1
@@ -358,19 +371,20 @@ expand_mode = 1
 
 [node name="EquippedItem" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.536
-anchor_top = 0.455
-anchor_right = 0.536
-anchor_bottom = 0.455
-offset_left = 380.528
-offset_top = -261.84
-offset_right = 480.528
-offset_bottom = -161.84
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="EquippedItem"]
 layout_mode = 0
-offset_right = 100.0
-offset_bottom = 20.0
+offset_left = -280.0
+offset_top = -332.0
+offset_right = -180.0
+offset_bottom = -312.0
 text = "Equipped"
 label_settings = SubResource("LabelSettings_0vscq")
 horizontal_alignment = 1
@@ -382,10 +396,10 @@ anchor_left = 0.5
 anchor_top = 0.55
 anchor_right = 0.5
 anchor_bottom = 0.55
-offset_left = -40.0
-offset_top = -35.0
-offset_right = 40.0
-offset_bottom = 45.0
+offset_left = -275.0
+offset_top = -300.0
+offset_right = -195.0
+offset_bottom = -220.0
 
 [node name="TextureRect" type="TextureRect" parent="EquippedItem"]
 layout_mode = 1
@@ -394,8 +408,8 @@ anchor_left = 0.5
 anchor_top = 0.6
 anchor_right = 0.5
 anchor_bottom = 0.6
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -275.0
+offset_top = -300.0
+offset_right = -195.0
+offset_bottom = -220.0
 expand_mode = 1

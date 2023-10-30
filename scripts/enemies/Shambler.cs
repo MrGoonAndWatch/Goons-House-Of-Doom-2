@@ -40,8 +40,8 @@ public partial class Shambler : Enemy
         {
             if (distanceToPlayerSquared > _attackRangeSquared)
             {
-                LookAtPlayer();
-                MoveTowardsPlayer(delta);
+                LookAtPoint(_player.GlobalPosition);
+                MoveTowardsPosition(_player.GlobalPosition, _speed, delta);
             }
             else if (_postAttackIdleTime <= 0)
             {

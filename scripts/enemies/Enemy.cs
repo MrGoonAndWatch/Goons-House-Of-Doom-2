@@ -3,10 +3,10 @@ using Godot;
 public abstract partial class Enemy : CharacterBody3D
 {
     [Export]
-    private NavigationAgent3D _navigation;
+    protected NavigationAgent3D _navigation;
 
     [Export]
-    private float _speed = 2.0f;
+    protected float _speed = 2.0f;
     [Export]
     private float _acceleration = 10.0f;
     [Export]
@@ -26,17 +26,17 @@ public abstract partial class Enemy : CharacterBody3D
         _player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
     }
 
-    protected void LookAtPlayer()
+    protected void LookAtPoint(Vector3 lookAt)
     {
-        LookAt(new Vector3(_player.GlobalPosition.X, GlobalPosition.Y, _player.GlobalPosition.Z), Vector3.Up);
+        LookAt(new Vector3(lookAt.X, GlobalPosition.Y, lookAt.Z), Vector3.Up);
         RotateY(Mathf.Pi);
     }
 
-    protected void MoveTowardsPlayer(double delta)
+    protected void MoveTowardsPosition(Vector3 position, float speed, double delta)
     {
-        _navigation.TargetPosition = _player.GlobalPosition;
+        _navigation.TargetPosition = position;
         var direction = (_navigation.GetNextPathPosition() - GlobalPosition).Normalized();
-        Velocity = Velocity.Lerp(direction * _speed, _acceleration * (float)delta);
+        Velocity = Velocity.Lerp(direction * speed, _acceleration * (float)delta);
         MoveAndSlide();
     }
 
@@ -67,7 +67,7 @@ public abstract partial class Enemy : CharacterBody3D
         GD.Print("End attack!");
     }
 
-    public void OnBodyEntered(Node3D node)
+    public virtual void OnBodyEntered(Node3D node)
     {
         if (node is Player)
         {
@@ -79,7 +79,7 @@ public abstract partial class Enemy : CharacterBody3D
         }
     }
 
-    public void OnBodyExited(Node3D node)
+    public virtual void OnBodyExited(Node3D node)
     {
         if (node is Player)
         {
