@@ -37,7 +37,7 @@ public partial class Player : CharacterBody3D
 
     private Vector3 ProcessMovement(double delta, Vector3 velocity)
     {
-        if (_playerStatus.IsMovementPrevented()) return velocity;
+        if (_playerStatus.IsMovementPrevented()) return new Vector3(0, velocity.Y, 0);
 
         var input_dir = Input.GetVector(GameConstants.Controls.Left, GameConstants.Controls.Right, GameConstants.Controls.Up, GameConstants.Controls.Down);
 
