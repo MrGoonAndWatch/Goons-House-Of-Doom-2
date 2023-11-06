@@ -10,7 +10,7 @@ height = 2.934
 [sub_resource type="BoxShape3D" id="BoxShape3D_lnypk"]
 size = Vector3(3, 3, 2)
 
-[node name="shambler" type="CharacterBody3D" node_paths=PackedStringArray("_navigation")]
+[node name="chaser" type="CharacterBody3D" node_paths=PackedStringArray("_navigation")]
 script = ExtResource("1_lrh4m")
 _maxWanderDistance = 2.0
 _minWanderDistance = 0.25

@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://b37mrskomqbhs"]
+[gd_scene load_steps=11 format=3 uid="uid://b37mrskomqbhs"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
+[ext_resource type="PackedScene" uid="uid://dv4t2p42in77u" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
 [ext_resource type="PackedScene" uid="uid://brhfdv1dqc6ll" path="res://models/person.tscn" id="2_chhtv"]
 [ext_resource type="PackedScene" uid="uid://c3u3gh2hf3vs7" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
 [ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
+[ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dadhp"]
 height = 2.1
@@ -16,7 +18,11 @@ size = Vector3(1, 2.1, 1)
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_wlo0u")
 
+[node name="save_game_ui" parent="." instance=ExtResource("2_biyvh")]
+visible = false
+
 [node name="PlayerInventoryUi" parent="." instance=ExtResource("2_q6hdo")]
+visible = false
 
 [node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemQtys", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
 script = ExtResource("4_h7s4o")
@@ -48,6 +54,9 @@ shape = SubResource("BoxShape3D_mv370")
 
 [node name="InspectTextUI" type="Node3D" parent="."]
 script = ExtResource("6_fksfj")
+
+[node name="ProcessGameState" type="Node3D" parent="."]
+script = ExtResource("8_0mwpg")
 
 [connection signal="body_entered" from="InteractHitbox" to="InteractHitbox" method="_OnBodyEntered"]
 [connection signal="body_exited" from="InteractHitbox" to="InteractHitbox" method="_OnBodyExited"]

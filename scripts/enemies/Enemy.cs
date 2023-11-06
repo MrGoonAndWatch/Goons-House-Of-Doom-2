@@ -3,6 +3,9 @@ using Godot;
 public abstract partial class Enemy : CharacterBody3D
 {
     [Export]
+    public int EnemyId;
+
+    [Export]
     protected NavigationAgent3D _navigation;
 
     [Export]
@@ -85,5 +88,11 @@ public abstract partial class Enemy : CharacterBody3D
         {
             _touchingPlayer = false;
         }
+    }
+
+    // TODO: Improve this! Also move other stuff in from DamageHandler.
+    public void ForceDead()
+    {
+        QueueFree();
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 public partial class Door : Node3D
 {
     [Export]
-    private int DoorId;
+    public int DoorId;
 
     [Export]
     private string GoesToRoom;

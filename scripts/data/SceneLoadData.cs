@@ -8,6 +8,11 @@ public partial class SceneLoadData : GodotObject
 
     public string GetTargetSceneFullPath()
     {
-        return $"res://scenes/{TargetScene}.tscn";
+        return GetSceneFullPath(TargetScene);
+    }
+
+    public static string GetSceneFullPath(string sceneName)
+    {
+        return $"res://scenes/{sceneName}.tscn";
     }
 }

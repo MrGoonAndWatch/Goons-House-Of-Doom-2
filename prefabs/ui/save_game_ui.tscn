@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv4t2p42in77u"]
+
+[ext_resource type="Script" path="res://scripts/data/SaveGame.cs" id="1_os25d"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_13ymv"]
+font_size = 200
+
+[node name="save_game_ui" type="Control" node_paths=PackedStringArray("SaveGameUi", "LoadingMessage", "SaveFileList")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_os25d")
+SaveGameUi = NodePath("SaveUiBase")
+LoadingMessage = NodePath("SaveUiBase/FileWindow/LoadingText")
+SaveFileList = NodePath("SaveUiBase/FileWindow/LoadedFilesText")
+
+[node name="SaveUiBase" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 2560.0
+offset_bottom = 1440.0
+
+[node name="Background" type="ColorRect" parent="SaveUiBase"]
+layout_mode = 0
+offset_right = 2560.0
+offset_bottom = 1440.0
+color = Color(1, 1, 0, 0.521569)
+
+[node name="FileWindow" type="Control" parent="SaveUiBase"]
+anchors_preset = 0
+offset_right = 2560.0
+offset_bottom = 1440.0
+
+[node name="LoadingText" type="Label" parent="SaveUiBase/FileWindow"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading..."
+label_settings = SubResource("LabelSettings_13ymv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadedFilesText" type="Label" parent="SaveUiBase/FileWindow"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "File loaded!"
+label_settings = SubResource("LabelSettings_13ymv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaveSuccessfulText" type="Label" parent="SaveUiBase"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading..."
+label_settings = SubResource("LabelSettings_13ymv")
+horizontal_alignment = 1
+vertical_alignment = 1
