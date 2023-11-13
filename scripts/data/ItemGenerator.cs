@@ -25,11 +25,16 @@ public partial class ItemGenerator : Node3D
         }
 
         var resource = GD.Load<PackedScene>(itemType);
+        if(resource == null)
+        {
+            GD.PrintErr($"Failed to load PackedScene '{itemType}', GD.Load returned null...");
+            throw new ApplicationException("Could not create item, failed to load packed scene!");
+        }
+
         var itemObj = resource.Instantiate();
-        Instance.AddChild(itemObj);
-        var item = itemObj as Item;
-        if (item == null)
+        var itemContainer = itemObj as ItemContainer;
+        if (itemContainer == null)
             throw new ApplicationException("Could not find item at the root on resource for prefab: " + itemType);
-        return item;
+        return itemContainer.Item;
     }
 }

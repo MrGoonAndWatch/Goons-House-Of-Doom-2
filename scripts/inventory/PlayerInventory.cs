@@ -107,7 +107,11 @@ public partial class PlayerInventory : Node3D
     {
         var targetItem = Items[i];
         if (targetItem.Item == null)
+        {
+            ExamineText.Text = "";
             ExamineTexture.Modulate = GameConstants.Colors.Clear;
+            targetItem.ItemSprite.Modulate = GameConstants.Colors.Clear;
+        }
         else
         {
             targetItem.ItemSprite.Texture = targetItem.Item.MenuIcon;

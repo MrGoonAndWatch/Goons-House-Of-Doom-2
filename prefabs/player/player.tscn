@@ -26,7 +26,7 @@ visible = false
 
 [node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemQtys", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
 script = ExtResource("4_h7s4o")
-ExamineText = NodePath("../PlayerInventoryUi/Actions/Action-Examine/ActionLabel")
+ExamineText = NodePath("../PlayerInventoryUi/ItemDescription/ItemDescriptionLabel")
 ExamineTexture = NodePath("../PlayerInventoryUi/ItemWindow/ItemTextureRect")
 Items = [NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-1"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-2"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-3"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-4"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-5"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-6")]
 ItemQtys = [NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-1/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-2/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-3/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-4/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-5/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-6/Qty")]
@@ -58,6 +58,8 @@ script = ExtResource("6_fksfj")
 [node name="ProcessGameState" type="Node3D" parent="."]
 script = ExtResource("8_0mwpg")
 
+[connection signal="area_entered" from="InteractHitbox" to="InteractHitbox" method="_OnAreaEntered"]
+[connection signal="area_exited" from="InteractHitbox" to="InteractHitbox" method="_OnAreaExited"]
 [connection signal="body_entered" from="InteractHitbox" to="InteractHitbox" method="_OnBodyEntered"]
 [connection signal="body_exited" from="InteractHitbox" to="InteractHitbox" method="_OnBodyExited"]
 

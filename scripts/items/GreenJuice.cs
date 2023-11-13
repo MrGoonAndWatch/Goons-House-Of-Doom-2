@@ -1,43 +1,42 @@
-public partial class Garbage : Item
-{
-    public static string PrefabPath()
-    {
-        return $"{ItemPrefabFolderPath}garbage.tscn";
-    }
+using Godot;
+using System;
 
+public partial class GreenJuice : Item
+{
     public override string GetDescription()
     {
-        return "It's a useless pile of junk.";
+        return "A special mixture of chemicals that treat injuries almost instantly.";
     }
 
     public override string GetPrefabPath()
     {
-        return PrefabPath();
+        return ItemPrefabFolderPath + "green-juice.tscn";
     }
 
     public override bool IsStackable()
     {
-        return true;
+        return false;
     }
 
     public override int? GetMaxStackSize()
     {
-        return 99;
+        return null;
     }
 
     public override bool UseItem()
     {
         var playerStatus = PlayerStatus.GetInstance();
-        playerStatus.SetHealth(40);
+        playerStatus.AddHealth(GameConstants.GreenMedicineHp);
         return true;
     }
 
     public override ComboResult Combine(Item otherItem)
     {
+        // TODO: Setup Combos w/ other items.
         return new ComboResult
         {
-            ItemA = this,
-            ItemB = otherItem,
+            ItemA = ItemGenerator.CreateItem(Garbage.PrefabPath()),
+            ItemB = null,
         };
     }
 }

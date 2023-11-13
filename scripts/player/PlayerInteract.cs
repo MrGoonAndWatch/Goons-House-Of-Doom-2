@@ -44,8 +44,6 @@ public partial class PlayerInteract : Node
 
     public void _OnBodyEntered(Node3D obj)
     {
-        if(obj is Item)
-            _touchingItems.Add(obj as Item);
         if (obj is SimpleLock)
             _collidedSimpleLocks.Add(obj as SimpleLock);
         if (obj is Door)
@@ -54,12 +52,22 @@ public partial class PlayerInteract : Node
 
     public void _OnBodyExited(Node3D obj)
     {
-        if(obj is Item)
-            RemoveItem(obj);
         if (obj is SimpleLock)
             _collidedSimpleLocks.RemoveAll(l => l.GetInstanceId() == obj.GetInstanceId());
         if (obj is Door)
             _collidedDoors.RemoveAll(d => d.GetInstanceId() == obj.GetInstanceId());
+    }
+
+    public void _OnAreaEntered(Area3D obj)
+    {
+        if (obj is Item)
+            _touchingItems.Add(obj as Item);
+    }
+
+    public void _OnAreaExited(Area3D obj)
+    {
+        if (obj is Item)
+            RemoveItem(obj as Item);
     }
 
     void PickupCurrentItem()
@@ -73,19 +81,18 @@ public partial class PlayerInteract : Node
         var remainingQty = _inventory.AddItem(item);
         if (item.ItemId != 0 && remainingQty != item.QtyOnPickup)
         {
-            //_playerStatus.GrabItem(item.ItemId);
+            _playerStatus.GrabItem(item.ItemId);
         }
 
-        // TODO: Confirm we shouldn't just set visible = false here instead!
         if (remainingQty == 0)
-            item.QueueFree();
+            item.ForceDestroy();
         else
             item.QtyOnPickup = remainingQty;
 
         RemoveItem(item);
     }
 
-    private void RemoveItem(Node3D item)
+    private void RemoveItem(Item item)
     {
         _touchingItems.RemoveAll(i => i.GetInstanceId() == item.GetInstanceId());
     }

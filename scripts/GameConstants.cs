@@ -2,6 +2,8 @@ using Godot;
 
 public partial class GameConstants : GodotObject
 {
+    public const float GreenMedicineHp = 25.0f;
+
     public static class Colors
     {
         public static Color Clear = Color.Color8(0, 0, 0, 0);

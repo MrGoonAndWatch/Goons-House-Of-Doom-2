@@ -136,7 +136,6 @@ public partial class DataSaver : Node3D
 
         for (var i = 0; i < playerInventory.Items.Length; i++)
         {
-            playerInventory.ItemDirty[i] = true;
             if (string.IsNullOrEmpty(_gameState.Inventory[i].ItemType))
                 continue;
 
@@ -151,6 +150,8 @@ public partial class DataSaver : Node3D
             }
             else
                 playerInventory.Items[i].Qty = _gameState.Inventory[i].Qty;
+
+            playerInventory.ItemDirty[i] = true;
         }
     }
 

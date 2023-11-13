@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdf4m7xs2jmy2"]
+
+[ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_xd12x"]
+[ext_resource type="Script" path="res://scripts/items/Garbage.cs" id="2_7cx0h"]
+[ext_resource type="Texture2D" uid="uid://cwqg5q50okehx" path="res://textures/TrashCan.png" id="3_k81mm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cbjtn"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="garbage" type="Node3D" node_paths=PackedStringArray("Item")]
+script = ExtResource("1_xd12x")
+Item = NodePath("Item")
+
+[node name="Item" type="Area3D" parent="."]
+script = ExtResource("2_7cx0h")
+MenuIcon = ExtResource("3_k81mm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Item"]
+shape = SubResource("BoxShape3D_cbjtn")

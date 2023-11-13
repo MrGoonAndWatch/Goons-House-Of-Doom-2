@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://bx6j7jqn675qo"]
+
+[ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_apuqc"]
+[ext_resource type="Script" path="res://scripts/items/GreenJuice.cs" id="1_yo0rh"]
+[ext_resource type="Texture2D" uid="uid://yio1f4tds1he" path="res://textures/GreenMedicine.png" id="2_3dktu"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_0m3a5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1iqm5"]
+
+[node name="green-juice" type="Node3D" node_paths=PackedStringArray("Item")]
+script = ExtResource("1_apuqc")
+Item = NodePath("Item")
+
+[node name="ItemMarker" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_0m3a5")
+
+[node name="Item" type="Area3D" parent="."]
+script = ExtResource("1_yo0rh")
+MenuIcon = ExtResource("2_3dktu")
+
+[node name="ItemCollisionShape" type="CollisionShape3D" parent="Item"]
+shape = SubResource("BoxShape3D_1iqm5")
