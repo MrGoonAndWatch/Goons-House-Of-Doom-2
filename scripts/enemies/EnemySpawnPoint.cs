@@ -2,7 +2,7 @@ using Godot;
 
 public partial class EnemySpawnPoint : Node3D
 {
-    [Export]
+    [Export(hintString: "Unique identifier for the enemy, use this number ONCE per the entire game!")]
     private int EnemyId;
 
     [Export]

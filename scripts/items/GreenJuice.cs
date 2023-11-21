@@ -10,7 +10,7 @@ public partial class GreenJuice : Item
 
     public override string GetPrefabPath()
     {
-        return ItemPrefabFolderPath + "green-juice.tscn";
+        return GameConstants.ItemPrefabLookup[GameConstants.ItemSpawnType.GreenJuice];
     }
 
     public override bool IsStackable()
@@ -35,7 +35,7 @@ public partial class GreenJuice : Item
         // TODO: Setup Combos w/ other items.
         return new ComboResult
         {
-            ItemA = ItemGenerator.CreateItem(Garbage.PrefabPath()),
+            ItemA = ItemGenerator.CreateItem(GameConstants.ItemPrefabLookup[GameConstants.ItemSpawnType.Garbage]),
             ItemB = null,
         };
     }

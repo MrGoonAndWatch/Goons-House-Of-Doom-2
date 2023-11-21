@@ -1,10 +1,5 @@
 public partial class Garbage : Item
 {
-    public static string PrefabPath()
-    {
-        return $"{ItemPrefabFolderPath}garbage.tscn";
-    }
-
     public override string GetDescription()
     {
         return "It's a useless pile of junk.";
@@ -12,7 +7,7 @@ public partial class Garbage : Item
 
     public override string GetPrefabPath()
     {
-        return PrefabPath();
+        return GameConstants.ItemPrefabLookup[GameConstants.ItemSpawnType.Garbage];
     }
 
     public override bool IsStackable()

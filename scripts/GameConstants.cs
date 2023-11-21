@@ -62,12 +62,26 @@ public partial class GameConstants : GodotObject
         Chaser = 2
     }
 
+    public enum ItemSpawnType
+    {
+        None = 0,
+        Garbage = 1,
+        GreenJuice = 2
+    }
+
     private const string EnemyPrefabFolder = "res://prefabs/spawnables/enemies/";
 
     public static Dictionary<EnemySpawnType, string> EnemyPrefabLookup = new Dictionary<EnemySpawnType, string>()
     {
         {EnemySpawnType.Shambler, $"{EnemyPrefabFolder}/shambler.tscn"},
         {EnemySpawnType.Chaser, $"{EnemyPrefabFolder}/chaser.tscn"}
+    };
+
+    private const string ItemPrefabFolderPath = "res://prefabs/spawnables/items/";
+    public static Dictionary<ItemSpawnType, string> ItemPrefabLookup = new Dictionary<ItemSpawnType, string>()
+    {
+        {ItemSpawnType.Garbage, $"{ItemPrefabFolderPath}/garbage.tscn"},
+        {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
     };
 
     public static class Controls
@@ -91,7 +105,7 @@ public partial class GameConstants : GodotObject
             public const string Player = "/root/root/Player";
             public const string PlayerInventory = Player + "/PlayerInventory";
             public const string PlayerInteract = Player + "/InteractHitbox";
-            public const string InspectTextUi = Player + "/InspectTextUi";
+            public const string InspectTextUi = Player + "/InspectTextUI";
             public const string PlayerStatus = "/root/root/PlayerStatus";
             public const string HordeModeManager = "/root/root/HordeModeManager";
         }
