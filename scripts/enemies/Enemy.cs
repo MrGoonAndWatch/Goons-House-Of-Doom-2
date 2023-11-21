@@ -2,11 +2,9 @@ using Godot;
 
 public abstract partial class Enemy : CharacterBody3D
 {
-    [Export]
     public int EnemyId;
-
     [Export]
-    protected NavigationAgent3D _navigation;
+    protected NavigationAgent3D Navigation;
 
     [Export]
     protected float _speed = 2.0f;
@@ -37,8 +35,8 @@ public abstract partial class Enemy : CharacterBody3D
 
     protected void MoveTowardsPosition(Vector3 position, float speed, double delta)
     {
-        _navigation.TargetPosition = position;
-        var direction = (_navigation.GetNextPathPosition() - GlobalPosition).Normalized();
+        Navigation.TargetPosition = position;
+        var direction = (Navigation.GetNextPathPosition() - GlobalPosition).Normalized();
         Velocity = Velocity.Lerp(direction * speed, _acceleration * (float)delta);
         MoveAndSlide();
     }

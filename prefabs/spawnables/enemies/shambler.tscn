@@ -10,9 +10,9 @@ height = 2.934
 [sub_resource type="BoxShape3D" id="BoxShape3D_lnypk"]
 size = Vector3(3, 3, 2)
 
-[node name="shambler" type="CharacterBody3D" node_paths=PackedStringArray("_navigation")]
+[node name="shambler" type="CharacterBody3D" node_paths=PackedStringArray("Navigation")]
 script = ExtResource("1_m8x22")
-_navigation = NodePath("NavigationAgent3D")
+Navigation = NodePath("NavigationAgent3D")
 _speed = 1.5
 
 [node name="Model" parent="." instance=ExtResource("1_4inkg")]

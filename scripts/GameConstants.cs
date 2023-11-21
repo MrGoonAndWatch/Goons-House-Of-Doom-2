@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 public partial class GameConstants : GodotObject
 {
@@ -8,6 +9,14 @@ public partial class GameConstants : GodotObject
     {
         public static Color Clear = Color.Color8(0, 0, 0, 0);
         public static Color White = Color.Color8(255, 255, 255);
+    }
+
+    public enum GameDifficulty
+    {
+        Easy,
+        Normal,
+        Hard,
+        Impossible
     }
 
     public enum HealthStatus
@@ -45,6 +54,21 @@ public partial class GameConstants : GodotObject
     {
         None = 0,
     }
+
+    public enum EnemySpawnType
+    {
+        None = 0,
+        Shambler = 1,
+        Chaser = 2
+    }
+
+    private const string EnemyPrefabFolder = "res://prefabs/spawnables/enemies/";
+
+    public static Dictionary<EnemySpawnType, string> EnemyPrefabLookup = new Dictionary<EnemySpawnType, string>()
+    {
+        {EnemySpawnType.Shambler, $"{EnemyPrefabFolder}/shambler.tscn"},
+        {EnemySpawnType.Chaser, $"{EnemyPrefabFolder}/chaser.tscn"}
+    };
 
     public static class Controls
     {

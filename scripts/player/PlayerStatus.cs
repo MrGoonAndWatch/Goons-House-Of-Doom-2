@@ -5,6 +5,7 @@ using static GameConstants;
 
 public partial class PlayerStatus : Node
 {
+    public GameDifficulty GameDifficulty;
     public Weapon EquipedWeapon;
     //public Animator PlayerAnimator;
     // TODO: Need to hook this up with non-export since this is an autoloaded component.

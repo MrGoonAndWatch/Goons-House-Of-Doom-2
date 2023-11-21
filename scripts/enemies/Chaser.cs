@@ -65,7 +65,7 @@ public partial class Chaser : Enemy
 
 	private bool IsAtPoint()
 	{
-        var dist = GlobalPosition.DistanceSquaredTo(_navigation.GetFinalPosition());
+        var dist = GlobalPosition.DistanceSquaredTo(Navigation.GetFinalPosition());
         return dist < 2;
     }
 

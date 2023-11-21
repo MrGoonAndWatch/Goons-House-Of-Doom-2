@@ -10,11 +10,11 @@ height = 2.934
 [sub_resource type="BoxShape3D" id="BoxShape3D_lnypk"]
 size = Vector3(3, 3, 2)
 
-[node name="chaser" type="CharacterBody3D" node_paths=PackedStringArray("_navigation")]
+[node name="chaser" type="CharacterBody3D" node_paths=PackedStringArray("Navigation")]
 script = ExtResource("1_lrh4m")
 _maxWanderDistance = 2.0
 _minWanderDistance = 0.25
-_navigation = NodePath("NavigationAgent3D")
+Navigation = NodePath("NavigationAgent3D")
 _speed = 1.0
 
 [node name="Model" parent="." instance=ExtResource("2_1bbij")]
