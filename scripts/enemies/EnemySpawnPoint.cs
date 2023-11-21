@@ -1,4 +1,5 @@
 using Godot;
+using static GameConstants;
 
 public partial class EnemySpawnPoint : Node3D
 {
@@ -6,60 +7,65 @@ public partial class EnemySpawnPoint : Node3D
     private int EnemyId;
 
     [Export]
-    private GameConstants.EnemySpawnType EnemySpawnOnEasy;
+    private EnemySpawnType EnemySpawnOnEasy = EnemySpawnType.None;
     [Export]
-    private GameConstants.EnemySpawnType EnemySpawnOnNormal;
+    private EnemySpawnType EnemySpawnOnNormal = EnemySpawnType.None;
     [Export]
-    private GameConstants.EnemySpawnType EnemySpawnOnHard;
+    private EnemySpawnType EnemySpawnOnHard = EnemySpawnType.None;
     [Export]
-    private GameConstants.EnemySpawnType EnemySpawnOnImpossible;
+    private EnemySpawnType EnemySpawnOnImpossible = EnemySpawnType.None;
 
     public override void _Ready()
     {
-        if (PlayerStatus.GetInstance().KilledEnemies.Contains(EnemyId)) return;
+        var playerStatus = PlayerStatus.GetInstance();
+        if (playerStatus.KilledEnemies.Contains(EnemyId)) return;
 
-        GameConstants.EnemySpawnType enemySpawnType;
-        switch (PlayerStatus.GetInstance().GameDifficulty) {
-            case GameConstants.GameDifficulty.Easy:
+        EnemySpawnType enemySpawnType;
+        switch (playerStatus.GameDifficulty) {
+            case GameDifficulty.Easy:
                 enemySpawnType = EnemySpawnOnEasy;
                 break;
-            case GameConstants.GameDifficulty.Normal:
+            case GameDifficulty.Normal:
                 enemySpawnType = EnemySpawnOnNormal;
                 break;
-            case GameConstants.GameDifficulty.Hard:
+            case GameDifficulty.Hard:
                 enemySpawnType = EnemySpawnOnHard;
                 break;
-            case GameConstants.GameDifficulty.Impossible:
+            case GameDifficulty.Impossible:
             default:
                 enemySpawnType = EnemySpawnOnImpossible;
                 break;
         }
 
-        // TODO: Get randomizer settings to check if this needs to be swapped.
+        if (playerStatus.RandomizerEnabled && playerStatus.RandomizerSeed.RandomizedEnemies.ContainsKey(EnemyId))
+        {
+            if (enemySpawnType != EnemySpawnType.None || playerStatus.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
+                enemySpawnType = playerStatus.RandomizerSeed.RandomizedEnemies[EnemyId];
+        }
 
-        if (enemySpawnType != GameConstants.EnemySpawnType.None)
+        if (enemySpawnType != EnemySpawnType.None)
             SpawnEnemy(enemySpawnType);
     }
 
-    private void SpawnEnemy(GameConstants.EnemySpawnType enemySpawnType)
+    private void SpawnEnemy(EnemySpawnType enemySpawnType)
     {
-        if (!GameConstants.EnemyPrefabLookup.ContainsKey(enemySpawnType))
+        if (!EnemyPrefabLookup.ContainsKey(enemySpawnType))
         {
             GD.PrintErr($"Failed to spawn enemy, no prefab path found for enemy type '{enemySpawnType}'.");
             return;
         }
 
-        var enemySceneLoad = GD.Load<PackedScene>(GameConstants.EnemyPrefabLookup[enemySpawnType]);
+        var enemySceneLoad = GD.Load<PackedScene>(EnemyPrefabLookup[enemySpawnType]);
         if(enemySceneLoad == null)
         {
-            GD.PrintErr($"Failed to spawn enemy of type '{enemySpawnType}', scene not found '{GameConstants.EnemyPrefabLookup[enemySpawnType]}' .");
+            GD.PrintErr($"Failed to spawn enemy of type '{enemySpawnType}', scene not found '{EnemyPrefabLookup[enemySpawnType]}' .");
             return;
         }
         var enemyScene = enemySceneLoad.Instantiate();
         var enemy = enemyScene as Enemy;
         if(enemy == null)
         {
-            GD.PrintErr($"Failed to spawn enemy of type '{enemySpawnType}'. Scene '{GameConstants.EnemyPrefabLookup[enemySpawnType]}' does not have an Enemy script at its root node!");
+            GD.PrintErr($"Failed to spawn enemy of type '{enemySpawnType}'. Scene '{EnemyPrefabLookup[enemySpawnType]}' does not have an Enemy script at its root node!");
             return;
         }
 

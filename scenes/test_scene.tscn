@@ -64,6 +64,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8114, 0, 0)
 [node name="enemy-spawn-point" parent="." instance=ExtResource("5_qo12u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0965605, -1, -6.44764)
 EnemyId = 1
-EnemySpawnOnNormal = 1
-EnemySpawnOnHard = 2
-EnemySpawnOnImpossible = 2
+EnemySpawnOnNormal = 2
+EnemySpawnOnHard = 4
+EnemySpawnOnImpossible = 4

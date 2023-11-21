@@ -55,17 +55,18 @@ public partial class GameConstants : GodotObject
         None = 0,
     }
 
+    // Note: These are powers of 2 to allow the randomizer settings to use a singular field to store which of these are enabled.
     public enum EnemySpawnType
     {
-        None = 0,
-        Shambler = 1,
-        Chaser = 2
+        None = 1,
+        Shambler = 2,
+        Chaser = 4
     }
 
+    // Note: These are powers of 2 to allow the randomizer settings to use a singular field to store which of these are enabled.
     public enum ItemSpawnType
     {
-        None = 0,
-        Garbage = 1,
+        None = 1,
         GreenJuice = 2
     }
 
@@ -78,9 +79,10 @@ public partial class GameConstants : GodotObject
     };
 
     private const string ItemPrefabFolderPath = "res://prefabs/spawnables/items/";
+    public const string GarbagePrefabPath = $"{ItemPrefabFolderPath}/garbage.tscn";
+
     public static Dictionary<ItemSpawnType, string> ItemPrefabLookup = new Dictionary<ItemSpawnType, string>()
     {
-        {ItemSpawnType.Garbage, $"{ItemPrefabFolderPath}/garbage.tscn"},
         {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
     };
 

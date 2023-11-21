@@ -7,7 +7,7 @@ public partial class Garbage : Item
 
     public override string GetPrefabPath()
     {
-        return GameConstants.ItemPrefabLookup[GameConstants.ItemSpawnType.Garbage];
+        return GameConstants.GarbagePrefabPath;
     }
 
     public override bool IsStackable()

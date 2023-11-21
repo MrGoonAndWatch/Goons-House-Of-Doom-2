@@ -5,7 +5,11 @@ using static GameConstants;
 
 public partial class PlayerStatus : Node
 {
+    // TODO: Determine if this is the right place to store this info, it's convenient for now for debugging but idk...
     public GameDifficulty GameDifficulty;
+    public RandomizerSeed RandomizerSeed;
+    public bool RandomizerEnabled;
+
     public Weapon EquipedWeapon;
     //public Animator PlayerAnimator;
     // TODO: Need to hook this up with non-export since this is an autoloaded component.

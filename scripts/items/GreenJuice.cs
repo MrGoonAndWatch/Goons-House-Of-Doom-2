@@ -35,7 +35,7 @@ public partial class GreenJuice : Item
         // TODO: Setup Combos w/ other items.
         return new ComboResult
         {
-            ItemA = ItemGenerator.CreateItem(GameConstants.ItemPrefabLookup[GameConstants.ItemSpawnType.Garbage]),
+            ItemA = ItemGenerator.CreateItem(GameConstants.GarbagePrefabPath),
             ItemB = null,
         };
     }

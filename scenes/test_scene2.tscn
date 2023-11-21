@@ -53,5 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49654, -0.269487, -0.743682
 ItemId = 1
 ItemSpawnOnEasy = 2
 ItemSpawnOnNormal = 2
+ItemSpawnOnHard = 1
+ItemSpawnOnImpossible = 1
 
 [editable path="test_door"]

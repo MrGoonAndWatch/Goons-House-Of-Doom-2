@@ -1,4 +1,5 @@
 using Godot;
+using static GameConstants;
 
 public partial class ItemSpawnPoint : Node3D
 {
@@ -8,61 +9,66 @@ public partial class ItemSpawnPoint : Node3D
     private int QtyOnPickup = 1;
 
     [Export]
-    private GameConstants.ItemSpawnType ItemSpawnOnEasy;
+    private ItemSpawnType ItemSpawnOnEasy;
     [Export]
-    private GameConstants.ItemSpawnType ItemSpawnOnNormal;
+    private ItemSpawnType ItemSpawnOnNormal;
     [Export]
-    private GameConstants.ItemSpawnType ItemSpawnOnHard;
+    private ItemSpawnType ItemSpawnOnHard;
     [Export]
-    private GameConstants.ItemSpawnType ItemSpawnOnImpossible;
+    private ItemSpawnType ItemSpawnOnImpossible;
 
     public override void _Ready()
 	{
-        if (PlayerStatus.GetInstance().GrabbedItems.Contains(ItemId)) return;
+        var playerStatus = PlayerStatus.GetInstance();
+        if (playerStatus.GrabbedItems.Contains(ItemId)) return;
 
-        GameConstants.ItemSpawnType itemSpawnType;
-        switch (PlayerStatus.GetInstance().GameDifficulty)
+        ItemSpawnType itemSpawnType;
+        switch (playerStatus.GameDifficulty)
         {
-            case GameConstants.GameDifficulty.Easy:
+            case GameDifficulty.Easy:
                 itemSpawnType = ItemSpawnOnEasy;
                 break;
-            case GameConstants.GameDifficulty.Normal:
+            case GameDifficulty.Normal:
                 itemSpawnType = ItemSpawnOnNormal;
                 break;
-            case GameConstants.GameDifficulty.Hard:
+            case GameDifficulty.Hard:
                 itemSpawnType = ItemSpawnOnHard;
                 break;
-            case GameConstants.GameDifficulty.Impossible:
+            case GameDifficulty.Impossible:
             default:
                 itemSpawnType = ItemSpawnOnImpossible;
                 break;
         }
 
-        // TODO: Get randomizer settings to check if this needs to be swapped.
+        if(playerStatus.RandomizerEnabled && playerStatus.RandomizerSeed.RandomizedItems.ContainsKey(ItemId))
+        {
+            if (itemSpawnType != ItemSpawnType.None || playerStatus.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
+                itemSpawnType = playerStatus.RandomizerSeed.RandomizedItems[ItemId];
+        }
 
-        if (itemSpawnType != GameConstants.ItemSpawnType.None)
+        if (itemSpawnType != ItemSpawnType.None)
             SpawnItem(itemSpawnType);
     }
 
-    private void SpawnItem(GameConstants.ItemSpawnType itemSpawnType)
+    private void SpawnItem(ItemSpawnType itemSpawnType)
     {
-        if (!GameConstants.ItemPrefabLookup.ContainsKey(itemSpawnType))
+        if (!ItemPrefabLookup.ContainsKey(itemSpawnType))
         {
             GD.PrintErr($"Failed to spawn item, no prefab path found for item type '{itemSpawnType}'.");
             return;
         }
 
-        var itemSceneLoad = GD.Load<PackedScene>(GameConstants.ItemPrefabLookup[itemSpawnType]);
+        var itemSceneLoad = GD.Load<PackedScene>(ItemPrefabLookup[itemSpawnType]);
         if (itemSceneLoad == null)
         {
-            GD.PrintErr($"Failed to spawn item of type '{itemSpawnType}', scene not found '{GameConstants.ItemPrefabLookup[itemSpawnType]}' .");
+            GD.PrintErr($"Failed to spawn item of type '{itemSpawnType}', scene not found '{ItemPrefabLookup[itemSpawnType]}' .");
             return;
         }
         var itemScene = itemSceneLoad.Instantiate();
         var itemContainer = itemScene as ItemContainer;
         if (itemContainer == null || itemContainer.Item == null)
         {
-            GD.PrintErr($"Failed to spawn item of type '{itemSpawnType}'. Scene '{GameConstants.ItemPrefabLookup[itemSpawnType]}' does not have an ItemContainer script at its root node or Item parameter on it is null!");
+            GD.PrintErr($"Failed to spawn item of type '{itemSpawnType}'. Scene '{ItemPrefabLookup[itemSpawnType]}' does not have an ItemContainer script at its root node or Item parameter on it is null!");
             return;
         }
 
