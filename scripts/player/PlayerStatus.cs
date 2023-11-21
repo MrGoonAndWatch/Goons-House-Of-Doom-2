@@ -67,6 +67,23 @@ public partial class PlayerStatus : Node
 
     public override void _Process(double delta)
     {
+        // if (Input.IsActionJustPressed("DEBUG_Save"))
+        // {
+        //     GameDifficulty = (GameDifficulty)((((int)GetInstance().GameDifficulty) + 1) % Enum.GetValues(typeof(GameDifficulty)).Length);
+        // }
+        // if (Input.IsActionJustPressed("DEBUG_Load"))
+        // {
+        //     RandomizerEnabled = !RandomizerEnabled;
+        //     var settings = new RandomizerSettings
+        //     {
+        //         AllowSpawnsOnEmptyEnemySlotsForDifficulty = true,
+        //         AllowSpawnsOnEmptyItemSlotsForDifficulty = true,
+        //         RandomizeEnemies = true,
+        //         RandomizeItems = true,
+        //     };
+        //     if(RandomizerEnabled)
+        //         RandomizerSeed = RandomizerSeed.GenerateRandomizer(settings);
+        // }
         ProcessGameOverUi(delta);
         ProcessExitInput();
         ProcessHitCooldown(delta);
