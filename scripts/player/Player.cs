@@ -39,7 +39,7 @@ public partial class Player : CharacterBody3D
     {
         if (_playerStatus.IsMovementPrevented()) return new Vector3(0, velocity.Y, 0);
 
-        var input_dir = Input.GetVector(GameConstants.Controls.Left, GameConstants.Controls.Right, GameConstants.Controls.Up, GameConstants.Controls.Down);
+        var input_dir = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString());
 
         var inputRotation = input_dir.X;
 
@@ -50,7 +50,7 @@ public partial class Player : CharacterBody3D
 
         if (inputMovement != 0 && !IsQuickTurning)
         {
-            var running = Input.IsActionPressed(GameConstants.Controls.Run);
+            var running = Input.IsActionPressed(GameConstants.Controls.run.ToString());
 
             var runMod = 1.0f;
 
@@ -63,7 +63,7 @@ public partial class Player : CharacterBody3D
                 backwardsMod = BACKWARDS_MODIFIER;
 
 
-            if (inputMovement > 0 && Input.IsActionJustPressed(GameConstants.Controls.Run))
+            if (inputMovement > 0 && Input.IsActionJustPressed(GameConstants.Controls.run.ToString()))
                 StartQuickTurn();
 
             var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod;

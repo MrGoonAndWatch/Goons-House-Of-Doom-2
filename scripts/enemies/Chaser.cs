@@ -25,8 +25,8 @@ public partial class Chaser : Enemy
 
     public override void _PhysicsProcess(double delta)
     {
-		var movement = Input.GetAxis(GameConstants.Controls.Down, GameConstants.Controls.Up);
-		if(Input.IsActionPressed(GameConstants.Controls.Run) && movement > 0)
+		var movement = Input.GetAxis(GameConstants.Controls.down.ToString(), GameConstants.Controls.up.ToString());
+		if(Input.IsActionPressed(GameConstants.Controls.run.ToString()) && movement > 0)
 		{
 			_chasePoint = _player.GlobalPosition;
 			_chasing = true;

@@ -86,18 +86,24 @@ public partial class GameConstants : GodotObject
         {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
     };
 
-    public static class Controls
+    public enum Controls
     {
-        public const string Left = "left";
-        public const string Right = "right";
-        public const string Up = "up";
-        public const string Down = "down";
+        left,
+        right,
+        up,
+        down,
+        run,
+        inventory,
+        confirm,
+        aim,
+        pause
+    }
 
-        public const string Run = "run";
-        public const string Inventory = "inventory";
-        public const string Confirm = "confirm";
-        public const string Aim = "aim";
-        public const string Pause = "pause";
+    public enum ControlBinding
+    {
+        Primary,
+        Secondary,
+        Tertiary
     }
 
     public static class NodePaths

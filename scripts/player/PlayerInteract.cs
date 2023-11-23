@@ -23,8 +23,8 @@ public partial class PlayerInteract : Node
 	public override void _Process(double delta)
 	{
         if (_playerStatus.CanInteract() &&
-            !Input.IsActionPressed(GameConstants.Controls.Aim) &&
-            Input.IsActionJustPressed(GameConstants.Controls.Confirm))
+            !Input.IsActionPressed(GameConstants.Controls.aim.ToString()) &&
+            Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
         {
             if(_touchingItems.Any())
                 PickupCurrentItem();

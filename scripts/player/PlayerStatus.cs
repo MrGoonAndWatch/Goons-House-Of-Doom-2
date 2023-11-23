@@ -126,7 +126,7 @@ public partial class PlayerStatus : Node
         if (!_showingGameOverUi)
             return;
 
-        if (Input.IsActionJustPressed(Controls.Pause))
+        if (Input.IsActionJustPressed(Controls.pause.ToString()))
             GetTree().Quit();
     }
 

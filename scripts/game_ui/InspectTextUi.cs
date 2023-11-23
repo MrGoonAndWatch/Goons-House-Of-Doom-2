@@ -44,14 +44,14 @@ public partial class InspectTextUi : Node
 
         if (_makingChoice)
         {
-            if (Input.IsActionJustPressed(GameConstants.Controls.Confirm))
+            if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
                 ConfirmChoice();
-            else if (Input.IsActionJustPressed(GameConstants.Controls.Aim))
+            else if (Input.IsActionJustPressed(GameConstants.Controls.aim.ToString()))
                 CloseTextbox();
             else
                 ProcessChoiceMovement();
         }
-        else if (Input.IsActionJustPressed(GameConstants.Controls.Confirm))
+        else if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
             AdvanceText();
     }
 
@@ -149,7 +149,7 @@ public partial class InspectTextUi : Node
 
     private void ProcessChoiceMovement()
     {
-        var horizontalMovement = Input.GetVector(GameConstants.Controls.Left, GameConstants.Controls.Right, GameConstants.Controls.Up, GameConstants.Controls.Down).X;
+        var horizontalMovement = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString()).X;
 
         if (!_justMovedChoice && horizontalMovement < 0)
         {

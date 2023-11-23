@@ -75,7 +75,7 @@ public partial class PlayerInventory : Node3D
     public override void _Process(double delta)
     {
         if (_playerStatus.CanOpenMenu() &&
-            Input.IsActionJustPressed(GameConstants.Controls.Inventory))
+            Input.IsActionJustPressed(GameConstants.Controls.inventory.ToString()))
             ToggleMenu();
 
         if (!_playerStatus.MenuOpened)
@@ -89,17 +89,17 @@ public partial class PlayerInventory : Node3D
         if (EquipDirty)
             UpdateEquipUi();
 
-        var inputDir = Input.GetVector(GameConstants.Controls.Left, GameConstants.Controls.Right, GameConstants.Controls.Up, GameConstants.Controls.Down);
+        var inputDir = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString());
 
         if (_actionMenuOpen && !_combiningItems)
             HandleActionCursorMovement(inputDir.Y);
         else
             HandleItemCursorMovement(inputDir.X, inputDir.Y);
 
-        if (Input.IsActionJustPressed(GameConstants.Controls.Confirm))
+        if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
             HandleConfirmPressed();
 
-        if (Input.IsActionJustPressed(GameConstants.Controls.Aim))
+        if (Input.IsActionJustPressed(GameConstants.Controls.aim.ToString()))
             HandleBackPressed();
     }
 
