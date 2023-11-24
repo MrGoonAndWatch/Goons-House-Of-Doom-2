@@ -4,8 +4,9 @@ using System;
 
 public partial class InputMapper : Control
 {
+	private const string DefaultControlsFilePath = "res://data/default_controls.cfg";
 	private const string ControlsFileDir = "user://settings";
-    private const string ControlsFilePath = $"{ControlsFileDir}/controls.config";
+    private const string ControlsFilePath = $"{ControlsFileDir}/controls.cfg";
 
     private Dictionary<string, Dictionary<GameConstants.ControlBinding, InputEvent>> _controlsMap;
 	private bool _awaitingInput;
@@ -27,11 +28,22 @@ public partial class InputMapper : Control
 			}
 		}
 		LoadControlsConfig();
-		foreach(var remapButton in GetChildren())
+        InitRemappers();
+	}
+
+	private void InitRemappers()
+	{
+        InitRemappers(GetChildren());
+    }
+
+	private static void InitRemappers(Array<Node> nodes)
+	{
+		foreach(var node in nodes)
 		{
-			if(remapButton is ControlRemapButton)
-				(remapButton as ControlRemapButton).Init();
-		}
+			if(node is ControlRemapButton)
+                (node as ControlRemapButton).Init();
+			InitRemappers(node.GetChildren());
+        }
 	}
 
 	public void StartBinding()
@@ -67,6 +79,18 @@ public partial class InputMapper : Control
         return _controlsMap[action][binding];
     }
 
+	public void ResetToDefaultControls()
+	{
+		if (!FileAccess.FileExists(DefaultControlsFilePath))
+		{
+			GD.PrintErr($"Failed to reset to default controls. File '{DefaultControlsFilePath}' not found!");
+			return;
+		}
+
+		LoadControlsFromFile(DefaultControlsFilePath);
+        InitRemappers();
+    }
+
     public static GameConstants.ControlBinding GetControlBindingType(InputEvent controlBinding)
     {
 		var bindingText = controlBinding.AsText();
@@ -85,26 +109,31 @@ public partial class InputMapper : Control
 			SaveControlsConfig();
 			return;
 		}
-		var file = FileAccess.Open(ControlsFilePath, FileAccess.ModeFlags.Read);
-		var tempControlsMap = (Dictionary<string, Dictionary<GameConstants.ControlBinding, InputEvent>>)file.GetVar(true);
-		file.Close();
-		foreach(var action in _controlsMap.Keys)
-		{
-			if(tempControlsMap.ContainsKey(action))
-			{
-				if (tempControlsMap[action].Keys.Count > 0)
-				{
-					InputMap.ActionEraseEvents(action);
-					_controlsMap[action] = new Dictionary<GameConstants.ControlBinding, InputEvent>();
-				}
-				foreach (var controlType in tempControlsMap[action].Keys)
-				{
-					_controlsMap[action][controlType] = tempControlsMap[action][controlType];
-					InputMap.ActionAddEvent(action, _controlsMap[action][controlType]);
-				}
-			}
-		}
+        LoadControlsFromFile(ControlsFilePath);
 	}
+
+	private void LoadControlsFromFile(string controlsFilePath)
+	{
+        var file = FileAccess.Open(controlsFilePath, FileAccess.ModeFlags.Read);
+        var tempControlsMap = (Dictionary<string, Dictionary<GameConstants.ControlBinding, InputEvent>>)file.GetVar(true);
+        file.Close();
+        foreach (var action in _controlsMap.Keys)
+        {
+            if (tempControlsMap.ContainsKey(action))
+            {
+                if (tempControlsMap[action].Keys.Count > 0)
+                {
+                    InputMap.ActionEraseEvents(action);
+                    _controlsMap[action] = new Dictionary<GameConstants.ControlBinding, InputEvent>();
+                }
+                foreach (var controlType in tempControlsMap[action].Keys)
+                {
+                    _controlsMap[action][controlType] = tempControlsMap[action][controlType];
+                    InputMap.ActionAddEvent(action, _controlsMap[action][controlType]);
+                }
+            }
+        }
+    }
 
 	private void SaveControlsConfig()
 	{

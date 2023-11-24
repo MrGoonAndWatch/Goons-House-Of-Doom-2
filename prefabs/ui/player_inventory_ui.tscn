@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3u3gh2hf3vs7"]
+[gd_scene load_steps=7 format=3 uid="uid://c3u3gh2hf3vs7"]
 
 [ext_resource type="PackedScene" uid="uid://dn8w4qmysed00" path="res://prefabs/ui/item_slot.tscn" id="1_mlpxx"]
 [ext_resource type="Script" path="res://scripts/game_ui/MenuAction.cs" id="2_sdnk2"]
 [ext_resource type="Texture2D" uid="uid://d2vp8an608wqg" path="res://textures/medieval-art1.jpg" id="3_7co6t"]
-[ext_resource type="Script" path="res://scripts/game_ui/InputMapper.cs" id="4_pajsi"]
-[ext_resource type="Script" path="res://scripts/game_ui/ControlRemapButton.cs" id="5_fr56c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jng7x"]
 font_size = 24
@@ -415,45 +413,3 @@ offset_top = -300.0
 offset_right = -195.0
 offset_bottom = -220.0
 expand_mode = 1
-
-[node name="ControlsRemap" type="Control" parent="."]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("4_pajsi")
-
-[node name="Forwards (Keyboard)" type="Button" parent="ControlsRemap" node_paths=PackedStringArray("_inputMapper")]
-layout_mode = 0
-offset_left = 33.0
-offset_top = 28.0
-offset_right = 227.0
-offset_bottom = 86.0
-text = "AAAAAA"
-script = ExtResource("5_fr56c")
-_action = 2
-_inputMapper = NodePath("..")
-
-[node name="Forwards (Controller)" type="Button" parent="ControlsRemap" node_paths=PackedStringArray("_inputMapper")]
-layout_mode = 0
-offset_left = 255.0
-offset_top = 28.0
-offset_right = 449.0
-offset_bottom = 86.0
-text = "AAAAAA"
-script = ExtResource("5_fr56c")
-_action = 2
-_inputMapper = NodePath("..")
-_bindingType = 1
-
-[node name="Forwards (Controller D-Pad)" type="Button" parent="ControlsRemap" node_paths=PackedStringArray("_inputMapper")]
-layout_mode = 0
-offset_left = 475.0
-offset_top = 28.0
-offset_right = 669.0
-offset_bottom = 86.0
-text = "AAAAAA"
-script = ExtResource("5_fr56c")
-_action = 2
-_inputMapper = NodePath("..")
-_bindingType = 2

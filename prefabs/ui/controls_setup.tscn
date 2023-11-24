@@ -1,0 +1,502 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq422yee4ffab"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/InputMapper.cs" id="1_vrlno"]
+[ext_resource type="LabelSettings" uid="uid://c4eyjl7yb2bj2" path="res://materials/menu_label.tres" id="2_5uu45"]
+[ext_resource type="Script" path="res://scripts/game_ui/ControlRemapButton.cs" id="3_3uibi"]
+
+[node name="controls_setup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 450.0
+offset_right = 450.0
+
+[node name="KeyboardLabel" type="Label" parent="Header"]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 100.0
+text = "Keyboard"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ControllerLabel" type="Label" parent="Header"]
+layout_mode = 0
+offset_left = 750.0
+offset_right = 1100.0
+offset_bottom = 100.0
+text = "Controller"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ControlsRemap" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vrlno")
+
+[node name="Forwards" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 100.0
+offset_bottom = 100.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Forwards"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Move Up:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Forwards (Keyboard)" type="Button" parent="ControlsRemap/Forwards" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 2
+_inputMapper = NodePath("../..")
+
+[node name="Forwards (Controller)" type="Button" parent="ControlsRemap/Forwards" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 2
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Forwards (Controller D-Pad)" type="Button" parent="ControlsRemap/Forwards" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 1450.0
+offset_top = 5.0
+offset_right = 1800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 2
+_inputMapper = NodePath("../..")
+_bindingType = 2
+
+[node name="Backwards" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 200.0
+offset_bottom = 200.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Backwards"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Move Down:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Backwards (Keyboard)" type="Button" parent="ControlsRemap/Backwards" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 3
+_inputMapper = NodePath("../..")
+
+[node name="Backwards (Controller)" type="Button" parent="ControlsRemap/Backwards" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 3
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Backwards (Controller D-Pad)" type="Button" parent="ControlsRemap/Backwards" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 1450.0
+offset_top = 5.0
+offset_right = 1800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 3
+_inputMapper = NodePath("../..")
+_bindingType = 2
+
+[node name="Left" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 300.0
+offset_bottom = 300.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Left"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Move Left:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Left (Keyboard)" type="Button" parent="ControlsRemap/Left" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_inputMapper = NodePath("../..")
+
+[node name="Left (Controller)" type="Button" parent="ControlsRemap/Left" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Left (Controller D-Pad)" type="Button" parent="ControlsRemap/Left" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 1450.0
+offset_top = 5.0
+offset_right = 1800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_inputMapper = NodePath("../..")
+_bindingType = 2
+
+[node name="Right" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 400.0
+offset_bottom = 400.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Right"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Move Right:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Right (Keyboard)" type="Button" parent="ControlsRemap/Right" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 1
+_inputMapper = NodePath("../..")
+
+[node name="Right (Controller)" type="Button" parent="ControlsRemap/Right" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 1
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Right (Controller D-Pad)" type="Button" parent="ControlsRemap/Right" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 1450.0
+offset_top = 5.0
+offset_right = 1800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 1
+_inputMapper = NodePath("../..")
+_bindingType = 2
+
+[node name="Action" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 500.0
+offset_bottom = 500.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Action"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Action:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Action (Keyboard)" type="Button" parent="ControlsRemap/Action" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 6
+_inputMapper = NodePath("../..")
+
+[node name="Action (Controller)" type="Button" parent="ControlsRemap/Action" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 6
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Run" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 600.0
+offset_bottom = 600.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Run"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Run:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Run (Keyboard)" type="Button" parent="ControlsRemap/Run" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 4
+_inputMapper = NodePath("../..")
+
+[node name="Run (Controller)" type="Button" parent="ControlsRemap/Run" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 4
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Aim" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 700.0
+offset_bottom = 700.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Aim"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Aim:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Aim (Keyboard)" type="Button" parent="ControlsRemap/Aim" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 7
+_inputMapper = NodePath("../..")
+
+[node name="Aim (Controller)" type="Button" parent="ControlsRemap/Aim" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 7
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Inventory" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 800.0
+offset_bottom = 800.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Inventory"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Inventory:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Inventory (Keyboard)" type="Button" parent="ControlsRemap/Inventory" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 5
+_inputMapper = NodePath("../..")
+
+[node name="Inventory (Controller)" type="Button" parent="ControlsRemap/Inventory" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 5
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="Pause" type="Control" parent="ControlsRemap"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 900.0
+offset_bottom = 900.0
+
+[node name="Label" type="Label" parent="ControlsRemap/Pause"]
+layout_mode = 0
+offset_right = 425.0
+offset_bottom = 100.0
+text = "Pause:"
+label_settings = ExtResource("2_5uu45")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pause (Keyboard)" type="Button" parent="ControlsRemap/Pause" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 5.0
+offset_right = 800.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 8
+_inputMapper = NodePath("../..")
+
+[node name="Pause (Controller)" type="Button" parent="ControlsRemap/Pause" node_paths=PackedStringArray("_inputMapper")]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 5.0
+offset_right = 1300.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "AAAAAA"
+text_overrun_behavior = 1
+script = ExtResource("3_3uibi")
+_action = 8
+_inputMapper = NodePath("../..")
+_bindingType = 1
+
+[node name="MenuButtons" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 1450.0
+offset_top = 650.0
+offset_right = 1450.0
+offset_bottom = 650.0
+grow_horizontal = 2
+
+[node name="ResetButton" type="Button" parent="MenuButtons"]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 45
+text = "Reset to Default"
+
+[node name="ExitButton" type="Button" parent="MenuButtons"]
+layout_mode = 0
+offset_top = 125.0
+offset_right = 400.0
+offset_bottom = 325.0
+theme_override_font_sizes/font_size = 100
+text = "Exit"
+
+[connection signal="pressed" from="MenuButtons/ResetButton" to="ControlsRemap" method="ResetToDefaultControls"]

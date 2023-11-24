@@ -107,6 +107,17 @@ public partial class ControlRemapButton : Button
 
 				return $"{stickAndAxisText}{axisDirText}";
 			}
+			else if (lowerText.Contains("action,"))
+			{
+                var startOfButtonText = inputText.IndexOf("(") + 1;
+				var trimmedText = inputText.Substring(startOfButtonText);
+                trimmedText = trimmedText.Substring(0, trimmedText.IndexOf(" "));
+				return $"{trimmedText} Button";
+            }
+			else if (lowerText.Contains("start,"))
+			{
+				return "Start";
+			}
 			else
 			{
 				var startOfButtonText = inputText.IndexOf("(") + 1;
