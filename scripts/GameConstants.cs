@@ -118,4 +118,13 @@ public partial class GameConstants : GodotObject
             public const string HordeModeManager = "/root/root/HordeModeManager";
         }
     }
+
+    public static class Animation
+    {
+        public static class Player
+        {
+            public const string Idle = "parameters/Legs/conditions/idle";
+            public const string Walking = "parameters/Legs/conditions/walking";
+        }
+    }
 }

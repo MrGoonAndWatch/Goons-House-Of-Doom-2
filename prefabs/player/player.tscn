@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://dv4t2p42in77u" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
-[ext_resource type="PackedScene" uid="uid://brhfdv1dqc6ll" path="res://models/person.tscn" id="2_chhtv"]
 [ext_resource type="PackedScene" uid="uid://c3u3gh2hf3vs7" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
 [ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
+[ext_resource type="PackedScene" uid="uid://u8386uexmbla" path="res://models/human_low.tscn" id="6_xcsgj"]
 [ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dadhp"]
@@ -15,8 +15,9 @@ height = 2.1
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
 
-[node name="Player" type="CharacterBody3D" groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree") groups=["player"]]
 script = ExtResource("1_wlo0u")
+_tree = NodePath("human_low/AnimationTree")
 
 [node name="save_game_ui" parent="." instance=ExtResource("2_biyvh")]
 visible = false
@@ -41,8 +42,8 @@ EquipSlot = NodePath("../PlayerInventoryUi/EquippedItem/TextureRect")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
 
-[node name="Person" parent="." instance=ExtResource("2_chhtv")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.952113, 0)
+[node name="human_low" parent="." instance=ExtResource("6_xcsgj")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.96, 0)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)

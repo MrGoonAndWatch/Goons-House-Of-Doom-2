@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://u8386uexmbla"]
+
+[ext_resource type="PackedScene" uid="uid://dtl1xti622d40" path="res://models/human_low.glb" id="1_ngjbo"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_fxwsl"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xqgpn"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tgn0h"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vcsds"]
+advance_mode = 2
+advance_condition = &"walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ijiqj"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_32re7"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_41pl7"]
+states/End/position = Vector2(498, 100)
+states/Idle/node = SubResource("AnimationNodeAnimation_xqgpn")
+states/Idle/position = Vector2(365, 58)
+states/Start/position = Vector2(233, 100)
+states/Walk/node = SubResource("AnimationNodeAnimation_tgn0h")
+states/Walk/position = Vector2(365, 137)
+transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_vcsds"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_ijiqj"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_32re7")]
+graph_offset = Vector2(134, -16)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vsrs6"]
+graph_offset = Vector2(-274.893, -81.1645)
+nodes/GlobalSpeedAdjust/node = SubResource("AnimationNodeTimeScale_fxwsl")
+nodes/GlobalSpeedAdjust/position = Vector2(120, 140)
+nodes/Legs/node = SubResource("AnimationNodeStateMachine_41pl7")
+nodes/Legs/position = Vector2(-40, 20)
+node_connections = [&"output", 0, &"GlobalSpeedAdjust", &"GlobalSpeedAdjust", 0, &"Legs"]
+
+[node name="human_low" instance=ExtResource("1_ngjbo")]
+
+[node name="Skeleton3D" parent="ArmLow" index="0"]
+bones/12/rotation = Quaternion(0.0979958, -0.289406, -0.16221, 0.938258)
+bones/13/rotation = Quaternion(-0.118536, 0.0982626, -0.00322419, 0.98807)
+bones/14/rotation = Quaternion(0.689476, -0.0464448, 0.0114814, 0.722727)
+bones/16/rotation = Quaternion(0.226809, 0.25696, 0.190256, 0.919963)
+bones/17/rotation = Quaternion(-0.182103, -0.0261637, -0.0296313, 0.982485)
+bones/18/rotation = Quaternion(0.720893, 0.0606644, 0.0204051, 0.690085)
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeBlendTree_vsrs6")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/GlobalSpeedAdjust/scale = 3.0
+parameters/Legs/conditions/idle = false
+parameters/Legs/conditions/walking = false

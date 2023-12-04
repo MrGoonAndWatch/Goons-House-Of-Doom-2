@@ -3,8 +3,10 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
+    [Export]
+    private AnimationTree _tree;
 
-	const float SPEED = 50.0f;
+    const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
 	const float BACKWARDS_MODIFIER = 0.5f;
 
@@ -16,6 +18,12 @@ public partial class Player : CharacterBody3D
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 100;
 
     private PlayerStatus _playerStatus;
+
+    public override void _Process(double delta)
+    {
+        if(Input.IsActionJustPressed("pause"))
+            GetTree().Quit();
+    }
 
     public override void _PhysicsProcess(double delta)
     {
@@ -70,9 +78,16 @@ public partial class Player : CharacterBody3D
 
             velocity.X = movement.X;
             velocity.Z = movement.Z;
+
+            _tree.Set(GameConstants.Animation.Player.Idle, false);
+            _tree.Set(GameConstants.Animation.Player.Walking, true);
         }
         else
+        {
             velocity = new Vector3(0, velocity.Y, 0);
+            _tree.Set(GameConstants.Animation.Player.Walking, false);
+            _tree.Set(GameConstants.Animation.Player.Idle, true);
+        }
         return velocity;
     }
 
