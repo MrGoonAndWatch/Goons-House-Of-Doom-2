@@ -39,6 +39,7 @@ public partial class PlayerInventory : Node3D
 
     public bool EquipDirty;
     public bool[] ItemDirty;
+    public bool SyncedWithItemBox;
 
     private PlayerStatus _playerStatus;
     private PlayerItemBoxControl _itemBoxControl;
@@ -119,7 +120,6 @@ public partial class PlayerInventory : Node3D
             ExamineText.Text = "";
             ExamineTexture.Modulate = GameConstants.Colors.Clear;
         }
-        _itemBoxControl.SyncInventory(Items);
         ItemDirty[i] = false;
     }
 

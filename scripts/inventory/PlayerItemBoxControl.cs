@@ -25,11 +25,14 @@ public partial class PlayerItemBoxControl : Node3D
     private int _lastYPress;
     private int _lastXPress;
 
+    private bool _itemBoxCursorDirty;
+
     public override void _Ready()
     {
         ItemBoxCursor.Visible = false;
         _playerStatus = PlayerStatus.GetInstance();
         _playerInventory = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
+        ItemBoxScroll.GetVScrollBar().Modulate = GameConstants.Colors.Clear;
     }
 
     public override void _Process(double delta)
@@ -90,6 +93,12 @@ public partial class PlayerItemBoxControl : Node3D
 
     private void HandleCursorMovement()
     {
+        if (_itemBoxCursorDirty)
+        {
+            UpdateItemBoxCursor();
+            _itemBoxCursorDirty = false;
+        }
+
         var inputDir = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString());
 
         if (_inItemBox)
@@ -100,6 +109,8 @@ public partial class PlayerItemBoxControl : Node3D
 
     private void HandleItemBoxMovement(float inputVal)
     {
+        var oldItemBoxSlot = _currentItemBoxSlot;
+
         if (inputVal < 0 && _lastYPress >= 0)
         {
             _currentItemBoxSlot--;
@@ -116,7 +127,11 @@ public partial class PlayerItemBoxControl : Node3D
         if (inputVal == 0)
             _lastYPress = 0;
 
-        UpdateItemBoxCursor();
+        if (oldItemBoxSlot != _currentItemBoxSlot)
+        {
+            UpdateItemBoxCursor();
+            _itemBoxCursorDirty = true;
+        }
     }
 
     private void HandleInventoryMovement(float xVal, float yVal)
@@ -156,10 +171,11 @@ public partial class PlayerItemBoxControl : Node3D
 
     private void UpdateItemBoxCursor()
     {
+        // HACK: To get scrolling to be smoother towards the top, center on the lesser of 5 slots earlier or pos 0 if that's negative.
+        var targetScrollIndex = Mathf.Max(_currentItemBoxSlot - 5, 0);
+        ItemBoxScroll.ScrollVertical = targetScrollIndex * 100;
+
         ItemBoxCursor.GlobalPosition = ItemBoxItems[_currentItemBoxSlot].GlobalPosition;
-        // TODO: THIS IS BUSTED!!! Need to focus on currently selected slot!
-        //ItemBoxItems[_currentItemBoxSlot].GrabFocus();
-        //ItemBoxScroll.ScrollVertical = (int)(ItemBoxItems[_currentItemBoxSlot].GlobalPosition.Y);
     }
 
     private void UpdateInventoryCursor()
