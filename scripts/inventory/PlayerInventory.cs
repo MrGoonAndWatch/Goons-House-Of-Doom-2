@@ -54,9 +54,7 @@ public partial class PlayerInventory : Node3D
 
         ItemDirty = new bool[6];
         for (var i = 0; i < ItemDirty.Length; i++)
-        {
             ItemDirty[i] = true;
-        }
 
         EquipDirty = true;
     }
@@ -78,6 +76,12 @@ public partial class PlayerInventory : Node3D
         if (_playerStatus.CanOpenMenu() &&
             Input.IsActionJustPressed(GameConstants.Controls.inventory.ToString()))
             ToggleMenu();
+
+        if (!SyncedWithItemBox)
+        {
+            _itemBoxControl.SyncInventory(Items);
+            SyncedWithItemBox = true;
+        }
 
         if (!_playerStatus.MenuOpened)
             return;
@@ -106,6 +110,7 @@ public partial class PlayerInventory : Node3D
 
     public void SyncInventory(ItemSlot[] items)
     {
+        SyncedWithItemBox = true;
         for (var i = 0; i < items.Length && i < Items.Length; i++)
             Items[i].CopyItemSlot(items[i]);
         UpdateEquipUi();
@@ -296,6 +301,7 @@ public partial class PlayerInventory : Node3D
             case GameConstants.MenuActionType.Discard:
                 Items[_currentItemIndex].DiscardItem();
                 ItemDirty[_currentItemIndex] = true;
+                SyncedWithItemBox = false;
                 CloseActionMenu();
                 break;
         }
@@ -323,6 +329,7 @@ public partial class PlayerInventory : Node3D
         Items[itemA].Combine(Items[itemB]);
         ItemDirty[itemA] = true;
         ItemDirty[itemB] = true;
+        SyncedWithItemBox = false;
         _combiningItems = false;
         CloseActionMenu();
     }
@@ -379,6 +386,7 @@ public partial class PlayerInventory : Node3D
                     qty -= qtyToAddToStack;
                     itemSlot.Qty += qtyToAddToStack;
                     ItemDirty[i] = true;
+                    SyncedWithItemBox = false;
                 }
                 i++;
             }
@@ -395,6 +403,7 @@ public partial class PlayerInventory : Node3D
                     itemSlot.Item = item;
                     itemSlot.Qty = qty;
                     ItemDirty[i] = true;
+                    SyncedWithItemBox = false;
                     qty = 0;
                     break;
                 }
@@ -416,14 +425,14 @@ public partial class PlayerInventory : Node3D
         else
             Items[_currentItemIndex].DiscardItem();
         ItemDirty[_currentItemIndex] = true;
+        SyncedWithItemBox = false;
     }
 
     public void RefreshItemUi()
     {
         for (var i = 0; i < ItemDirty.Length; i++)
-        {
             ItemDirty[i] = true;
-        }
+        SyncedWithItemBox = false;
     }
 
     public void ToggleMenu()
