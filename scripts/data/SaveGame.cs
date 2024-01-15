@@ -42,10 +42,10 @@ public partial class SaveGame : Node
 
 	public override void _Process(double delta)
 	{
-         if (Input.IsActionJustPressed("DEBUG_Save"))
-             CreateSaveFile("test_scene2 - 24-01-07_21-45-51.sav");
-         if(Input.IsActionJustPressed("DEBUG_Load"))
-             LoadSaveFile(0);
+         // if (Input.IsActionJustPressed("DEBUG_Save"))
+         //     CreateSaveFile("test_scene2 - 24-01-07_21-45-51.sav");
+         // if(Input.IsActionJustPressed("DEBUG_Load"))
+         //     LoadSaveFile(0);
 
         if (!_menuOpened)
             return;
