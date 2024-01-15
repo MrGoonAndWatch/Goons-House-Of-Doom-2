@@ -16,6 +16,7 @@ public partial class PlayerItemBoxControl : Node3D
     private ScrollContainer ItemBoxScroll;
 
     private PlayerStatus _playerStatus;
+    private PlayerInventory _playerInventory;
     private bool _inItemBox;
 
     private int _currentInventorySlot;
@@ -28,6 +29,7 @@ public partial class PlayerItemBoxControl : Node3D
     {
         ItemBoxCursor.Visible = false;
         _playerStatus = PlayerStatus.GetInstance();
+        _playerInventory = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
     }
 
     public override void _Process(double delta)
@@ -41,6 +43,12 @@ public partial class PlayerItemBoxControl : Node3D
             HandleConfirmPressed();
 
         HandleCursorMovement();
+    }
+
+    public void SyncInventory(ItemSlot[] items)
+    {
+        for(var i = 0; i < items.Length && i < PlayerItems.Length; i++)
+            PlayerItems[i].CopyItemSlot(items[i]);
     }
 
     private void BackToPlayerInventory()
@@ -61,11 +69,17 @@ public partial class PlayerItemBoxControl : Node3D
     {
         if (_inItemBox)
         {
-            var itemBoxItem = ItemBoxItems[_currentItemBoxSlot];
-            ItemBoxItems[_currentItemBoxSlot] = PlayerItems[_currentInventorySlot];
-            PlayerItems[_currentInventorySlot] = itemBoxItem;
-            // TODO: Merge ammo stacks if they're the same ammo type.
+            // If we just swapped the currently equipped weapon in to the item box, unequip it.
+            if(_playerStatus.EquipedWeapon != null && ItemBoxItems[_currentItemBoxSlot].Item != null && 
+                ItemBoxItems[_currentItemBoxSlot].Item.GetInstanceId() == _playerStatus.EquipedWeapon.GetInstanceId())
+            {
+                _playerStatus.EquipWeapon(_playerStatus.EquipedWeapon);
+                _playerInventory.EquipDirty = true;
+            }
+
+            PlayerItems[_currentInventorySlot].SwapItemSlots(ItemBoxItems[_currentItemBoxSlot]);
             BackToPlayerInventory();
+            _playerInventory.SyncInventory(PlayerItems);
         }
         else
         {

@@ -62,6 +62,27 @@ public partial class ItemSlot : Control
         UpdateUi();
     }
 
+    public void SwapItemSlots(ItemSlot other)
+    {
+        // TODO: Merge ammo stacks if they're the same ammo type.
+        var otherItem = other.Item;
+        var otherQty = other.Qty;
+        other.Item = Item;
+        other.Qty = Qty;
+        Item = otherItem;
+        Qty = otherQty;
+
+        other.UpdateUi();
+        UpdateUi();
+    }
+
+    public void CopyItemSlot(ItemSlot other)
+    {
+        Item = other.Item;
+        Qty = other.Qty;
+        UpdateUi();
+    }
+
     public void UpdateUi()
     {
         if (Item == null)

@@ -186,10 +186,10 @@ public partial class DataSaver : Node3D
                 continue;
             }
 
-            GD.Print($"Found Item '{_gameState.Inventory[i].ItemType}' in item box slot {i}");
+            GD.Print($"Found Item '{_gameState.ItemBox[i].ItemType}' in item box slot {i}");
 
-            var item = ItemGenerator.CreateItem(_gameState.Inventory[i].ItemType);
-            playerItemBox.ItemBoxItems[i].InitUi(item, _gameState.Inventory[i].Qty);
+            var item = ItemGenerator.CreateItem(_gameState.ItemBox[i].ItemType);
+            playerItemBox.ItemBoxItems[i].InitUi(item, _gameState.ItemBox[i].Qty);
         }
     }
 

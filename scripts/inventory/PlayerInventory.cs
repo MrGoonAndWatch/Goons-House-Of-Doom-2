@@ -41,12 +41,14 @@ public partial class PlayerInventory : Node3D
     public bool[] ItemDirty;
 
     private PlayerStatus _playerStatus;
+    private PlayerItemBoxControl _itemBoxControl;
 
     private bool _menuEnabled;
 
     public override void _Ready()
     {
         _playerStatus = PlayerStatus.GetInstance();
+        _itemBoxControl = GetNode<PlayerItemBoxControl>(GameConstants.NodePaths.FromSceneRoot.ItemBoxControl);
         MenuPrefab.Visible = false;
 
         ItemDirty = new bool[6];
@@ -101,6 +103,13 @@ public partial class PlayerInventory : Node3D
             HandleBackPressed();
     }
 
+    public void SyncInventory(ItemSlot[] items)
+    {
+        for (var i = 0; i < items.Length && i < Items.Length; i++)
+            Items[i].CopyItemSlot(items[i]);
+        UpdateEquipUi();
+    }
+
     void UpdateItemUi(int i)
     {
         var targetItem = Items[i];
@@ -110,6 +119,7 @@ public partial class PlayerInventory : Node3D
             ExamineText.Text = "";
             ExamineTexture.Modulate = GameConstants.Colors.Clear;
         }
+        _itemBoxControl.SyncInventory(Items);
         ItemDirty[i] = false;
     }
 
