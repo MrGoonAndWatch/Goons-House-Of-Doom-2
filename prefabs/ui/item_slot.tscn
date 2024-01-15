@@ -5,13 +5,14 @@
 [sub_resource type="LabelSettings" id="LabelSettings_cq1dx"]
 font_color = Color(0, 0, 0, 1)
 
-[node name="ItemSlot" type="Control" node_paths=PackedStringArray("ItemSprite")]
+[node name="ItemSlot" type="Control" node_paths=PackedStringArray("ItemSprite", "ItemQtyLabel")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 75.0
 offset_bottom = 75.0
 script = ExtResource("1_87pgj")
 ItemSprite = NodePath("ItemImage")
+ItemQtyLabel = NodePath("Qty")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

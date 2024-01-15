@@ -28,6 +28,7 @@ public partial class PlayerStatus : Node
     public bool Shooting;
     public bool HasSaveUiOpen;
     public bool Paused;
+    public bool ItemBoxOpened;
 
     public List<int> KilledEnemies;
     public List<GlobalEvent> TriggeredEvents;
@@ -47,6 +48,9 @@ public partial class PlayerStatus : Node
 
     public override void _Ready()
     {
+        // TODO: Hard coding this to normal difficulty for now.
+        GameDifficulty = GameDifficulty.Normal;
+
         GD.Print("PlayerStatus _Ready called!");
 
         // TODO: May not need this, can just rely on Godot singleton logic?
@@ -204,6 +208,12 @@ public partial class PlayerStatus : Node
             inv.ToggleMenu();
         }
 
+        if (ItemBoxOpened)
+        {
+            var itemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
+            itemBox.OpenMenu();
+        }
+
         if (Reading)
         {
             // Note: Getting node here instead of _Ready() or something because this is a singleton and we need to recalc this every scene!
@@ -244,26 +254,26 @@ public partial class PlayerStatus : Node
 
     public bool CanPause()
     {
-        return !LockMovement && Health > 0;
+        return !LockMovement && !ItemBoxOpened && Health > 0;
     }
 
     public bool CanOpenMenu()
     {
-        return !Paused && !Reading && Health > 0 && !TakingDamage && !HasSaveUiOpen && !LockMovement;
+        return !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveUiOpen && !LockMovement;
     }
 
     public bool IsMovementPrevented()
     {
-        return Paused || MenuOpened || LockMovement || TakingDamage || Shooting || Reading || HasSaveUiOpen || Health <= 0;
+        return Paused || MenuOpened || ItemBoxOpened || LockMovement || TakingDamage || Shooting || Reading || HasSaveUiOpen || Health <= 0;
     }
 
     public bool CanInteract()
     {
-        return !Paused && !MenuOpened && !Reading && !TakingDamage && !Shooting && Health > 0;
+        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && !Shooting && Health > 0;
     }
 
     public bool CanShoot()
     {
-        return !Paused && !MenuOpened && !Reading && !TakingDamage && Health > 0 && !HasSaveUiOpen && !Reading && !LockMovement;
+        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && Health > 0 && !HasSaveUiOpen && !Reading && !LockMovement;
     }
 }

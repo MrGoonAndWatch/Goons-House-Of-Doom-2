@@ -30,7 +30,8 @@ public partial class DataSaver : Node3D
             DoorsUnlocked = new int[0],
             GrabbedItems = new int[0],
             TriggeredEvents = new int[0],
-            Inventory = null,
+            Inventory = new ItemState[0],
+            ItemBox = new ItemState[0],
             Health = PlayerStatus.MaxHealth,
             SceneLoadData = new SceneLoadData
             {
@@ -47,10 +48,11 @@ public partial class DataSaver : Node3D
         return _gameState;
     }
 
-    public void SaveGameStateFromScene(PlayerStatus playerStatus, PlayerInventory playerInventory, SceneLoadData sceneLoadData)
+    public void SaveGameStateFromScene(PlayerStatus playerStatus, PlayerInventory playerInventory, SceneLoadData sceneLoadData, PlayerItemBoxControl playerItemBox)
     {
         SavePlayerStatus(playerStatus, playerInventory);
         SaveInventory(playerInventory);
+        SaveItemBox(playerItemBox);
         SaveSceneLoadData(sceneLoadData);
     }
 
@@ -87,6 +89,27 @@ public partial class DataSaver : Node3D
         _gameState.Inventory = inventoryData.ToArray();
     }
 
+    private void SaveItemBox(PlayerItemBoxControl playerItemBox)
+    {
+        var itemBoxData = new List<ItemState>();
+        foreach (var itemSlot in playerItemBox.ItemBoxItems)
+        {
+            ItemState itemState;
+            if (itemSlot.Item == null)
+                itemState = new ItemState();
+            else
+                itemState = new ItemState
+                {
+                    ItemType = itemSlot.Item.GetPrefabPath(),
+                    Qty = (itemSlot.Item is Weapon) ? (itemSlot.Item as Weapon).Ammo : itemSlot.Qty,
+                };
+            itemBoxData.Add(itemState);
+        }
+
+        _gameState.ItemBox = itemBoxData.ToArray();
+        GD.Print($"Saved {_gameState.ItemBox.Length} ItemBox items to _gameState...");
+    }
+
     private void SaveSceneLoadData(SceneLoadData sceneLoadData)
     {
         _gameState.SceneLoadData = sceneLoadData;
@@ -97,12 +120,14 @@ public partial class DataSaver : Node3D
         _gameState = data;
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
-        LoadFromGameState(playerStatus, playerInventory);
+        var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
+        LoadFromGameState(playerStatus, playerInventory, playerItemBox);
     }
 
-    public void LoadFromGameState(PlayerStatus playerStatus, PlayerInventory playerInventory)
+    public void LoadFromGameState(PlayerStatus playerStatus, PlayerInventory playerInventory, PlayerItemBoxControl playerItemBox)
     {
-        LoadInventory(playerInventory);
+        LoadInventory(playerInventory, playerItemBox);
+        LoadItemBox(playerItemBox);
         LoadPlayerStatus(playerStatus, playerInventory);
     }
 
@@ -129,29 +154,42 @@ public partial class DataSaver : Node3D
         }
     }
 
-    private void LoadInventory(PlayerInventory playerInventory)
+    private void LoadInventory(PlayerInventory playerInventory, PlayerItemBoxControl playerItemBox)
     {
-        if (_gameState.Inventory == null)
+        if (_gameState.Inventory == null || _gameState.ItemBox == null)
             return;
 
         for (var i = 0; i < playerInventory.Items.Length; i++)
         {
             if (string.IsNullOrEmpty(_gameState.Inventory[i].ItemType))
-                continue;
-
-            playerInventory.Items[i].Item = ItemGenerator.CreateItem(_gameState.Inventory[i].ItemType);
-            playerInventory.Items[i].ItemSprite.Texture = playerInventory.Items[i].Item.MenuIcon;
-            // TODO: Probably don't need this in Godot?
-            //playerInventory.Items[i].ItemSprite.Color = Color.White;
-            if (playerInventory.Items[i].Item is Weapon)
             {
-                (playerInventory.Items[i].Item as Weapon).Ammo = _gameState.Inventory[i].Qty;
-                playerInventory.Items[i].Qty = 1;
+                playerInventory.Items[i].InitUi(null, 0);
+                playerItemBox.PlayerItems[i].InitUi(null, 0);
+                continue;
             }
-            else
-                playerInventory.Items[i].Qty = _gameState.Inventory[i].Qty;
 
+            var item = ItemGenerator.CreateItem(_gameState.Inventory[i].ItemType);
+            playerInventory.Items[i].InitUi(item, _gameState.Inventory[i].Qty);
+            playerItemBox.PlayerItems[i].InitUi(item, _gameState.Inventory[i].Qty);
             playerInventory.ItemDirty[i] = true;
+        }
+    }
+
+    private void LoadItemBox(PlayerItemBoxControl playerItemBox)
+    {
+        //GD.Print($"LoadItemBox for {playerItemBox.ItemBoxItems.Length} slots...");
+        for (var i = 0; i < playerItemBox.ItemBoxItems.Length; i++)
+        {
+            if (string.IsNullOrEmpty(_gameState.ItemBox[i].ItemType))
+            {
+                playerItemBox.ItemBoxItems[i].InitUi(null, 0);
+                continue;
+            }
+
+            GD.Print($"Found Item '{_gameState.Inventory[i].ItemType}' in item box slot {i}");
+
+            var item = ItemGenerator.CreateItem(_gameState.Inventory[i].ItemType);
+            playerItemBox.ItemBoxItems[i].InitUi(item, _gameState.Inventory[i].Qty);
         }
     }
 
@@ -159,6 +197,7 @@ public partial class DataSaver : Node3D
     {
         public SceneLoadData SceneLoadData;
         public ItemState[] Inventory;
+        public ItemState[] ItemBox;
         public int? EquipedWeaponIndex;
         public double Health;
         public int[] DeadEnemies;

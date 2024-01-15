@@ -7,6 +7,7 @@ public abstract partial class Item : Area3D
     [Export]
     public Texture2D MenuIcon;
 
+    public abstract string GetItemName();
     public abstract string GetDescription();
 
     protected const string ItemPrefabFolderPath = "res://prefabs/spawnables/items/";

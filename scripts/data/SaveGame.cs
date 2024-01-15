@@ -42,10 +42,10 @@ public partial class SaveGame : Node
 
 	public override void _Process(double delta)
 	{
-        // if (Input.IsActionJustPressed("DEBUG_Save"))
-        //     CreateSaveFile("test_scene2 - 23-11-05_21-45-51.sav");
-        // if(Input.IsActionJustPressed("DEBUG_Load"))
-        //     LoadSaveFile(0);
+         if (Input.IsActionJustPressed("DEBUG_Save"))
+             CreateSaveFile("test_scene2 - 24-01-07_21-45-51.sav");
+         if(Input.IsActionJustPressed("DEBUG_Load"))
+             LoadSaveFile(0);
 
         if (!_menuOpened)
             return;
@@ -70,6 +70,7 @@ public partial class SaveGame : Node
         var player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
+        var playerItemBox = GetNode<PlayerItemBoxControl>(GameConstants.NodePaths.FromSceneRoot.ItemBoxControl);
         var sceneName = GetTree().CurrentScene.SceneFilePath.Replace(ScenesDirectory, "").Replace(".tscn", "");
         var sceneInfo = new SceneLoadData
         {
@@ -79,7 +80,7 @@ public partial class SaveGame : Node
         };
 
         var saver = DataSaver.GetInstance();
-        saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo);
+        saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo, playerItemBox);
         var data = saver.GetGameState();
 
         var roomStr = sceneName;
@@ -168,7 +169,8 @@ public partial class SaveGame : Node
         //
         //var targetFile = _saveFileSlots[fileSlot];
 
-        var targetFile = "test_scene2 - 23-11-05_22-15-47.sav";
+        // TODO: Load filename from slot # instead of hard coding!!!
+        var targetFile = "test_scene2 - 24-01-08_01-03-42.sav";
         var targetFilePath = $"{SaveDirectoryPath}/{targetFile}";
 
         if (string.IsNullOrEmpty(targetFile) || !FileAccess.FileExists(targetFilePath))

@@ -5,6 +5,8 @@ public partial class ItemSlot : Control
 {
     [Export]
     public TextureRect ItemSprite;
+    [Export]
+    protected Label ItemQtyLabel;
 
     public int Qty;
     public Item Item;
@@ -42,7 +44,38 @@ public partial class ItemSlot : Control
             itemB.Item = comboResult.ItemB;
     }
 
-    public string GetQtyDisplay()
+    public void InitUi(Item item, int qty)
+    {
+        Item = item;
+        if (Item != null)
+        {
+            ItemSprite.Texture = Item.MenuIcon;
+            if (Item is Weapon)
+            {
+                (Item as Weapon).Ammo = qty;
+                Qty = 1;
+            }
+            else
+                Qty = qty;
+        }
+
+        UpdateUi();
+    }
+
+    public void UpdateUi()
+    {
+        if (Item == null)
+            ItemSprite.Modulate = GameConstants.Colors.Clear;
+        else
+        {
+            ItemSprite.Texture = Item.MenuIcon;
+            ItemSprite.Modulate = GameConstants.Colors.White;
+        }
+
+        ItemQtyLabel.Text = GetQtyDisplay();
+    }
+
+    public virtual string GetQtyDisplay()
     {
         if (Item == null)
             return "";

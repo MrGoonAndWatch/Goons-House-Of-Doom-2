@@ -1,0 +1,260 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfttv5cinncf3"]
+
+[ext_resource type="PackedScene" uid="uid://dw7mqryivmawc" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_r4xo4"]
+[ext_resource type="PackedScene" uid="uid://chylejx4q00vi" path="res://prefabs/ui/item_box_slot.tscn" id="2_oxnx2"]
+
+[node name="item_box" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemBoxBg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.52549, 0.521569, 0.447059)
+
+[node name="ItemBoxCursor" type="ColorRect" parent="."]
+layout_mode = 2
+offset_left = 466.0
+offset_top = 50.0
+offset_right = 1426.0
+offset_bottom = 160.0
+color = Color(1, 1, 0, 1)
+
+[node name="ItemSlots" parent="." instance=ExtResource("1_r4xo4")]
+layout_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -479.0
+offset_right = 489.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Spacing" type="Control" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="item_box_slot_1" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_2" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_3" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_4" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_5" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_6" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_7" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_8" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_9" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_10" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_11" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_12" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_13" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_14" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_15" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_16" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_17" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_18" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_19" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_20" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_21" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_22" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_23" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_24" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_25" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_26" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_27" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_28" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_29" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_30" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_31" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_32" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_33" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_34" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_35" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_36" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_37" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_38" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_39" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_40" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_41" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_42" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_43" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_44" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_45" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_46" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_47" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_48" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_49" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="item_box_slot_50" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_oxnx2")]
+layout_mode = 2
+focus_mode = 2
+
+[node name="Spacing2" type="Control" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[editable path="ItemSlots"]

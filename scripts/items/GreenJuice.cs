@@ -3,6 +3,11 @@ using System;
 
 public partial class GreenJuice : Item
 {
+    public override string GetItemName()
+    {
+        return "Green Juice";
+    }
+
     public override string GetDescription()
     {
         return "A special mixture of chemicals that treat injuries almost instantly.";

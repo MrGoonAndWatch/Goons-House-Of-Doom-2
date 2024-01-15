@@ -106,12 +106,20 @@ public partial class GameConstants : GodotObject
         Tertiary
     }
 
+    public const int ItemBoxSize = 50;
+
+    public static class UiLabels
+    {
+        public const string EmptyItemBoxSlotText = "(empty)";
+    }
+
     public static class NodePaths
     {
         public static class FromSceneRoot
         {
             public const string Player = "/root/root/Player";
             public const string PlayerInventory = Player + "/PlayerInventory";
+            public const string ItemBoxControl = Player + "/PlayerItemBoxControl";
             public const string PlayerInteract = Player + "/InteractHitbox";
             public const string InspectTextUi = Player + "/InspectTextUI";
             public const string PlayerStatus = "/root/root/PlayerStatus";

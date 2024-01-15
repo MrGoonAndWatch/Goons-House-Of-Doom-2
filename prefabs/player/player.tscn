@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://b37mrskomqbhs"]
+[gd_scene load_steps=13 format=3 uid="uid://b37mrskomqbhs"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://dv4t2p42in77u" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
 [ext_resource type="PackedScene" uid="uid://c3u3gh2hf3vs7" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
+[ext_resource type="PackedScene" uid="uid://bfttv5cinncf3" path="res://prefabs/ui/item_box.tscn" id="3_iwwv0"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
+[ext_resource type="Script" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
 [ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
 [ext_resource type="PackedScene" uid="uid://u8386uexmbla" path="res://models/human_low.tscn" id="6_xcsgj"]
 [ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
@@ -22,21 +24,32 @@ _tree = NodePath("human_low/AnimationTree")
 [node name="save_game_ui" parent="." instance=ExtResource("2_biyvh")]
 visible = false
 
+[node name="item_box" parent="." instance=ExtResource("3_iwwv0")]
+visible = false
+
 [node name="PlayerInventoryUi" parent="." instance=ExtResource("2_q6hdo")]
 visible = false
 
-[node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemQtys", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
+[node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
 script = ExtResource("4_h7s4o")
 ExamineText = NodePath("../PlayerInventoryUi/ItemDescription/ItemDescriptionLabel")
 ExamineTexture = NodePath("../PlayerInventoryUi/ItemWindow/ItemTextureRect")
 Items = [NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-1"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-2"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-3"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-4"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-5"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-6")]
-ItemQtys = [NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-1/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-2/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-3/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-4/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-5/Qty"), NodePath("../PlayerInventoryUi/ItemSlots/ItemSlot-6/Qty")]
 ItemCursor = NodePath("../PlayerInventoryUi/ItemSlots/ItemCursor")
 MenuActionRoot = NodePath("../PlayerInventoryUi/Actions")
 MenuActions = [NodePath("../PlayerInventoryUi/Actions/Action-Use"), NodePath("../PlayerInventoryUi/Actions/Action-Combine"), NodePath("../PlayerInventoryUi/Actions/Action-Examine"), NodePath("../PlayerInventoryUi/Actions/Action-Discard")]
 ActionCursor = NodePath("../PlayerInventoryUi/Actions/ActionCursor")
 MenuPrefab = NodePath("../PlayerInventoryUi")
 EquipSlot = NodePath("../PlayerInventoryUi/EquippedItem/TextureRect")
+
+[node name="PlayerItemBoxControl" type="Node3D" parent="." node_paths=PackedStringArray("ItemBoxUi", "PlayerItems", "ItemBoxItems", "InventoryCursor", "ItemBoxCursor", "ItemBoxScroll")]
+script = ExtResource("6_aqktm")
+ItemBoxUi = NodePath("../item_box")
+PlayerItems = [NodePath("../item_box/ItemSlots/ItemSlot-1"), NodePath("../item_box/ItemSlots/ItemSlot-2"), NodePath("../item_box/ItemSlots/ItemSlot-3"), NodePath("../item_box/ItemSlots/ItemSlot-4"), NodePath("../item_box/ItemSlots/ItemSlot-5"), NodePath("../item_box/ItemSlots/ItemSlot-6")]
+ItemBoxItems = [NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_1"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_2"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_3"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_4"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_5"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_6"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_7"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_8"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_9"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_10"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_11"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_12"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_13"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_14"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_15"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_16"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_17"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_18"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_19"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_20"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_21"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_22"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_23"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_24"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_25"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_26"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_27"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_28"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_29"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_30"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_31"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_32"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_33"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_34"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_35"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_36"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_37"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_38"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_39"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_40"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_41"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_42"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_43"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_44"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_45"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_46"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_47"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_48"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_49"), NodePath("../item_box/ScrollContainer/VBoxContainer/item_box_slot_50")]
+InventoryCursor = NodePath("../item_box/ItemSlots/ItemCursor")
+ItemBoxCursor = NodePath("../item_box/ItemBoxCursor")
+ItemBoxScroll = NodePath("../item_box/ScrollContainer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
@@ -64,10 +77,6 @@ script = ExtResource("8_0mwpg")
 [connection signal="body_entered" from="InteractHitbox" to="InteractHitbox" method="_OnBodyEntered"]
 [connection signal="body_exited" from="InteractHitbox" to="InteractHitbox" method="_OnBodyExited"]
 
+[editable path="item_box"]
+[editable path="item_box/ItemSlots"]
 [editable path="PlayerInventoryUi"]
-[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-1"]
-[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-2"]
-[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-3"]
-[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-4"]
-[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-5"]
-[editable path="PlayerInventoryUi/ItemSlots/ItemSlot-6"]

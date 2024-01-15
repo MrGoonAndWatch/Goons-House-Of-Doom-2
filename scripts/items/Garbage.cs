@@ -1,5 +1,10 @@
 public partial class Garbage : Item
 {
+    public override string GetItemName()
+    {
+        return "Garbage";
+    }
+
     public override string GetDescription()
     {
         return "It's a useless pile of junk.";

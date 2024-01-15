@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw7mqryivmawc"]
+
+[ext_resource type="PackedScene" uid="uid://dn8w4qmysed00" path="res://prefabs/ui/item_slot.tscn" id="1_i6ay0"]
+
+[node name="ItemSlots" type="Control"]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -321.0
+offset_top = -135.0
+offset_right = -158.0
+offset_bottom = 117.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ItemCursor" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 85.0
+offset_bottom = 85.0
+color = Color(1, 1, 0, 1)
+
+[node name="ItemSlot-1" parent="." instance=ExtResource("1_i6ay0")]
+layout_mode = 0
+
+[node name="ItemSlot-2" parent="." instance=ExtResource("1_i6ay0")]
+layout_mode = 0
+offset_left = 88.0
+offset_right = 163.0
+
+[node name="ItemSlot-3" parent="." instance=ExtResource("1_i6ay0")]
+layout_mode = 0
+offset_top = 88.0
+offset_bottom = 163.0
+
+[node name="ItemSlot-4" parent="." instance=ExtResource("1_i6ay0")]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 88.0
+offset_right = 163.0
+offset_bottom = 163.0
+
+[node name="ItemSlot-5" parent="." instance=ExtResource("1_i6ay0")]
+layout_mode = 0
+offset_top = 177.0
+offset_bottom = 252.0
+
+[node name="ItemSlot-6" parent="." instance=ExtResource("1_i6ay0")]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 177.0
+offset_right = 163.0
+offset_bottom = 252.0

@@ -11,8 +11,6 @@ public partial class PlayerInventory : Node3D
     [Export]
     public ItemSlot[] Items;
     [Export]
-    private Label[] ItemQtys;
-    [Export]
     private Control ItemCursor;
     [Export]
     private Control MenuActionRoot;
@@ -106,19 +104,12 @@ public partial class PlayerInventory : Node3D
     void UpdateItemUi(int i)
     {
         var targetItem = Items[i];
+        targetItem.UpdateUi();
         if (targetItem.Item == null)
         {
             ExamineText.Text = "";
             ExamineTexture.Modulate = GameConstants.Colors.Clear;
-            targetItem.ItemSprite.Modulate = GameConstants.Colors.Clear;
         }
-        else
-        {
-            targetItem.ItemSprite.Texture = targetItem.Item.MenuIcon;
-            targetItem.ItemSprite.Modulate = GameConstants.Colors.White;
-        }
-
-        ItemQtys[i].Text = targetItem.GetQtyDisplay();
         ItemDirty[i] = false;
     }
 

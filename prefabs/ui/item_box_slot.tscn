@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://chylejx4q00vi"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/ItemBoxSlot.cs" id="1_5dgxo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4vof1"]
+font_size = 50
+font_color = Color(0, 0, 0, 1)
+
+[node name="item_box_slot" type="Control" node_paths=PackedStringArray("ItemSprite", "ItemQtyLabel")]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -940.0
+offset_bottom = -900.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_5dgxo")
+ItemSprite = NodePath("ItemBoxSlotImage")
+ItemQtyLabel = NodePath("ItemBoxSlotText")
+
+[node name="ItemBoxBg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemImgBg" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 90.0
+offset_bottom = 89.0
+color = Color(0.462745, 0.462745, 0.462745, 1)
+
+[node name="ItemBoxSlotImage" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 90.0
+offset_bottom = 89.0
+expand_mode = 1
+
+[node name="ItemBoxSlotText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 14.0
+offset_right = 589.0
+offset_bottom = 86.0
+text = "(empty)"
+label_settings = SubResource("LabelSettings_4vof1")

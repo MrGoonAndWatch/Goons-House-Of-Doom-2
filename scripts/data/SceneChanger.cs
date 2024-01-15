@@ -37,7 +37,8 @@ public partial class SceneChanger : Node
     {
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
-        _dataSaver.SaveGameStateFromScene(playerStatus, playerInventory, sceneLoadData);
+        var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
+        _dataSaver.SaveGameStateFromScene(playerStatus, playerInventory, sceneLoadData, playerItemBox);
 
         if (doorScene == DoorLoadType.None)
             FinishSceneLoad();
@@ -66,6 +67,7 @@ public partial class SceneChanger : Node
 
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
-        _dataSaver.LoadFromGameState(playerStatus, playerInventory);
+        var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
+        _dataSaver.LoadFromGameState(playerStatus, playerInventory, playerItemBox);
     }
 }

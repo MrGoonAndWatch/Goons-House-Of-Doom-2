@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpmjgdqcsom45"]
+[gd_scene load_steps=7 format=3 uid="uid://bpmjgdqcsom45"]
 
 [ext_resource type="PackedScene" uid="uid://lndxrv03bc67" path="res://prefabs/scenery/camera_change.tscn" id="1_qpmgo"]
 [ext_resource type="PackedScene" uid="uid://b37mrskomqbhs" path="res://prefabs/player/player.tscn" id="2_paq13"]
 [ext_resource type="MeshLibrary" uid="uid://bwn3cpxcfaeq3" path="res://prefabs/scenery/tiles_mesh_library_3.tres" id="3_tyy1c"]
 [ext_resource type="PackedScene" uid="uid://bvfvy25qajjm1" path="res://prefabs/doors/test_door.tscn" id="4_d00ot"]
 [ext_resource type="PackedScene" uid="uid://d1d2ckrsxnqmp" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_2kp7c"]
+[ext_resource type="PackedScene" uid="uid://b0y5vh31ukcxm" path="res://prefabs/player/item-box.tscn" id="6_cgprx"]
 
 [node name="root" type="Node3D"]
 
@@ -55,5 +56,8 @@ ItemSpawnOnEasy = 2
 ItemSpawnOnNormal = 2
 ItemSpawnOnHard = 1
 ItemSpawnOnImpossible = 1
+
+[node name="item-box" parent="." instance=ExtResource("6_cgprx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29218, -0.310889, -2.11201)
 
 [editable path="test_door"]
