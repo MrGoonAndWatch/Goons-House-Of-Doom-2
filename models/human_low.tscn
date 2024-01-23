@@ -1,6 +1,81 @@
-[gd_scene load_steps=10 format=3 uid="uid://u8386uexmbla"]
+[gd_scene load_steps=28 format=3 uid="uid://u8386uexmbla"]
 
 [ext_resource type="PackedScene" uid="uid://dtl1xti622d40" path="res://models/human_low.glb" id="1_ngjbo"]
+[ext_resource type="Script" path="res://scripts/player/PlayerAnimationEventHandler.cs" id="2_enwue"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_vvjd8"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mgsjl"]
+animation = &"Aim-Pistol"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0fxof"]
+animation = &"Aiming-Pistol"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1yfmr"]
+animation = &"Equip-Pistol"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pcm0y"]
+animation = &"Fire-Pistol"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_txoby"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tsok6"]
+animation = &"Aim-Pistol"
+play_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sn1xc"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5sw78"]
+advance_mode = 2
+advance_condition = &"equipPistol"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6ijfg"]
+advance_mode = 2
+advance_expression = "!get(\"parameters/Arms/conditions/equipPistol\")"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rejqq"]
+advance_mode = 2
+advance_condition = &"aiming"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_x4nif"]
+reset = false
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hcryr"]
+advance_mode = 2
+advance_expression = "!get(\"parameters/Arms/conditions/aiming\")"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qbedh"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fygjl"]
+advance_mode = 2
+advance_condition = &"fire"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qm100"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d7jjl"]
+states/Aim-Pistol/node = SubResource("AnimationNodeAnimation_mgsjl")
+states/Aim-Pistol/position = Vector2(324, 206)
+states/Aiming-Pistol/node = SubResource("AnimationNodeAnimation_0fxof")
+states/Aiming-Pistol/position = Vector2(160, 206)
+states/Equip-Pistol/node = SubResource("AnimationNodeAnimation_1yfmr")
+states/Equip-Pistol/position = Vector2(324, 150)
+states/Fire-Pistol/node = SubResource("AnimationNodeAnimation_pcm0y")
+states/Fire-Pistol/position = Vector2(160, 269.3)
+states/Idle/node = SubResource("AnimationNodeAnimation_txoby")
+states/Idle/position = Vector2(324, 61)
+states/Start/position = Vector2(180, 61)
+states/Un-Aim-Pistol/node = SubResource("AnimationNodeAnimation_tsok6")
+states/Un-Aim-Pistol/position = Vector2(160, 150)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_sn1xc"), "Idle", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_5sw78"), "Equip-Pistol", "Idle", SubResource("AnimationNodeStateMachineTransition_6ijfg"), "Equip-Pistol", "Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_rejqq"), "Un-Aim-Pistol", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_x4nif"), "Aiming-Pistol", "Un-Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_hcryr"), "Aim-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_qbedh"), "Aiming-Pistol", "Fire-Pistol", SubResource("AnimationNodeStateMachineTransition_fygjl"), "Fire-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_qm100")]
+graph_offset = Vector2(-104, 67.6438)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_fxwsl"]
 
@@ -16,7 +91,7 @@ advance_condition = &"walking"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ijiqj"]
 advance_mode = 2
-advance_condition = &"idle"
+advance_expression = "!get(\"parameters/Legs/conditions/walking\")"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_32re7"]
 advance_mode = 2
@@ -32,27 +107,44 @@ transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(134, -16)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vsrs6"]
-graph_offset = Vector2(-274.893, -81.1645)
+graph_offset = Vector2(-340.857, -84.9652)
+nodes/AddArmsLegs/node = SubResource("AnimationNodeAdd2_vvjd8")
+nodes/AddArmsLegs/position = Vector2(120, -40)
+nodes/Arms/node = SubResource("AnimationNodeStateMachine_d7jjl")
+nodes/Arms/position = Vector2(-280, -80)
 nodes/GlobalSpeedAdjust/node = SubResource("AnimationNodeTimeScale_fxwsl")
-nodes/GlobalSpeedAdjust/position = Vector2(120, 140)
+nodes/GlobalSpeedAdjust/position = Vector2(340, 100)
 nodes/Legs/node = SubResource("AnimationNodeStateMachine_41pl7")
-nodes/Legs/position = Vector2(-40, 20)
-node_connections = [&"output", 0, &"GlobalSpeedAdjust", &"GlobalSpeedAdjust", 0, &"Legs"]
+nodes/Legs/position = Vector2(-100, 80)
+nodes/output/position = Vector2(540, 120)
+node_connections = [&"output", 0, &"GlobalSpeedAdjust", &"AddArmsLegs", 0, &"Arms", &"AddArmsLegs", 1, &"Legs", &"GlobalSpeedAdjust", 0, &"AddArmsLegs"]
 
 [node name="human_low" instance=ExtResource("1_ngjbo")]
 
 [node name="Skeleton3D" parent="ArmLow" index="0"]
+bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
+bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
+bones/6/rotation = Quaternion(-0.066972, -0.0447931, 0.00779578, 0.996718)
+bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
+bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
+bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
 bones/12/rotation = Quaternion(0.0979958, -0.289406, -0.16221, 0.938258)
 bones/13/rotation = Quaternion(-0.118536, 0.0982626, -0.00322419, 0.98807)
-bones/14/rotation = Quaternion(0.689476, -0.0464448, 0.0114814, 0.722727)
-bones/16/rotation = Quaternion(0.226809, 0.25696, 0.190256, 0.919963)
-bones/17/rotation = Quaternion(-0.182103, -0.0261637, -0.0296313, 0.982485)
-bones/18/rotation = Quaternion(0.720893, 0.0606644, 0.0204051, 0.690085)
+bones/14/rotation = Quaternion(0.689382, -0.0464481, 0.0114179, 0.722817)
+bones/16/rotation = Quaternion(0.112654, 0.258428, 0.152396, 0.947259)
+bones/17/rotation = Quaternion(-0.118087, -0.0367386, 0.0107796, 0.992265)
+bones/18/rotation = Quaternion(0.689446, 0.0506068, -0.00810963, 0.722522)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 tree_root = SubResource("AnimationNodeBlendTree_vsrs6")
 anim_player = NodePath("../AnimationPlayer")
 active = true
+parameters/AddArmsLegs/add_amount = 1.0
+parameters/Arms/conditions/aiming = false
+parameters/Arms/conditions/equipPistol = false
+parameters/Arms/conditions/fire = false
 parameters/GlobalSpeedAdjust/scale = 3.0
-parameters/Legs/conditions/idle = false
 parameters/Legs/conditions/walking = false
+script = ExtResource("2_enwue")
+
+[connection signal="animation_finished" from="AnimationTree" to="AnimationTree" method="_OnAnimationFinished"]

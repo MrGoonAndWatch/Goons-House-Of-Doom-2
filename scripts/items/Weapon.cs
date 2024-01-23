@@ -22,6 +22,7 @@ public abstract partial class Weapon : Item
     public abstract bool IsHitscan();
     public abstract float GetDamagePerHit();
     public abstract float GetRateOfFire();
+    public abstract string GetEquipAnimationName();
 
     public override bool IsStackable()
     {

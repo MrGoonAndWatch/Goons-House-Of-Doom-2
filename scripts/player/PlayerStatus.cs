@@ -29,6 +29,7 @@ public partial class PlayerStatus : Node
     public bool HasSaveUiOpen;
     public bool Paused;
     public bool ItemBoxOpened;
+    public bool ReadyToShoot;
 
     public List<int> KilledEnemies;
     public List<GlobalEvent> TriggeredEvents;
@@ -227,10 +228,18 @@ public partial class PlayerStatus : Node
 
     public void EquipWeapon(Weapon weapon)
     {
+        var player = GetNode<Player>(NodePaths.FromSceneRoot.Player);
+
         if (EquipedWeapon == weapon)
+        {
+            player.WeaponUnequipped(weapon);
             EquipedWeapon = null;
+        }
         else
+        {
+            player.WeaponEquipped(weapon);
             EquipedWeapon = weapon;
+        }
     
         //var layerIndex = PlayerAnimator.GetLayerIndex(AnimationLayers.Player.EquipLayer);
         var weight = EquipedWeapon == null ? 0 : 1;
@@ -264,16 +273,16 @@ public partial class PlayerStatus : Node
 
     public bool IsMovementPrevented()
     {
-        return Paused || MenuOpened || ItemBoxOpened || LockMovement || TakingDamage || Shooting || Reading || HasSaveUiOpen || Health <= 0;
+        return Paused || MenuOpened || ItemBoxOpened || LockMovement || TakingDamage || Aiming || Shooting || Reading || HasSaveUiOpen || Health <= 0;
     }
 
     public bool CanInteract()
     {
-        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && !Shooting && Health > 0;
+        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && Aiming && !Shooting && Health > 0;
     }
 
     public bool CanShoot()
     {
-        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && Health > 0 && !HasSaveUiOpen && !Reading && !LockMovement;
+        return ReadyToShoot && !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && Health > 0 && !HasSaveUiOpen && !Reading && !LockMovement;
     }
 }

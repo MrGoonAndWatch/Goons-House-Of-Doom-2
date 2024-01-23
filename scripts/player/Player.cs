@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody3D
 {
@@ -19,15 +18,79 @@ public partial class Player : CharacterBody3D
 
     private PlayerStatus _playerStatus;
 
+    public override void _Ready()
+    {
+        _playerStatus = PlayerStatus.GetInstance();
+
+        //_tree.Set(GameConstants.Animation.Player.EquipPistol, true);
+    }
+
     public override void _Process(double delta)
     {
         if(Input.IsActionJustPressed("pause"))
             GetTree().Quit();
+        HandleAiming();
+        HandleShooting();
+    }
+
+    private void HandleAiming()
+    {
+        if (_playerStatus.EquipedWeapon == null) return;
+
+        if (!_playerStatus.Aiming && Input.IsActionPressed(GameConstants.Controls.aim.ToString()))
+        {
+            _playerStatus.Aiming = true;
+            _playerStatus.ReadyToShoot = false;
+            _tree.Set(GameConstants.Animation.Player.Aiming, true);
+        }
+        else if (_playerStatus.Aiming && !Input.IsActionPressed(GameConstants.Controls.aim.ToString()))
+            EndAiming();
+    }
+
+    public void WeaponEquipped(Weapon weapon)
+    {
+        if (weapon == null) return;
+
+        _tree.Set(weapon.GetEquipAnimationName(), true);
+    }
+
+    public void WeaponUnequipped(Weapon weapon)
+    {
+        if (weapon == null) return;
+        EndAiming();
+        _tree.Set(weapon.GetEquipAnimationName(), false);
+    }
+
+    public void OnShootingReady()
+    {
+        _playerStatus.ReadyToShoot = true;
+    }
+
+    private void EndAiming()
+    {
+        _playerStatus.Aiming = false;
+        _tree.Set(GameConstants.Animation.Player.Aiming, false);
+    }
+
+    private void HandleShooting()
+    {
+        if (_playerStatus.CanShoot() && _playerStatus.Aiming && Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
+        {
+            _playerStatus.ReadyToShoot = false;
+            _tree.Set(GameConstants.Animation.Player.Fire, true);
+            // TODO: Calculate what got hit!
+            //_playerStatus.EquipedWeapon.GetDamagePerHit();
+        }
+    }
+
+    public void OnShootingEnded()
+    {
+        _tree.Set(GameConstants.Animation.Player.Fire, false);
+        _playerStatus.ReadyToShoot = true;
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        _playerStatus = PlayerStatus.GetInstance();
         var velocity = Velocity;
 		velocity = ProcessGravity(delta, velocity);
 		velocity = ProcessMovement(delta, velocity);
@@ -45,7 +108,11 @@ public partial class Player : CharacterBody3D
 
     private Vector3 ProcessMovement(double delta, Vector3 velocity)
     {
-        if (_playerStatus.IsMovementPrevented()) return new Vector3(0, velocity.Y, 0);
+        if (_playerStatus.IsMovementPrevented())
+        {
+            _tree.Set(GameConstants.Animation.Player.Walking, false);
+            return new Vector3(0, velocity.Y, 0);
+        }
 
         var input_dir = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString());
 
@@ -79,14 +146,12 @@ public partial class Player : CharacterBody3D
             velocity.X = movement.X;
             velocity.Z = movement.Z;
 
-            _tree.Set(GameConstants.Animation.Player.Idle, false);
             _tree.Set(GameConstants.Animation.Player.Walking, true);
         }
         else
         {
             velocity = new Vector3(0, velocity.Y, 0);
             _tree.Set(GameConstants.Animation.Player.Walking, false);
-            _tree.Set(GameConstants.Animation.Player.Idle, true);
         }
         return velocity;
     }
