@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjqnsvx70quue"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/PauseScreenUi.cs" id="1_8hvdm"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_is7b2"]
+[ext_resource type="PackedScene" uid="uid://bybodg6o4h6ji" path="res://prefabs/ui/options_menu_ui.tscn" id="3_jggi5"]
+
+[node name="pause_ui" type="Control" node_paths=PackedStringArray("PauseMenu", "OptionsMenu", "DefaultPauseMenuFocus", "DefaultOptionsMenuFocus")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8hvdm")
+PauseMenu = NodePath("PauseMenu")
+OptionsMenu = NodePath("OptionsMenu")
+DefaultPauseMenuFocus = NodePath("PauseMenu/Resume Button")
+DefaultOptionsMenuFocus = NodePath("OptionsMenu/VBoxContainer/TotalVolume/TotalVolumeSlider")
+
+[node name="InventoryBg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.443137, 0.886275, 0.447059)
+
+[node name="PauseMenu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resume Button" type="Button" parent="PauseMenu"]
+layout_mode = 2
+theme = ExtResource("1_is7b2")
+text = "Resume"
+
+[node name="spacer" type="Control" parent="PauseMenu"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Options Button" type="Button" parent="PauseMenu"]
+layout_mode = 2
+theme = ExtResource("1_is7b2")
+text = "Options"
+
+[node name="spacer2" type="Control" parent="PauseMenu"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Title Screen Button" type="Button" parent="PauseMenu"]
+layout_mode = 2
+theme = ExtResource("1_is7b2")
+text = " Exit To Title Screen "
+
+[node name="spacer3" type="Control" parent="PauseMenu"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Exit Button" type="Button" parent="PauseMenu"]
+layout_mode = 2
+theme = ExtResource("1_is7b2")
+text = "Exit To Desktop"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("3_jggi5")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="PauseMenu/Resume Button" to="." method="_OnResumePressed"]
+[connection signal="pressed" from="PauseMenu/Options Button" to="." method="_OnOptionsPressed"]
+[connection signal="pressed" from="PauseMenu/Title Screen Button" to="." method="_OnExitToMainMenu"]
+[connection signal="pressed" from="PauseMenu/Exit Button" to="." method="_OnExitToDesktop"]
+
+[editable path="OptionsMenu"]
