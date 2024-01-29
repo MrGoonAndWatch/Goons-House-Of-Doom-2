@@ -278,7 +278,7 @@ public partial class PlayerStatus : Node
 
     public bool CanInteract()
     {
-        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && Aiming && !Shooting && Health > 0;
+        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && !Aiming && !Shooting && Health > 0;
     }
 
     public bool CanShoot()
