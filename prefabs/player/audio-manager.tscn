@@ -8,7 +8,9 @@ _musicPlayer = NodePath("MusicPlayer")
 _playerSfxPlayer = NodePath("AudioStreamPlayer")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
 
 [connection signal="finished" from="MusicPlayer" to="." method="_OnSongFinished"]

@@ -1,9 +1,12 @@
 using Godot;
+using static GameConstants;
 
 public partial class Player : CharacterBody3D
 {
     [Export]
     private AnimationTree _tree;
+    [Export]
+    private PauseScreenUi _pauseScreenUi;
 
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
@@ -18,6 +21,8 @@ public partial class Player : CharacterBody3D
 
     private PlayerStatus _playerStatus;
 
+    private AudioStream _audioStream;
+
     public override void _Ready()
     {
         _playerStatus = PlayerStatus.GetInstance();
@@ -27,8 +32,22 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        if(Input.IsActionJustPressed("pause"))
-            GetTree().Quit();
+        //if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
+        //    GhodAudioManager.PlayPainSound();
+
+        if (Input.IsActionJustPressed(Controls.pause.ToString()))
+        {
+            if (_playerStatus.Paused)
+            {
+                _playerStatus.Paused = _pauseScreenUi.OnPauseMenuClosed();
+            }
+            else
+            {
+                _playerStatus.Paused = true;
+                _pauseScreenUi.OnPauseMenuOpened();
+            }
+        }
+
         HandleAiming();
         HandleShooting();
     }

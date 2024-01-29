@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b37mrskomqbhs"]
+[gd_scene load_steps=14 format=3 uid="uid://b37mrskomqbhs"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://dv4t2p42in77u" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
 [ext_resource type="PackedScene" uid="uid://bfttv5cinncf3" path="res://prefabs/ui/item_box.tscn" id="3_iwwv0"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
+[ext_resource type="PackedScene" uid="uid://bjqnsvx70quue" path="res://prefabs/ui/pause_ui.tscn" id="5_q718m"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
 [ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
 [ext_resource type="PackedScene" uid="uid://u8386uexmbla" path="res://models/human_low.tscn" id="6_xcsgj"]
@@ -17,9 +18,10 @@ height = 2.1
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree", "_pauseScreenUi") groups=["player"]]
 script = ExtResource("1_wlo0u")
 _tree = NodePath("human_low/AnimationTree")
+_pauseScreenUi = NodePath("pause_ui")
 
 [node name="save_game_ui" parent="." instance=ExtResource("2_biyvh")]
 visible = false
@@ -28,6 +30,9 @@ visible = false
 visible = false
 
 [node name="PlayerInventoryUi" parent="." instance=ExtResource("2_q6hdo")]
+visible = false
+
+[node name="pause_ui" parent="." instance=ExtResource("5_q718m")]
 visible = false
 
 [node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
@@ -59,7 +64,7 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.96, 0)
 
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
-bones/6/rotation = Quaternion(-0.355928, -0.23806, 0.0422659, 0.902694)
+bones/6/rotation = Quaternion(-0.360276, -0.240968, 0.0427848, 0.90017)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)

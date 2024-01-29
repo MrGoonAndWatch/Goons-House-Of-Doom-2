@@ -141,6 +141,14 @@ public partial class GameConstants : GodotObject
         }
     }
 
+    public static class AudioBusNames
+    {
+        public const string MasterAudioBusName = "Master";
+        public const string MusicAudioBusName = "Music";
+        public const string SfxAudioBusName = "Sfx";
+        public const string VoiceAudioBusName = "Voice";
+    }
+
     public static class AudioAssetPaths
     {
         private const string AudioPrefabFolderPath = "res://audio/";

@@ -21,6 +21,11 @@ public partial class GhodAudioManager : Node
 	private List<Task> _audioLoadingTasks;
 	private bool _initializedAudio;
 
+    private int _masterBusIndex;
+    private int _musicBusIndex;
+    private int _sfxBusIndex;
+    private int _voiceBusIndex;
+
 	public override void _Ready()
 	{
 		_audioLoadingTasks = new List<Task>();
@@ -36,6 +41,11 @@ public partial class GhodAudioManager : Node
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSong(GameConstants.AudioAssetPaths.ClownSongPath); _clownSong = source; }));
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSong(GameConstants.AudioAssetPaths.CountdownSongPath); _countdownSong = source; }));
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSound(GameConstants.AudioAssetPaths.PainSfxPath); _painSound = source; }));
+
+        _masterBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.MasterAudioBusName);
+        _musicBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.MusicAudioBusName);
+        _sfxBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.SfxAudioBusName);
+        _voiceBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.VoiceAudioBusName);
     }
 
 	public override void _Process(double delta)
@@ -44,7 +54,7 @@ public partial class GhodAudioManager : Node
         {
             //GD.Print("All audio loaded, playing clown song...");
             _musicPlayer.Stream = _countdownSong;
-			//_musicPlayer.Play();
+			_musicPlayer.Play();
             _initializedAudio = true;
         }
 	}
@@ -74,5 +84,54 @@ public partial class GhodAudioManager : Node
 
         _instance._playerSfxPlayer.Stream = _instance._painSound;
         _instance._playerSfxPlayer.Play();
+    }
+
+    public static void ChangeTotalVolume(float newVolume)
+    {
+        if(_instance == null) return;
+
+        var newDbVolume = ConvertToDb(newVolume);
+        MuteOrUnmuteBus(_instance._masterBusIndex, newVolume);
+        AudioServer.SetBusVolumeDb(_instance._masterBusIndex, newDbVolume);
+    }
+
+    public static void ChangeMusicVolume(float newVolume)
+    {
+        if (_instance == null) return;
+
+        var newDbVolume = ConvertToDb(newVolume);
+        MuteOrUnmuteBus(_instance._musicBusIndex, newVolume);
+        AudioServer.SetBusVolumeDb(_instance._musicBusIndex, newDbVolume);
+    }
+
+    public static void ChangeSfxVolume(float newVolume)
+    {
+        if (_instance == null) return;
+
+        var newDbVolume = ConvertToDb(newVolume);
+        MuteOrUnmuteBus(_instance._sfxBusIndex, newVolume);
+        AudioServer.SetBusVolumeDb(_instance._sfxBusIndex, newDbVolume);
+    }
+
+    public static void ChangeVoiceVolume(float newVolume)
+    {
+        if (_instance == null) return;
+
+        var newDbVolume = ConvertToDb(newVolume);
+        MuteOrUnmuteBus(_instance._voiceBusIndex, newVolume);
+        AudioServer.SetBusVolumeDb(_instance._voiceBusIndex, newDbVolume);
+    }
+
+    private static void MuteOrUnmuteBus(int busIndex, float volume)
+    {
+        var disabled = volume <= 0;
+        AudioServer.SetBusMute(busIndex, disabled);
+    }
+
+    private static float ConvertToDb(float sliderValue)
+    {
+        var dbVolume = ((sliderValue / 100) - 1) * 24;
+        //GD.Print($"Converted sliderValue '{sliderValue}' to '{dbVolume}'db");
+        return dbVolume;
     }
 }
