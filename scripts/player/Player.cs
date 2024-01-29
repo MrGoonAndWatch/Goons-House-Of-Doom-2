@@ -32,9 +32,20 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        //if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
-        //    GhodAudioManager.PlayPainSound();
+        //DebugStuff();
+        HandlePauseMenu();
+        HandleAiming();
+        HandleShooting();
+    }
 
+    private void DebugStuff()
+    {
+        if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
+            GhodAudioManager.PlayPainSound();
+    }
+
+    private void HandlePauseMenu()
+    {
         if (Input.IsActionJustPressed(Controls.pause.ToString()))
         {
             if (_playerStatus.Paused)
@@ -47,9 +58,6 @@ public partial class Player : CharacterBody3D
                 _pauseScreenUi.OnPauseMenuOpened();
             }
         }
-
-        HandleAiming();
-        HandleShooting();
     }
 
     private void HandleAiming()
