@@ -59,7 +59,7 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.96, 0)
 
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
-bones/6/rotation = Quaternion(-0.191664, -0.128192, 0.0226673, 0.972789)
+bones/6/rotation = Quaternion(-0.355928, -0.23806, 0.0422659, 0.902694)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)

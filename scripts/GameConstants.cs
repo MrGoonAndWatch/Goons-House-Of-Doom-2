@@ -140,4 +140,16 @@ public partial class GameConstants : GodotObject
             public const string Fire = "parameters/Arms/conditions/fire";
         }
     }
+
+    public static class AudioAssetPaths
+    {
+        private const string AudioPrefabFolderPath = "res://audio/";
+        private const string MusicPrefabFolderPath = $"{AudioPrefabFolderPath}/music";
+        private const string SfxPrefabFolderPath = $"{AudioPrefabFolderPath}/sound";
+
+        public const string CountdownSongPath = $"{MusicPrefabFolderPath}/10MinutesTillBadEnd.wav";
+        public const string ClownSongPath = $"{MusicPrefabFolderPath}/Hall of Confused Clowns.wav";
+
+        public const string PainSfxPath = $"{SfxPrefabFolderPath}/Pain.ogg";
+    }
 }

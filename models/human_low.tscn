@@ -107,7 +107,6 @@ transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(134, -16)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vsrs6"]
-graph_offset = Vector2(-340.857, -84.9652)
 nodes/AddArmsLegs/node = SubResource("AnimationNodeAdd2_vvjd8")
 nodes/AddArmsLegs/position = Vector2(120, -40)
 nodes/Arms/node = SubResource("AnimationNodeStateMachine_d7jjl")
@@ -124,7 +123,7 @@ node_connections = [&"output", 0, &"GlobalSpeedAdjust", &"AddArmsLegs", 0, &"Arm
 [node name="Skeleton3D" parent="ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.066972, -0.0447931, 0.00779578, 0.996718)
+bones/6/rotation = Quaternion(-0.368201, -0.246268, 0.0437305, 0.895471)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)

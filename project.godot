@@ -22,6 +22,7 @@ PlayerStatus="*res://scripts/player/PlayerStatus.cs"
 SceneChanger="*res://scripts/data/SceneChanger.cs"
 ItemGenerator="*res://scripts/data/ItemGenerator.cs"
 LoadGameData="*res://scripts/data/LoadGameData.cs"
+AudioManager="*res://prefabs/player/audio-manager.tscn"
 
 [display]
 
