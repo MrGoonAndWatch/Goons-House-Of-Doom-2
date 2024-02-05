@@ -73,8 +73,8 @@ public partial class PlayerItemBoxControl : Node3D
         if (_inItemBox)
         {
             // If we just swapped the currently equipped weapon in to the item box, unequip it.
-            if(_playerStatus.EquipedWeapon != null && ItemBoxItems[_currentItemBoxSlot].Item != null && 
-                ItemBoxItems[_currentItemBoxSlot].Item.GetInstanceId() == _playerStatus.EquipedWeapon.GetInstanceId())
+            if(_playerStatus.EquipedWeapon != null && PlayerItems[_currentInventorySlot].Item != null &&
+                PlayerItems[_currentInventorySlot].Item.ItemId == _playerStatus.EquipedWeapon.ItemId)
             {
                 _playerStatus.EquipWeapon(_playerStatus.EquipedWeapon);
                 _playerInventory.EquipDirty = true;
