@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhrq513fk5127"]
+
+[ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_6wj0i"]
+[ext_resource type="Script" path="res://scripts/items/Pistol.cs" id="2_q083g"]
+[ext_resource type="Texture2D" uid="uid://bfafhbssgu5il" path="res://textures/Handgun.png" id="3_k17s5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_aoe3o"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j6fhj"]
+
+[node name="pistol" type="Node3D" node_paths=PackedStringArray("Item")]
+script = ExtResource("1_6wj0i")
+Item = NodePath("Item")
+
+[node name="ItemMarker" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_aoe3o")
+
+[node name="Item" type="Area3D" parent="."]
+script = ExtResource("2_q083g")
+MenuIcon = ExtResource("3_k17s5")
+
+[node name="ItemCollisionShape" type="CollisionShape3D" parent="Item"]
+shape = SubResource("BoxShape3D_j6fhj")

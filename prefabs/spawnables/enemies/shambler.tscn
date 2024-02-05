@@ -14,6 +14,7 @@ size = Vector3(3, 3, 2)
 script = ExtResource("1_m8x22")
 Navigation = NodePath("NavigationAgent3D")
 _speed = 1.5
+_maxHp = 5.0
 
 [node name="Model" parent="." instance=ExtResource("1_4inkg")]
 

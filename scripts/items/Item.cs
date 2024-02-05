@@ -21,6 +21,7 @@ public abstract partial class Item : Area3D
 
     public void ForceDestroy()
     {
+        if (this is Weapon) (this as Weapon).AddAmmo(QtyOnPickup);
         GetParent().QueueFree();
     }
 }

@@ -18,10 +18,11 @@ height = 2.1
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree", "_pauseScreenUi") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree", "_pauseScreenUi", "_hitscanRay") groups=["player"]]
 script = ExtResource("1_wlo0u")
 _tree = NodePath("human_low/AnimationTree")
 _pauseScreenUi = NodePath("pause_ui")
+_hitscanRay = NodePath("WeaponHitscan")
 
 [node name="save_game_ui" parent="." instance=ExtResource("2_biyvh")]
 visible = false
@@ -64,7 +65,18 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.96, 0)
 
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
-bones/6/rotation = Quaternion(-0.370201, -0.247606, 0.0439692, 0.894265)
+bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
+bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
+bones/6/rotation = Quaternion(-0.0831348, -0.0556035, 0.00972321, 0.994938)
+bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
+bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
+bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
+bones/12/rotation = Quaternion(0.0979958, -0.289406, -0.16221, 0.938258)
+bones/13/rotation = Quaternion(-0.118536, 0.0982626, -0.00322419, 0.98807)
+bones/14/rotation = Quaternion(0.689382, -0.0464481, 0.0114179, 0.722817)
+bones/16/rotation = Quaternion(0.112654, 0.258428, 0.152396, 0.947259)
+bones/17/rotation = Quaternion(-0.118087, -0.0367386, 0.0107796, 0.992265)
+bones/18/rotation = Quaternion(0.689446, 0.0506068, -0.00810963, 0.722522)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
@@ -79,6 +91,10 @@ script = ExtResource("6_fksfj")
 
 [node name="ProcessGameState" type="Node3D" parent="."]
 script = ExtResource("8_0mwpg")
+
+[node name="WeaponHitscan" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52849, 0, 0)
+target_position = Vector3(1000, 0, 0)
 
 [connection signal="area_entered" from="InteractHitbox" to="InteractHitbox" method="_OnAreaEntered"]
 [connection signal="area_exited" from="InteractHitbox" to="InteractHitbox" method="_OnAreaExited"]

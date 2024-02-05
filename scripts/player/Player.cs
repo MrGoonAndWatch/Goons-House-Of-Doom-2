@@ -7,6 +7,8 @@ public partial class Player : CharacterBody3D
     private AnimationTree _tree;
     [Export]
     private PauseScreenUi _pauseScreenUi;
+    [Export]
+    private RayCast3D _hitscanRay;
 
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
@@ -26,22 +28,14 @@ public partial class Player : CharacterBody3D
     public override void _Ready()
     {
         _playerStatus = PlayerStatus.GetInstance();
-
-        //_tree.Set(GameConstants.Animation.Player.EquipPistol, true);
+        WeaponEquipped(_playerStatus.EquipedWeapon);
     }
 
     public override void _Process(double delta)
     {
-        //DebugStuff();
         HandlePauseMenu();
         HandleAiming();
         HandleShooting();
-    }
-
-    private void DebugStuff()
-    {
-        if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
-            GhodAudioManager.PlayPainSound();
     }
 
     private void HandlePauseMenu()
@@ -64,13 +58,13 @@ public partial class Player : CharacterBody3D
     {
         if (_playerStatus.EquipedWeapon == null) return;
 
-        if (!_playerStatus.Aiming && Input.IsActionPressed(GameConstants.Controls.aim.ToString()))
+        if (!_playerStatus.Aiming && Input.IsActionPressed(Controls.aim.ToString()))
         {
             _playerStatus.Aiming = true;
             _playerStatus.ReadyToShoot = false;
             _tree.Set(GameConstants.Animation.Player.Aiming, true);
         }
-        else if (_playerStatus.Aiming && !Input.IsActionPressed(GameConstants.Controls.aim.ToString()))
+        else if (_playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
             EndAiming();
     }
 
@@ -101,12 +95,47 @@ public partial class Player : CharacterBody3D
 
     private void HandleShooting()
     {
-        if (_playerStatus.CanShoot() && _playerStatus.Aiming && Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
+        if (_playerStatus.CanShoot() && _playerStatus.Aiming && Input.IsActionJustPressed(Controls.confirm.ToString()))
         {
-            _playerStatus.ReadyToShoot = false;
-            _tree.Set(GameConstants.Animation.Player.Fire, true);
-            // TODO: Calculate what got hit!
-            //_playerStatus.EquipedWeapon.GetDamagePerHit();
+            if (_playerStatus.WeaponHasAmmo())
+            {
+                _playerStatus.ReadyToShoot = false;
+                _tree.Set(GameConstants.Animation.Player.Fire, true);
+                _playerStatus.EquipedWeapon.PlaySfx();
+                // NOTE: Can subtract more than 1 here if we need to, probably would need to add another property to the weapon class/implementation.
+                _playerStatus.EquipedWeapon.AddAmmo();
+                var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
+                inv.SetAllDirty();
+                if (_playerStatus.EquipedWeapon.IsHitscan())
+                {
+                    var collider = _hitscanRay.GetCollider();
+                    if(collider is Enemy)
+                    {
+                        (collider as Enemy).TakeDamage(_playerStatus.EquipedWeapon.GetDamagePerHit());
+                    }
+                    //else if(collider is Node)
+                    //{
+                    //    GD.Print($"Didn't hit enemy, hit '{(collider as Node).Name}' instead.");
+                    //}
+                    //else
+                    //{
+                    //    GD.Print($"Hit nothing? Collider==null={collider == null}, collider.type={collider?.GetType()}");
+                    //}
+                }
+                else
+                {
+                    // TODO: Handle knives and other non-hitscan weapons!
+                }
+            }
+            else if (_playerStatus.HasAmmoInInventory())
+            {
+                // TODO: Play reload animation.
+                _playerStatus.AddAmmoToCurrentWeaponFromInventory();
+            }
+            else
+            {
+                // TODO: Play no ammo click.
+            }
         }
     }
 

@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public partial class GreenJuice : Item
 {
     public override string GetItemName()

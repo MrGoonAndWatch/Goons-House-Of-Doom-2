@@ -32,6 +32,14 @@ public partial class ItemSlot : Control
             return;
         }
 
+        var mergedAmmoWithWeapon = false;
+        if (Item is Weapon)
+            mergedAmmoWithWeapon = MergeAmmoInToWeapon(this, itemB);
+        else if (itemB.Item is Weapon)
+            mergedAmmoWithWeapon = MergeAmmoInToWeapon(itemB, this);
+        if(mergedAmmoWithWeapon)
+            return;
+
         var comboResult = Item.Combine(itemB.Item);
         if (comboResult.ItemA == null)
             DiscardItem();
@@ -42,6 +50,30 @@ public partial class ItemSlot : Control
             itemB.DiscardItem();
         else
             itemB.Item = comboResult.ItemB;
+    }
+
+    private static bool MergeAmmoInToWeapon(ItemSlot weapon, ItemSlot other)
+    {
+        var weaponItem = weapon.Item as Weapon;
+        if (other.Item.GetType() != weaponItem.GetAmmoType()) return false;
+
+        if (weaponItem.GetMaxStackSize().HasValue)
+        {
+            var maxAmmoToAdd = weaponItem.GetMaxStackSize().Value - weaponItem.GetAmmo();
+            var actualAmmoAdded = Math.Min(other.Qty, maxAmmoToAdd);
+
+            weaponItem.AddAmmo(actualAmmoAdded);
+            other.Qty -= actualAmmoAdded;
+        }
+        else
+        {
+            weaponItem.AddAmmo(other.Qty);
+            other.Qty = 0;
+        }
+
+        if (other.Qty <= 0) other.DiscardItem();
+
+        return true;
     }
 
     public void InitUi(Item item, int qty)

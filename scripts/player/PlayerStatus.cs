@@ -230,7 +230,7 @@ public partial class PlayerStatus : Node
     {
         var player = GetNode<Player>(NodePaths.FromSceneRoot.Player);
 
-        if (EquipedWeapon == weapon)
+        if (EquipedWeapon != null && EquipedWeapon.ItemId == weapon.ItemId)
         {
             player.WeaponUnequipped(weapon);
             EquipedWeapon = null;
@@ -244,6 +244,12 @@ public partial class PlayerStatus : Node
         //var layerIndex = PlayerAnimator.GetLayerIndex(AnimationLayers.Player.EquipLayer);
         var weight = EquipedWeapon == null ? 0 : 1;
         //PlayerAnimator.SetLayerWeight(layerIndex, weight);
+    }
+
+    public void SetInventoryEquipDirty()
+    {
+        var menu = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
+        menu.EquipDirty = true;
     }
 
     public HealthStatus GetHealthStatus()
@@ -284,5 +290,42 @@ public partial class PlayerStatus : Node
     public bool CanShoot()
     {
         return ReadyToShoot && !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && Health > 0 && !HasSaveUiOpen && !Reading && !LockMovement;
+    }
+
+    public bool WeaponHasAmmo()
+    {
+        return EquipedWeapon != null && EquipedWeapon.GetAmmo() > 0;
+    }
+
+    public bool HasAmmoInInventory()
+    {
+        var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
+        return GetFirstCompatibleAmmoSlot(EquipedWeapon, inv) != null;
+    }
+
+    public void AddAmmoToCurrentWeaponFromInventory()
+    {
+        var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
+        var ammoSlot = GetFirstCompatibleAmmoSlot(EquipedWeapon, inv);
+        if (ammoSlot == null) return;
+
+        foreach(var item in inv.Items)
+            if(item?.Item != null && item.Item.ItemId == EquipedWeapon.ItemId)
+                item.Combine(ammoSlot);
+        inv.SetAllDirty();
+    }
+
+    private static ItemSlot GetFirstCompatibleAmmoSlot(Weapon weapon, PlayerInventory inv)
+    {
+        if (weapon == null) return null;
+
+        var ammoType = weapon.GetAmmoType();
+        foreach (var item in inv.Items)
+        {
+            if (item?.Item != null && item.Item.GetType() == ammoType)
+                return item;
+        }
+
+        return null;
     }
 }

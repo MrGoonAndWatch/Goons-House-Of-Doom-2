@@ -12,6 +12,9 @@ public abstract partial class Enemy : CharacterBody3D
     private float _acceleration = 10.0f;
     [Export]
     private float _damage = 20.0f;
+    [Export]
+    public float _maxHp = 1.0f;
+    private float _currentHp;
 
     protected bool _isAttacking;
     private bool _hitPlayerThisAttack;
@@ -24,6 +27,7 @@ public abstract partial class Enemy : CharacterBody3D
 
     public override void _Ready()
 	{
+        _currentHp = _maxHp;
         _player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
     }
 
@@ -86,6 +90,13 @@ public abstract partial class Enemy : CharacterBody3D
         {
             _touchingPlayer = false;
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _currentHp -= damage;
+        if (_currentHp < 0)
+            ForceDead();
     }
 
     // TODO: Improve this! Also move other stuff in from DamageHandler.

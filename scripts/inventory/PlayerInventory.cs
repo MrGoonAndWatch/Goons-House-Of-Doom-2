@@ -108,6 +108,12 @@ public partial class PlayerInventory : Node3D
             HandleBackPressed();
     }
 
+    public void SetAllDirty()
+    {
+        for (var i = 0; i < ItemDirty.Length; i++)
+            ItemDirty[i] = true;
+    }
+
     public void SyncInventory(ItemSlot[] items)
     {
         SyncedWithItemBox = true;
@@ -355,7 +361,7 @@ public partial class PlayerInventory : Node3D
             {
                 if (Items[_currentItemIndex].Item is Weapon)
                 {
-                    if (_playerStatus.EquipedWeapon == null || _playerStatus.EquipedWeapon.GetInstanceId() != Items[_currentItemIndex].Item.GetInstanceId())
+                    if (_playerStatus.EquipedWeapon == null || _playerStatus.EquipedWeapon.ItemId != Items[_currentItemIndex].Item.ItemId)
                         menuAction.Textbox.Text = "EQUIP";
                     else
                         menuAction.Textbox.Text = "UNEQUIP";

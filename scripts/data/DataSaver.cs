@@ -65,7 +65,7 @@ public partial class DataSaver : Node3D
         _gameState.TriggeredEvents = _gameState.TriggeredEvents.Union(playerStatus.TriggeredEvents.Select(e => (int)e)).Distinct().ToArray();
         if (playerStatus.EquipedWeapon != null)
             for (var i = 0; i < playerInventory.Items.Length; i++)
-                if (playerInventory.Items[i].Item != null && playerStatus.EquipedWeapon.GetInstanceId() == playerInventory.Items[i].Item.GetInstanceId())
+                if (playerInventory.Items[i].Item != null && playerStatus.EquipedWeapon.ItemId == playerInventory.Items[i].Item.ItemId)
                     _gameState.EquipedWeaponIndex = i;
     }
 

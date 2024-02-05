@@ -67,7 +67,9 @@ public partial class GameConstants : GodotObject
     public enum ItemSpawnType
     {
         None = 1,
-        GreenJuice = 2
+        GreenJuice = 2,
+        Pistol = 3,
+        PistolAmmo = 4,
     }
 
     private const string EnemyPrefabFolder = "res://prefabs/spawnables/enemies/";
@@ -84,6 +86,8 @@ public partial class GameConstants : GodotObject
     public static Dictionary<ItemSpawnType, string> ItemPrefabLookup = new Dictionary<ItemSpawnType, string>()
     {
         {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
+        {ItemSpawnType.Pistol, $"{ItemPrefabFolderPath}/pistol.tscn"},
+        {ItemSpawnType.PistolAmmo, $"{ItemPrefabFolderPath}/pistol-ammo.tscn"},
     };
 
     public enum Controls

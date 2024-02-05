@@ -1,3 +1,5 @@
+using System;
+
 public abstract partial class Weapon : Item
 {
     public int Ammo;
@@ -12,34 +14,28 @@ public abstract partial class Weapon : Item
         return IsUnlimited() ? 1 : Ammo;
     }
 
-    public void DecreaseAmmo(int amount = 1)
+    public void AddAmmo(int amount = -1)
     {
         if (IsUnlimited()) return;
-        Ammo -= amount;
+        Ammo += amount;
     }
 
     public abstract void PlaySfx();
     public abstract bool IsHitscan();
     public abstract float GetDamagePerHit();
-    public abstract float GetRateOfFire();
     public abstract string GetEquipAnimationName();
+    public abstract Type GetAmmoType();
 
     public override bool IsStackable()
     {
         return false;
     }
 
-    public override int? GetMaxStackSize()
-    {
-        return null;
-    }
-
     public override bool UseItem()
     {
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.EquipWeapon(this);
-        var menu = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
-        menu.EquipDirty = true;
+        playerStatus.SetInventoryEquipDirty();
         return false;
     }
 

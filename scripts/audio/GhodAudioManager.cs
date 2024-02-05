@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,8 +11,9 @@ public partial class GhodAudioManager : Node
     private AudioStreamPlayer _playerSfxPlayer;
 
     private AudioStream _painSound;
+    private AudioStream _pistolShotSound;
 
-	private AudioStreamWav _clownSong;
+    private AudioStreamWav _clownSong;
     private AudioStreamWav _countdownSong;
 
     private static GhodAudioManager _instance;
@@ -41,6 +41,7 @@ public partial class GhodAudioManager : Node
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSong(GameConstants.AudioAssetPaths.ClownSongPath); _clownSong = source; }));
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSong(GameConstants.AudioAssetPaths.CountdownSongPath); _countdownSong = source; }));
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSound(GameConstants.AudioAssetPaths.PainSfxPath); _painSound = source; }));
+        _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSound(GameConstants.AudioAssetPaths.PainSfxPath); _pistolShotSound = source; }));
 
         _masterBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.MasterAudioBusName);
         _musicBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.MusicAudioBusName);
@@ -54,7 +55,7 @@ public partial class GhodAudioManager : Node
         {
             //GD.Print("All audio loaded, playing clown song...");
             _musicPlayer.Stream = _countdownSong;
-			_musicPlayer.Play();
+			//_musicPlayer.Play();
             _initializedAudio = true;
         }
 	}
@@ -79,11 +80,25 @@ public partial class GhodAudioManager : Node
 
     public static void PlayPainSound()
     {
-        if (_instance == null || !_instance._initializedAudio)
-            return;
+        PlayOneShotOnPlayer(_instance?._painSound);
+    }
 
-        _instance._playerSfxPlayer.Stream = _instance._painSound;
-        _instance._playerSfxPlayer.Play();
+    public static void PlayPistolFired()
+    {
+        PlayOneShotOnPlayer(_instance?._pistolShotSound);
+    }
+
+    private static void PlayOneShotOnPlayer(AudioStream sound)
+    {
+        PlayOneShotSound(_instance._playerSfxPlayer, sound);
+    }
+
+    private static void PlayOneShotSound(AudioStreamPlayer player, AudioStream sound)
+    {
+        if (!(_instance?._initializedAudio ?? false) || player == null || sound == null) return;
+
+        player.Stream = sound;
+        player.Play();
     }
 
     public static void ChangeTotalVolume(float newVolume)

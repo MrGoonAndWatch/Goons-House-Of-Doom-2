@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4lf53ri386mt"]
+
+[ext_resource type="Script" path="res://scripts/items/PistolAmmo.cs" id="1_c41hb"]
+[ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_cj08w"]
+[ext_resource type="Texture2D" uid="uid://c5gd34yyyxp7g" path="res://textures/PistolAmmo.png" id="3_wurg5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_gv3go"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1pej6"]
+
+[node name="pistol-ammo" type="Node3D" node_paths=PackedStringArray("Item")]
+script = ExtResource("1_cj08w")
+Item = NodePath("Item")
+
+[node name="ItemMarker" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_gv3go")
+
+[node name="Item" type="Area3D" parent="."]
+script = ExtResource("1_c41hb")
+MenuIcon = ExtResource("3_wurg5")
+
+[node name="ItemCollisionShape" type="CollisionShape3D" parent="Item"]
+shape = SubResource("BoxShape3D_1pej6")
