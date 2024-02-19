@@ -7,7 +7,7 @@ public partial class InspectTextUi : Node
 {
     private PlayerStatus _playerStatus;
     [Export]
-    private Node2D DescriptiveText;
+    private Control DescriptiveText;
     [Export]
     private Label TextBox;
 
@@ -19,7 +19,8 @@ public partial class InspectTextUi : Node
     private Action _onChoiceConfirmed;
     private bool _justMovedChoice;
 
-    public float AdvanceTextCooldown;
+    [Export]
+    private float AdvanceTextCooldown;
     private double _advanceTextCooldownRemaining = 0.0;
 
     private bool _queuedText = false;
@@ -29,8 +30,7 @@ public partial class InspectTextUi : Node
 
     public override void _Ready()
     {
-        // TODO: Set once available...
-        //DescriptiveText.Visible = false;
+        DescriptiveText.Visible = false;
         _playerStatus = PlayerStatus.GetInstance();
     }
 
@@ -85,6 +85,8 @@ public partial class InspectTextUi : Node
 
     private void AdvanceText()
     {
+        GD.Print("AdvanceText called");
+
         _advanceTextCooldownRemaining = AdvanceTextCooldown;
         if (_currentLineIndex >= _currentLines.Length)
         {

@@ -49,7 +49,7 @@ public partial class Door : Node3D
             };
             sceneChanger.ChangeScene(sceneChangeInfo, DoorLoadType);
         }
-        else if (LockedText.Any())
+        else if (LockedText?.Any() ?? false)
             _textReader.ReadText(LockedText);
     }
 
@@ -61,7 +61,7 @@ public partial class Door : Node3D
         _unlocked = true;
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.UnlockDoor(DoorId);
-        if (UnlockText.Any())
+        if (UnlockText?.Any() ?? false)
             _textReader.ReadText(UnlockText);
     }
 

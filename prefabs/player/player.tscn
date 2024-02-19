@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b37mrskomqbhs"]
+[gd_scene load_steps=16 format=3 uid="uid://b37mrskomqbhs"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://dv4t2p42in77u" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -8,9 +8,14 @@
 [ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
 [ext_resource type="PackedScene" uid="uid://bjqnsvx70quue" path="res://prefabs/ui/pause_ui.tscn" id="5_q718m"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
+[ext_resource type="FontFile" uid="uid://qoog8jprg8ka" path="res://prefabs/ui/ui_font.tres" id="6_f4pxk"]
 [ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
 [ext_resource type="PackedScene" uid="uid://u8386uexmbla" path="res://models/human_low.tscn" id="6_xcsgj"]
 [ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2prw7"]
+font = ExtResource("6_f4pxk")
+font_size = 34
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dadhp"]
 height = 2.1
@@ -35,6 +40,48 @@ visible = false
 
 [node name="pause_ui" parent="." instance=ExtResource("5_q718m")]
 visible = false
+
+[node name="descriptive_text" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="descriptive_text_container" type="Control" parent="descriptive_text"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -80.0
+offset_right = 500.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="descriptive_text_bg" type="ColorRect" parent="descriptive_text/descriptive_text_container"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+color = Color(0.145098, 0.145098, 0.145098, 0.521569)
+
+[node name="descriptive_text_label" type="Label" parent="descriptive_text/descriptive_text_container"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 36.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_2prw7")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
 
 [node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
 script = ExtResource("4_h7s4o")
@@ -67,7 +114,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.0831348, -0.0556035, 0.00972321, 0.994938)
+bones/6/rotation = Quaternion(-0.14518, -0.0971021, 0.0171229, 0.98448)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
@@ -86,8 +133,11 @@ _inventory = NodePath("../PlayerInventory")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractHitbox"]
 shape = SubResource("BoxShape3D_mv370")
 
-[node name="InspectTextUI" type="Node3D" parent="."]
+[node name="InspectTextUI" type="Node3D" parent="." node_paths=PackedStringArray("DescriptiveText", "TextBox")]
 script = ExtResource("6_fksfj")
+DescriptiveText = NodePath("../descriptive_text")
+TextBox = NodePath("../descriptive_text/descriptive_text_container/descriptive_text_label")
+AdvanceTextCooldown = 0.1
 
 [node name="ProcessGameState" type="Node3D" parent="."]
 script = ExtResource("8_0mwpg")

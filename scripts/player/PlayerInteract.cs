@@ -108,7 +108,7 @@ public partial class PlayerInteract : Node
         _touchingItems.RemoveAll(i => i.GetInstanceId() == item.GetInstanceId());
     }
 
-    public void Use(Key key)
+    public void UseKey(Key key)
     {
         if (_collidedSimpleLocks.Any())
             _collidedSimpleLocks.First().Unlock(key);

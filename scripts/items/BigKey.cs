@@ -14,7 +14,7 @@ public partial class BigKey : Key
 
     public override string GetPrefabPath()
     {
-        return ItemPrefabFolderPath + "BigKey.tscn";
+        return ItemPrefabFolderPath + "big-key.tscn";
     }
 
     public override KeyType GetKeyType()

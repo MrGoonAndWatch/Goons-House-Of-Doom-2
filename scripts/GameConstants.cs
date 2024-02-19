@@ -70,6 +70,7 @@ public partial class GameConstants : GodotObject
         GreenJuice = 2,
         Pistol = 3,
         PistolAmmo = 4,
+        BigKey = 5,
     }
 
     private const string EnemyPrefabFolder = "res://prefabs/spawnables/enemies/";
@@ -88,6 +89,7 @@ public partial class GameConstants : GodotObject
         {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
         {ItemSpawnType.Pistol, $"{ItemPrefabFolderPath}/pistol.tscn"},
         {ItemSpawnType.PistolAmmo, $"{ItemPrefabFolderPath}/pistol-ammo.tscn"},
+        {ItemSpawnType.BigKey, $"{ItemPrefabFolderPath}/big-key.tscn" },
     };
 
     public enum Controls

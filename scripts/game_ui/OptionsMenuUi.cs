@@ -20,10 +20,10 @@ public partial class OptionsMenuUi : Control
     public override void _Ready()
     {
         SaveCurrentValues();
-        GhodAudioManager.ChangeTotalVolume(_originalTotalVolume);
-        GhodAudioManager.ChangeMusicVolume(_originalMusicVolume);
-        GhodAudioManager.ChangeSfxVolume(_originalSfxVolume);
-        GhodAudioManager.ChangeVoiceVolume(_originalVoiceVolume);
+        //GhodAudioManager.ChangeTotalVolume(_originalTotalVolume);
+        //GhodAudioManager.ChangeMusicVolume(_originalMusicVolume);
+        //GhodAudioManager.ChangeSfxVolume(_originalSfxVolume);
+        //GhodAudioManager.ChangeVoiceVolume(_originalVoiceVolume);
     }
 
     public void _OnTotalVolumeChanged(float newVolume)

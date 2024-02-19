@@ -86,3 +86,13 @@ ItemSpawnOnEasy = 3
 ItemSpawnOnNormal = 3
 ItemSpawnOnHard = 3
 ItemSpawnOnImpossible = 3
+
+[node name="test_door2" parent="." instance=ExtResource("4_iqgm1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.92697, 0, 1.84189)
+
+[node name="DoorBody" parent="test_door2" index="1"]
+LockedText = PackedStringArray("It\'s locked with a big keyhole.")
+UnlockText = PackedStringArray("You unlocked the door.")
+LocksWith = 1
+
+[editable path="test_door2"]

@@ -328,4 +328,10 @@ public partial class PlayerStatus : Node
 
         return null;
     }
+
+    public void UseKey(Key key)
+    {
+        var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
+        playerInteract.UseKey(key);
+    }
 }

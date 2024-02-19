@@ -4,7 +4,7 @@ public abstract partial class Key : Item
 {
     private PlayerInteract _useKey;
 
-    void Start()
+    public override void _Ready()
     {
         _useKey = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
     }
@@ -23,10 +23,9 @@ public abstract partial class Key : Item
 
     public override bool UseItem()
     {
-        // HACK: when key is created by DataSaver Start() is not called and this doesn't get properly initialized.
-        if (_useKey == null)
-            _useKey = _useKey = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
-        _useKey.Use(this);
+        // HACK: due to the items not existing in scene when loading between rooms we need to call a persistent object to retrieve nodes in the scene, thus we're delagating this call off to PlayerStatus.
+        var playerStatus = PlayerStatus.GetInstance();
+        playerStatus.UseKey(this);
         return false;
     }
 

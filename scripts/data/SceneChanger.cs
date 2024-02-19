@@ -43,13 +43,13 @@ public partial class SceneChanger : Node
         if (doorScene == DoorLoadType.None)
             FinishSceneLoad();
         else
-            GetTree().ChangeSceneToFile($"res://scenes/doors/{doorScene}.tscn");
+            GetTree().ChangeSceneToFile($"res://scenes/door_loads/{doorScene}.tscn");
 
         var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
         playerInteract.ResetState();
     }
 
-    private void FinishSceneLoad()
+    public void FinishSceneLoad()
     {
         var sceneLoadData = _dataSaver.GetSceneLoadData();
         _loadScene = true;
