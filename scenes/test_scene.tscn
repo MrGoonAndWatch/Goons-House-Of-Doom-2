@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://vrh82cg0vlit"]
+[gd_scene load_steps=10 format=3 uid="uid://vrh82cg0vlit"]
 
 [ext_resource type="PackedScene" uid="uid://b37mrskomqbhs" path="res://prefabs/player/player.tscn" id="2_m2n1s"]
 [ext_resource type="PackedScene" uid="uid://lndxrv03bc67" path="res://prefabs/scenery/camera_change.tscn" id="3_yjef3"]
@@ -6,11 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://bvfvy25qajjm1" path="res://prefabs/doors/test_door.tscn" id="4_iqgm1"]
 [ext_resource type="PackedScene" uid="uid://b11ys8ttn3wit" path="res://prefabs/spawnables/enemies/enemy-spawn-point.tscn" id="5_qo12u"]
 [ext_resource type="PackedScene" uid="uid://d1d2ckrsxnqmp" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_buisc"]
+[ext_resource type="Script" path="res://scripts/puzzles/PassCode.cs" id="7_b7b8e"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_umokm"]
 vertices = PackedVector3Array(-5.5, -0.5, -3.25, -3.5, -0.5, -3.25, -3.25, -0.5, -4.5, -5.5, -0.5, -7.5, 2.5, -0.5, -4.5, 2.75, -0.5, -3.5, 5.5, -0.5, -3.5, 5.5, -0.5, -7.5, 2.5, -0.5, -4.5, 5.5, -0.5, -7.5, -5.5, -0.5, -7.5, -3.25, -0.5, -4.5, -3.25, -0.5, -2.25, -3.5, -0.5, -3.25, -5.5, -0.5, -3.25, -5.5, -0.5, 1.5, 5.5, -0.5, -3.5, 2.75, -0.5, -3.5, 2.25, -0.5, -2.25, 5.5, -0.5, 1.5, -5.5, -0.5, 1.5, 5.5, -0.5, 1.5, 2.25, -0.5, -2.25, -3.25, -0.5, -2.25)
 polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(23, 22, 20), PackedInt32Array(20, 22, 21)]
 agent_max_slope = 47.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_srbyp"]
+size = Vector3(2, 2, 2)
 
 [node name="root" type="Node3D"]
 
@@ -95,4 +99,28 @@ LockedText = PackedStringArray("It\'s locked with a big keyhole.")
 UnlockText = PackedStringArray("You unlocked the door.")
 LocksWith = 1
 
+[node name="test-code-input" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96954, 0, 0.906012)
+
+[node name="Area3D" type="StaticBody3D" parent="test-code-input"]
+script = ExtResource("7_b7b8e")
+PassCodeType = 1
+InspectText = PackedStringArray("You come across a keypad", "with four digits", "enter code")
+NumberOfDigits = 4
+SetEventOnUnlock = 1
+OnUnlockSuccessText = PackedStringArray("The code was accepted!")
+OnUnlockFailText = PackedStringArray("Wrong Code", "Dumbass")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="test-code-input/Area3D"]
+shape = SubResource("BoxShape3D_srbyp")
+
+[node name="test_door3" parent="." instance=ExtResource("4_iqgm1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33654, 0, 1.84189)
+
+[node name="DoorBody" parent="test_door3" index="1"]
+LockedText = PackedStringArray("It\'s locked", "By some mysterious force")
+UnlockText = PackedStringArray("You unlocked the door.")
+UnlocksOnEvent = 1
+
 [editable path="test_door2"]
+[editable path="test_door3"]

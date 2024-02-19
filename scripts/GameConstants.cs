@@ -53,6 +53,7 @@ public partial class GameConstants : GodotObject
     public enum GlobalEvent
     {
         None = 0,
+        TestKeypadUnlocked = 1,
     }
 
     // Note: These are powers of 2 to allow the randomizer settings to use a singular field to store which of these are enabled.
@@ -111,6 +112,28 @@ public partial class GameConstants : GodotObject
         Secondary,
         Tertiary
     }
+
+    public enum PassCodeType
+    {
+        Invalid = 0,
+        TestCode = 1,
+    }
+
+    public static Dictionary<GameDifficulty, Dictionary<PassCodeType, string>> PassCodeLookup = new()
+    {
+        { GameDifficulty.Easy, new Dictionary<PassCodeType, string> {
+            {PassCodeType.TestCode, "1234" }
+        } },
+        { GameDifficulty.Normal, new Dictionary<PassCodeType, string> {
+            {PassCodeType.TestCode, "4321" }
+        } },
+        { GameDifficulty.Hard, new Dictionary<PassCodeType, string> {
+            {PassCodeType.TestCode, "1111" }
+        } },
+        { GameDifficulty.Impossible, new Dictionary<PassCodeType, string> {
+            {PassCodeType.TestCode, "9999" }
+        } },
+    };
 
     public const int ItemBoxSize = 50;
 

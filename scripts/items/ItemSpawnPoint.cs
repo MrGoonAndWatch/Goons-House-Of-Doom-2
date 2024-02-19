@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 using static GameConstants;
 
 public partial class ItemSpawnPoint : Node3D
@@ -23,7 +24,7 @@ public partial class ItemSpawnPoint : Node3D
         if (playerStatus.GrabbedItems.Contains(ItemId)) return;
 
         ItemSpawnType itemSpawnType;
-        switch (playerStatus.GameDifficulty)
+        switch (playerStatus.GameSettings.GameDifficulty)
         {
             case GameDifficulty.Easy:
                 itemSpawnType = ItemSpawnOnEasy;
@@ -40,10 +41,10 @@ public partial class ItemSpawnPoint : Node3D
                 break;
         }
 
-        if(playerStatus.RandomizerEnabled && playerStatus.RandomizerSeed.RandomizedItems.ContainsKey(ItemId))
+        if(playerStatus.GameSettings.IsRandomized && playerStatus.GameSettings.RandomizerSeed.RandomizedItems.ContainsKey(ItemId))
         {
-            if (itemSpawnType != ItemSpawnType.None || playerStatus.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
-                itemSpawnType = playerStatus.RandomizerSeed.RandomizedItems[ItemId];
+            if (itemSpawnType != ItemSpawnType.None || playerStatus.GameSettings.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
+                itemSpawnType = playerStatus.GameSettings.RandomizerSeed.RandomizedItems[ItemId];
         }
 
         if (itemSpawnType != ItemSpawnType.None)

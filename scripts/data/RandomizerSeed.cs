@@ -53,10 +53,12 @@ public class RandomizerSeed
     {
         RandomizedEnemies = new Dictionary<int, GameConstants.EnemySpawnType>();
         RandomizedItems = new Dictionary<int, GameConstants.ItemSpawnType>();
+        PassCodeLookup = new Dictionary<GameConstants.PassCodeType, string>();
     }
 
     public Dictionary<int, GameConstants.EnemySpawnType> RandomizedEnemies;
     public Dictionary<int, GameConstants.ItemSpawnType> RandomizedItems;
+    public Dictionary<GameConstants.PassCodeType, string> PassCodeLookup;
     public bool AllowSpawnsOnEmptyEnemySlotsForDifficulty;
     public bool AllowSpawnsOnEmptyItemSlotsForDifficulty;
 }

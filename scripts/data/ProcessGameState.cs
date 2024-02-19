@@ -18,12 +18,12 @@ public partial class ProcessGameState : Node3D
         var enemies = FindObjectsOfType<Enemy>();
         var doors = FindObjectsOfType<Door>();
         var items = FindObjectsOfType<Item>();
-        // var inspectables = FindObjectsOfType<Inspectable>();
+        var passCodes = FindObjectsOfType<PassCode>();
         GD.Print($"Found {enemies.Count} enemies, {doors.Count} doors, {items.Count} items.");
 
         DestroyPreviouslyKilledEnemies(gameState, enemies);
         UnlockPreviouslyUnlockedDoors(gameState, doors);
-        // ProcessPreviouslyTriggeredEvent(gameState, doors, inspectables);
+        ProcessPreviouslyTriggeredEvent(gameState.TriggeredEvents, doors, passCodes);
         DeletePreviouslyPickedUpItems(gameState, items);
     }
 
@@ -57,33 +57,35 @@ public partial class ProcessGameState : Node3D
         }
     }
 
-    // TODO: Reimplement this!!!
-    // private static void ProcessPreviouslyTriggeredEvent(DataSaver.GameState gameState, Door[] doors, Inspectable[] inspectables)
-    // {
-    //     foreach (var gameStateTriggeredEvent in gameState.TriggeredEvents)
-    //     {
-    //         // TODO: Eventually probably need to propagate these through more than just doors...
-    //         foreach (var door in doors)
-    //         {
-    //             door.OnEvent((GlobalEvent)gameStateTriggeredEvent);
-    //         }
-    //     
-    //         foreach (var inspectable in inspectables)
-    //         {
-    //             if ((int)inspectable.EventToTrigger == gameStateTriggeredEvent)
-    //             {
-    //                 inspectable.SetTriggered();
-    //             }
-    //         }
-    //     }
-    // }
+    private static void ProcessPreviouslyTriggeredEvent(int[] triggeredEvents, List<Door> doors, List<PassCode> passCodes)
+    {
+        foreach (var gameStateTriggeredEvent in triggeredEvents)
+        {
+            // TODO: Eventually probably need to propagate these through more than just doors...
+            foreach (var door in doors)
+            {
+                door.OnEvent((GameConstants.GlobalEvent)gameStateTriggeredEvent);
+            }
+
+            foreach (var passCode in passCodes)
+            {
+                passCode.OnEvent((GameConstants.GlobalEvent)gameStateTriggeredEvent);
+            }
+
+            // foreach (var inspectable in inspectables)
+            // {
+            //     if ((int)inspectable.EventToTrigger == gameStateTriggeredEvent)
+            //         inspectable.SetTriggered();
+            // }
+        }
+    }
 
     private List<T> FindObjectsOfType<T>() where T: class
     {
         return FindObjectsOfType<T>(GetTree().Root);
     }
 
-    private List<T> FindObjectsOfType<T>(Node parent) where T: class
+    public static List<T> FindObjectsOfType<T>(Node parent) where T: class
     {
         var matchingNodes = new List<T>();
 

@@ -13,6 +13,7 @@ public partial class PlayerInteract : Node
     private List<SimpleLock> _collidedSimpleLocks;
     private List<Door> _collidedDoors;
     private List<ItemBox> _collidedItemBoxes;
+    private List<PassCode> _collidedPassCodes;
 
     public override void _Ready()
 	{
@@ -21,6 +22,7 @@ public partial class PlayerInteract : Node
         _collidedSimpleLocks = new List<SimpleLock>();
         _collidedDoors = new List<Door>();
         _collidedItemBoxes = new List<ItemBox>();
+        _collidedPassCodes = new List<PassCode>();
     }
 
 	public override void _Process(double delta)
@@ -33,6 +35,8 @@ public partial class PlayerInteract : Node
                 PickupCurrentItem();
             else if (_collidedSimpleLocks.Any())
                 _collidedSimpleLocks.First().Inspect();
+            else if (_collidedPassCodes.Any())
+                _collidedPassCodes.First().Inspect();
             else if (_collidedItemBoxes.Any())
                 _collidedItemBoxes.First().OpenBox();
             else if (_collidedDoors.Any())
@@ -46,6 +50,7 @@ public partial class PlayerInteract : Node
         _collidedDoors.RemoveAll(_ => true);
         _collidedSimpleLocks.RemoveAll(_ => true);
         _collidedItemBoxes.RemoveAll(_ => true);
+        _collidedPassCodes.RemoveAll(_ => true);
     }
 
     public void _OnBodyEntered(Node3D obj)
@@ -56,6 +61,11 @@ public partial class PlayerInteract : Node
             _collidedDoors.Add(obj as Door);
         if (obj is ItemBox)
             _collidedItemBoxes.Add(obj as ItemBox);
+        if (obj is PassCode)
+        {
+            GD.Print($"Collided with PassCode '{obj.Name}'");
+            _collidedPassCodes.Add(obj as PassCode);
+        }
     }
 
     public void _OnBodyExited(Node3D obj)
@@ -67,6 +77,8 @@ public partial class PlayerInteract : Node
             _collidedDoors.RemoveAll(matchByInstanceId);
         if (obj is ItemBox)
             _collidedItemBoxes.RemoveAll(matchByInstanceId);
+        if (obj is PassCode)
+            _collidedPassCodes.RemoveAll(matchByInstanceId);
     }
 
     public void _OnAreaEntered(Area3D obj)

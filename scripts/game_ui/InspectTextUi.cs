@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -16,17 +17,15 @@ public partial class InspectTextUi : Node
     private string[] _currentChoices;
     private int _currentChoiceSelection;
     private bool _makingChoice;
-    private Action _onChoiceConfirmed;
+    private Action<List<string>> _onChoiceConfirmed;
     private bool _justMovedChoice;
+    private int _repeatChoices;
+    private int _currentChoiceRepeatIndex;
+    private List<string> _selectedChoices;
 
     [Export]
     private float AdvanceTextCooldown;
     private double _advanceTextCooldownRemaining = 0.0;
-
-    private bool _queuedText = false;
-    private string[] _queuedLines = null;
-    private string[] _queuedChoices = null;
-    private Action _queuedOnChoiceConfirmed = null;
 
     public override void _Ready()
     {
@@ -47,7 +46,7 @@ public partial class InspectTextUi : Node
             if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
                 ConfirmChoice();
             else if (Input.IsActionJustPressed(GameConstants.Controls.aim.ToString()))
-                CloseTextbox();
+                ForceCloseTextbox();
             else
                 ProcessChoiceMovement();
         }
@@ -55,22 +54,12 @@ public partial class InspectTextUi : Node
             AdvanceText();
     }
 
-    public void QueueReadText(string[] lines, string[] choices = null, Action onChoiceConfirmed = null)
+    public void ReadText(string[] lines, string[] choices = null, Action<List<string>> onChoiceConfirmed = null, int repeatChoices = 1, bool overrideRead = false)
     {
-        if (_queuedText)
+        if (_playerStatus.LockMovement || (_playerStatus.Reading && !overrideRead) || _advanceTextCooldownRemaining > 0)
             return;
 
-        _queuedText = true;
-        _queuedLines = lines;
-        _queuedChoices = choices;
-        _queuedOnChoiceConfirmed = onChoiceConfirmed;
-    }
-
-    public void ReadText(string[] lines, string[] choices = null, Action onChoiceConfirmed = null)
-    {
-        if (_playerStatus.LockMovement || _playerStatus.Reading || _advanceTextCooldownRemaining > 0)
-            return;
-
+        GD.Print("ReadText started!");
         _advanceTextCooldownRemaining = AdvanceTextCooldown;
         _currentLineIndex = 0;
         _currentLines = lines;
@@ -78,7 +67,10 @@ public partial class InspectTextUi : Node
         _currentChoiceSelection = 0;
         _makingChoice = false;
         _onChoiceConfirmed = onChoiceConfirmed;
+        _currentChoiceRepeatIndex = 0;
+        _repeatChoices = repeatChoices;
         _playerStatus.Reading = true;
+        _selectedChoices = new List<string>();
         AdvanceText();
         DescriptiveText.Visible = true;
     }
@@ -91,7 +83,7 @@ public partial class InspectTextUi : Node
         if (_currentLineIndex >= _currentLines.Length)
         {
             if (_currentChoices == null || !_currentChoices.Any())
-                CloseTextbox();
+                ForceCloseTextbox();
             else
             {
                 _makingChoice = true;
@@ -123,9 +115,8 @@ public partial class InspectTextUi : Node
 
     public void ForceCloseTextbox()
     {
-        if (_queuedText)
-            CloseTextbox();
         CloseTextbox();
+        _onChoiceConfirmed = null;
     }
 
     private void CloseTextbox()
@@ -136,17 +127,7 @@ public partial class InspectTextUi : Node
         _currentChoices = null;
         _currentChoiceSelection = 0;
         _makingChoice = false;
-        _onChoiceConfirmed = null;
         _playerStatus.Reading = false;
-
-        if (_queuedText)
-        {
-            ReadText(_queuedLines, _queuedChoices, _queuedOnChoiceConfirmed);
-            _queuedLines = null;
-            _queuedChoices = null;
-            _queuedOnChoiceConfirmed = null;
-            _queuedText = false;
-        }
     }
 
     private void ProcessChoiceMovement()
@@ -175,17 +156,17 @@ public partial class InspectTextUi : Node
 
     private void ConfirmChoice()
     {
-        // TODO: Can do something more intricate with this system if we pass back which selection was made and let it handle things from there.
-        //       For now it just assumes that the last choice is no and everything else is yes.
-        if (_currentChoiceSelection == _currentChoices.Length - 1)
+        _selectedChoices.Add(_currentChoices[_currentChoiceSelection]);
+        _currentChoiceRepeatIndex++;
+
+        if (_currentChoiceRepeatIndex >= _repeatChoices)
         {
             CloseTextbox();
-        }
-        else
-        {
             if (_onChoiceConfirmed != null)
-                _onChoiceConfirmed();
-            CloseTextbox();
+            {
+                _onChoiceConfirmed(_selectedChoices);
+                _onChoiceConfirmed = null;
+            }
         }
     }
 }

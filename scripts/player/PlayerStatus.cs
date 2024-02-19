@@ -5,10 +5,7 @@ using static GameConstants;
 
 public partial class PlayerStatus : Node
 {
-    // TODO: Determine if this is the right place to store this info, it's convenient for now for debugging but idk...
-    public GameDifficulty GameDifficulty;
-    public RandomizerSeed RandomizerSeed;
-    public bool RandomizerEnabled;
+    public GameSettings GameSettings;
 
     public Weapon EquipedWeapon;
     //public Animator PlayerAnimator;
@@ -50,7 +47,13 @@ public partial class PlayerStatus : Node
     public override void _Ready()
     {
         // TODO: Hard coding this to normal difficulty for now.
-        GameDifficulty = GameDifficulty.Normal;
+        GameSettings = new GameSettings
+        {
+            GameDifficulty = GameDifficulty.Normal,
+            IsRandomized = false,
+            RandomizerSeed = null,
+            FunnyMode = false,
+        };
 
         GD.Print("PlayerStatus _Ready called!");
 
@@ -162,6 +165,12 @@ public partial class PlayerStatus : Node
 
     public void TriggeredEvent(GlobalEvent eventTriggered)
     {
+        // TODO: Apply this to anything that a triggered event can effect!!!
+        var doors = ProcessGameState.FindObjectsOfType<Door>(GetTree().Root);
+        foreach (var door in doors) {
+            door.OnEvent(eventTriggered);
+        }
+
         TriggeredEvents.Add(eventTriggered);
     }
 

@@ -22,7 +22,7 @@ public partial class EnemySpawnPoint : Node3D
 
         //GD.Print($"Difficulty = {playerStatus.GameDifficulty}");
         EnemySpawnType enemySpawnType;
-        switch (playerStatus.GameDifficulty) {
+        switch (playerStatus.GameSettings.GameDifficulty) {
             case GameDifficulty.Easy:
                 enemySpawnType = EnemySpawnOnEasy;
                 break;
@@ -38,10 +38,10 @@ public partial class EnemySpawnPoint : Node3D
                 break;
         }
 
-        if (playerStatus.RandomizerEnabled && playerStatus.RandomizerSeed.RandomizedEnemies.ContainsKey(EnemyId))
+        if (playerStatus.GameSettings.IsRandomized && playerStatus.GameSettings.RandomizerSeed.RandomizedEnemies.ContainsKey(EnemyId))
         {
-            if (enemySpawnType != EnemySpawnType.None || playerStatus.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
-                enemySpawnType = playerStatus.RandomizerSeed.RandomizedEnemies[EnemyId];
+            if (enemySpawnType != EnemySpawnType.None || playerStatus.GameSettings.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
+                enemySpawnType = playerStatus.GameSettings.RandomizerSeed.RandomizedEnemies[EnemyId];
         }
 
         if (enemySpawnType != EnemySpawnType.None)
