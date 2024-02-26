@@ -15,7 +15,7 @@ script = ExtResource("1_8hvdm")
 PauseMenu = NodePath("PauseMenu")
 OptionsMenu = NodePath("OptionsMenu")
 DefaultPauseMenuFocus = NodePath("PauseMenu/Resume Button")
-DefaultOptionsMenuFocus = NodePath("OptionsMenu/VBoxContainer/TotalVolume/TotalVolumeSlider")
+DefaultOptionsMenuFocus = NodePath("OptionsMenu/VBoxContainer/Resolution/OptionButton")
 
 [node name="InventoryBg" type="ColorRect" parent="."]
 layout_mode = 1

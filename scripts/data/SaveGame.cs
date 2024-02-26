@@ -24,18 +24,6 @@ public partial class SaveGame : Node
 
     public override void _Ready()
 	{
-        //var size = new Vector2I(800, 600);
-        //DisplayServer.WindowSetSize(size);
-        DisplayServer.WindowSetSize(DisplayServer.ScreenGetSize());
-        //GetViewport().Size = new
-
-        // if (e.Pressed)
-        // {
-        //     InputMap.ActionEraseEvents("Aim");
-        //     InputMap.ActionAddEvent("Aim", e);
-        //     InputMap.ActionGetEvents("Aim")[0].AsText();
-        // }
-
         DirAccess.MakeDirRecursiveAbsolute(SaveDirectoryPath);
         LoadingMessage.Visible = false;
     }

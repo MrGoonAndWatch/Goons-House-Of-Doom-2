@@ -5,3 +5,5 @@
 [resource]
 default_font = ExtResource("1_oqt3g")
 default_font_size = 50
+LabelSmall/base_type = &"Label"
+LabelSmall/font_sizes/font_size = 35

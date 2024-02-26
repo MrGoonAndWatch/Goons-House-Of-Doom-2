@@ -1,8 +1,10 @@
 using Godot;
-using System;
+using System.Linq;
 
 public partial class OptionsMenuUi : Control
 {
+    [Export]
+    private OptionButton ResolutionPicker;
     [Export]
     private Slider TotalVolumeSlider;
     [Export]
@@ -88,5 +90,23 @@ public partial class OptionsMenuUi : Control
         GhodAudioManager.ChangeMusicVolume(_originalMusicVolume);
         GhodAudioManager.ChangeSfxVolume(_originalSfxVolume);
         GhodAudioManager.ChangeVoiceVolume(_originalVoiceVolume);
+    }
+
+    public void _OnResolutionChanged(int newResolutionIndex)
+    {
+        var resolutionText = ResolutionPicker.GetItemText(newResolutionIndex);
+        if (!resolutionText.Contains("x")) return;
+
+        var resolution = resolutionText.Split("x").Select(r => int.Parse(r)).ToArray();
+
+        DisplayServer.WindowSetSize(new Vector2I(resolution[0], resolution[1]));
+    }
+
+    public void _OnSetFullscreen(bool isFullscreen)
+    {
+        if (isFullscreen)
+            DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+        else
+            DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
     }
 }
