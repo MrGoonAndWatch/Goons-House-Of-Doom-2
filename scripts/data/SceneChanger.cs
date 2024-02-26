@@ -38,15 +38,14 @@ public partial class SceneChanger : Node
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
+        var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
+        playerInteract.ResetState();
         _dataSaver.SaveGameStateFromScene(playerStatus, playerInventory, sceneLoadData, playerItemBox);
 
         if (doorScene == DoorLoadType.None)
             FinishSceneLoad();
         else
             GetTree().ChangeSceneToFile($"res://scenes/door_loads/{doorScene}.tscn");
-
-        var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
-        playerInteract.ResetState();
     }
 
     public void FinishSceneLoad()
