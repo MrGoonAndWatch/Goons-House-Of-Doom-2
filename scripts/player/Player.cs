@@ -149,7 +149,10 @@ public partial class Player : CharacterBody3D
     {
         var velocity = Velocity;
 		velocity = ProcessGravity(delta, velocity);
-		velocity = ProcessMovement(delta, velocity);
+
+        var input_dir = Input.GetVector(Controls.left.ToString(), Controls.right.ToString(), Controls.up.ToString(), Controls.down.ToString());
+        velocity = ProcessMovement(delta, velocity, input_dir.Y);
+        ProcessRotation(delta, input_dir.X);
 		Velocity = velocity;
 
 		MoveAndSlide();
@@ -162,7 +165,7 @@ public partial class Player : CharacterBody3D
         return velocity;
 	}
 
-    private Vector3 ProcessMovement(double delta, Vector3 velocity)
+    private Vector3 ProcessMovement(double delta, Vector3 velocity, float inputMovement)
     {
         if (_playerStatus.IsMovementPrevented())
         {
@@ -170,18 +173,9 @@ public partial class Player : CharacterBody3D
             return new Vector3(0, velocity.Y, 0);
         }
 
-        var input_dir = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString());
-
-        var inputRotation = input_dir.X;
-
-        var inputMovement = input_dir.Y;
-
-        if (inputRotation != 0 && !IsQuickTurning)
-            RotateY(inputRotation * ROTATION_SPEED * (float)delta * -1);
-
         if (inputMovement != 0 && !IsQuickTurning)
         {
-            var running = Input.IsActionPressed(GameConstants.Controls.run.ToString());
+            var running = Input.IsActionPressed(Controls.run.ToString());
 
             var runMod = 1.0f;
 
@@ -194,7 +188,7 @@ public partial class Player : CharacterBody3D
                 backwardsMod = BACKWARDS_MODIFIER;
 
 
-            if (inputMovement > 0 && Input.IsActionJustPressed(GameConstants.Controls.run.ToString()))
+            if (inputMovement > 0 && Input.IsActionJustPressed(Controls.run.ToString()))
                 StartQuickTurn();
 
             var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod;
@@ -210,6 +204,14 @@ public partial class Player : CharacterBody3D
             _tree.Set(GameConstants.Animation.Player.Walking, false);
         }
         return velocity;
+    }
+
+    private void ProcessRotation(double delta, float inputRotation)
+    {
+        if (_playerStatus.IsRotationPrevented()) return;
+
+        if (inputRotation != 0 && !IsQuickTurning)
+            RotateY(inputRotation * ROTATION_SPEED * (float)delta * -1);
     }
 
     private void StartQuickTurn() {

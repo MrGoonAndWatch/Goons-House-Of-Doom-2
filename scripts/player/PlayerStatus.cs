@@ -290,6 +290,11 @@ public partial class PlayerStatus : Node
         return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveUiOpen;
     }
 
+    public bool IsRotationPrevented()
+    {
+        return TakingDamage || Shooting || Health <= 0 || HasAnyUiOpen();
+    }
+
     public bool IsMovementPrevented()
     {
         return TakingDamage || Aiming || Shooting || Health <= 0 || HasAnyUiOpen();
