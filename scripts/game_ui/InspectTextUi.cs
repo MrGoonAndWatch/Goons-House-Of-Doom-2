@@ -56,7 +56,7 @@ public partial class InspectTextUi : Node
 
     public void ReadText(string[] lines, string[] choices = null, Action<List<string>> onChoiceConfirmed = null, int repeatChoices = 1, bool overrideRead = false)
     {
-        if (_playerStatus.LockMovement || (_playerStatus.Reading && !overrideRead) || _advanceTextCooldownRemaining > 0)
+        if ((_playerStatus.Reading && !overrideRead) || _advanceTextCooldownRemaining > 0)
             return;
 
         GD.Print("ReadText started!");

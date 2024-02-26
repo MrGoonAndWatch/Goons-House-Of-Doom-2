@@ -58,13 +58,13 @@ public partial class Player : CharacterBody3D
     {
         if (_playerStatus.EquipedWeapon == null) return;
 
-        if (!_playerStatus.Aiming && Input.IsActionPressed(Controls.aim.ToString()))
+        if (_playerStatus.CanAim() && Input.IsActionPressed(Controls.aim.ToString()))
         {
             _playerStatus.Aiming = true;
             _playerStatus.ReadyToShoot = false;
             _tree.Set(GameConstants.Animation.Player.Aiming, true);
         }
-        else if (_playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
+        else if (!_playerStatus.HasAnyUiOpen() && _playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
             EndAiming();
     }
 

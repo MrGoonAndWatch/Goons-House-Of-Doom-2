@@ -18,7 +18,6 @@ public partial class PlayerStatus : Node
 
     public bool MenuOpened;
     public bool Reading;
-    public bool LockMovement;
     public bool QuickTurning;
     public bool TakingDamage;
     public bool Aiming;
@@ -278,27 +277,37 @@ public partial class PlayerStatus : Node
 
     public bool CanPause()
     {
-        return !LockMovement && !ItemBoxOpened && Health > 0;
+        return !MenuOpened && !ItemBoxOpened && Health > 0;
     }
 
     public bool CanOpenMenu()
     {
-        return !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveUiOpen && !LockMovement;
+        return !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveUiOpen;
+    }
+
+    public bool HasAnyUiOpen()
+    {
+        return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveUiOpen;
     }
 
     public bool IsMovementPrevented()
     {
-        return Paused || MenuOpened || ItemBoxOpened || LockMovement || TakingDamage || Aiming || Shooting || Reading || HasSaveUiOpen || Health <= 0;
+        return TakingDamage || Aiming || Shooting || Health <= 0 || HasAnyUiOpen();
     }
 
     public bool CanInteract()
     {
-        return !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && !Aiming && !Shooting && Health > 0;
+        return !TakingDamage && !Aiming && !Shooting && Health > 0 && !HasAnyUiOpen();
+    }
+
+    public bool CanAim()
+    {
+        return !Aiming && !Paused && !TakingDamage && Health > 0 && !HasAnyUiOpen();
     }
 
     public bool CanShoot()
     {
-        return ReadyToShoot && !Paused && !MenuOpened && !ItemBoxOpened && !Reading && !TakingDamage && Health > 0 && !HasSaveUiOpen && !Reading && !LockMovement;
+        return ReadyToShoot && !TakingDamage && Health > 0 && !HasAnyUiOpen();
     }
 
     public bool WeaponHasAmmo()
