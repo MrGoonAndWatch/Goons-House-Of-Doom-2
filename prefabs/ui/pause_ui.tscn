@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjqnsvx70quue"]
+[gd_scene load_steps=4 format=3 uid="uid://m4w5lovwdw6"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/PauseScreenUi.cs" id="1_8hvdm"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_is7b2"]
-[ext_resource type="PackedScene" uid="uid://bybodg6o4h6ji" path="res://prefabs/ui/options_menu_ui.tscn" id="3_jggi5"]
+[ext_resource type="PackedScene" uid="uid://b3plxc1qko6mn" path="res://prefabs/ui/options_menu_ui.tscn" id="3_jggi5"]
 
 [node name="pause_ui" type="Control" node_paths=PackedStringArray("PauseMenu", "OptionsMenu", "DefaultPauseMenuFocus", "DefaultOptionsMenuFocus")]
 layout_mode = 3

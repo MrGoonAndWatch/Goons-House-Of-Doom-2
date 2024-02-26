@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dq422yee4ffab"]
+[gd_scene load_steps=4 format=3 uid="uid://b551tbih1cuj1"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/InputMapper.cs" id="1_vrlno"]
 [ext_resource type="LabelSettings" uid="uid://c4eyjl7yb2bj2" path="res://materials/menu_label.tres" id="2_5uu45"]

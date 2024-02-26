@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfttv5cinncf3"]
+[gd_scene load_steps=3 format=3 uid="uid://c2y01dsom536l"]
 
-[ext_resource type="PackedScene" uid="uid://dw7mqryivmawc" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_r4xo4"]
-[ext_resource type="PackedScene" uid="uid://chylejx4q00vi" path="res://prefabs/ui/item_box_slot.tscn" id="2_oxnx2"]
+[ext_resource type="PackedScene" uid="uid://dm1r6v5ighikj" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_r4xo4"]
+[ext_resource type="PackedScene" uid="uid://cj4fh5ysu4ny5" path="res://prefabs/ui/item_box_slot.tscn" id="2_oxnx2"]
 
 [node name="item_box" type="Control"]
 layout_mode = 3

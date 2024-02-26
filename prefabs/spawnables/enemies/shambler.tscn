@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b057sa1sa7tkp"]
+[gd_scene load_steps=5 format=3 uid="uid://2w1rk3178cwi"]
 
-[ext_resource type="PackedScene" uid="uid://cgbt2ni46da1j" path="res://models/shambler.tscn" id="1_4inkg"]
+[ext_resource type="PackedScene" uid="uid://j2jg2yxgxtal" path="res://models/shambler.tscn" id="1_4inkg"]
 [ext_resource type="Script" path="res://scripts/enemies/Shambler.cs" id="1_m8x22"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sk8gk"]

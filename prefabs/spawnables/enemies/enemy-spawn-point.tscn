@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b11ys8ttn3wit"]
+[gd_scene load_steps=2 format=3 uid="uid://43pj43g5wgqu"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemySpawnPoint.cs" id="1_ghs38"]
 

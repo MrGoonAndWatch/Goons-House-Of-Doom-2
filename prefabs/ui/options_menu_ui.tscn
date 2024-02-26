@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bybodg6o4h6ji"]
+[gd_scene load_steps=3 format=3 uid="uid://b3plxc1qko6mn"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/OptionsMenuUi.cs" id="1_87jiw"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_dx8wx"]

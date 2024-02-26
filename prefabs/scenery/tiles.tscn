@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://s77vbt83abtc"]
+[gd_scene load_steps=4 format=3 uid="uid://c0h22hpdgo8q4"]
 
 [ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="1_ktlbh"]
 [ext_resource type="PackedScene" uid="uid://bab8r5uel4tq1" path="res://models/Tiles/stairs-redo.glb" id="5_itm8f"]

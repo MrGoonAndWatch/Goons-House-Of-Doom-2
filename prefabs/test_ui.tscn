@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dta8vdj10v1x0"]
+[gd_scene load_steps=3 format=3 uid="uid://dxp0e6jjbb2ej"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/MenuAction.cs" id="1_disuc"]
 [ext_resource type="Texture2D" uid="uid://d2vp8an608wqg" path="res://textures/medieval-art1.jpg" id="2_2is6p"]

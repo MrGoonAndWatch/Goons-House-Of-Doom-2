@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw7mqryivmawc"]
+[gd_scene load_steps=2 format=3 uid="uid://dm1r6v5ighikj"]
 
-[ext_resource type="PackedScene" uid="uid://dn8w4qmysed00" path="res://prefabs/ui/item_slot.tscn" id="1_i6ay0"]
+[ext_resource type="PackedScene" uid="uid://cfbslpps01evc" path="res://prefabs/ui/item_slot.tscn" id="1_i6ay0"]
 
 [node name="ItemSlots" type="Control"]
 layout_mode = 3

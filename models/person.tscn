@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://brhfdv1dqc6ll"]
+[gd_scene load_steps=3 format=3 uid="uid://ifadur1av21g"]
 
 [ext_resource type="PackedScene" uid="uid://bs66k1sk4vpqr" path="res://models/Person.fbx" id="1_bn0g6"]
 [ext_resource type="Material" uid="uid://uberhyf5v3uw" path="res://materials/flat_red_material.tres" id="2_lxkc5"]

@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3u3gh2hf3vs7"]
+[gd_scene load_steps=7 format=3 uid="uid://cejaneqj6o6nl"]
 
-[ext_resource type="PackedScene" uid="uid://dw7mqryivmawc" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_8u6o3"]
+[ext_resource type="PackedScene" uid="uid://dm1r6v5ighikj" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_8u6o3"]
 [ext_resource type="Script" path="res://scripts/game_ui/MenuAction.cs" id="2_sdnk2"]
 [ext_resource type="Texture2D" uid="uid://d2vp8an608wqg" path="res://textures/medieval-art1.jpg" id="3_7co6t"]
 

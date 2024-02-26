@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1d2ckrsxnqmp"]
+[gd_scene load_steps=2 format=3 uid="uid://b24ook6tgly8c"]
 
 [ext_resource type="Script" path="res://scripts/items/ItemSpawnPoint.cs" id="1_rqqxo"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdf4m7xs2jmy2"]
+[gd_scene load_steps=5 format=3 uid="uid://bijoij2s0sosu"]
 
 [ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_xd12x"]
 [ext_resource type="Script" path="res://scripts/items/Garbage.cs" id="2_7cx0h"]

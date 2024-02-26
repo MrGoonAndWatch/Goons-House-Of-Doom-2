@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4lf53ri386mt"]
+[gd_scene load_steps=6 format=3 uid="uid://dcmxari4j7ir3"]
 
 [ext_resource type="Script" path="res://scripts/items/PistolAmmo.cs" id="1_c41hb"]
 [ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_cj08w"]

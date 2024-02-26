@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0y5vh31ukcxm"]
+[gd_scene load_steps=4 format=3 uid="uid://cwgvmlg5wk1f"]
 
 [ext_resource type="Script" path="res://scripts/inventory/ItemBox.cs" id="1_ex4e1"]
 

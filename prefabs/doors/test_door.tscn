@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvfvy25qajjm1"]
+[gd_scene load_steps=5 format=3 uid="uid://byxkvjaw5ho8v"]
 
 [ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="1_i2r5f"]
 [ext_resource type="Script" path="res://scripts/puzzles/Door.cs" id="2_5oeo1"]

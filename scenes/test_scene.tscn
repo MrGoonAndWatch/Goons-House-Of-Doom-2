@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://vrh82cg0vlit"]
+[gd_scene load_steps=10 format=3 uid="uid://bdfkbexd4iqus"]
 
-[ext_resource type="PackedScene" uid="uid://b37mrskomqbhs" path="res://prefabs/player/player.tscn" id="2_m2n1s"]
-[ext_resource type="PackedScene" uid="uid://lndxrv03bc67" path="res://prefabs/scenery/camera_change.tscn" id="3_yjef3"]
+[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_m2n1s"]
+[ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="3_yjef3"]
 [ext_resource type="MeshLibrary" uid="uid://bwn3cpxcfaeq3" path="res://prefabs/scenery/tiles_mesh_library_3.tres" id="3_yjpyq"]
-[ext_resource type="PackedScene" uid="uid://bvfvy25qajjm1" path="res://prefabs/doors/test_door.tscn" id="4_iqgm1"]
-[ext_resource type="PackedScene" uid="uid://b11ys8ttn3wit" path="res://prefabs/spawnables/enemies/enemy-spawn-point.tscn" id="5_qo12u"]
-[ext_resource type="PackedScene" uid="uid://d1d2ckrsxnqmp" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_buisc"]
+[ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="4_iqgm1"]
+[ext_resource type="PackedScene" uid="uid://43pj43g5wgqu" path="res://prefabs/spawnables/enemies/enemy-spawn-point.tscn" id="5_qo12u"]
+[ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_buisc"]
 [ext_resource type="Script" path="res://scripts/puzzles/PassCode.cs" id="7_b7b8e"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_umokm"]

@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://qebv333r62qo"]
+[gd_scene load_steps=5 format=3 uid="uid://c2coe4cbjwo0g"]
 
 [ext_resource type="Script" path="res://scripts/enemies/Chaser.cs" id="1_lrh4m"]
-[ext_resource type="PackedScene" uid="uid://cgbt2ni46da1j" path="res://models/shambler.tscn" id="2_1bbij"]
+[ext_resource type="PackedScene" uid="uid://j2jg2yxgxtal" path="res://models/shambler.tscn" id="2_1bbij"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sk8gk"]
 radius = 1.328

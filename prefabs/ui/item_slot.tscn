@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dn8w4qmysed00"]
+[gd_scene load_steps=3 format=3 uid="uid://cfbslpps01evc"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/ItemSlot.cs" id="1_87pgj"]
 

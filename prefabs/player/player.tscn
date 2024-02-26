@@ -1,16 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://b37mrskomqbhs"]
+[gd_scene load_steps=16 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
-[ext_resource type="PackedScene" uid="uid://dv4t2p42in77u" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
-[ext_resource type="PackedScene" uid="uid://c3u3gh2hf3vs7" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
+[ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
+[ext_resource type="PackedScene" uid="uid://cejaneqj6o6nl" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
-[ext_resource type="PackedScene" uid="uid://bfttv5cinncf3" path="res://prefabs/ui/item_box.tscn" id="3_iwwv0"]
+[ext_resource type="PackedScene" uid="uid://c2y01dsom536l" path="res://prefabs/ui/item_box.tscn" id="3_iwwv0"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
-[ext_resource type="PackedScene" uid="uid://bjqnsvx70quue" path="res://prefabs/ui/pause_ui.tscn" id="5_q718m"]
+[ext_resource type="PackedScene" uid="uid://m4w5lovwdw6" path="res://prefabs/ui/pause_ui.tscn" id="5_q718m"]
 [ext_resource type="Script" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
 [ext_resource type="FontFile" uid="uid://qoog8jprg8ka" path="res://prefabs/ui/ui_font.tres" id="6_f4pxk"]
 [ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
-[ext_resource type="PackedScene" uid="uid://u8386uexmbla" path="res://models/human_low.tscn" id="6_xcsgj"]
+[ext_resource type="PackedScene" uid="uid://ceo15gfbs2cse" path="res://models/human_low.tscn" id="6_xcsgj"]
 [ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2prw7"]
@@ -114,7 +114,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.0156999, -0.0105001, 0.00168202, 0.99982)
+bones/6/rotation = Quaternion(-0.170008, -0.113708, 0.0200842, 0.978654)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
