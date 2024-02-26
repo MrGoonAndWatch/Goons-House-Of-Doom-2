@@ -4,6 +4,7 @@ using Godot.Collections;
 public partial class GameConstants : GodotObject
 {
     public const float GreenMedicineHp = 25.0f;
+    public const float ControllerMenuDeadzone = 0.72f;
 
     public static class Colors
     {

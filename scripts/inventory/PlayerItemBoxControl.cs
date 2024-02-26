@@ -134,36 +134,44 @@ public partial class PlayerItemBoxControl : Node3D
         }
     }
 
-    private void HandleInventoryMovement(float xVal, float yVal)
+    private void HandleInventoryMovement(float horizontal, float vertical)
     {
-        if (xVal < 0 && _lastXPress >= 0)
+        // Note: For some reason the Deadzone property in the project's InputMap wasn't being respected, leading to weird menu movement some of the time.
+        if ((horizontal < 0 && horizontal > -GameConstants.ControllerMenuDeadzone) ||
+            (horizontal > 0 && horizontal < GameConstants.ControllerMenuDeadzone))
+            horizontal = 0;
+        if ((vertical < 0 && vertical > -GameConstants.ControllerMenuDeadzone) ||
+            (vertical > 0 && vertical < GameConstants.ControllerMenuDeadzone))
+            vertical = 0;
+
+        if (horizontal < 0 && _lastXPress >= 0)
         {
             _currentInventorySlot--;
             if (_currentInventorySlot < 0)
                 _currentInventorySlot = PlayerItems.Length - 1;
             _lastXPress = -1;
         }
-        else if (xVal > 0 && _lastXPress <= 0)
+        else if (horizontal > 0 && _lastXPress <= 0)
         {
             _currentInventorySlot = (_currentInventorySlot + 1) % PlayerItems.Length;
             _lastXPress = 1;
         }
-        else if (yVal < 0 && _lastYPress >= 0)
+        else if (vertical < 0 && _lastYPress >= 0)
         {
             _currentInventorySlot -= 2;
             if (_currentInventorySlot < 0)
                 _currentInventorySlot = PlayerItems.Length + _currentInventorySlot;
             _lastYPress = -1;
         }
-        else if (yVal > 0 && _lastYPress <= 0)
+        else if (vertical > 0 && _lastYPress <= 0)
         {
             _currentInventorySlot = (_currentInventorySlot + 2) % PlayerItems.Length;
             _lastYPress = 1;
         }
 
-        if (xVal == 0)
+        if (horizontal == 0)
             _lastXPress = 0;
-        if (yVal == 0)
+        if (vertical == 0)
             _lastYPress = 0;
 
         UpdateInventoryCursor();
@@ -185,6 +193,8 @@ public partial class PlayerItemBoxControl : Node3D
 
     public void OpenMenu()
     {
+        _currentInventorySlot = 0;
+        UpdateInventoryCursor();
         ItemBoxUi.Visible = true;
         _playerStatus.ItemBoxOpened = true;
     }

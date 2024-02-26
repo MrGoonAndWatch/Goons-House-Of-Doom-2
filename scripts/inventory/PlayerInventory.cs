@@ -200,6 +200,14 @@ public partial class PlayerInventory : Node3D
 
     void HandleItemCursorMovement(float horizontal, float vertical)
     {
+        // Note: For some reason the Deadzone property in the project's InputMap wasn't being respected, leading to weird menu movement some of the time.
+        if ((horizontal < 0 && horizontal > -GameConstants.ControllerMenuDeadzone) ||
+            (horizontal > 0 && horizontal < GameConstants.ControllerMenuDeadzone))
+            horizontal = 0;
+        if ((vertical < 0 && vertical > -GameConstants.ControllerMenuDeadzone) ||
+            (vertical > 0 && vertical < GameConstants.ControllerMenuDeadzone))
+            vertical = 0;
+
         if (horizontal > 0 && !_pressingRight)
         {
             MoveItemCursorRight();
