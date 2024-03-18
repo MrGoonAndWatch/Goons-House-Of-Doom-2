@@ -32,6 +32,9 @@ public partial class Door : Node3D
     public override void _Ready()
 	{
         _textReader = GetNode<InspectTextUi>(NodePaths.FromSceneRoot.InspectTextUi);
+        var gameState = DataSaver.GetInstance().GetGameState();
+        if (gameState.DoorsUnlocked.Contains(DoorId))
+            _unlocked = true;
         if (LocksWith == KeyType.None && UnlocksOnEvent == GlobalEvent.None)
             _unlocked = true;
     }

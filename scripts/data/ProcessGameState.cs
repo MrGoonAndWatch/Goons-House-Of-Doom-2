@@ -5,6 +5,7 @@ using System.Linq;
 
 public partial class ProcessGameState : Node3D
 {
+    // TODO: Nuke this class, we've pushed the responsibility of checking game state down to each respective object type.
 	public override void _Ready()
 	{
         LoadGameStateToScene();
@@ -12,31 +13,14 @@ public partial class ProcessGameState : Node3D
 
     private void LoadGameStateToScene()
     {
-        var dataSaver = DataSaver.GetInstance();
-        var gameState = dataSaver.GetGameState();
+        //var dataSaver = DataSaver.GetInstance();
+        //var gameState = dataSaver.GetGameState();
 
-        var enemies = FindObjectsOfType<Enemy>();
-        var doors = FindObjectsOfType<Door>();
-        var items = FindObjectsOfType<Item>();
-        var passCodes = FindObjectsOfType<PassCode>();
-        GD.Print($"Found {enemies.Count} enemies, {doors.Count} doors, {items.Count} items.");
+        //var doors = FindObjectsOfType<Door>();
+        //var passCodes = FindObjectsOfType<PassCode>();
 
-        DestroyPreviouslyKilledEnemies(gameState, enemies);
-        UnlockPreviouslyUnlockedDoors(gameState, doors);
-        ProcessPreviouslyTriggeredEvent(gameState.TriggeredEvents, doors, passCodes);
-        DeletePreviouslyPickedUpItems(gameState, items);
-    }
-
-    private static void DestroyPreviouslyKilledEnemies(DataSaver.GameState gameState, List<Enemy> enemies)
-    {
-        foreach (var enemy in enemies)
-        {
-            if (enemy.EnemyId != 0 && gameState.DeadEnemies.Contains(enemy.EnemyId))
-            {
-                GD.Print($"Killing enemy {enemy.EnemyId}");
-                enemy.ForceDead();
-            }
-        }
+        //UnlockPreviouslyUnlockedDoors(gameState, doors);
+        //ProcessPreviouslyTriggeredEvent(gameState.TriggeredEvents, doors, passCodes);
     }
 
     private static void UnlockPreviouslyUnlockedDoors(DataSaver.GameState gameState, List<Door> doors)
@@ -48,37 +32,22 @@ public partial class ProcessGameState : Node3D
         }
     }
 
-    private static void DeletePreviouslyPickedUpItems(DataSaver.GameState gameState, List<Item> items)
-    {
-        foreach (var item in items)
-        {
-            if (item.ItemId != 0 && gameState.GrabbedItems.Contains(item.ItemId))
-                item.ForceDestroy();
-        }
-    }
-
-    private static void ProcessPreviouslyTriggeredEvent(int[] triggeredEvents, List<Door> doors, List<PassCode> passCodes)
-    {
-        foreach (var gameStateTriggeredEvent in triggeredEvents)
-        {
-            // TODO: Eventually probably need to propagate these through more than just doors...
-            foreach (var door in doors)
-            {
-                door.OnEvent((GameConstants.GlobalEvent)gameStateTriggeredEvent);
-            }
-
-            foreach (var passCode in passCodes)
-            {
-                passCode.OnEvent((GameConstants.GlobalEvent)gameStateTriggeredEvent);
-            }
-
-            // foreach (var inspectable in inspectables)
-            // {
-            //     if ((int)inspectable.EventToTrigger == gameStateTriggeredEvent)
-            //         inspectable.SetTriggered();
-            // }
-        }
-    }
+    // private static void ProcessPreviouslyTriggeredEvent(int[] triggeredEvents, List<Door> doors, List<PassCode> passCodes)
+    // {
+    //     foreach (var gameStateTriggeredEvent in triggeredEvents)
+    //     {
+    //         foreach (var passCode in passCodes)
+    //         {
+    //             passCode.OnEvent((GameConstants.GlobalEvent)gameStateTriggeredEvent);
+    //         }
+    // 
+    //         // foreach (var inspectable in inspectables)
+    //         // {
+    //         //     if ((int)inspectable.EventToTrigger == gameStateTriggeredEvent)
+    //         //         inspectable.SetTriggered();
+    //         // }
+    //     }
+    // }
 
     private List<T> FindObjectsOfType<T>() where T: class
     {

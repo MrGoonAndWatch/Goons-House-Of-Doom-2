@@ -22,12 +22,12 @@ public partial class PlayerStatus : Node
     public bool TakingDamage;
     public bool Aiming;
     public bool Shooting;
-    public bool HasSaveUiOpen;
+    public bool HasSaveLoadUiOpen;
     public bool Paused;
     public bool ItemBoxOpened;
     public bool ReadyToShoot;
 
-    public List<int> KilledEnemies;
+    public List<int> DeadEnemies;
     public List<GlobalEvent> TriggeredEvents;
     public List<int> GrabbedItems;
     public List<int> DoorsUnlocked;
@@ -64,7 +64,7 @@ public partial class PlayerStatus : Node
         }
         _instance = this;
 
-        KilledEnemies = new List<int>();
+        DeadEnemies = new List<int>();
         TriggeredEvents = new List<GlobalEvent>();
         GrabbedItems = new List<int>();
         DoorsUnlocked = new List<int>();
@@ -149,11 +149,12 @@ public partial class PlayerStatus : Node
 
     public void KillEnemy(int enemyId)
     {
-        KilledEnemies.Add(enemyId);
+        DeadEnemies.Add(enemyId);
     }
 
     public void UnlockDoor(int doorId)
     {
+        GD.Print($"Unlocked door {doorId}");
         DoorsUnlocked.Add(doorId);
     }
 
@@ -282,12 +283,12 @@ public partial class PlayerStatus : Node
 
     public bool CanOpenMenu()
     {
-        return !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveUiOpen;
+        return !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen;
     }
 
     public bool HasAnyUiOpen()
     {
-        return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveUiOpen;
+        return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveLoadUiOpen;
     }
 
     public bool IsRotationPrevented()
@@ -357,4 +358,24 @@ public partial class PlayerStatus : Node
         var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
         playerInteract.UseKey(key);
     }
+
+    public static void PrintPlayerStatus()
+    {
+        if(_instance == null)
+        {
+            GD.PrintErr("Could not PrintPlayerStatus, PlayerStatus instance is null!");
+            return;
+        }
+
+        GD.Print($"MenuOpened={_instance.MenuOpened}");
+        GD.Print($"Reading={_instance.Reading}");
+        GD.Print($"QuickTurning={_instance.QuickTurning}");
+        GD.Print($"TakingDamage={_instance.TakingDamage}");
+        GD.Print($"Aiming={_instance.Aiming}");
+        GD.Print($"Shooting={_instance.Shooting}");
+        GD.Print($"HasSaveLoadUiOpen={_instance.HasSaveLoadUiOpen}");
+        GD.Print($"Paused={_instance.Paused}");
+        GD.Print($"ItemBoxOpened={_instance.ItemBoxOpened}");
+        GD.Print($"ReadyToShoot={_instance.ReadyToShoot}");
+}
 }

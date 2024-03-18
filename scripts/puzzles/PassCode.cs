@@ -1,6 +1,6 @@
 using Godot;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class PassCode : Node3D
 {
@@ -27,6 +27,10 @@ public partial class PassCode : Node3D
     public override void _Ready()
 	{
         _textReader = GetNode<InspectTextUi>(GameConstants.NodePaths.FromSceneRoot.InspectTextUi);
+
+		var gameState = DataSaver.GetInstance().GetGameState();
+		if (gameState.TriggeredEvents.Contains((int)SetEventOnUnlock))
+            OnPassCodeSuccess();
     }
 
 	public void Inspect()
@@ -48,13 +52,18 @@ public partial class PassCode : Node3D
 			playerStatus.TriggeredEvent(SetEventOnUnlock);
             if (OnUnlockSuccessText != null && OnUnlockSuccessText.Length > 0)
                 _textReader.ReadText(OnUnlockSuccessText, overrideRead: true);
-			_interactable = false;
+			OnPassCodeSuccess();
         }
         else {
             if (OnUnlockFailText != null && OnUnlockFailText.Length > 0)
 				_textReader.ReadText(OnUnlockFailText, overrideRead: true);
 		}
     }
+
+	private void OnPassCodeSuccess()
+	{
+		_interactable = false;
+	}
 
 	public void OnEvent(GameConstants.GlobalEvent globalEvent)
 	{

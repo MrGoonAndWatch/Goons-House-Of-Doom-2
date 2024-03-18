@@ -1,5 +1,3 @@
-using System;
-
 public partial class GameSettings
 {
     public GameConstants.GameDifficulty GameDifficulty;

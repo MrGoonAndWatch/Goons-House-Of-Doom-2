@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://byxjbyxscrc5o"]
+
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_3qrwh"]
+[ext_resource type="Script" path="res://scripts/game_ui/SaveFileUi.cs" id="1_p66cq"]
+
+[node name="SaveMenuFileUi" type="Control" node_paths=PackedStringArray("SaveFileButton")]
+custom_minimum_size = Vector2(550, 75)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p66cq")
+SaveFileButton = NodePath("Button")
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(1000, 0)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+theme = ExtResource("1_3qrwh")
+text = "1 - Main Room - 1:23:46"
+
+[node name="Spacer" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 25)
+anchors_preset = 0
+offset_top = 75.0
+offset_right = 1.0
+offset_bottom = 100.0
+
+[connection signal="pressed" from="Button" to="." method="_OnButtonPressed"]

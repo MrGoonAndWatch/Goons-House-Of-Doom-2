@@ -102,6 +102,7 @@ public abstract partial class Enemy : CharacterBody3D
     // TODO: Improve this! Also move other stuff in from DamageHandler.
     public void ForceDead()
     {
+        PlayerStatus.GetInstance().KillEnemy(EnemyId);
         QueueFree();
     }
 }

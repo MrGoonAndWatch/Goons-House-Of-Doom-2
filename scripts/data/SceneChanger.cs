@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using static GameConstants;
 
 public partial class SceneChanger : Node
@@ -30,7 +31,9 @@ public partial class SceneChanger : Node
     {
         if (!_loadScene) return;
 
-        OnNewSceneLoaded();
+        var player = GetNodeOrNull<Player>(NodePaths.FromSceneRoot.Player);
+        if(player != null)
+            OnNewSceneLoaded();
     }
 
     public void ChangeScene(SceneLoadData sceneLoadData, DoorLoadType doorScene = DoorLoadType.None)

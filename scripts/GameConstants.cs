@@ -86,6 +86,9 @@ public partial class GameConstants : GodotObject
     private const string ItemPrefabFolderPath = "res://prefabs/spawnables/items/";
     public const string GarbagePrefabPath = $"{ItemPrefabFolderPath}/garbage.tscn";
 
+    public const string SaveFileButtonUi = "res://prefabs/ui/save_menu_file_ui.tscn";
+    public const string SaveFileNewSaveText = "(create new save)";
+
     public static Dictionary<ItemSpawnType, string> ItemPrefabLookup = new Dictionary<ItemSpawnType, string>()
     {
         {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
@@ -154,6 +157,7 @@ public partial class GameConstants : GodotObject
             public const string InspectTextUi = Player + "/InspectTextUI";
             public const string PlayerStatus = "/root/root/PlayerStatus";
             public const string HordeModeManager = "/root/root/HordeModeManager";
+            public const string SaveGameUi = Player + "/save_game_ui";
         }
     }
 

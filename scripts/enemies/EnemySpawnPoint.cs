@@ -18,7 +18,7 @@ public partial class EnemySpawnPoint : Node3D
     public override void _Ready()
     {
         var playerStatus = PlayerStatus.GetInstance();
-        if (playerStatus.KilledEnemies.Contains(EnemyId)) return;
+        if (playerStatus.DeadEnemies.Contains(EnemyId)) return;
 
         //GD.Print($"Difficulty = {playerStatus.GameDifficulty}");
         EnemySpawnType enemySpawnType;

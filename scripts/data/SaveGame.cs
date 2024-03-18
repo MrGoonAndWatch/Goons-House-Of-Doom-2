@@ -3,56 +3,66 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-public partial class SaveGame : Node
+public partial class SaveGame : Control
 {
     [Export]
-    public Control SaveGameUi;
+    private Control SaveGameUi;
     [Export]
-    public Control LoadingMessage;
+    private Control LoadingMessage;
     [Export]
-    public Control SaveFileList;
+    private Control SaveFileList;
+    [Export]
+    private ScrollContainer SaveFilesScroll;
 
     private const string SaveDirectoryPath = "user://saves";
     private const string ScenesDirectory = "res://scenes/";
 
     private bool _menuOpened;
     private bool _loadingSaveFiles;
-    private bool _firstFrameSinceLoaded;
     private List<string> _saveFileNames;
+
+    private List<SaveFileUi> _saveFiles;
+
+    private bool _isLoading;
 
     public override void _Ready()
 	{
+        SaveGameUi.Visible = false;
+        SaveFilesScroll.GetVScrollBar().Modulate = GameConstants.Colors.Clear;
         DirAccess.MakeDirRecursiveAbsolute(SaveDirectoryPath);
         LoadingMessage.Visible = false;
+        RefreshSaveFileList();
     }
 
 	public override void _Process(double delta)
 	{
-         // if (Input.IsActionJustPressed("DEBUG_Save"))
-         //     CreateSaveFile("test_scene2 - 24-01-07_21-45-51.sav");
-         // if(Input.IsActionJustPressed("DEBUG_Load"))
-         //     LoadSaveFile(0);
-
-        if (!_menuOpened)
-            return;
-        ProcessFileSelect();
+        if (Input.IsActionJustPressed("DEBUG_Save"))
+            ShowSaveUi();
+        if (Input.IsActionJustPressed("DEBUG_Load"))
+            ShowLoadUi();
     }
 
-    private void ProcessFileSelect()
+    public void ShowSaveUi()
     {
-        if (_firstFrameSinceLoaded)
-            _firstFrameSinceLoaded = false;
-
-        
-        if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()) || Input.IsActionJustPressed(GameConstants.Controls.aim.ToString()))
-        {
-            CreateSaveFile();
-        }
+        _isLoading = false;
+        OpenSaveLoadUi();
     }
 
-    // TODO: Add error handling!
+    public void ShowLoadUi()
+    {
+        _isLoading = true;
+        OpenSaveLoadUi();
+    }
+
+    public void SaveSlotSelected(SaveFileUi saveFile)
+    {
+        if (_isLoading)
+            LoadSaveFile(saveFile.SaveFileName);
+        else
+            CreateSaveFile(saveFile.IsNewFileSlot ? null : saveFile.SaveFileName);
+    }
+
     private void CreateSaveFile(string filename = null)
     {
         var player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
@@ -68,6 +78,7 @@ public partial class SaveGame : Node
         };
 
         var saver = DataSaver.GetInstance();
+        playerStatus.HasSaveLoadUiOpen = false;
         saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo, playerItemBox);
         var data = saver.GetGameState();
 
@@ -83,48 +94,78 @@ public partial class SaveGame : Node
         if (!string.IsNullOrEmpty(filename))
             DirAccess.RemoveAbsolute($"{SaveDirectoryPath}/{filename}");
 
-        Close();
+        CloseSaveUi();
 
         GD.Print($"Finished saving file '{newFilename}'");
     }
 
-    public void Open()
+    private void OpenSaveLoadUi()
     {
         var playerStatus = PlayerStatus.GetInstance();
-        if (playerStatus != null)
-            playerStatus.HasSaveUiOpen = true;
+        playerStatus.HasSaveLoadUiOpen = true;
 
         _loadingSaveFiles = true;
-        LoadingMessage.Visible = true;
+        RefreshSaveFileList();
         SaveGameUi.Visible = true;
 
         _menuOpened = true;
     }
 
-    private void Close()
+    private void CloseSaveUi()
     {
         _menuOpened = false;
 
         var playerStatus = PlayerStatus.GetInstance();
         if (playerStatus != null)
-            playerStatus.HasSaveUiOpen = false;
+            playerStatus.HasSaveLoadUiOpen = false;
         SaveGameUi.Visible = false;
     }
 
     private void RefreshSaveFileList()
     {
-        _saveFileNames = GetSaveFilesByMostRecentFirst();
-        var saveFileDisplayStr = new StringBuilder("Create New Save File\r\n\r\n");
+        // GD.Print("RefreshSaveFileList start");
+        SaveFilesScroll.Visible = false;
+        LoadingMessage.Visible = true;
+        _saveFileNames = GetSaveFilesByLeastRecentFirst();
+
+        if (_saveFiles == null)
+            _saveFiles = new List<SaveFileUi>();
+        else
+        {
+            foreach (var file in _saveFiles)
+                file.QueueFree();
+            _saveFiles.Clear();
+        }
+        
         foreach (var saveFileName in _saveFileNames)
         {
             var cleanFileName = CleanFileName(saveFileName);
-            saveFileDisplayStr.AppendLine(cleanFileName);
+
+            var saveFileButtonScene = GD.Load<PackedScene>(GameConstants.SaveFileButtonUi);
+            var saveFileButton = (saveFileButtonScene.Instantiate()) as SaveFileUi;
+            saveFileButton.SaveFileButton.Text = cleanFileName;
+            saveFileButton.SaveFileName = saveFileName;
+            _saveFiles.Add(saveFileButton);
+            SaveFileList.AddSibling(saveFileButton);
         }
 
-        var displayStr = saveFileDisplayStr.ToString();
+        if (!_isLoading)
+        {
+            var newSaveFileButtonScene = GD.Load<PackedScene>(GameConstants.SaveFileButtonUi);
+            var newSaveFileButton = (newSaveFileButtonScene.Instantiate()) as SaveFileUi;
+            newSaveFileButton.SaveFileButton.Text = GameConstants.SaveFileNewSaveText;
+            newSaveFileButton.IsNewFileSlot = true;
+            _saveFiles.Add(newSaveFileButton);
+            SaveFileList.AddSibling(newSaveFileButton);
+        }
+
+        if (_saveFiles.Any())
+            _saveFiles.Last().SaveFileButton.GrabFocus();
+        LoadingMessage.Visible = false;
+        SaveFilesScroll.Visible = true;
     }
 
-    private static List<string> GetSaveFilesByMostRecentFirst()
+    private static List<string> GetSaveFilesByLeastRecentFirst()
     {
         var saveDir = DirAccess.Open(SaveDirectoryPath);
 
@@ -133,11 +174,12 @@ public partial class SaveGame : Node
         var filenamesWithLastModified = new List<Tuple<string, ulong>>();
         foreach (var file in files)
         {
-            var lastModified = FileAccess.GetModifiedTime(file);
+            var lastModified = FileAccess.GetModifiedTime($"{SaveDirectoryPath}/{file}");
             filenamesWithLastModified.Add(new Tuple<string, ulong>(file, lastModified));
+            // GD.Print($"File = {file}, LastModified = {lastModified}");
         }
 
-        var saveFileNames = filenamesWithLastModified.OrderByDescending(f => f.Item2).Select(f => f.Item1).ToList();
+        var saveFileNames = filenamesWithLastModified.OrderBy(f => f.Item2).Select(f => f.Item1).ToList();
         return saveFileNames;
     }
 
@@ -149,17 +191,11 @@ public partial class SaveGame : Node
         return cleanFileName;
     }
 
-    // TODO: Move this to main menu UI at some point.
-    public void LoadSaveFile(int fileSlot)
+    public void LoadSaveFile(string targetFile)
     {
-        //if (fileSlot >= _saveFileSlots.Length)
-        //    return;
-        //
-        //var targetFile = _saveFileSlots[fileSlot];
-
-        // TODO: Load filename from slot # instead of hard coding!!!
-        var targetFile = "test_scene2 - 24-01-08_01-03-42.sav";
+        // TODO: will we need to concatinate the path in here?
         var targetFilePath = $"{SaveDirectoryPath}/{targetFile}";
+        GD.Print($"Loading save file '{targetFilePath}'");
 
         if (string.IsNullOrEmpty(targetFile) || !FileAccess.FileExists(targetFilePath))
             return;
@@ -168,6 +204,9 @@ public partial class SaveGame : Node
         var saveData = file.GetAsText();
         var gameState = JsonConvert.DeserializeObject<DataSaver.GameState>(saveData);
 
+        GD.Print($"Save data as game state==null? {gameState == null}, saveData:\r\n{saveData}");
         LoadGameData.GetInstance().SetGameState(gameState);
+
+        CloseSaveUi();
     }
 }

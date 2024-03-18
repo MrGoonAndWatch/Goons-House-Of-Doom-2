@@ -59,7 +59,7 @@ public partial class DataSaver : Node3D
     private void SavePlayerStatus(PlayerStatus playerStatus, PlayerInventory playerInventory)
     {
         _gameState.Health = playerStatus.Health;
-        _gameState.DeadEnemies = _gameState.DeadEnemies.Union(playerStatus.KilledEnemies).Distinct().ToArray();
+        _gameState.DeadEnemies = _gameState.DeadEnemies.Union(playerStatus.DeadEnemies).Distinct().ToArray();
         _gameState.DoorsUnlocked = _gameState.DoorsUnlocked.Union(playerStatus.DoorsUnlocked).Distinct().ToArray();
         _gameState.GrabbedItems = _gameState.GrabbedItems.Union(playerStatus.GrabbedItems).Distinct().ToArray();
         _gameState.TriggeredEvents = _gameState.TriggeredEvents.Union(playerStatus.TriggeredEvents.Select(e => (int)e)).Distinct().ToArray();
@@ -148,10 +148,10 @@ public partial class DataSaver : Node3D
                 playerInventory.EquipDirty = true;
             }
             else
-            {
                 GD.Print("Tried to equip non-weapon item from item slot #" + _gameState.EquipedWeaponIndex);
-            }
         }
+        playerStatus.GrabbedItems = _gameState.GrabbedItems.ToList();
+        playerStatus.DeadEnemies = _gameState.DeadEnemies.ToList();
     }
 
     private void LoadInventory(PlayerInventory playerInventory, PlayerItemBoxControl playerItemBox)
