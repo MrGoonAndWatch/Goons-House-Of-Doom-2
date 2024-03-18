@@ -6,6 +6,10 @@ public partial class GameConstants : GodotObject
     public const float GreenMedicineHp = 25.0f;
     public const float ControllerMenuDeadzone = 0.72f;
 
+    public const string SaveDirectoryPath = "user://saves";
+    public const string ScenesDirectory = "res://scenes/";
+    public const string GlobalSettingsFilename = "global.config";
+
     public static class Colors
     {
         public static Color Clear = Color.Color8(0, 0, 0, 0);

@@ -13,19 +13,55 @@ public partial class OptionsMenuUi : Control
     private Slider SfxVolumeSlider;
     [Export]
     private Slider VoiceVolumeSlider;
+    [Export]
+    private CheckBox FullscreenCheckbox;
 
-    private float _originalTotalVolume;
-    private float _originalMusicVolume;
-    private float _originalSfxVolume;
-    private float _originalVoiceVolume;
+    private GlobalSettings _originalGlobalSettings;
+    private GlobalSettings _globalSettings;
+
+    private const int DefaultResolutionChoice = 6;
+
+    private int _currentResolutionIndex;
+    private bool _initialized;
 
     public override void _Ready()
     {
-        SaveCurrentValues();
-        //GhodAudioManager.ChangeTotalVolume(_originalTotalVolume);
-        //GhodAudioManager.ChangeMusicVolume(_originalMusicVolume);
-        //GhodAudioManager.ChangeSfxVolume(_originalSfxVolume);
-        //GhodAudioManager.ChangeVoiceVolume(_originalVoiceVolume);
+        _originalGlobalSettings = DataSaver.GetGlobalSettings();
+        _globalSettings = new GlobalSettings(_originalGlobalSettings);
+        InitResolution();
+    }
+
+    private void InitResolution()
+    {
+        _currentResolutionIndex = GetResolutionIndex(_originalGlobalSettings.Resolution);
+        ResolutionPicker.Select(_currentResolutionIndex);
+        SyncResolution();
+        FullscreenCheckbox.SetPressedNoSignal(_globalSettings.Fullscreen);
+        SetFullscreen();
+    }
+
+    private int GetResolutionIndex(string resolution)
+    {
+        for (var i = 0; i < ResolutionPicker.ItemCount; i++)
+        {
+            if (ResolutionPicker.GetItemText(i).Equals(resolution, System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                GD.Print($"Found resolution option at slot {i}");
+                return i;
+            }
+        }
+
+        return DefaultResolutionChoice;
+    }
+
+    public override void _Process(double delta)
+    {
+        if(!_initialized && GhodAudioManager.IsInitialized())
+        {
+            GD.Print("audio manager is initialized, initializing volumes!");
+            SyncAllVolumes();
+            _initialized = true;
+        }
     }
 
     public void _OnTotalVolumeChanged(float newVolume)
@@ -73,28 +109,44 @@ public partial class OptionsMenuUi : Control
 
     private void SaveCurrentValues()
     {
-        _originalTotalVolume = (float) TotalVolumeSlider.Value;
-        _originalMusicVolume = (float) MusicVolumeSlider.Value;
-        _originalSfxVolume = (float) SfxVolumeSlider.Value;
-        _originalVoiceVolume = (float) VoiceVolumeSlider.Value;
+        _globalSettings.TotalVolume = (float) TotalVolumeSlider.Value;
+        _globalSettings.MusicVolume = (float) MusicVolumeSlider.Value;
+        _globalSettings.SfxVolume = (float) SfxVolumeSlider.Value;
+        _globalSettings.VoiceVolume = (float) VoiceVolumeSlider.Value;
+        _globalSettings.Resolution = ResolutionPicker.GetItemText(_currentResolutionIndex);
+        _originalGlobalSettings = _globalSettings;
+        DataSaver.GetInstance().SaveGlobalSettings(_globalSettings);
     }
 
     private void RevertValues()
     {
-        TotalVolumeSlider.Value = _originalTotalVolume;
-        MusicVolumeSlider.Value = _originalMusicVolume;
-        SfxVolumeSlider.Value = _originalSfxVolume;
-        VoiceVolumeSlider.Value = _originalVoiceVolume;
+        _globalSettings = _originalGlobalSettings;
+        SyncAllVolumes();
+        InitResolution();
+    }
 
-        GhodAudioManager.ChangeTotalVolume(_originalTotalVolume);
-        GhodAudioManager.ChangeMusicVolume(_originalMusicVolume);
-        GhodAudioManager.ChangeSfxVolume(_originalSfxVolume);
-        GhodAudioManager.ChangeVoiceVolume(_originalVoiceVolume);
+    private void SyncAllVolumes()
+    {
+        TotalVolumeSlider.Value = _globalSettings.TotalVolume;
+        MusicVolumeSlider.Value = _globalSettings.MusicVolume;
+        SfxVolumeSlider.Value = _globalSettings.SfxVolume;
+        VoiceVolumeSlider.Value = _globalSettings.VoiceVolume;
+
+        GhodAudioManager.ChangeTotalVolume((float)TotalVolumeSlider.Value);
+        GhodAudioManager.ChangeMusicVolume((float)MusicVolumeSlider.Value);
+        GhodAudioManager.ChangeSfxVolume((float)SfxVolumeSlider.Value);
+        GhodAudioManager.ChangeVoiceVolume((float)VoiceVolumeSlider.Value);
     }
 
     public void _OnResolutionChanged(int newResolutionIndex)
     {
-        var resolutionText = ResolutionPicker.GetItemText(newResolutionIndex);
+        _currentResolutionIndex = newResolutionIndex;
+        SyncResolution();
+    }
+
+    private void SyncResolution()
+    {
+        var resolutionText = ResolutionPicker.GetItemText(_currentResolutionIndex);
         if (!resolutionText.Contains("x")) return;
 
         var resolution = resolutionText.Split("x").Select(r => int.Parse(r)).ToArray();
@@ -104,7 +156,13 @@ public partial class OptionsMenuUi : Control
 
     public void _OnSetFullscreen(bool isFullscreen)
     {
-        if (isFullscreen)
+        _globalSettings.Fullscreen = isFullscreen;
+        SetFullscreen();
+    }
+
+    private void SetFullscreen()
+    {
+        if (_globalSettings.Fullscreen)
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
         else
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);

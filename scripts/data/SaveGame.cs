@@ -15,9 +15,6 @@ public partial class SaveGame : Control
     [Export]
     private ScrollContainer SaveFilesScroll;
 
-    private const string SaveDirectoryPath = "user://saves";
-    private const string ScenesDirectory = "res://scenes/";
-
     private bool _menuOpened;
     private bool _loadingSaveFiles;
     private List<string> _saveFileNames;
@@ -30,7 +27,7 @@ public partial class SaveGame : Control
 	{
         SaveGameUi.Visible = false;
         SaveFilesScroll.GetVScrollBar().Modulate = GameConstants.Colors.Clear;
-        DirAccess.MakeDirRecursiveAbsolute(SaveDirectoryPath);
+        DirAccess.MakeDirRecursiveAbsolute(GameConstants.SaveDirectoryPath);
         LoadingMessage.Visible = false;
         RefreshSaveFileList();
     }
@@ -69,7 +66,7 @@ public partial class SaveGame : Control
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(GameConstants.NodePaths.FromSceneRoot.ItemBoxControl);
-        var sceneName = GetTree().CurrentScene.SceneFilePath.Replace(ScenesDirectory, "").Replace(".tscn", "");
+        var sceneName = GetTree().CurrentScene.SceneFilePath.Replace(GameConstants.ScenesDirectory, "").Replace(".tscn", "");
         var sceneInfo = new SceneLoadData
         {
             TargetScene = sceneName,
@@ -87,12 +84,12 @@ public partial class SaveGame : Control
         var newFilename = $"{roomStr} - {dateStr}.sav";
 
         GD.Print($"Trying to save data to {newFilename}...");
-        var fileAccess = FileAccess.Open($"{SaveDirectoryPath}/{newFilename}", FileAccess.ModeFlags.Write);
+        var fileAccess = FileAccess.Open($"{GameConstants.SaveDirectoryPath}/{newFilename}", FileAccess.ModeFlags.Write);
 
         var dataJson = JsonConvert.SerializeObject(data);
         fileAccess.StoreString(dataJson);
         if (!string.IsNullOrEmpty(filename))
-            DirAccess.RemoveAbsolute($"{SaveDirectoryPath}/{filename}");
+            DirAccess.RemoveAbsolute($"{GameConstants.SaveDirectoryPath}/{filename}");
         fileAccess.Close();
 
         CloseSaveUi();
@@ -168,14 +165,14 @@ public partial class SaveGame : Control
 
     private static List<string> GetSaveFilesByLeastRecentFirst()
     {
-        var saveDir = DirAccess.Open(SaveDirectoryPath);
+        var saveDir = DirAccess.Open(GameConstants.SaveDirectoryPath);
 
         var files = saveDir.GetFiles().Where(f => f.EndsWith(".sav"));
 
         var filenamesWithLastModified = new List<Tuple<string, ulong>>();
         foreach (var file in files)
         {
-            var lastModified = FileAccess.GetModifiedTime($"{SaveDirectoryPath}/{file}");
+            var lastModified = FileAccess.GetModifiedTime($"{GameConstants.SaveDirectoryPath}/{file}");
             filenamesWithLastModified.Add(new Tuple<string, ulong>(file, lastModified));
             // GD.Print($"File = {file}, LastModified = {lastModified}");
         }
@@ -195,7 +192,7 @@ public partial class SaveGame : Control
     public void LoadSaveFile(string targetFile)
     {
         // TODO: will we need to concatinate the path in here?
-        var targetFilePath = $"{SaveDirectoryPath}/{targetFile}";
+        var targetFilePath = $"{GameConstants.SaveDirectoryPath}/{targetFile}";
         GD.Print($"Loading save file '{targetFilePath}'");
 
         if (string.IsNullOrEmpty(targetFile) || !FileAccess.FileExists(targetFilePath))
@@ -203,6 +200,7 @@ public partial class SaveGame : Control
         
         var file = FileAccess.Open(targetFilePath, FileAccess.ModeFlags.Read);
         var saveData = file.GetAsText();
+        file.Close();
         var gameState = JsonConvert.DeserializeObject<DataSaver.GameState>(saveData);
 
         GD.Print($"Save data as game state==null? {gameState == null}, saveData:\r\n{saveData}");

@@ -60,6 +60,13 @@ public partial class GhodAudioManager : Node
         }
 	}
 
+    public static bool IsInitialized()
+    {
+        if (_instance == null) return false;
+
+        return _instance._initializedAudio;
+    }
+
     private AudioStream LoadSound(string soundPath)
     {
         var stream = ResourceLoader.Load<AudioStream>(soundPath);

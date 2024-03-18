@@ -1,4 +1,6 @@
 using Godot;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static GameConstants;
@@ -8,6 +10,9 @@ public partial class DataSaver : Node3D
     private static DataSaver Instance;
 
     private GameState _gameState;
+    private GlobalSettings _globalSettings;
+
+    private const string GlobalSettingsFullFilepath = $"{SaveDirectoryPath}/{GlobalSettingsFilename}";
 
     public static DataSaver GetInstance()
     {
@@ -16,7 +21,7 @@ public partial class DataSaver : Node3D
 
     public override void _Ready()
 	{
-        if(Instance != null)
+        if (Instance != null)
         {
             QueueFree();
             return;
@@ -41,11 +46,65 @@ public partial class DataSaver : Node3D
             },
             EquipedWeaponIndex = null,
         };
+
+        _globalSettings = new GlobalSettings
+        {
+            TotalVolume = 80.0f,
+            MusicVolume = 80.0f,
+            SfxVolume = 80.0f,
+            VoiceVolume = 80.0f,
+            Resolution = "1680x1050",
+        };
+
+        LoadGlobalSettingsFromFile();
+    }
+
+    private void LoadGlobalSettingsFromFile()
+    {
+        DirAccess.MakeDirRecursiveAbsolute(SaveDirectoryPath);
+
+        if (!FileAccess.FileExists(GlobalSettingsFullFilepath)) return;
+
+        var settingsFile = FileAccess.Open(GlobalSettingsFullFilepath, FileAccess.ModeFlags.Read);
+        var settingsFileJson = settingsFile.GetAsText();
+        settingsFile.Close();
+
+        try
+        {
+            var settings = JsonConvert.DeserializeObject<GlobalSettings>(settingsFileJson);
+            _globalSettings = settings;
+            GD.Print($"Successfully loaded global settings");
+            GD.Print(settingsFileJson);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"Failed to load global settings, file was found but not deserialzable: {e}");
+        }
     }
 
     public GameState GetGameState()
     {
         return _gameState;
+    }
+
+    public static GlobalSettings GetGlobalSettings()
+    {
+        if(Instance == null)
+        {
+            GD.PrintErr("Failed to get global settings, DataSaver Instance was null!");
+            throw new System.NullReferenceException();
+        }
+
+        return Instance._globalSettings;
+    }
+
+    public void SaveGlobalSettings(GlobalSettings settings)
+    {
+        _globalSettings = settings;
+        var fileAccess = FileAccess.Open(GlobalSettingsFullFilepath, FileAccess.ModeFlags.Write);
+        var settingsJson = JsonConvert.SerializeObject(_globalSettings);
+        fileAccess.StoreString(settingsJson);
+        fileAccess.Close();
     }
 
     public void SaveGameStateFromScene(PlayerStatus playerStatus, PlayerInventory playerInventory, SceneLoadData sceneLoadData, PlayerItemBoxControl playerItemBox)
