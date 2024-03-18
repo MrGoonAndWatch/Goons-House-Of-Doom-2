@@ -68,6 +68,7 @@ offset_left = -4.0
 offset_right = 4.0
 grow_horizontal = 2
 grow_vertical = 2
+follow_focus = true
 
 [node name="FileListContainer" type="VBoxContainer" parent="SaveUiBase/FileWindow/ScrollContainer"]
 self_modulate = Color(1, 1, 1, 0)

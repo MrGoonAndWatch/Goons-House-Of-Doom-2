@@ -8,9 +8,15 @@ public partial class SaveFileUi : Control
     public bool IsNewFileSlot;
     public string SaveFileName;
 
+    private SaveGame _saveGameUi;
+
+    public override void _Ready()
+    {
+        _saveGameUi = GetNode<SaveGame>(GameConstants.NodePaths.FromSceneRoot.SaveGameUi);
+    }
+
     public void _OnButtonPressed()
     {
-        var saveGameUi = GetNode<SaveGame>(GameConstants.NodePaths.FromSceneRoot.SaveGameUi);
-        saveGameUi.SaveSlotSelected(this);
+        _saveGameUi.SaveSlotSelected(this);
     }
 }

@@ -93,6 +93,7 @@ public partial class SaveGame : Control
         fileAccess.StoreString(dataJson);
         if (!string.IsNullOrEmpty(filename))
             DirAccess.RemoveAbsolute($"{SaveDirectoryPath}/{filename}");
+        fileAccess.Close();
 
         CloseSaveUi();
 
