@@ -1,7 +1,8 @@
 using Godot;
+using System;
 using static GameConstants;
 
-public partial class Player : CharacterBody3D
+public partial class Player : ICutsceneActor
 {
     [Export]
     private AnimationTree _tree;
@@ -231,5 +232,15 @@ public partial class Player : CharacterBody3D
 
     private void EndQuickTurn() {
         IsQuickTurning = false;
+    }
+
+    public override void SetAnimationFlag(string flagName, Variant value)
+    {
+        _tree.Set(flagName, value);
+    }
+
+    public override void MoveToPosition(Vector3 position, bool run)
+    {
+        throw new NotImplementedException();
     }
 }

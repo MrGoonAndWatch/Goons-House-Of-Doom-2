@@ -26,6 +26,7 @@ public partial class PlayerStatus : Node
     public bool Paused;
     public bool ItemBoxOpened;
     public bool ReadyToShoot;
+    public bool IsInCutscene;
 
     public List<int> DeadEnemies;
     public List<GlobalEvent> TriggeredEvents;
@@ -278,12 +279,12 @@ public partial class PlayerStatus : Node
 
     public bool CanPause()
     {
-        return !MenuOpened && !ItemBoxOpened && Health > 0;
+        return !IsInCutscene && !MenuOpened && !ItemBoxOpened && Health > 0;
     }
 
     public bool CanOpenMenu()
     {
-        return !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen;
+        return !IsInCutscene && !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen;
     }
 
     public bool HasAnyUiOpen()
@@ -293,27 +294,27 @@ public partial class PlayerStatus : Node
 
     public bool IsRotationPrevented()
     {
-        return TakingDamage || Shooting || Health <= 0 || HasAnyUiOpen();
+        return IsInCutscene || TakingDamage || Shooting || Health <= 0 || HasAnyUiOpen();
     }
 
     public bool IsMovementPrevented()
     {
-        return TakingDamage || Aiming || Shooting || Health <= 0 || HasAnyUiOpen();
+        return IsInCutscene || TakingDamage || Aiming || Shooting || Health <= 0 || HasAnyUiOpen();
     }
 
     public bool CanInteract()
     {
-        return !TakingDamage && !Aiming && !Shooting && Health > 0 && !HasAnyUiOpen();
+        return !IsInCutscene && !TakingDamage && !Aiming && !Shooting && Health > 0 && !HasAnyUiOpen();
     }
 
     public bool CanAim()
     {
-        return !Aiming && !Paused && !TakingDamage && Health > 0 && !HasAnyUiOpen();
+        return !IsInCutscene && !Aiming && !Paused && !TakingDamage && Health > 0 && !HasAnyUiOpen();
     }
 
     public bool CanShoot()
     {
-        return ReadyToShoot && !TakingDamage && Health > 0 && !HasAnyUiOpen();
+        return ReadyToShoot && !IsInCutscene && !TakingDamage && Health > 0 && !HasAnyUiOpen();
     }
 
     public bool WeaponHasAmmo()

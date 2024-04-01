@@ -615,7 +615,7 @@ states/Start/position = Vector2(180, 61)
 states/Un-Aim-Pistol/node = SubResource("AnimationNodeAnimation_tsok6")
 states/Un-Aim-Pistol/position = Vector2(160, 150)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_sn1xc"), "Idle", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_5sw78"), "Equip-Pistol", "Idle", SubResource("AnimationNodeStateMachineTransition_6ijfg"), "Equip-Pistol", "Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_rejqq"), "Un-Aim-Pistol", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_x4nif"), "Aiming-Pistol", "Un-Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_hcryr"), "Aim-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_qbedh"), "Aiming-Pistol", "Fire-Pistol", SubResource("AnimationNodeStateMachineTransition_fygjl"), "Fire-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_qm100")]
-graph_offset = Vector2(-104, 67.6438)
+graph_offset = Vector2(-60, 40.6438)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_fxwsl"]
 
@@ -644,7 +644,7 @@ states/Start/position = Vector2(233, 100)
 states/Walk/node = SubResource("AnimationNodeAnimation_tgn0h")
 states/Walk/position = Vector2(365, 137)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_vcsds"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_ijiqj"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_32re7")]
-graph_offset = Vector2(134, -16)
+graph_offset = Vector2(97, -29)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vsrs6"]
 nodes/AddArmsLegs/node = SubResource("AnimationNodeAdd2_vvjd8")

@@ -30,7 +30,7 @@ window/size/viewport_width=1900
 window/size/viewport_height=1000
 window/size/resizable=false
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+window/stretch/aspect="ignore"
 
 [dotnet]
 
