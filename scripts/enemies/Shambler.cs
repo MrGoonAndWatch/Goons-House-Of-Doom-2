@@ -8,6 +8,8 @@ public partial class Shambler : Enemy
     private float _attackRange = 3.0f;
     [Export]
     private float _timeToWaitAfterAttack = 2.0f;
+    [Export]
+    private RayCast3D _rayCast;
 
     private float _chaseDistanceSquared;
     private float _attackRangeSquared;
@@ -37,17 +39,25 @@ public partial class Shambler : Enemy
 
         var distanceToPlayerSquared = GlobalPosition.DistanceSquaredTo(_player.GlobalPosition);
         if (distanceToPlayerSquared <= _chaseDistanceSquared)
+            HandleChasePlayer(distanceToPlayerSquared, delta);
+    }
+
+    private void HandleChasePlayer(float distanceToPlayerSquared, double delta)
+    {
+        _rayCast.LookAt(_player.GlobalPosition);
+        _rayCast.ForceRaycastUpdate();
+        var lineOfSightCollider = _rayCast.GetCollider();
+        if (lineOfSightCollider != null && !(lineOfSightCollider is Player)) return;
+
+        if (distanceToPlayerSquared > _attackRangeSquared)
         {
-            if (distanceToPlayerSquared > _attackRangeSquared)
-            {
-                LookAtPoint(_player.GlobalPosition);
-                MoveTowardsPosition(_player.GlobalPosition, _speed, delta);
-            }
-            else if (_postAttackIdleTime <= 0)
-            {
-                AttackPlayer();
-                _postAttackIdleTime = _timeToWaitAfterAttack;
-            }
+            LookAtPoint(_player.GlobalPosition);
+            MoveTowardsPosition(_player.GlobalPosition, _speed, delta);
+        }
+        else if (_postAttackIdleTime <= 0)
+        {
+            AttackPlayer();
+            _postAttackIdleTime = _timeToWaitAfterAttack;
         }
     }
 }
