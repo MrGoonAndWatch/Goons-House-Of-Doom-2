@@ -459,4 +459,18 @@ public partial class PlayerInventory : Node3D
         if (_menuEnabled)
             OnOpenMenu();
     }
+
+    public Key GetKeyOfType(GameConstants.KeyType type)
+    {
+        for (var i = 0; i < Items.Length; i++)
+        {
+            var key = Items[i].Item as Key;
+            if (key != null && key.GetKeyType() == type)
+            {
+                return key;
+            }
+        }
+
+        return null;
+    }
 }

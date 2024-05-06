@@ -28,6 +28,7 @@ public partial class Door : Node3D
 
     private bool _unlocked;
     private InspectTextUi _textReader;
+    private PlayerInventory _playerInventory;
 
     public override void _Ready()
 	{
@@ -35,8 +36,11 @@ public partial class Door : Node3D
         var gameState = DataSaver.GetInstance().GetGameState();
         if (gameState.DoorsUnlocked.Contains(DoorId))
             _unlocked = true;
+        if (gameState.TriggeredEvents.Contains((int)UnlocksOnEvent))
+            _unlocked = true;
         if (LocksWith == KeyType.None && UnlocksOnEvent == GlobalEvent.None)
             _unlocked = true;
+        _playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
     }
 
     public void Inspect()
@@ -52,7 +56,15 @@ public partial class Door : Node3D
             };
             sceneChanger.ChangeScene(sceneChangeInfo, DoorLoadType);
         }
-        else if (LockedText?.Any() ?? false)
+        else if (LocksWith != KeyType.None)
+        {
+            var key = _playerInventory.GetKeyOfType(LocksWith);
+            if (key != null)
+                Unlock(key);
+            else if (LockedText?.Any() ?? false)
+                _textReader.ReadText(LockedText);
+        }
+        else if (UnlocksOnEvent != GlobalEvent.None && (LockedText?.Any() ?? false))
             _textReader.ReadText(LockedText);
     }
 
