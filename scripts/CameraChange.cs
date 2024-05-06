@@ -5,15 +5,19 @@ public partial class CameraChange : Area3D
 	[Export]
 	private Camera3D TargetCamera;
 
+	[Export]
+	private Node3D TargetCameraPos;
+
 	public void OnBodyEntered(Node3D body)
 	{
-		if (TargetCamera == null)
+		if (TargetCameraPos == null || TargetCamera == null)
 			return;
 
 		if (body.IsInGroup("player"))
 		{
-			GD.Print($"changing camera to {TargetCamera.Name}");
-			TargetCamera.Current = true;
+			GD.Print($"changing camera to {TargetCameraPos.Name}");
+			TargetCamera.GlobalPosition = TargetCameraPos.GlobalPosition;
+			TargetCamera.GlobalRotation = TargetCameraPos.GlobalRotation;
 		}
 	}
 }
