@@ -16,6 +16,12 @@ public partial class GameConstants : GodotObject
         public static Color White = Color.Color8(255, 255, 255);
     }
 
+    public enum CutsceneInstructionEndType
+    {
+        EndAfterTime,
+        EndWhenMovementEnds
+    }
+
     public enum GameDifficulty
     {
         Easy,
@@ -162,6 +168,7 @@ public partial class GameConstants : GodotObject
             public const string PlayerStatus = "/root/root/PlayerStatus";
             public const string HordeModeManager = "/root/root/HordeModeManager";
             public const string SaveGameUi = Player + "/save_game_ui";
+            public const string CutsceneManager = Player + "/cutscene_ui";
         }
     }
 

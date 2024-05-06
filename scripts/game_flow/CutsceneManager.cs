@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class CutsceneManager : Node
 {
@@ -22,6 +21,8 @@ public partial class CutsceneManager : Node
 	private float EndBottomBarYPos;
 
 	private PlayerStatus _playerStatus;
+
+	private Cutscene _currentCutscene;
 
     public override void _Ready()
 	{
@@ -51,12 +52,17 @@ public partial class CutsceneManager : Node
 
     public override void _Process(double delta)
 	{
-        //if (Input.IsActionJustPressed("DEBUG_Save"))
-        //	StartCutscene();
-        //if (Input.IsActionJustPressed("DEBUG_Load"))
-        //	EndCutscene();
-        if (Input.IsActionJustPressed(GameConstants.Controls.pause.ToString()))
-            SkipCutscene();
+		if (Input.IsActionJustPressed(GameConstants.Controls.pause.ToString()))
+		{
+			SkipCutscene();
+			return;
+		}
+
+		if (_currentCutscene != null && _currentCutscene.HasCutsceneEnded())
+		{
+			GD.Print("Cutscene has ended!");
+			EndCutscene();
+		}
 
         if (_cutsceneStarting && _cutsceneEnding) _cutsceneEnding = false;
 
@@ -64,7 +70,10 @@ public partial class CutsceneManager : Node
 		{
 			var topFinishedStarting = MoveBar(TopBar, 1.0f, delta, StartTopBarYPos);
 			var bottomFinishedStarting = MoveBar(BottomBar, -1.0f, delta, StartBottomBarYPos);
-			if (topFinishedStarting && bottomFinishedStarting) _cutsceneStarting = false;
+			if (topFinishedStarting && bottomFinishedStarting) { 
+				_cutsceneStarting = false;
+				_currentCutscene.StartCutscene();
+			}
 		}
 		else if (_cutsceneEnding)
 		{
@@ -92,6 +101,8 @@ public partial class CutsceneManager : Node
 
 	public void SkipCutscene()
 	{
+		if (_currentCutscene != null)
+			_currentCutscene.SkipCutscene();
 		ForceCutsceneEnd();
 	}
 
@@ -102,16 +113,20 @@ public partial class CutsceneManager : Node
 		_cutsceneStarting = false;
 		_cutsceneEnding = false;
 		_playerStatus.IsInCutscene = false;
+		_currentCutscene = null;
     }
 
-	public void StartCutscene()
+	public void StartCutscene(Cutscene cutscene)
 	{
+		// TODO: Check if cutscene should not be run due to it already having been played or similar reasons!
 		_cutsceneStarting = true;
 		_playerStatus.IsInCutscene = true;
+		_currentCutscene = cutscene;
     }
 
 	public void EndCutscene()
 	{
 		_cutsceneEnding = true;
-	}
+		_currentCutscene = null;
+    }
 }

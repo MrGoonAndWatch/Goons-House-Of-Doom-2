@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://bge1m43vai5ow"]
+
+[ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="1_uqswq"]
+[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_b0if0"]
+[ext_resource type="Script" path="res://scripts/debug/RotationTest.cs" id="3_6q67x"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nkymg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gmde6"]
+
+[node name="root" type="Node3D"]
+
+[node name="test_grid_map" parent="." instance=ExtResource("1_uqswq")]
+data = {
+"cells": PackedInt32Array(-65538, 65534, 0, -65537, 65534, 0, -131072, 65534, 0, -131071, 65534, 0, -65539, 65534, 0, -65540, 65534, 0, -65540, 65535, 0, -65540, 0, 0, -65539, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -131071, 65535, 0, -131072, 65535, 0, -65537, 65535, 0, -65538, 65535, 0, -65539, 65535, 0, -65540, 65533, 0, -65540, 65532, 0, -65539, 65532, 0, -65538, 65532, 0, -65537, 65532, 0, -65539, 65533, 0, -65538, 65533, 0, -65537, 65533, 0, -131072, 65533, 0, -131071, 65533, 0, -131071, 65532, 0, -131072, 65532, 0, -131070, 65532, 0, -131070, 65533, 0, -131070, 65534, 0, -131070, 65535, 0, -131070, 0, 0, -131069, 65532, 0, -131069, 65533, 0, -131069, 65534, 0, -131069, 65535, 0, -131069, 0, 0, -131069, 1, 0, -131069, 2, 0, -131070, 2, 0, -131069, 3, 0, -131070, 3, 0, -131071, 3, 0, -131072, 3, 0, -65537, 3, 0, -65538, 3, 0, -65539, 3, 0, -65540, 3, 0, -65540, 2, 0, -65540, 1, 0, -65539, 1, 0, -65539, 2, 0, -65538, 1, 0, -65538, 2, 0, -65537, 1, 0, -131072, 1, 0, -65537, 2, 0, -131071, 1, 0, -131071, 2, 0, -131072, 2, 0, -131070, 1, 0)
+}
+metadata/_editor_floor_ = Vector3(0, -2, 0)
+
+[node name="Player" parent="." instance=ExtResource("2_b0if0")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 6, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 5.93658, 0)
+
+[node name="targetA" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.70808, 0, 2.77495)
+mesh = SubResource("CapsuleMesh_nkymg")
+
+[node name="targetB" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10888, 0, -2.59648)
+mesh = SubResource("BoxMesh_gmde6")
+
+[node name="Node3D" type="Node3D" parent="." node_paths=PackedStringArray("_player", "_targetA", "_targetB")]
+script = ExtResource("3_6q67x")
+_player = NodePath("../Player")
+_targetA = NodePath("../targetA")
+_targetB = NodePath("../targetB")

@@ -11,6 +11,9 @@ public partial class Player : ICutsceneActor
     [Export]
     private RayCast3D _hitscanRay;
 
+    [Export]
+    private Label _playerPositionLabel;
+
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
 	const float BACKWARDS_MODIFIER = 0.5f;
@@ -28,6 +31,9 @@ public partial class Player : ICutsceneActor
 
     public override void _Ready()
     {
+        if (_playerPositionLabel != null)
+            _playerPositionLabel.Text = "";
+
         _playerStatus = PlayerStatus.GetInstance();
         WeaponEquipped(_playerStatus.EquipedWeapon);
     }
@@ -41,7 +47,7 @@ public partial class Player : ICutsceneActor
 
     private void HandlePauseMenu()
     {
-        if (Input.IsActionJustPressed(Controls.pause.ToString()))
+        if (!_playerStatus.IsInCutscene && Input.IsActionJustPressed(Controls.pause.ToString()))
         {
             if (_playerStatus.Paused)
             {
@@ -148,6 +154,13 @@ public partial class Player : ICutsceneActor
 
     public override void _PhysicsProcess(double delta)
     {
+        // Note: override for when we're moving in a cutscene per cutscene instructions.
+        if (_currentTargetPosition.HasValue) {
+            MoveAndSlide();
+            //_playerPositionLabel.Text = $"{Position.ToString("0.00")}";
+            return;
+        }
+
         var velocity = Velocity;
 		velocity = ProcessGravity(delta, velocity);
 
@@ -157,6 +170,8 @@ public partial class Player : ICutsceneActor
 		Velocity = velocity;
 
 		MoveAndSlide();
+
+        //_playerPositionLabel.Text = Position.ToString("0.00");
     }
 
 	private Vector3 ProcessGravity(double delta, Vector3 velocity)
@@ -239,8 +254,16 @@ public partial class Player : ICutsceneActor
         _tree.Set(flagName, value);
     }
 
-    public override void MoveToPosition(Vector3 position, bool run)
+    public void DebugTweenToAngle(float angle, Action callback)
     {
-        throw new NotImplementedException();
+        var tween = CreateTween();
+        tween.TweenProperty(this, "rotation:y", angle, 0.25f);
+        tween.SetTrans(Tween.TransitionType.Linear);
+        tween.TweenCallback(Callable.From(callback));
+    }
+
+    public RayCast3D GetHitscan()
+    {
+        return _hitscanRay;
     }
 }

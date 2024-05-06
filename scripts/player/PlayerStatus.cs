@@ -360,23 +360,28 @@ public partial class PlayerStatus : Node
         playerInteract.UseKey(key);
     }
 
-    public static void PrintPlayerStatus()
+    public static void DebugPrintPlayerStatus()
     {
-        if(_instance == null)
-        {
-            GD.PrintErr("Could not PrintPlayerStatus, PlayerStatus instance is null!");
-            return;
-        }
+        GD.Print(DebugGetStatusFlagsString());
+    }
 
-        GD.Print($"MenuOpened={_instance.MenuOpened}");
-        GD.Print($"Reading={_instance.Reading}");
-        GD.Print($"QuickTurning={_instance.QuickTurning}");
-        GD.Print($"TakingDamage={_instance.TakingDamage}");
-        GD.Print($"Aiming={_instance.Aiming}");
-        GD.Print($"Shooting={_instance.Shooting}");
-        GD.Print($"HasSaveLoadUiOpen={_instance.HasSaveLoadUiOpen}");
-        GD.Print($"Paused={_instance.Paused}");
-        GD.Print($"ItemBoxOpened={_instance.ItemBoxOpened}");
-        GD.Print($"ReadyToShoot={_instance.ReadyToShoot}");
-}
+    public static string DebugGetStatusFlagsString()
+    {
+        if (_instance == null)
+            return "";
+
+        return $"MenuOpened={_instance.MenuOpened}\r\n" +
+            $"Reading={_instance.Reading}\r\n" +
+            $"QuickTurning={_instance.QuickTurning}\r\n" +
+            $"TakingDamage={_instance.TakingDamage}\r\n" +
+            $"Aiming={_instance.Aiming}\r\n" +
+            $"Shooting={_instance.Shooting}\r\n" +
+            $"HasSaveLoadUiOpen={_instance.HasSaveLoadUiOpen}\r\n" +
+            $"Paused={_instance.Paused}\r\n" +
+            $"ItemBoxOpened={_instance.ItemBoxOpened}\r\n" +
+            $"ReadyToShoot={_instance.ReadyToShoot}\r\n" +
+            $"IsInCutscene={_instance.IsInCutscene}\r\n" +
+            $"IsRotationPrevented={_instance.IsRotationPrevented()}\r\n" +
+            $"IsMovementPrevented={_instance.IsMovementPrevented()}";
+    }
 }

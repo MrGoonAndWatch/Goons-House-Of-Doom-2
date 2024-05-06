@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://bdfkbexd4iqus"]
 
-[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_m2n1s"]
-[ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="3_yjef3"]
-[ext_resource type="MeshLibrary" uid="uid://bwn3cpxcfaeq3" path="res://prefabs/scenery/tiles_mesh_library_3.tres" id="3_yjpyq"]
-[ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="4_iqgm1"]
-[ext_resource type="PackedScene" uid="uid://43pj43g5wgqu" path="res://prefabs/spawnables/enemies/enemy-spawn-point.tscn" id="5_qo12u"]
-[ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_buisc"]
-[ext_resource type="Script" path="res://scripts/puzzles/PassCode.cs" id="7_b7b8e"]
+[ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="1_qgu7j"]
+[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_edi1e"]
+[ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="3_3ov67"]
+[ext_resource type="MeshLibrary" uid="uid://bwn3cpxcfaeq3" path="res://prefabs/scenery/tiles_mesh_library_3.tres" id="4_03g0w"]
+[ext_resource type="PackedScene" uid="uid://43pj43g5wgqu" path="res://prefabs/spawnables/enemies/enemy-spawn-point.tscn" id="5_etfxi"]
+[ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_50rh5"]
+[ext_resource type="Script" path="res://scripts/puzzles/PassCode.cs" id="7_1id0d"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_umokm"]
 vertices = PackedVector3Array(-5.5, -0.5, -3.25, -3.5, -0.5, -3.25, -3.25, -0.5, -4.5, -5.5, -0.5, -7.5, 2.5, -0.5, -4.5, 2.75, -0.5, -3.5, 5.5, -0.5, -3.5, 5.5, -0.5, -7.5, 2.5, -0.5, -4.5, 5.5, -0.5, -7.5, -5.5, -0.5, -7.5, -3.25, -0.5, -4.5, -3.25, -0.5, -2.25, -3.5, -0.5, -3.25, -5.5, -0.5, -3.25, -5.5, -0.5, 1.5, 5.5, -0.5, -3.5, 2.75, -0.5, -3.5, 2.25, -0.5, -2.25, 5.5, -0.5, 1.5, -5.5, -0.5, 1.5, 5.5, -0.5, 1.5, 2.25, -0.5, -2.25, -3.25, -0.5, -2.25)
@@ -32,48 +32,52 @@ transform = Transform3D(-1, 3.05162e-10, -8.74222e-08, -2.13005e-08, 0.969007, 0
 
 [node name="Camera-Triggers" type="Node3D" parent="."]
 
-[node name="Camera2Change" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("3_yjef3")]
+[node name="Camera2Change" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("1_qgu7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.42667, 0, 0)
 TargetCamera = NodePath("../../Cameras/Camera2")
 
-[node name="CameraInitChange" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("3_yjef3")]
+[node name="CameraInitChange" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("1_qgu7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8114, 0, 0)
 TargetCamera = NodePath("../../Cameras/Init-Camera")
 
-[node name="CameraBackChange" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("3_yjef3")]
+[node name="CameraBackChange" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("1_qgu7j")]
 transform = Transform3D(11.3137, 0, 0, 0, 1, 0, 0, 0, 3.70752, 0.362668, 0, -5.72403)
 TargetCamera = NodePath("../../Cameras/Camera3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.366729, 0.930328, 0, -0.930328, 0.366729, 0, 4.61138, 2.3795)
 
-[node name="Player" parent="." instance=ExtResource("2_m2n1s")]
+[node name="Player" parent="." instance=ExtResource("2_edi1e")]
 
-[node name="test_door" parent="." instance=ExtResource("4_iqgm1")]
+[node name="test_door" parent="." instance=ExtResource("3_3ov67")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22101, 0, 1.84189)
+
+[node name="DoorBody" parent="test_door" index="1"]
+GoesToRoom = "debug/test_scene2"
+StartAtPosition = Vector3(-5.5, 0, 0)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_umokm")
 
 [node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
-mesh_library = ExtResource("3_yjpyq")
+mesh_library = ExtResource("4_03g0w")
 cell_size = Vector3(1, 1, 1)
 data = {
 "cells": PackedInt32Array(-131071, 1, 0, -131071, 0, 0, -131071, 65535, 0, -131071, 65534, 0, -131072, 65534, 0, -65537, 65534, 0, -65538, 65534, 0, -65538, 65535, 0, -65538, 0, 0, -65538, 1, 0, -65537, 1, 0, -131072, 1, 0, -65537, 0, 0, -65537, 65535, 0, -131072, 65535, 0, -131072, 0, 0, -131070, 1, 0, -131070, 0, 0, -131070, 65535, 0, -131070, 65534, 0, -131069, 65534, 0, -131068, 65534, 0, -131068, 65535, 0, -131067, 65535, 0, -131067, 65534, 0, -131067, 0, 0, -131067, 1, 0, -131068, 1, 0, -131069, 1, 0, -131068, 0, 0, -131069, 0, 0, -131069, 65535, 0, -65539, 1, 0, -65540, 1, 0, -65541, 1, 0, -65542, 1, 0, -65542, 0, 0, -65542, 65535, 0, -65541, 65535, 0, -65541, 65534, 0, -65542, 65534, 0, -65540, 65534, 0, -65539, 65534, 0, -65539, 65535, 0, -65539, 0, 0, -65540, 0, 0, -65541, 0, 0, -65540, 65535, 0, -65542, 65533, 0, -65541, 65533, 0, -65540, 65533, 0, -65539, 65532, 0, -65538, 65532, 0, -65537, 65532, 0, -131072, 65532, 0, -131071, 65532, 0, -131070, 65532, 0, -131069, 65532, 0, -131068, 65532, 0, -131068, 65530, 0, -131067, 65533, 0, -131067, 65532, 0, -131067, 65531, 0, -131067, 65530, 0, -131067, 65529, 0, -131068, 65529, 0, -131069, 65529, 0, -131069, 65528, 0, -131070, 65528, 0, -131071, 65528, 0, -131068, 65528, 0, -131067, 65528, 0, -131072, 65528, 0, -65537, 65528, 0, -65538, 65528, 0, -65539, 65528, 0, -65540, 65528, 0, -65541, 65528, 0, -65542, 65528, 0, -65542, 65532, 0, -65542, 65531, 0, -65542, 65530, 0, -65542, 65529, 0, -65540, 65532, 0, -65541, 65532, 0, -65541, 65531, 0, -65541, 65530, 0, -65540, 65530, 0, -65540, 65531, 0, -65539, 65530, 0, -65538, 65530, 0, -65538, 65531, 0, -65537, 65531, 0, -131072, 65531, 0, -131071, 65531, 0, -131070, 65531, 0, -131069, 65531, 0, -131068, 65531, 0, -131069, 65530, 0, -131070, 65530, 0, -131071, 65530, 0, -131072, 65530, 0, -65537, 65530, 0, -65539, 65531, 0, -131070, 65529, 0, -131071, 65529, 0, -65541, 65529, 0, -65540, 65529, 0, -65539, 65529, 0, -65538, 65529, 0, -65537, 65529, 0, -131072, 65529, 0, -65539, 65533, 0, -65538, 65533, 0, -65537, 65533, 0, -131072, 65533, 0, -131071, 65533, 0, -131070, 65533, 0, -131069, 65533, 0, -131068, 65533, 0, -65535, 65532, 0, -65536, 65532, 0, -1, 65532, 0, -2, 65532, 0, -3, 65532, 0, 65533, 65532, 0, 65534, 65532, 0, 65535, 65532, 0, 0, 65532, 0, 1, 65532, 0)
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
-[node name="CameraInitChange" parent="." instance=ExtResource("3_yjef3")]
+[node name="CameraInitChange" parent="." instance=ExtResource("1_qgu7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8114, 0, 0)
 
-[node name="enemy-spawn-point" parent="." instance=ExtResource("5_qo12u")]
+[node name="enemy-spawn-point" parent="." instance=ExtResource("5_etfxi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0965605, -1, -6.44764)
 EnemyId = 1
 EnemySpawnOnNormal = 2
 EnemySpawnOnHard = 4
 EnemySpawnOnImpossible = 4
 
-[node name="ammo-spawn" parent="." instance=ExtResource("6_buisc")]
+[node name="ammo-spawn" parent="." instance=ExtResource("6_50rh5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4364, 0, 0)
 ItemId = 3
 QtyOnPickup = 50
@@ -82,7 +86,7 @@ ItemSpawnOnNormal = 4
 ItemSpawnOnHard = 4
 ItemSpawnOnImpossible = 4
 
-[node name="pistol-spawn" parent="." instance=ExtResource("6_buisc")]
+[node name="pistol-spawn" parent="." instance=ExtResource("6_50rh5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.82595, 0, 0)
 ItemId = 2
 QtyOnPickup = 3
@@ -91,11 +95,12 @@ ItemSpawnOnNormal = 3
 ItemSpawnOnHard = 3
 ItemSpawnOnImpossible = 3
 
-[node name="test_door2" parent="." instance=ExtResource("4_iqgm1")]
+[node name="test_door2" parent="." instance=ExtResource("3_3ov67")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.92697, 0, 1.84189)
 
 [node name="DoorBody" parent="test_door2" index="1"]
 DoorId = 1
+GoesToRoom = "debug/test_scene2"
 LockedText = PackedStringArray("It\'s locked with a big keyhole.")
 UnlockText = PackedStringArray("You unlocked the door.")
 LocksWith = 1
@@ -104,7 +109,7 @@ LocksWith = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96954, 0, 0.906012)
 
 [node name="Area3D" type="StaticBody3D" parent="test-code-input"]
-script = ExtResource("7_b7b8e")
+script = ExtResource("7_1id0d")
 PassCodeType = 1
 InspectText = PackedStringArray("You come across a keypad", "with four digits", "enter code")
 NumberOfDigits = 4
@@ -115,14 +120,16 @@ OnUnlockFailText = PackedStringArray("Wrong Code", "Dumbass")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="test-code-input/Area3D"]
 shape = SubResource("BoxShape3D_srbyp")
 
-[node name="test_door3" parent="." instance=ExtResource("4_iqgm1")]
+[node name="test_door3" parent="." instance=ExtResource("3_3ov67")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33654, 0, 1.84189)
 
 [node name="DoorBody" parent="test_door3" index="1"]
 DoorId = 2
+GoesToRoom = "debug/test_scene2"
 LockedText = PackedStringArray("It\'s locked", "By some mysterious force")
 UnlockText = PackedStringArray("You unlocked the door.")
 UnlocksOnEvent = 1
 
+[editable path="test_door"]
 [editable path="test_door2"]
 [editable path="test_door3"]

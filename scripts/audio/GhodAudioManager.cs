@@ -9,6 +9,8 @@ public partial class GhodAudioManager : Node
 	private AudioStreamPlayer _musicPlayer;
     [Export]
     private AudioStreamPlayer _playerSfxPlayer;
+    [Export]
+    private AudioStreamPlayer _voicePlayer;
 
     private AudioStream _painSound;
     private AudioStream _pistolShotSound;
@@ -59,6 +61,22 @@ public partial class GhodAudioManager : Node
             _initializedAudio = true;
         }
 	}
+
+    public static AudioStream LoadVoiceClip(string soundPath)
+    {
+        if (_instance == null) return null;
+
+        var stream = ResourceLoader.Load<AudioStream>(soundPath);
+        return stream;
+    }
+
+    public static void PlayVoiceClip(AudioStream stream)
+    {
+        if (_instance == null) return;
+
+        _instance._voicePlayer.Stream = stream;
+        _instance._voicePlayer.Play();
+    }
 
     public static bool IsInitialized()
     {

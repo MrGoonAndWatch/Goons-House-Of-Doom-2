@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://ckchoq4cpa1ij"]
 
-[ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="1_qpmgo"]
-[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_paq13"]
-[ext_resource type="MeshLibrary" uid="uid://bwn3cpxcfaeq3" path="res://prefabs/scenery/tiles_mesh_library_3.tres" id="3_tyy1c"]
-[ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="4_d00ot"]
-[ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_2kp7c"]
-[ext_resource type="PackedScene" uid="uid://cwgvmlg5wk1f" path="res://prefabs/player/item-box.tscn" id="6_cgprx"]
+[ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="1_ksj6x"]
+[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_6j00k"]
+[ext_resource type="MeshLibrary" uid="uid://bwn3cpxcfaeq3" path="res://prefabs/scenery/tiles_mesh_library_3.tres" id="3_8jsyc"]
+[ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="4_vgd6f"]
+[ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="5_qnp0j"]
+[ext_resource type="PackedScene" uid="uid://cwgvmlg5wk1f" path="res://prefabs/player/item-box.tscn" id="6_tgra2"]
 
 [node name="root" type="Node3D"]
 
@@ -20,37 +20,38 @@ transform = Transform3D(-0.0291633, 0.611089, -0.791025, 0.0144844, 0.791536, 0.
 
 [node name="Camera-Triggers" type="Node3D" parent="."]
 
-[node name="Camera2Change" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("1_qpmgo")]
+[node name="Camera2Change" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("1_ksj6x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.42667, 0, 0)
 TargetCamera = NodePath("../../Cameras/Camera2")
 
-[node name="CameraInitChange" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("1_qpmgo")]
+[node name="CameraInitChange" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera") instance=ExtResource("1_ksj6x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8114, 0, 0)
 TargetCamera = NodePath("../../Cameras/Init-Camera")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.366729, 0.930328, 0, -0.930328, 0.366729, 0, 4.61138, 2.3795)
 
-[node name="Player" parent="." instance=ExtResource("2_paq13")]
+[node name="Player" parent="." instance=ExtResource("2_6j00k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 0)
 
 [node name="GridMap" type="GridMap" parent="."]
-mesh_library = ExtResource("3_tyy1c")
+mesh_library = ExtResource("3_8jsyc")
 cell_size = Vector3(1, 1, 1)
 data = {
 "cells": PackedInt32Array(-131071, 1, 0, -131071, 0, 0, -131071, 65535, 0, -131071, 65534, 0, -131072, 65534, 0, -65537, 65534, 0, -65538, 65534, 0, -65538, 65535, 0, -65538, 0, 0, -65538, 1, 0, -65537, 1, 0, -131072, 1, 0, -65537, 0, 0, -65537, 65535, 0, -131072, 65535, 0, -131072, 0, 0, -131070, 1, 0, -131070, 0, 0, -131070, 65535, 0, -131070, 65534, 0, -131069, 65534, 0, -131068, 65534, 0, -131068, 65535, 0, -131067, 65535, 0, -131067, 65534, 0, -131067, 0, 0, -131067, 1, 0, -131068, 1, 0, -131069, 1, 0, -131068, 0, 0, -131069, 0, 0, -131069, 65535, 0, -65539, 1, 0, -65540, 1, 0, -65541, 1, 0, -65542, 1, 0, -65542, 0, 0, -65542, 65535, 0, -65541, 65535, 0, -65541, 65534, 0, -65542, 65534, 0, -65540, 65534, 0, -65539, 65534, 0, -65539, 65535, 0, -65539, 0, 0, -65540, 0, 0, -65541, 0, 0, -65540, 65535, 0, 1, 65532, 1507329, 2, 65532, 1507329, 3, 65532, 1507329, 2, 3, 1245185, 1, 3, 1245185, 0, 3, 1245185)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="test_door" parent="." instance=ExtResource("4_d00ot")]
+[node name="test_door" parent="." instance=ExtResource("4_vgd6f")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 0)
 
 [node name="DoorBody" parent="test_door" index="1"]
-GoesToRoom = "test_scene"
+GoesToRoom = "debug/test_scene"
 DoorLoadType = 1
 StartAtPosition = Vector3(5, 0, 0)
 StartAtAngle = Vector3(0, 180, 0)
 
-[node name="green-juice" parent="." instance=ExtResource("6_2kp7c")]
+[node name="green-juice" parent="." instance=ExtResource("5_qnp0j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49654, -0.269487, -0.743682)
 ItemId = 1
 ItemSpawnOnEasy = 2
@@ -58,10 +59,10 @@ ItemSpawnOnNormal = 2
 ItemSpawnOnHard = 1
 ItemSpawnOnImpossible = 1
 
-[node name="item-box" parent="." instance=ExtResource("6_cgprx")]
+[node name="item-box" parent="." instance=ExtResource("6_tgra2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29218, -0.310889, -2.11201)
 
-[node name="big-key" parent="." instance=ExtResource("6_2kp7c")]
+[node name="big-key" parent="." instance=ExtResource("5_qnp0j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.20662, -0.269487, -0.743682)
 ItemId = 4
 ItemSpawnOnEasy = 5
@@ -69,4 +70,13 @@ ItemSpawnOnNormal = 5
 ItemSpawnOnHard = 5
 ItemSpawnOnImpossible = 5
 
+[node name="test_door2" parent="." instance=ExtResource("4_vgd6f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8666, 0, -1.93737)
+
+[node name="DoorBody" parent="test_door2" index="1"]
+GoesToRoom = "debug/test_cutscene"
+StartAtPosition = Vector3(-2.2, 0, 1.5)
+StartAtAngle = Vector3(0, 90, 0)
+
 [editable path="test_door"]
+[editable path="test_door2"]
