@@ -2,15 +2,19 @@
 
 [ext_resource type="Script" path="res://scripts/audio/GhodAudioManager.cs" id="1_1an3t"]
 
-[node name="audio-manager" type="Node2D" node_paths=PackedStringArray("_musicPlayer", "_playerSfxPlayer")]
+[node name="audio-manager" type="Node2D" node_paths=PackedStringArray("_musicPlayer", "_playerSfxPlayer", "_voicePlayer")]
 script = ExtResource("1_1an3t")
 _musicPlayer = NodePath("MusicPlayer")
-_playerSfxPlayer = NodePath("AudioStreamPlayer")
+_playerSfxPlayer = NodePath("SfxPlayer")
+_voicePlayer = NodePath("VoicePlayer")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Music"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Sfx"
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Voice"
 
 [connection signal="finished" from="MusicPlayer" to="." method="_OnSongFinished"]

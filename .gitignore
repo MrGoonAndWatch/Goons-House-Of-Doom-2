@@ -1,3 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
 .vs/
+_setup/Empty.ogg.import
+_setup/Empty.wav.import
+audio/music/10MinutesTillBadEnd.wav
+audio/music/Hall of Confused Clowns.wav
+audio/sound/Pain.ogg

@@ -2,9 +2,19 @@
  
 ## About this project
 
-This is a sequel to a game I made in one month (~60 hours) ported over from Unity to Godot 4.1.1. While the original was a sort of self imposed month long game jam this game is being worked on at a much slower pace with only a loose estimated release date of end of January 2024.
+This is a sequel to a game I made in one month (~60 hours) ported over from Unity to Godot 4.2.1. While the original was a sort of self imposed month long game jam this game is being worked on at a much slower pace with only a loose estimated release date of end of January 2024.
 
 The plan is also to collaborate with more creators on this project to create an overall similar but much more polished experience compared to the first game, including most if not all features I had to cut due to the 1 month deadline (with an all new story and setting of course).
+
+## First Time Setup
+
+Due to the distribution rights on some of the third party assets I use in this game there are several files intentionally not included in the repo that you will need to successfully run the project. Ultimately you should replace these with your own assets but to assist in getting the project set up I have provided some dummy files inside of the "_setup" folder at the root of this repository. Please feel free to copy, paste, and rename the empty files from here in to the following places in your cloned repository to get things running quickly:
+
+* /audio/music/10MinutesTillBadEnd.wav
+* /audio/music/Hall of Confused Clowns.wav
+* /audio/sound/Pain.ogg
+
+It is highly recommended to make this change *before* opening the project in Godot as the import files may be wiped out and replaced with incorrect default values.
 
 ## Usage / Project Contribution
 
