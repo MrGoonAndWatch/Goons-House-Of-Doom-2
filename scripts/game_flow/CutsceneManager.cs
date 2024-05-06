@@ -58,7 +58,7 @@ public partial class CutsceneManager : Node
 			return;
 		}
 
-		if (_currentCutscene != null && _currentCutscene.HasCutsceneEnded())
+		if (_currentCutscene != null && _currentCutscene.HasCutsceneEnded() && !_cutsceneEnding)
 		{
 			GD.Print("Cutscene has ended!");
 			EndCutscene();
@@ -80,10 +80,7 @@ public partial class CutsceneManager : Node
             var topFinishedEnd = MoveBar(TopBar, -1.0f, delta, EndTopBarYPos);
             var bottomFinishedEnd = MoveBar(BottomBar, 1.0f, delta, EndBottomBarYPos);
 			if (topFinishedEnd && bottomFinishedEnd)
-			{
-				_cutsceneEnding = false;
-				_playerStatus.IsInCutscene = false;
-            }
+				FinishCutsceneEnd();
         }
     }
 
@@ -111,14 +108,23 @@ public partial class CutsceneManager : Node
         TopBar.SetGlobalPosition(new Vector2(TopBar.GlobalPosition.X, EndTopBarYPos));
         BottomBar.SetGlobalPosition(new Vector2(BottomBar.GlobalPosition.X, EndBottomBarYPos));
 		_cutsceneStarting = false;
+        FinishCutsceneEnd();
+    }
+
+	private void FinishCutsceneEnd()
+	{
+		if (_currentCutscene != null)
+			_playerStatus.SetWatchedCutscene(_currentCutscene.CutsceneId);
 		_cutsceneEnding = false;
 		_playerStatus.IsInCutscene = false;
 		_currentCutscene = null;
-    }
+	}
 
 	public void StartCutscene(Cutscene cutscene)
 	{
-		// TODO: Check if cutscene should not be run due to it already having been played or similar reasons!
+		if (_playerStatus.HasWatchedCutscene(cutscene.CutsceneId))
+			return;
+
 		_cutsceneStarting = true;
 		_playerStatus.IsInCutscene = true;
 		_currentCutscene = cutscene;
@@ -127,6 +133,5 @@ public partial class CutsceneManager : Node
 	public void EndCutscene()
 	{
 		_cutsceneEnding = true;
-		_currentCutscene = null;
     }
 }

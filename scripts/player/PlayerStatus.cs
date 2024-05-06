@@ -32,6 +32,7 @@ public partial class PlayerStatus : Node
     public List<GlobalEvent> TriggeredEvents;
     public List<int> GrabbedItems;
     public List<int> DoorsUnlocked;
+    public List<int> CutscenesWatched;
 
     [Export(hintString: "Time (in seconds) between when player hp reaches 0 and when the game over screen comes up.")]
     public float GameOverUiDelay = 6.0f;
@@ -69,6 +70,7 @@ public partial class PlayerStatus : Node
         TriggeredEvents = new List<GlobalEvent>();
         GrabbedItems = new List<int>();
         DoorsUnlocked = new List<int>();
+        CutscenesWatched = new List<int>();
 
         Health = MaxHealth;
     }
@@ -157,6 +159,16 @@ public partial class PlayerStatus : Node
     {
         GD.Print($"Unlocked door {doorId}");
         DoorsUnlocked.Add(doorId);
+    }
+
+    public void SetWatchedCutscene(int cutsceneId)
+    {
+        CutscenesWatched.Add(cutsceneId);
+    }
+
+    public bool HasWatchedCutscene(int cutsceneId)
+    {
+        return CutscenesWatched.Contains(cutsceneId);
     }
 
     public void GrabItem(int itemId)

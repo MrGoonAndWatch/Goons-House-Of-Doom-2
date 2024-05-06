@@ -35,6 +35,7 @@ public partial class DataSaver : Node3D
             DoorsUnlocked = new int[0],
             GrabbedItems = new int[0],
             TriggeredEvents = new int[0],
+            CutscenesWatched = new int[0],
             Inventory = new ItemState[0],
             ItemBox = new ItemState[0],
             Health = PlayerStatus.MaxHealth,
@@ -122,6 +123,8 @@ public partial class DataSaver : Node3D
         _gameState.DoorsUnlocked = _gameState.DoorsUnlocked.Union(playerStatus.DoorsUnlocked).Distinct().ToArray();
         _gameState.GrabbedItems = _gameState.GrabbedItems.Union(playerStatus.GrabbedItems).Distinct().ToArray();
         _gameState.TriggeredEvents = _gameState.TriggeredEvents.Union(playerStatus.TriggeredEvents.Select(e => (int)e)).Distinct().ToArray();
+        GD.Print($"Cutscenes watched --- _gameState null? {_gameState.CutscenesWatched == null} . playerStatus null ? {playerStatus.CutscenesWatched == null}");
+        _gameState.CutscenesWatched = _gameState.CutscenesWatched.Union(playerStatus.CutscenesWatched).Distinct().ToArray();
         if (playerStatus.EquipedWeapon != null)
             for (var i = 0; i < playerInventory.Items.Length; i++)
                 if (playerInventory.Items[i].Item != null && playerStatus.EquipedWeapon.ItemId == playerInventory.Items[i].Item.ItemId)
@@ -263,6 +266,7 @@ public partial class DataSaver : Node3D
         public int[] GrabbedItems;
         public int[] TriggeredEvents;
         public int[] DoorsUnlocked;
+        public int[] CutscenesWatched;
     }
 
     public class ItemState

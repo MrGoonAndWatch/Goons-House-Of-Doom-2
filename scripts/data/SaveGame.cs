@@ -79,13 +79,12 @@ public partial class SaveGame : Control
         saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo, playerItemBox);
         var data = saver.GetGameState();
 
-        var roomStr = sceneName;
+        var roomStr = sceneName.Contains('/') ? sceneName.Substring(sceneName.LastIndexOf('/') + 1) : sceneName;
         var dateStr = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
         var newFilename = $"{roomStr} - {dateStr}.sav";
 
         GD.Print($"Trying to save data to {newFilename}...");
         var fileAccess = FileAccess.Open($"{GameConstants.SaveDirectoryPath}/{newFilename}", FileAccess.ModeFlags.Write);
-
         var dataJson = JsonConvert.SerializeObject(data);
         fileAccess.StoreString(dataJson);
         if (!string.IsNullOrEmpty(filename))

@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public partial class Cutscene : Node
 {
@@ -8,9 +7,12 @@ public partial class Cutscene : Node
     //[Export]
     //private ICutsceneActor[] Actors;
     [Export]
-    private int CutsceneEventId;
+    public int CutsceneId;
     [Export]
     private CutsceneInstruction[] Instructions;
+    /// <summary>
+    /// Unique identifier for this cutscene.
+    /// </summary>
 
     private bool _initialized;
     private int _currentInstructionIndex;

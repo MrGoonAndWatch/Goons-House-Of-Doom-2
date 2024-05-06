@@ -7,7 +7,6 @@ public partial class CutsceneTrigger : Node
 
     public override void _Ready()
     {
-        // TODO: Eventually make multiple types of cutscene triggers but for now this just triggers the cutscene on scene load.
         var cutsceneManager = GetNode<CutsceneManager>(GameConstants.NodePaths.FromSceneRoot.CutsceneManager);
         cutsceneManager.StartCutscene(Cutscene);
     }
