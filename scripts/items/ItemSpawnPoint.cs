@@ -40,11 +40,14 @@ public partial class ItemSpawnPoint : Node3D
                 break;
         }
 
-        if (playerStatus.GameSettings.IsRandomized && playerStatus.GameSettings.RandomizerSeed.RandomizedItems.ContainsKey(ItemId))
+        if (playerStatus.GameSettings.IsRandomized && playerStatus.GameSettings.RandomizerSeed.RandomizedItems.ContainsKey(ItemId) &&
+            (itemSpawnType != ItemSpawnType.None || playerStatus.GameSettings.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty))
         {
-            // TODO: Also randomize QTY here!!!
-            if (itemSpawnType != ItemSpawnType.None || playerStatus.GameSettings.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
-                itemSpawnType = playerStatus.GameSettings.RandomizerSeed.RandomizedItems[ItemId];
+            itemSpawnType = playerStatus.GameSettings.RandomizerSeed.RandomizedItems[ItemId];
+            if (playerStatus.GameSettings.RandomizerSeed.RandomizedItemQty.ContainsKey(ItemId))
+                QtyOnPickup = playerStatus.GameSettings.RandomizerSeed.RandomizedItemQty[ItemId];
+            else
+                QtyOnPickup = 1;
         }
 
         if (itemSpawnType != ItemSpawnType.None)

@@ -212,6 +212,8 @@ public partial class GameConstants : GodotObject
         {2, new ZoneRequirements { KeysRequiredToPassZone = new System.Collections.Generic.List<ItemSpawnType> { ItemSpawnType.Pistol }, ItemIdsInZone = new System.Collections.Generic.List<int>{ 1, 2, 3, 4 } } }
     };
 
+    public static System.Collections.Generic.List<ItemSpawnType> ItemsWithQty = new() { ItemSpawnType.Pistol, ItemSpawnType.PistolAmmo };
+
     public partial class ZoneRequirements: Node
     {
         public System.Collections.Generic.List<ItemSpawnType> KeysRequiredToPassZone;

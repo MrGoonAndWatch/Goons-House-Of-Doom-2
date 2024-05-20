@@ -64,14 +64,17 @@ public class RandomizerSeed
             validItemIds = validItemIds.Except(itemIdsUsedUpByKeys.Keys).ToList();
             for (var j = 0; j < GameConstants.ZoneKeyMap[currentZoneId].KeysRequiredToPassZone.Count; j++)
             {
-                var randomIndex = (int)(settings.Seed.HasValue ? GD.RandFromSeed(ref randomizerSeedForItems) : GD.Randi()) % validItemIds.Count;
+                var randomIndex = (int)((settings.Seed.HasValue ? GD.RandFromSeed(ref randomizerSeedForItems) : GD.Randi()) % validItemIds.Count);
                 GD.Print($"randomIndex={randomIndex},validItemIds.Count={validItemIds.Count}");
                 var selectedItemId = validItemIds[randomIndex];
                 itemIdsUsedUpByKeys.Add(selectedItemId, true);
                 var currentKeyType = GameConstants.ZoneKeyMap[currentZoneId].KeysRequiredToPassZone[j];
                 generatedRandomizer.RandomizedItems.Add(selectedItemId, currentKeyType);
+                var qty = GetQtyForRandomizedItem(currentKeyType, settings.Seed.HasValue, randomizerSeedForItems);
+                if(qty > 0)
+                    generatedRandomizer.RandomizedItemQty.Add(selectedItemId, qty);
                 validItemIds.RemoveAt(randomIndex);
-                GD.Print($"Randomized key '{currentKeyType}' to item id {selectedItemId}");
+                GD.Print($"Randomized key '{currentKeyType}' to item id {selectedItemId} w/ qty {qty}");
             }
         }
 
@@ -86,7 +89,10 @@ public class RandomizerSeed
 
             var selectedItem = RandomlySelectWithWeightedProbability(itemSpawnProbabilities, settings.Seed.HasValue, randomizerSeedForItems);
             generatedRandomizer.RandomizedItems.Add(i, selectedItem);
-            GD.Print($"Randomized item {i} to a '{selectedItem}'");
+            var qty = GetQtyForRandomizedItem(selectedItem, settings.Seed.HasValue, randomizerSeedForItems);
+            if (qty > 0)
+                generatedRandomizer.RandomizedItemQty.Add(i, qty);
+            GD.Print($"Randomized item {i} to a '{selectedItem}' with qty {qty}");
         }
     }
 
@@ -119,15 +125,27 @@ public class RandomizerSeed
         return default;
     }
 
+    private static int GetQtyForRandomizedItem(GameConstants.ItemSpawnType itemType, bool useSeed, ulong seed)
+    {
+        // TODO: Should we maintain a more complex lookup suggesting min/max ranges per type, or is this fine?
+        if (!GameConstants.ItemsWithQty.Contains(itemType))
+            return 0;
+
+        var randomQty = ((useSeed ? GD.RandFromSeed(ref seed) : GD.Randi()) % 50) + 1;
+        return (int)randomQty;
+    }
+
     public RandomizerSeed()
     {
         RandomizedEnemies = new Godot.Collections.Dictionary<int, GameConstants.EnemySpawnType>();
         RandomizedItems = new Godot.Collections.Dictionary<int, GameConstants.ItemSpawnType>();
+        RandomizedItemQty = new Godot.Collections.Dictionary<int, int>();
         PassCodeLookup = new Godot.Collections.Dictionary<GameConstants.PassCodeType, string>();
     }
 
     public Godot.Collections.Dictionary<int, GameConstants.EnemySpawnType> RandomizedEnemies;
     public Godot.Collections.Dictionary<int, GameConstants.ItemSpawnType> RandomizedItems;
+    public Godot.Collections.Dictionary<int, int> RandomizedItemQty;
     public Godot.Collections.Dictionary<GameConstants.PassCodeType, string> PassCodeLookup;
     public bool AllowSpawnsOnEmptyEnemySlotsForDifficulty;
     public bool AllowSpawnsOnEmptyItemSlotsForDifficulty;
