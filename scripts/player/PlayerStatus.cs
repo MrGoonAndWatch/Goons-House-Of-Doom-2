@@ -47,12 +47,34 @@ public partial class PlayerStatus : Node
 
     public override void _Ready()
     {
+        // TODO: This is a hard coded randomizer setup, need UI for starting game in randomizer mode.
+        //var randomizerSettings = new RandomizerSettings
+        //{
+        //    RandomizeEnemies = true,
+        //    RandomizeItems = true,
+        //    AllowSpawnsOnEmptyEnemySlotsForDifficulty = true,
+        //    AllowSpawnsOnEmptyItemSlotsForDifficulty = true,
+        //    EnemySpawnProbabilities = new List<Tuple<EnemySpawnType, float>>
+        //    {
+        //        new Tuple<EnemySpawnType, float>(EnemySpawnType.None, 0.10f),
+        //        new Tuple<EnemySpawnType, float>(EnemySpawnType.Shambler, 0.25f),
+        //        new Tuple<EnemySpawnType, float>(EnemySpawnType.Chaser, 0.65f),
+        //    },
+        //    ItemSpawnProbabilities = new List<Tuple<ItemSpawnType, float>>
+        //    {
+        //        new Tuple<ItemSpawnType, float>(ItemSpawnType.None, 0.34f),
+        //        new Tuple<ItemSpawnType, float>(ItemSpawnType.GreenJuice, 0.33f),
+        //        new Tuple<ItemSpawnType, float>(ItemSpawnType.PistolAmmo, 0.33f),
+        //    },
+        //    Seed = 1234
+        //};
+
         // TODO: Hard coding this to normal difficulty for now.
         GameSettings = new GameSettings
         {
             GameDifficulty = GameDifficulty.Normal,
-            IsRandomized = false,
-            RandomizerSeed = null,
+            //IsRandomized = true,
+            //RandomizerSeed = RandomizerSeed.GenerateRandomizer(randomizerSettings),
             FunnyMode = false,
         };
 

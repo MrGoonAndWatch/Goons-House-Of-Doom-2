@@ -40,8 +40,9 @@ public partial class ItemSpawnPoint : Node3D
                 break;
         }
 
-        if(playerStatus.GameSettings.IsRandomized && playerStatus.GameSettings.RandomizerSeed.RandomizedItems.ContainsKey(ItemId))
+        if (playerStatus.GameSettings.IsRandomized && playerStatus.GameSettings.RandomizerSeed.RandomizedItems.ContainsKey(ItemId))
         {
+            // TODO: Also randomize QTY here!!!
             if (itemSpawnType != ItemSpawnType.None || playerStatus.GameSettings.RandomizerSeed.AllowSpawnsOnEmptyItemSlotsForDifficulty)
                 itemSpawnType = playerStatus.GameSettings.RandomizerSeed.RandomizedItems[ItemId];
         }

@@ -205,4 +205,16 @@ public partial class GameConstants : GodotObject
 
         public const string PainSfxPath = $"{SfxPrefabFolderPath}/Pain.ogg";
     }
+
+    public static Dictionary<int, ZoneRequirements> ZoneKeyMap = new()
+    {
+        {1, new ZoneRequirements { KeysRequiredToPassZone = new System.Collections.Generic.List<ItemSpawnType> { ItemSpawnType.BigKey }, ItemIdsInZone = new System.Collections.Generic.List<int>{ 2, 3 } } },
+        {2, new ZoneRequirements { KeysRequiredToPassZone = new System.Collections.Generic.List<ItemSpawnType> { ItemSpawnType.Pistol }, ItemIdsInZone = new System.Collections.Generic.List<int>{ 1, 2, 3, 4 } } }
+    };
+
+    public partial class ZoneRequirements: Node
+    {
+        public System.Collections.Generic.List<ItemSpawnType> KeysRequiredToPassZone;
+        public System.Collections.Generic.List<int> ItemIdsInZone;
+    }
 }
