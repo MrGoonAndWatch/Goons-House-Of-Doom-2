@@ -26,12 +26,16 @@ public partial class PauseScreenUi : Control
             OptionsMenu._OnCancelPressed();
             return true;
         }
+        else if (ControlsMenu.Visible)
+        {
+            ControlsMenu._OnBackClicked();
+            return true;
+        }
         else
         {
             Visible = false;
             return false;
         }
-
     }
 
     public void _OnResumePressed()
