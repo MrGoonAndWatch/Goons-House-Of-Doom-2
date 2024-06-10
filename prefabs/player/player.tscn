@@ -31,6 +31,20 @@ _pauseScreenUi = NodePath("pause_ui")
 _hitscanRay = NodePath("WeaponHitscan")
 _playerPositionLabel = NodePath("DEBUG_UI/PlayerPosLabel")
 
+[node name="DEBUG_UI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerPosLabel" type="Label" parent="DEBUG_UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="cutscene_ui" type="Control" parent="." node_paths=PackedStringArray("TopBar", "BottomBar")]
 layout_direction = 2
 layout_mode = 3
@@ -62,9 +76,6 @@ color = Color(0, 0, 0, 1)
 visible = false
 
 [node name="PlayerInventoryUi" parent="." instance=ExtResource("2_q6hdo")]
-visible = false
-
-[node name="pause_ui" parent="." instance=ExtResource("5_q718m")]
 visible = false
 
 [node name="descriptive_text" type="Control" parent="."]
@@ -109,6 +120,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
+[node name="pause_ui" parent="." instance=ExtResource("5_q718m")]
+visible = false
+
 [node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "MenuPrefab", "EquipSlot")]
 script = ExtResource("4_h7s4o")
 ExamineText = NodePath("../PlayerInventoryUi/ItemDescription/ItemDescriptionLabel")
@@ -140,7 +154,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.347428, -0.232374, 0.0412515, 0.907521)
+bones/6/rotation = Quaternion(-0.202385, -0.135363, 0.0239462, 0.96961)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
@@ -171,19 +185,6 @@ script = ExtResource("8_0mwpg")
 [node name="WeaponHitscan" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52849, 0, 0)
 target_position = Vector3(1000, 0, 0)
-
-[node name="DEBUG_UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PlayerPosLabel" type="Label" parent="DEBUG_UI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
 
 [connection signal="area_entered" from="InteractHitbox" to="InteractHitbox" method="_OnAreaEntered"]
 [connection signal="area_exited" from="InteractHitbox" to="InteractHitbox" method="_OnAreaExited"]
