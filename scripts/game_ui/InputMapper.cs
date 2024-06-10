@@ -11,25 +11,35 @@ public partial class InputMapper : Control
     private Dictionary<string, Dictionary<GameConstants.ControlBinding, InputEvent>> _controlsMap;
 	private bool _awaitingInput;
 
+	[Export]
+	private Control InitialFocus;
+
 	public override void _Ready()
 	{
-		_controlsMap = new Dictionary<string, Dictionary<GameConstants.ControlBinding, InputEvent>>();
-
-		foreach(var action in InputMap.GetActions())
-		{
-			if(InputMap.ActionGetEvents(action).Count != 0)
-			{
-				_controlsMap[action] = new Dictionary<GameConstants.ControlBinding, InputEvent>();
-				foreach (var controlBinding in InputMap.ActionGetEvents(action))
-				{
-					var bindingType = GetControlBindingType(controlBinding);
-					_controlsMap[action][bindingType] = controlBinding;
-				}
-			}
-		}
+		if(InitialFocus != null)
+			InitialFocus.GrabFocus();
+		LoadInputMapKeys();
 		LoadControlsConfig();
-        InitRemappers();
 	}
+
+	private void LoadInputMapKeys()
+	{
+        _controlsMap = new Dictionary<string, Dictionary<GameConstants.ControlBinding, InputEvent>>();
+        foreach (var action in InputMap.GetActions())
+        {
+            if (InputMap.ActionGetEvents(action).Count != 0)
+            {
+                _controlsMap[action] = new Dictionary<GameConstants.ControlBinding, InputEvent>();
+                foreach (var controlBinding in InputMap.ActionGetEvents(action))
+                {
+                    var bindingType = GetControlBindingType(controlBinding);
+                    _controlsMap[action][bindingType] = controlBinding;
+                }
+            }
+        }
+
+		SaveControlsForDefault();
+    }
 
 	private void InitRemappers()
 	{
@@ -89,6 +99,8 @@ public partial class InputMapper : Control
 
 		LoadControlsFromFile(DefaultControlsFilePath);
         InitRemappers();
+		SaveControlsConfig();
+		_awaitingInput = false;
     }
 
     public static GameConstants.ControlBinding GetControlBindingType(InputEvent controlBinding)
@@ -104,12 +116,14 @@ public partial class InputMapper : Control
 
     private void LoadControlsConfig()
 	{
-		if (!FileAccess.FileExists(ControlsFilePath))
+		if (FileAccess.FileExists(ControlsFilePath))
 		{
-			SaveControlsConfig();
-			return;
-		}
-        LoadControlsFromFile(ControlsFilePath);
+			LoadControlsFromFile(ControlsFilePath);
+            InitRemappers();
+        }
+		else
+			ResetToDefaultControls();
+        
 	}
 
 	private void LoadControlsFromFile(string controlsFilePath)
@@ -149,4 +163,19 @@ public partial class InputMapper : Control
 			GD.PrintErr($"Failed to save controls, got exception '{e.Message}'");
 		}
 	}
+
+    private void SaveControlsForDefault()
+    {
+        try
+        {
+            DirAccess.MakeDirRecursiveAbsolute(ControlsFileDir);
+            var file = FileAccess.Open($"{ControlsFileDir}/default_controls.cfg", FileAccess.ModeFlags.Write);
+            file.StoreVar(_controlsMap, true);
+            file.Close();
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"Failed to save controls, got exception '{e.Message}'");
+        }
+    }
 }

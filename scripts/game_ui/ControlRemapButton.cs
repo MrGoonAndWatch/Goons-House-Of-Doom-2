@@ -24,25 +24,36 @@ public partial class ControlRemapButton : Button
 
     public void Init()
 	{
+		ButtonPressed = false;
 		SetTextFromMap();
 	}
 
     public override void _Toggled(bool buttonPressed)
     {
-		if (buttonPressed && _inputMapper.IsLocked())
+        if (!buttonPressed)
+        {
+            SetTextFromMap();
+            Disabled = false;
+        }
+
+        if (_inputMapper.IsLocked())
 		{
 			ButtonPressed = false;
 			return;
 		}
 
+		//GD.Print($"_Toggled({buttonPressed}) called for {_actionStr} ({_bindingType})");
+
         SetProcessUnhandledInput(buttonPressed);
-		if (buttonPressed) {
+		if (buttonPressed)
+		{
+            Disabled = true;
             _inputMapper.StartBinding();
-            if (_bindingType == GameConstants.ControlBinding.Primary)
+			if (_bindingType == GameConstants.ControlBinding.Primary)
 				Text = "Press a Key";
 			else
-                Text = "Press a Button";
-        }
+				Text = "Press a Button";
+		}
     }
 
     public override void _UnhandledInput(InputEvent e)
@@ -51,9 +62,7 @@ public partial class ControlRemapButton : Button
 		{
 			if (IsCancelButton(e))
 			{
-				_inputMapper.CancelBinding();
-				ButtonPressed = false;
-                SetTextFromMap();
+				CancelInputBinding();
                 return;
 			}
 
@@ -73,10 +82,8 @@ public partial class ControlRemapButton : Button
 			else
 				InputMap.ActionEraseEvent(_actionStr, currentAction);
 			InputMap.ActionAddEvent(_actionStr, e);
-			ButtonPressed = false;
-			ReleaseFocus();
 			_inputMapper.UpdateControlsBinding(_actionStr, _bindingType, e);
-            SetTextFromMap();
+            ButtonPressed = false;
         }
     }
 
@@ -143,4 +150,10 @@ public partial class ControlRemapButton : Button
 		var inputText = inputEvent.AsText().ToLower();
 		return inputText.Equals("escape") || inputText.Contains("back");
 	}
+
+	private void CancelInputBinding()
+	{
+        _inputMapper.CancelBinding();
+        ButtonPressed = false;
+    }
 }

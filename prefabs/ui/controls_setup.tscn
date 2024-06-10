@@ -37,12 +37,13 @@ label_settings = ExtResource("2_5uu45")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="ControlsRemap" type="Control" parent="."]
+[node name="ControlsRemap" type="Control" parent="." node_paths=PackedStringArray("InitialFocus")]
 layout_mode = 2
 anchors_preset = 0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vrlno")
+InitialFocus = NodePath("Forwards/Forwards (Keyboard)")
 
 [node name="Forwards" type="Control" parent="ControlsRemap"]
 layout_mode = 1
@@ -497,6 +498,6 @@ offset_top = 125.0
 offset_right = 400.0
 offset_bottom = 325.0
 theme_override_font_sizes/font_size = 100
-text = "Exit"
+text = "Back"
 
 [connection signal="pressed" from="MenuButtons/ResetButton" to="ControlsRemap" method="ResetToDefaultControls"]
