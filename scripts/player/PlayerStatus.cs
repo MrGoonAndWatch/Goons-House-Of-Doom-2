@@ -313,7 +313,7 @@ public partial class PlayerStatus : Node
 
     public bool CanPause()
     {
-        return !IsInCutscene && !MenuOpened && !ItemBoxOpened && Health > 0;
+        return !HasAnyUiOpen() && !IsInCutscene && Health > 0;
     }
 
     public bool CanOpenMenu()

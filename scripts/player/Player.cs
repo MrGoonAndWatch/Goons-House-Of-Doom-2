@@ -47,13 +47,13 @@ public partial class Player : ICutsceneActor
 
     private void HandlePauseMenu()
     {
-        if (!_playerStatus.IsInCutscene && Input.IsActionJustPressed(Controls.pause.ToString()))
+        if (Input.IsActionJustPressed(Controls.pause.ToString()))
         {
             if (_playerStatus.Paused)
             {
                 _playerStatus.Paused = _pauseScreenUi.OnPauseMenuClosed();
             }
-            else
+            else if(_playerStatus.CanPause())
             {
                 _playerStatus.Paused = true;
                 _pauseScreenUi.OnPauseMenuOpened();
