@@ -16,13 +16,17 @@ public partial class InputMapper : Control
 
 	public override void _Ready()
 	{
-		if(InitialFocus != null)
-			InitialFocus.GrabFocus();
 		LoadInputMapKeys();
 		LoadControlsConfig();
 	}
 
-	private void LoadInputMapKeys()
+    public void OnVisible()
+    {
+        InitialFocus.GrabFocus();
+    }
+
+
+    private void LoadInputMapKeys()
 	{
         _controlsMap = new Dictionary<string, Dictionary<GameConstants.ControlBinding, InputEvent>>();
         foreach (var action in InputMap.GetActions())

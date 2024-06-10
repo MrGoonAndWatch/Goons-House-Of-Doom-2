@@ -1,16 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://b551tbih1cuj1"]
+[gd_scene load_steps=5 format=3 uid="uid://b551tbih1cuj1"]
 
+[ext_resource type="Script" path="res://scripts/game_ui/ControlsMenuUi.cs" id="1_6n72t"]
 [ext_resource type="Script" path="res://scripts/game_ui/InputMapper.cs" id="1_vrlno"]
 [ext_resource type="LabelSettings" uid="uid://c4eyjl7yb2bj2" path="res://materials/menu_label.tres" id="2_5uu45"]
 [ext_resource type="Script" path="res://scripts/game_ui/ControlRemapButton.cs" id="3_3uibi"]
 
-[node name="controls_setup" type="Control"]
+[node name="controls_setup" type="Control" node_paths=PackedStringArray("_inputMapper")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_6n72t")
+_inputMapper = NodePath("ControlsRemap")
 
 [node name="Header" type="Control" parent="."]
 layout_mode = 2
@@ -501,3 +504,4 @@ theme_override_font_sizes/font_size = 100
 text = "Back"
 
 [connection signal="pressed" from="MenuButtons/ResetButton" to="ControlsRemap" method="ResetToDefaultControls"]
+[connection signal="pressed" from="MenuButtons/ExitButton" to="." method="_OnBackClicked"]

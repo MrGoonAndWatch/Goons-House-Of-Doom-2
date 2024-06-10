@@ -10,6 +10,8 @@ public partial class PauseScreenUi : Control
     private Control DefaultPauseMenuFocus;
     [Export]
     private Control DefaultOptionsMenuFocus;
+    [Export]
+    private ControlsMenuUi ControlsMenu; 
 
     public void OnPauseMenuOpened()
     {
@@ -45,9 +47,26 @@ public partial class PauseScreenUi : Control
         DefaultOptionsMenuFocus.GrabFocus();
     }
 
+    public void _OnControlsPressed()
+    {
+        PauseMenu.Visible = false;
+        ControlsMenu.Visible = true;
+        ControlsMenu.OnVisible();
+    }
+
+    public void OnControlsClosed()
+    {
+        BackToMainPauseMenu(ControlsMenu);
+    }
+
     public void OnOptionsMenuClosed()
     {
-        OptionsMenu.Visible = false;
+        BackToMainPauseMenu(OptionsMenu);
+    }
+
+    private void BackToMainPauseMenu(Control menu)
+    {
+        menu.Visible = false;
         PauseMenu.Visible = true;
         DefaultPauseMenuFocus.GrabFocus();
     }

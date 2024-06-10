@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://m4w5lovwdw6"]
+[gd_scene load_steps=5 format=3 uid="uid://m4w5lovwdw6"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/PauseScreenUi.cs" id="1_8hvdm"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_is7b2"]
 [ext_resource type="PackedScene" uid="uid://b3plxc1qko6mn" path="res://prefabs/ui/options_menu_ui.tscn" id="3_jggi5"]
+[ext_resource type="PackedScene" uid="uid://b551tbih1cuj1" path="res://prefabs/ui/controls_setup.tscn" id="4_kpyg8"]
 
-[node name="pause_ui" type="Control" node_paths=PackedStringArray("PauseMenu", "OptionsMenu", "DefaultPauseMenuFocus", "DefaultOptionsMenuFocus")]
+[node name="pause_ui" type="Control" node_paths=PackedStringArray("PauseMenu", "OptionsMenu", "DefaultPauseMenuFocus", "DefaultOptionsMenuFocus", "ControlsMenu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +17,7 @@ PauseMenu = NodePath("PauseMenu")
 OptionsMenu = NodePath("OptionsMenu")
 DefaultPauseMenuFocus = NodePath("PauseMenu/Resume Button")
 DefaultOptionsMenuFocus = NodePath("OptionsMenu/VBoxContainer/Resolution/OptionButton")
+ControlsMenu = NodePath("controls_setup")
 
 [node name="InventoryBg" type="ColorRect" parent="."]
 layout_mode = 1
@@ -54,12 +56,21 @@ text = "Options"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
+[node name="Controls Button" type="Button" parent="PauseMenu"]
+layout_mode = 2
+theme = ExtResource("1_is7b2")
+text = "Controls"
+
+[node name="spacer3" type="Control" parent="PauseMenu"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
 [node name="Title Screen Button" type="Button" parent="PauseMenu"]
 layout_mode = 2
 theme = ExtResource("1_is7b2")
 text = " Exit To Title Screen "
 
-[node name="spacer3" type="Control" parent="PauseMenu"]
+[node name="spacer4" type="Control" parent="PauseMenu"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
@@ -73,8 +84,14 @@ visible = false
 layout_mode = 1
 FullscreenCheckbox = NodePath("VBoxContainer/FullScreen/CheckBox")
 
+[node name="controls_setup" parent="." node_paths=PackedStringArray("_pauseScreenUi") instance=ExtResource("4_kpyg8")]
+visible = false
+layout_mode = 1
+_pauseScreenUi = NodePath("..")
+
 [connection signal="pressed" from="PauseMenu/Resume Button" to="." method="_OnResumePressed"]
 [connection signal="pressed" from="PauseMenu/Options Button" to="." method="_OnOptionsPressed"]
+[connection signal="pressed" from="PauseMenu/Controls Button" to="." method="_OnControlsPressed"]
 [connection signal="pressed" from="PauseMenu/Title Screen Button" to="." method="_OnExitToMainMenu"]
 [connection signal="pressed" from="PauseMenu/Exit Button" to="." method="_OnExitToDesktop"]
 
