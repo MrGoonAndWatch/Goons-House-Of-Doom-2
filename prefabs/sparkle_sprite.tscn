@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bylix1b3casa6"]
+
+[ext_resource type="Texture2D" uid="uid://bmjncr5nocebo" path="res://textures/cc0/tile_0020.png" id="1_xndm6"]
+[ext_resource type="Texture2D" uid="uid://dwtbkea3qjf33" path="res://textures/cc0/tile_0021.png" id="2_t4soj"]
+[ext_resource type="Texture2D" uid="uid://dce65vvjpuw07" path="res://textures/cc0/tile_0022.png" id="3_edx5g"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n8lir"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xndm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_t4soj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_edx5g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SparkleSprite" type="AnimatedSprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+pixel_size = 0.02
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_n8lir")
+autoplay = "default"
+frame_progress = 0.298079

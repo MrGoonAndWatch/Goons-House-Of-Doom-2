@@ -2,10 +2,18 @@ using Godot;
 
 public abstract partial class Item : Area3D
 {
-	public int ItemId;
+    [Export]
+    public AnimatedSprite3D aniSprite;
+
+    public int ItemId;
 	public int QtyOnPickup;
     [Export]
     public Texture2D MenuIcon;
+
+    public override void _Ready() {
+        if (aniSprite != null)
+            aniSprite.Play();
+    }
 
     public abstract string GetItemName();
     public abstract string GetDescription();

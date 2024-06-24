@@ -10,3 +10,4 @@ normal_enabled = true
 normal_texture = ExtResource("2_sn0wc")
 ao_enabled = true
 ao_texture = ExtResource("2_hnfsf")
+texture_filter = 2

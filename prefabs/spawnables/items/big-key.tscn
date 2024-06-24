@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_r4luj"]
 [ext_resource type="Script" path="res://scripts/items/BigKey.cs" id="2_5s18e"]
+[ext_resource type="PackedScene" uid="uid://bylix1b3casa6" path="res://prefabs/sparkle_sprite.tscn" id="2_bki08"]
 [ext_resource type="Texture2D" uid="uid://cwqg5q50okehx" path="res://textures/TrashCan.png" id="3_ae11f"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_0m3a5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1iqm5"]
 
@@ -12,8 +11,7 @@
 script = ExtResource("1_r4luj")
 Item = NodePath("Item")
 
-[node name="ItemMarker" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_0m3a5")
+[node name="SparkleSprite" parent="." instance=ExtResource("2_bki08")]
 
 [node name="Item" type="Area3D" parent="."]
 script = ExtResource("2_5s18e")

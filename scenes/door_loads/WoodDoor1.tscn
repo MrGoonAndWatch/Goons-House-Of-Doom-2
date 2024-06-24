@@ -1,26 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0wgeleltfmyc"]
+[gd_scene load_steps=7 format=3 uid="uid://d0wgeleltfmyc"]
 
 [ext_resource type="Script" path="res://scripts/game_flow/DoorLoad.cs" id="1_8fn44"]
+[ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_5073r"]
 [ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="2_hx72u"]
+[ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="4_xhc14"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2udsr"]
 
 [sub_resource type="Environment" id="Environment_xtwv4"]
 background_mode = 1
 
-[node name="WoodDoor1" type="Node3D"]
+[node name="WoodDoor1" type="SubViewportContainer"]
+material = ExtResource("1_5073r")
+offset_right = 1900.0
+offset_bottom = 1000.0
 
-[node name="DoorContainer" type="Node3D" parent="."]
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1900, 1000)
+render_target_update_mode = 4
+
+[node name="DoorContainer" type="Node3D" parent="SubViewport"]
 script = ExtResource("1_8fn44")
 
-[node name="DoorMesh" type="MeshInstance3D" parent="DoorContainer"]
+[node name="DoorMesh" type="MeshInstance3D" parent="SubViewport/DoorContainer"]
 transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 0.25, 0.507424, 0, 0)
 material_override = ExtResource("2_hx72u")
 mesh = SubResource("BoxMesh_2udsr")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.07778)
 environment = SubResource("Environment_xtwv4")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+
+[node name="GammaCorrection" parent="SubViewport" instance=ExtResource("4_xhc14")]

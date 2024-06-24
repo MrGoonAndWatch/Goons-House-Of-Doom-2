@@ -15,6 +15,8 @@ public partial class OptionsMenuUi : Control
     private Slider VoiceVolumeSlider;
     [Export]
     private CheckBox FullscreenCheckbox;
+    [Export]
+    private Slider GammaSlider;
 
     private GlobalSettings _originalGlobalSettings;
     private GlobalSettings _globalSettings;
@@ -28,16 +30,17 @@ public partial class OptionsMenuUi : Control
     {
         _originalGlobalSettings = DataSaver.GetGlobalSettings();
         _globalSettings = new GlobalSettings(_originalGlobalSettings);
-        InitResolution();
+        InitGraphics();
     }
 
-    private void InitResolution()
+    private void InitGraphics()
     {
         _currentResolutionIndex = GetResolutionIndex(_originalGlobalSettings.Resolution);
         ResolutionPicker.Select(_currentResolutionIndex);
         SyncResolution();
         FullscreenCheckbox.SetPressedNoSignal(_globalSettings.Fullscreen);
         SetFullscreen();
+        UpdateGamma(_globalSettings.Gamma);
     }
 
     private int GetResolutionIndex(string resolution)
@@ -84,6 +87,11 @@ public partial class OptionsMenuUi : Control
         GhodAudioManager.ChangeVoiceVolume(newVolume);
     }
 
+    public void _OnGammaChanged(float newGamma)
+    {
+        UpdateGamma(newGamma);
+    }
+
     public void _OnConfirmPressed()
     {
         SaveCurrentValues();
@@ -114,6 +122,7 @@ public partial class OptionsMenuUi : Control
         _globalSettings.SfxVolume = (float) SfxVolumeSlider.Value;
         _globalSettings.VoiceVolume = (float) VoiceVolumeSlider.Value;
         _globalSettings.Resolution = ResolutionPicker.GetItemText(_currentResolutionIndex);
+        _globalSettings.Gamma = (float)GammaSlider.Value;
         _originalGlobalSettings = _globalSettings;
         DataSaver.GetInstance().SaveGlobalSettings(_globalSettings);
     }
@@ -122,7 +131,7 @@ public partial class OptionsMenuUi : Control
     {
         _globalSettings = _originalGlobalSettings;
         SyncAllVolumes();
-        InitResolution();
+        InitGraphics();
     }
 
     private void SyncAllVolumes()
@@ -131,6 +140,7 @@ public partial class OptionsMenuUi : Control
         MusicVolumeSlider.Value = _globalSettings.MusicVolume;
         SfxVolumeSlider.Value = _globalSettings.SfxVolume;
         VoiceVolumeSlider.Value = _globalSettings.VoiceVolume;
+        GammaSlider.Value = _globalSettings.Gamma;
 
         GhodAudioManager.ChangeTotalVolume((float)TotalVolumeSlider.Value);
         GhodAudioManager.ChangeMusicVolume((float)MusicVolumeSlider.Value);
@@ -166,5 +176,15 @@ public partial class OptionsMenuUi : Control
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
         else
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+    }
+
+    private void UpdateGamma(float gamma)
+    {
+        var node = GetNode(GameConstants.NodePaths.FromSceneRoot.GammaCorrectionPlayer);
+        GD.Print($"UpdateGamma, node type = {node.GetType()}");
+        var gammaRect = GetNode<CanvasItem>(GameConstants.NodePaths.FromSceneRoot.GammaCorrectionPlayer);
+        GD.Print("SUCCESS!!!!!!!");
+        var gammaShader = gammaRect.Material as ShaderMaterial;
+        gammaShader.SetShaderParameter(GameConstants.ShaderParameters.Gamma, gamma);
     }
 }

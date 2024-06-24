@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/game_ui/OptionsMenuUi.cs" id="1_87jiw"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_dx8wx"]
 
-[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("ResolutionPicker", "TotalVolumeSlider", "MusicVolumeSlider", "SfxVolumeSlider", "VoiceVolumeSlider")]
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("ResolutionPicker", "TotalVolumeSlider", "MusicVolumeSlider", "SfxVolumeSlider", "VoiceVolumeSlider", "FullscreenCheckbox", "GammaSlider")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +16,8 @@ TotalVolumeSlider = NodePath("VBoxContainer/TotalVolume/TotalVolumeSlider")
 MusicVolumeSlider = NodePath("VBoxContainer/MusicVolume/MusicVolumeSlider")
 SfxVolumeSlider = NodePath("VBoxContainer/EffectsVolume/EffectsVolumeSlider")
 VoiceVolumeSlider = NodePath("VBoxContainer/VoiceVolume/VoiceVolumeSlider")
+FullscreenCheckbox = NodePath("VBoxContainer/FullScreen/CheckBox")
+GammaSlider = NodePath("VBoxContainer/Gamma/GammaSlider")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -105,6 +107,24 @@ text = "Fullscreen"
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
+
+[node name="Gamma" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Gamma"]
+layout_mode = 2
+theme = ExtResource("1_dx8wx")
+theme_type_variation = &"LabelSmall"
+text = "Gamma    "
+
+[node name="GammaSlider" type="HSlider" parent="VBoxContainer/Gamma"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("1_dx8wx")
+max_value = 2.0
+step = 0.05
+value = 1.0
 
 [node name="Spacer2" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
@@ -205,6 +225,7 @@ text = " Confirm "
 
 [connection signal="item_selected" from="VBoxContainer/Resolution/OptionButton" to="." method="_OnResolutionChanged"]
 [connection signal="toggled" from="VBoxContainer/FullScreen/CheckBox" to="." method="_OnSetFullscreen"]
+[connection signal="value_changed" from="VBoxContainer/Gamma/GammaSlider" to="." method="_OnGammaChanged"]
 [connection signal="value_changed" from="VBoxContainer/TotalVolume/TotalVolumeSlider" to="." method="_OnTotalVolumeChanged"]
 [connection signal="value_changed" from="VBoxContainer/MusicVolume/MusicVolumeSlider" to="." method="_OnMusicVolumeChanged"]
 [connection signal="value_changed" from="VBoxContainer/EffectsVolume/EffectsVolumeSlider" to="." method="_OnSfxVolumeChanged"]

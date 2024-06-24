@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbm804mwh6x3r"]
+
+[ext_resource type="Shader" path="res://shaders/cc0/gamma-correction.gdshader" id="1_2v2aa"]
+[ext_resource type="Script" path="res://scripts/LoadGammaSettings.cs" id="2_c0dfw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mfx5f"]
+shader = ExtResource("1_2v2aa")
+shader_parameter/gamma = 1.0
+
+[node name="GammaCorrection" type="CanvasLayer"]
+layer = -10
+
+[node name="GammaRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_mfx5f")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_c0dfw")

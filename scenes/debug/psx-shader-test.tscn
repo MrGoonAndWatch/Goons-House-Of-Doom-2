@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjtaxins24mul"]
+
+[ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="1_sv751"]
+[ext_resource type="Shader" path="res://shaders/cc0/ps1-scene.gdshader" id="1_we0sd"]
+[ext_resource type="Material" uid="uid://cnduyexd3lw0x" path="res://materials/wave-shader-mat.tres" id="3_ilux6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7iluc"]
+shader = ExtResource("1_we0sd")
+shader_parameter/enabled = true
+shader_parameter/dithering = true
+shader_parameter/colors = 12
+shader_parameter/dither_size = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gy2kj"]
+material = ExtResource("3_ilux6")
+size = Vector2(10, 10)
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="SphereMesh" id="SphereMesh_rkym6"]
+material = ExtResource("3_ilux6")
+
+[node name="Psx-shader-test" type="SubViewportContainer"]
+material = SubResource("ShaderMaterial_7iluc")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1900, 1000)
+render_target_update_mode = 4
+
+[node name="root" type="Node3D" parent="SubViewport"]
+
+[node name="test_grid_map" parent="SubViewport/root" instance=ExtResource("1_sv751")]
+data = {
+"cells": PackedInt32Array(-65536, 65535, 0, -65536, 0, 0, -1, 0, 0, -2, 0, 0, -3, 0, 0, -3, 65535, 0, -3, 65534, 0, -4, 65534, 0, -3, 65533, 0, -2, 65533, 0, -1, 65533, 0, -65536, 65533, 0, -65536, 65534, 0, -65535, 65534, 0, -65535, 65533, 0, -65535, 65532, 0, -1, 65532, 0, -65536, 65532, 0, -2, 65532, 0, -3, 65532, 0, -4, 65532, 0, -5, 65532, 0, -4, 65533, 0, -5, 65533, 0, -5, 65534, 0, -4, 65535, 0, -5, 65535, 0, -4, 0, 0, -5, 0, 0, -2, 65534, 0, -1, 65534, 0, -1, 65535, 0, -2, 65535, 0, -65535, 65535, 0, -65535, 0, 0, -65534, 65532, 0, -65533, 65532, 0, -65533, 65533, 0, -65533, 65534, 0, -65533, 65535, 0, -65534, 65535, 0, -65534, 0, 0, -65533, 0, 0, -65534, 65533, 0, -65534, 65534, 0, 3, 0, 0, 3, 65535, 0, 3, 65534, 0, 3, 65533, 0, 3, 65532, 0, 2, 65532, 0, 65531, 65532, 0, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65531, 0, 0, 65532, 65532, 0, 65533, 65532, 0, 65534, 65532, 0, 65535, 65532, 0, 0, 65532, 0, 1, 65532, 0, 65539, 0, 0, 65539, 65535, 0, 65539, 65534, 0, 65537, 65532, 0, 131070, 65532, 0, 131067, 65532, 0, 131067, 65534, 0, 131067, 65533, 0, 131067, 65535, 0, 131067, 0, 0, 65539, 65533, 0, 65539, 65532, 0, 131069, 65532, 0, 65536, 65532, 0, 65534, 65533, 0, 65535, 65533, 0, 0, 65533, 0, 65535, 65534, 0)
+}
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/root"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 13.8694)
+mesh = SubResource("PlaneMesh_gy2kj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewport/root"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 26.8694)
+mesh = SubResource("SphereMesh_rkym6")

@@ -160,7 +160,8 @@ public partial class GameConstants : GodotObject
     {
         public static class FromSceneRoot
         {
-            public const string Player = "/root/root/Player";
+            public const string SceneRoot = "/root/root/SubViewport";
+            public const string Player = SceneRoot + "/Player";
             public const string PlayerInventory = Player + "/PlayerInventory";
             public const string ItemBoxControl = Player + "/PlayerItemBoxControl";
             public const string PlayerInteract = Player + "/InteractHitbox";
@@ -169,6 +170,8 @@ public partial class GameConstants : GodotObject
             public const string HordeModeManager = "/root/root/HordeModeManager";
             public const string SaveGameUi = Player + "/save_game_ui";
             public const string CutsceneManager = Player + "/cutscene_ui";
+            public const string GammaCorrectionPlayer = Player + "/GammaCorrection/GammaRect";
+            public const string GammaCorrectionSolo = SceneRoot + "/GammaCorrection/GammaRect";
         }
     }
 
@@ -218,5 +221,10 @@ public partial class GameConstants : GodotObject
     {
         public System.Collections.Generic.List<ItemSpawnType> KeysRequiredToPassZone;
         public System.Collections.Generic.List<int> ItemIdsInZone;
+    }
+
+    public static class ShaderParameters
+    {
+        public const string Gamma = "gamma";
     }
 }

@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdfkbexd4iqus"]
+[gd_scene load_steps=14 format=3 uid="uid://bdfkbexd4iqus"]
 
+[ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_mgspb"]
 [ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="1_qgu7j"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_edi1e"]
 [ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="3_3ov67"]
@@ -7,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://43pj43g5wgqu" path="res://prefabs/spawnables/enemies/enemy-spawn-point.tscn" id="5_etfxi"]
 [ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_50rh5"]
 [ext_resource type="Script" path="res://scripts/puzzles/PassCode.cs" id="7_1id0d"]
+[ext_resource type="Material" uid="uid://c1tvta0dbmvqj" path="res://materials/flat_black_material.tres" id="9_jsbhq"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_umokm"]
 vertices = PackedVector3Array(-5.5, -0.5, -3.25, -3.5, -0.5, -3.25, -3.25, -0.5, -4.5, -5.5, -0.5, -7.5, 2.5, -0.5, -4.5, 2.75, -0.5, -3.5, 5.5, -0.5, -3.5, 5.5, -0.5, -7.5, 2.5, -0.5, -4.5, 5.5, -0.5, -7.5, -5.5, -0.5, -7.5, -3.25, -0.5, -4.5, -3.25, -0.5, -2.25, -3.5, -0.5, -3.25, -5.5, -0.5, -3.25, -5.5, -0.5, 1.5, 5.5, -0.5, -3.5, 2.75, -0.5, -3.5, 2.25, -0.5, -2.25, 5.5, -0.5, 1.5, -5.5, -0.5, 1.5, 5.5, -0.5, 1.5, 2.25, -0.5, -2.25, -3.25, -0.5, -2.25)
@@ -16,56 +18,66 @@ agent_max_slope = 47.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_srbyp"]
 size = Vector3(2, 2, 2)
 
-[node name="root" type="Node3D"]
+[sub_resource type="BoxMesh" id="BoxMesh_r270a"]
 
-[node name="Cameras" type="Node3D" parent="."]
+[sub_resource type="PlaneMesh" id="PlaneMesh_vphn2"]
+size = Vector2(0.75, 0.75)
 
-[node name="Camera" type="Camera3D" parent="Cameras"]
+[node name="root" type="SubViewportContainer"]
+material = ExtResource("1_mgspb")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1900, 1000)
+render_target_update_mode = 4
+
+[node name="Cameras" type="Node3D" parent="SubViewport"]
+
+[node name="Camera" type="Camera3D" parent="SubViewport/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 0.980741, 0.195313, 0, -0.195313, 0.980741, 0, 1.28321, 4.23567)
 current = true
 
-[node name="Camera1" type="Node3D" parent="Cameras"]
+[node name="Camera1" type="Node3D" parent="SubViewport/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 0.980741, 0.195313, 0, -0.195313, 0.980741, 0, 1.28321, 4.23567)
 
-[node name="Camera2" type="Node3D" parent="Cameras"]
+[node name="Camera2" type="Node3D" parent="SubViewport/Cameras"]
 transform = Transform3D(-0.0291633, 0.611089, -0.791024, 0.0144844, 0.791536, 0.610951, 0.99947, 0.00635983, -0.0319351, -8.42644, 4.11527, -0.502417)
 
-[node name="Camera3" type="Node3D" parent="Cameras"]
+[node name="Camera3" type="Node3D" parent="SubViewport/Cameras"]
 transform = Transform3D(-1, 1.53192e-08, -1.46316e-07, -2.13005e-08, 0.969007, 0.247033, 1.45566e-07, 0.247033, -0.969007, -0.764972, 3.21904, -11.7243)
 
-[node name="Camera-Triggers" type="Node3D" parent="."]
+[node name="Camera-Triggers" type="Node3D" parent="SubViewport"]
 
-[node name="Camera1Change" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera", "TargetCameraPos") instance=ExtResource("1_qgu7j")]
+[node name="Camera1Change" parent="SubViewport/Camera-Triggers" node_paths=PackedStringArray("TargetCamera", "TargetCameraPos") instance=ExtResource("1_qgu7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8114, 0, 0)
 TargetCamera = NodePath("../../Cameras/Camera")
 TargetCameraPos = NodePath("../../Cameras/Camera1")
 
-[node name="Camera2Change" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera", "TargetCameraPos") instance=ExtResource("1_qgu7j")]
+[node name="Camera2Change" parent="SubViewport/Camera-Triggers" node_paths=PackedStringArray("TargetCamera", "TargetCameraPos") instance=ExtResource("1_qgu7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.42667, 0, 0)
 TargetCamera = NodePath("../../Cameras/Camera")
 TargetCameraPos = NodePath("../../Cameras/Camera2")
 
-[node name="Camera3Change" parent="Camera-Triggers" node_paths=PackedStringArray("TargetCamera", "TargetCameraPos") instance=ExtResource("1_qgu7j")]
+[node name="Camera3Change" parent="SubViewport/Camera-Triggers" node_paths=PackedStringArray("TargetCamera", "TargetCameraPos") instance=ExtResource("1_qgu7j")]
 transform = Transform3D(11.3137, 0, 0, 0, 1, 0, 0, 0, 3.70752, 0.362668, 0, -5.72403)
 TargetCamera = NodePath("../../Cameras/Camera")
 TargetCameraPos = NodePath("../../Cameras/Camera3")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.366729, 0.930328, 0, -0.930328, 0.366729, 0, 4.61138, 2.3795)
 
-[node name="Player" parent="." instance=ExtResource("2_edi1e")]
+[node name="Player" parent="SubViewport" instance=ExtResource("2_edi1e")]
 
-[node name="test_door" parent="." instance=ExtResource("3_3ov67")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22101, 0, 1.84189)
+[node name="test_door" parent="SubViewport" instance=ExtResource("3_3ov67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.82679, 0, 2.02785)
 
-[node name="DoorBody" parent="test_door" index="1"]
+[node name="DoorBody" parent="SubViewport/test_door" index="1"]
 GoesToRoom = "debug/test_scene2"
-StartAtPosition = Vector3(-5.5, 0, 0)
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="SubViewport"]
 navigation_mesh = SubResource("NavigationMesh_umokm")
 
-[node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
+[node name="GridMap" type="GridMap" parent="SubViewport/NavigationRegion3D"]
 mesh_library = ExtResource("4_03g0w")
 cell_size = Vector3(1, 1, 1)
 data = {
@@ -73,17 +85,23 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
-[node name="CameraInitChange" parent="." instance=ExtResource("1_qgu7j")]
+[node name="CameraInitChange" parent="SubViewport" instance=ExtResource("1_qgu7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8114, 0, 0)
 
-[node name="enemy-spawn-point" parent="." instance=ExtResource("5_etfxi")]
+[node name="enemy-spawn-point" parent="SubViewport" instance=ExtResource("5_etfxi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0965605, -1, -6.44764)
 EnemyId = 1
 EnemySpawnOnNormal = 2
 EnemySpawnOnHard = 4
 EnemySpawnOnImpossible = 4
 
-[node name="ammo-spawn" parent="." instance=ExtResource("6_50rh5")]
+[node name="test_door2" parent="SubViewport" instance=ExtResource("3_3ov67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55223, 0, 1.89509)
+
+[node name="DoorBody" parent="SubViewport/test_door2" index="1"]
+GoesToRoom = "debug/test_scene2"
+
+[node name="ammo-spawn" parent="SubViewport" instance=ExtResource("6_50rh5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4364, 0, 0)
 ItemId = 3
 QtyOnPickup = 50
@@ -92,7 +110,7 @@ ItemSpawnOnNormal = 4
 ItemSpawnOnHard = 4
 ItemSpawnOnImpossible = 4
 
-[node name="pistol-spawn" parent="." instance=ExtResource("6_50rh5")]
+[node name="pistol-spawn" parent="SubViewport" instance=ExtResource("6_50rh5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.82595, 0, 0)
 ItemId = 2
 QtyOnPickup = 3
@@ -101,20 +119,10 @@ ItemSpawnOnNormal = 3
 ItemSpawnOnHard = 3
 ItemSpawnOnImpossible = 3
 
-[node name="test_door2" parent="." instance=ExtResource("3_3ov67")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.92697, 0, 1.84189)
-
-[node name="DoorBody" parent="test_door2" index="1"]
-DoorId = 1
-GoesToRoom = "debug/test_scene2"
-LockedText = PackedStringArray("It\'s locked with a big keyhole.")
-UnlockText = PackedStringArray("You unlocked the door.")
-LocksWith = 1
-
-[node name="test-code-input" type="Node3D" parent="."]
+[node name="test-code-input" type="Node3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96954, 0, 0.906012)
 
-[node name="Area3D" type="StaticBody3D" parent="test-code-input"]
+[node name="Area3D" type="StaticBody3D" parent="SubViewport/test-code-input"]
 script = ExtResource("7_1id0d")
 PassCodeType = 1
 InspectText = PackedStringArray("You come across a keypad", "with four digits", "enter code")
@@ -123,19 +131,29 @@ SetEventOnUnlock = 1
 OnUnlockSuccessText = PackedStringArray("The code was accepted!")
 OnUnlockFailText = PackedStringArray("Wrong Code", "Dumbass")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="test-code-input/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/test-code-input/Area3D"]
 shape = SubResource("BoxShape3D_srbyp")
 
-[node name="test_door3" parent="." instance=ExtResource("3_3ov67")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33654, 0, 1.84189)
+[node name="test_door3" parent="SubViewport" instance=ExtResource("3_3ov67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.13054, 0, 1.85975)
 
-[node name="DoorBody" parent="test_door3" index="1"]
-DoorId = 2
+[node name="DoorBody" parent="SubViewport/test_door3" index="1"]
 GoesToRoom = "debug/test_scene2"
-LockedText = PackedStringArray("It\'s locked", "By some mysterious force")
-UnlockText = PackedStringArray("You unlocked the door.")
-UnlocksOnEvent = 1
 
-[editable path="test_door"]
-[editable path="test_door2"]
-[editable path="test_door3"]
+[node name="TV" type="Node3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6065, 0, 0)
+visible = false
+
+[node name="TV-Case" type="MeshInstance3D" parent="SubViewport/TV"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.501138)
+material_override = ExtResource("9_jsbhq")
+mesh = SubResource("BoxMesh_r270a")
+
+[node name="TV-Screen" type="MeshInstance3D" parent="SubViewport/TV"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_vphn2")
+skeleton = NodePath("../..")
+
+[editable path="SubViewport/test_door"]
+[editable path="SubViewport/test_door2"]
+[editable path="SubViewport/test_door3"]

@@ -79,10 +79,9 @@ layout_mode = 2
 theme = ExtResource("1_is7b2")
 text = "Exit To Desktop"
 
-[node name="OptionsMenu" parent="." node_paths=PackedStringArray("FullscreenCheckbox") instance=ExtResource("3_jggi5")]
+[node name="OptionsMenu" parent="." instance=ExtResource("3_jggi5")]
 visible = false
 layout_mode = 1
-FullscreenCheckbox = NodePath("VBoxContainer/FullScreen/CheckBox")
 
 [node name="controls_setup" parent="." node_paths=PackedStringArray("_pauseScreenUi") instance=ExtResource("4_kpyg8")]
 visible = false

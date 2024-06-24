@@ -1,5 +1,3 @@
-using System;
-
 public partial class GlobalSettings
 {
     public float TotalVolume;
@@ -9,6 +7,7 @@ public partial class GlobalSettings
 
     public bool Fullscreen;
     public string Resolution;
+    public float Gamma = 1.0f;
 
     public GlobalSettings() { }
 
@@ -20,5 +19,6 @@ public partial class GlobalSettings
         VoiceVolume = other.VoiceVolume;
         Fullscreen = other.Fullscreen;
         Resolution = other.Resolution;
+        Gamma = other.Gamma;
     }
 }

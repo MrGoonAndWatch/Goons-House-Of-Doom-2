@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2vp8an608wqg"
-path.s3tc="res://.godot/imported/medieval-art1.jpg-970b72055dea31354d1dd21c437da9d5.s3tc.ctex"
+uid="uid://bmjncr5nocebo"
+path.s3tc="res://.godot/imported/tile_0020.png-88ff0101877130f59b67d426f314588a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/medieval-art1.jpg"
-dest_files=["res://.godot/imported/medieval-art1.jpg-970b72055dea31354d1dd21c437da9d5.s3tc.ctex"]
+source_file="res://textures/cc0/tile_0020.png"
+dest_files=["res://.godot/imported/tile_0020.png-88ff0101877130f59b67d426f314588a.s3tc.ctex"]
 
 [params]
 
