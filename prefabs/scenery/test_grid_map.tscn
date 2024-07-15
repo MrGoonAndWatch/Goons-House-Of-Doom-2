@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://dn0fwjeoadmnu"]
 
-[ext_resource type="MeshLibrary" uid="uid://bwn3cpxcfaeq3" path="res://prefabs/scenery/tiles_mesh_library_3.tres" id="1_u06ji"]
+[ext_resource type="MeshLibrary" uid="uid://doatpfhrdrqh5" path="res://prefabs/scenery/tiles_mesh_library_4.tres" id="1_0sh2h"]
 
 [node name="test_grid_map" type="GridMap"]
-mesh_library = ExtResource("1_u06ji")
+mesh_library = ExtResource("1_0sh2h")
 cell_size = Vector3(1, 1, 1)
 metadata/_editor_floor_ = Vector3(0, 0, 0)

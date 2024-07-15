@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4ahnp1242cuw"]
+
+[ext_resource type="PackedScene" uid="uid://cvr35mf0dp7kb" path="res://models/Tiles/fence.glb" id="1_0ghbg"]
+
+[node name="fence" instance=ExtResource("1_0ghbg")]

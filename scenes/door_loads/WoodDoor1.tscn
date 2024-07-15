@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0wgeleltfmyc"]
+[gd_scene load_steps=6 format=3 uid="uid://d0wgeleltfmyc"]
 
 [ext_resource type="Script" path="res://scripts/game_flow/DoorLoad.cs" id="1_8fn44"]
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_5073r"]
-[ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="2_hx72u"]
+[ext_resource type="PackedScene" uid="uid://qci3y34d86a1" path="res://models/third-party/cc0/Brown Door.glb" id="3_lmtm8"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="4_xhc14"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_2udsr"]
 
 [sub_resource type="Environment" id="Environment_xtwv4"]
 background_mode = 1
@@ -23,11 +21,8 @@ render_target_update_mode = 4
 [node name="DoorContainer" type="Node3D" parent="SubViewport"]
 script = ExtResource("1_8fn44")
 
-[node name="DoorMesh" type="MeshInstance3D" parent="SubViewport/DoorContainer"]
-transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 0.25, 0.507424, 0, 0)
-material_override = ExtResource("2_hx72u")
-mesh = SubResource("BoxMesh_2udsr")
-skeleton = NodePath("../../..")
+[node name="Brown Door2" parent="SubViewport/DoorContainer" instance=ExtResource("3_lmtm8")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0.5, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.07778)

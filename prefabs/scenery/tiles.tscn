@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0h22hpdgo8q4"]
+[gd_scene load_steps=6 format=3 uid="uid://c0h22hpdgo8q4"]
 
 [ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="1_ktlbh"]
 [ext_resource type="PackedScene" uid="uid://bab8r5uel4tq1" path="res://models/Tiles/stairs-redo.glb" id="5_itm8f"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_r36yc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mbo8q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ikyp6"]
 
 [node name="tiles" type="Node3D"]
 
@@ -13,4 +17,15 @@
 mesh = SubResource("BoxMesh_r36yc")
 surface_material_override/0 = ExtResource("1_ktlbh")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="WoodFloor/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WoodFloor/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_mbo8q")
+
 [node name="stairs-redo" parent="." instance=ExtResource("5_itm8f")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="stairs-redo"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs-redo/StaticBody3D"]
+shape = SubResource("BoxShape3D_ikyp6")

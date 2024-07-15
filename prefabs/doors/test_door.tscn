@@ -1,23 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://byxkvjaw5ho8v"]
+[gd_scene load_steps=4 format=3 uid="uid://byxkvjaw5ho8v"]
 
-[ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="1_i2r5f"]
+[ext_resource type="PackedScene" uid="uid://qci3y34d86a1" path="res://models/third-party/cc0/Brown Door.glb" id="1_jfu0u"]
 [ext_resource type="Script" path="res://scripts/puzzles/Door.cs" id="2_5oeo1"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_mpk02"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_dpp81"]
-size = Vector3(1, 2, 0.25)
+size = Vector3(1, 1.81229, 0.25)
 
 [node name="test_door" type="Node3D"]
 
-[node name="DoorMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 0.25, 0, 0, 0)
-material_override = ExtResource("1_i2r5f")
-mesh = SubResource("BoxMesh_mpk02")
+[node name="Brown Door2" parent="." instance=ExtResource("1_jfu0u")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, 0, 0)
 
 [node name="DoorBody" type="StaticBody3D" parent="."]
 script = ExtResource("2_5oeo1")
 GoesToRoom = "test_scene2"
 
 [node name="DoorCollisionShape" type="CollisionShape3D" parent="DoorBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152023, 0)
 shape = SubResource("BoxShape3D_dpp81")
