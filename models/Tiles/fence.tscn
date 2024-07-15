@@ -1,5 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://d4ahnp1242cuw"]
+[gd_scene load_steps=3 format=3 uid="uid://d4ahnp1242cuw"]
 
 [ext_resource type="PackedScene" uid="uid://cvr35mf0dp7kb" path="res://models/Tiles/fence.glb" id="1_0ghbg"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_bswte"]
+size = Vector3(4, 2, 0.25)
+
 [node name="fence" instance=ExtResource("1_0ghbg")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Fence" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence/StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_bswte")
