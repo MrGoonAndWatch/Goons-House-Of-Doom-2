@@ -1,19 +1,19 @@
 [gd_scene load_steps=6 format=3 uid="uid://c0h22hpdgo8q4"]
 
 [ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="1_ktlbh"]
-[ext_resource type="PackedScene" uid="uid://bab8r5uel4tq1" path="res://models/Tiles/stairs-redo.glb" id="5_itm8f"]
+[ext_resource type="PackedScene" uid="uid://c20qpo5dnhban" path="res://models/Tiles/hedge.tscn" id="3_2wbrp"]
+[ext_resource type="PackedScene" uid="uid://c0ebwwxri4d1m" path="res://models/Tiles/stairs_redo.tscn" id="3_thp7j"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_r36yc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mbo8q"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ikyp6"]
 
 [node name="tiles" type="Node3D"]
 
 [node name="WoodFloor" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WoodFloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_r36yc")
 surface_material_override/0 = ExtResource("1_ktlbh")
 
@@ -22,10 +22,6 @@ surface_material_override/0 = ExtResource("1_ktlbh")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WoodFloor/MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_mbo8q")
 
-[node name="stairs-redo" parent="." instance=ExtResource("5_itm8f")]
+[node name="hedge" parent="." instance=ExtResource("3_2wbrp")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="stairs-redo"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs-redo/StaticBody3D"]
-shape = SubResource("BoxShape3D_ikyp6")
+[node name="stairs-redo" parent="." instance=ExtResource("3_thp7j")]

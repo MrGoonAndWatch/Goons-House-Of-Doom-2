@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c20qpo5dnhban"]
+
+[ext_resource type="PackedScene" uid="uid://cm5tv7hamqxup" path="res://models/Tiles/hedge.glb" id="1_50sle"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xwqqo"]
+size = Vector3(2, 2, 2)
+
+[node name="hedge" instance=ExtResource("1_50sle")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Hedge" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hedge/StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_xwqqo")

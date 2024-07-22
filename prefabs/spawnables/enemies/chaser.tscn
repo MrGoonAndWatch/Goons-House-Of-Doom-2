@@ -11,6 +11,7 @@ height = 2.934
 size = Vector3(3, 3, 2)
 
 [node name="chaser" type="CharacterBody3D" node_paths=PackedStringArray("Navigation")]
+floor_max_angle = 1.0472
 script = ExtResource("1_lrh4m")
 _maxWanderDistance = 2.0
 _minWanderDistance = 0.25

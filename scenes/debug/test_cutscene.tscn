@@ -19,7 +19,7 @@ size = Vector2i(1900, 1000)
 render_target_update_mode = 4
 
 [node name="Player" parent="SubViewport" instance=ExtResource("1_k4weh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0.5, 1.5)
 
 [node name="test_grid_map" parent="SubViewport" instance=ExtResource("2_i6rse")]
 data = {
@@ -27,7 +27,7 @@ data = {
 }
 
 [node name="test_door" parent="SubViewport" instance=ExtResource("3_0pa5d")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.00226, 0.0140662, 2.32311)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.002, 0.514, 2.323)
 
 [node name="DoorBody" parent="SubViewport/test_door" index="1"]
 GoesToRoom = "debug/test_scene2"
@@ -35,7 +35,7 @@ StartAtPosition = Vector3(-3.75, 0, -1.5)
 StartAtAngle = Vector3(0, 270, 0)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(-0.716643, 0, 0.69744, 0, 1, 0, -0.69744, 0, -0.716643, 4.89208, 1.97978, -6.91052)
+transform = Transform3D(-0.716643, 0, 0.69744, 0, 1, 0, -0.69744, 0, -0.716643, 4.892, 2.48, -6.911)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
 transform = Transform3D(0.860378, -0.193253, 0.471597, -0.509657, -0.326239, 0.796127, 0, -0.925322, -0.379182, 3.72441, 4.41841, -8.66892)
@@ -62,7 +62,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5716, 0, -4.55687)
 script = ExtResource("5_0mgx5")
 EndType = 1
 TargetActor = NodePath("../../Player")
-MoveToPosition = Vector3(1.5716, 0, -4.55687)
+MoveToPosition = Vector3(1.572, 0.5, -4.557)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/TestCutscene/Instruction1"]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
@@ -73,6 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.56842, 0, -0.497759)
 script = ExtResource("5_0mgx5")
 EndTimer = 2.0
 TargetActor = NodePath("../../Player")
+MoveToPosition = Vector3(0, 0.5, 0)
 VoiceLineFile = "res://audio/sound/Pain.ogg"
 
 [node name="Instruction3" type="Node3D" parent="SubViewport/TestCutscene" node_paths=PackedStringArray("TargetActor")]
@@ -80,7 +81,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.56842, 0, -0.497759)
 script = ExtResource("5_0mgx5")
 EndType = 1
 TargetActor = NodePath("../../Player")
-MoveToPosition = Vector3(-3.56842, 0, -0.497759)
+MoveToPosition = Vector3(-3.568, 0.5, -0.498)
 AnimationFlag = "parameters/Legs/conditions/walking"
 
 [node name="CutsceneTrigger" type="Node3D" parent="SubViewport" node_paths=PackedStringArray("Cutscene")]
