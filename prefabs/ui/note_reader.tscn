@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://dov4b3kwtujxh"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/NoteReader.cs" id="1_3a1fq"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="2_bcxsp"]
+
+[node name="note_reader" type="Control" node_paths=PackedStringArray("_noteBackgroundImage", "_previousPageArrow", "_nextPageArrow", "_currentPageTextLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3a1fq")
+_noteBackgroundImage = NodePath("BgImageContainer/MarginContainer/NoteBgImage")
+_previousPageArrow = NodePath("NoteControlsAndTextContainer/PreviousPage/PreviousPageArrow")
+_nextPageArrow = NodePath("NoteControlsAndTextContainer/Control/NextPageArrow")
+_currentPageTextLabel = NodePath("NoteControlsAndTextContainer/NotePageText")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BgImageContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="BgImageContainer"]
+layout_mode = 2
+
+[node name="NoteBgImage" type="TextureRect" parent="BgImageContainer/MarginContainer"]
+layout_mode = 2
+expand_mode = 3
+
+[node name="ImageFade" type="ColorRect" parent="BgImageContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.513726)
+
+[node name="NoteControlsAndTextContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PreviousPage" type="Control" parent="NoteControlsAndTextContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+
+[node name="PreviousPageArrow" type="Label" parent="NoteControlsAndTextContainer/PreviousPage"]
+layout_mode = 2
+offset_left = 4.0
+offset_top = 448.0
+offset_right = 47.0
+offset_bottom = 551.0
+theme_override_font_sizes/font_size = 75
+text = "<"
+
+[node name="NotePageText" type="Label" parent="NoteControlsAndTextContainer"]
+layout_mode = 2
+theme = ExtResource("2_bcxsp")
+text = "Hereis some text,
+you can totally
+read this with the busy 
+background texture"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="NoteControlsAndTextContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+
+[node name="NextPageArrow" type="Label" parent="NoteControlsAndTextContainer/Control"]
+layout_direction = 3
+layout_mode = 2
+offset_left = 4.0
+offset_top = 448.0
+offset_right = 47.0
+offset_bottom = 551.0
+theme_override_font_sizes/font_size = 75
+text = ">"
+horizontal_alignment = 2

@@ -36,6 +36,7 @@ public partial class DataSaver : Node3D
             GrabbedItems = new int[0],
             TriggeredEvents = new int[0],
             CutscenesWatched = new int[0],
+            NotesCollected = new int[0],
             Inventory = new ItemState[0],
             ItemBox = new ItemState[0],
             Health = PlayerStatus.MaxHealth,
@@ -123,6 +124,7 @@ public partial class DataSaver : Node3D
         _gameState.DoorsUnlocked = _gameState.DoorsUnlocked.Union(playerStatus.DoorsUnlocked).Distinct().ToArray();
         _gameState.GrabbedItems = _gameState.GrabbedItems.Union(playerStatus.GrabbedItems).Distinct().ToArray();
         _gameState.TriggeredEvents = _gameState.TriggeredEvents.Union(playerStatus.TriggeredEvents.Select(e => (int)e)).Distinct().ToArray();
+        _gameState.NotesCollected = _gameState.NotesCollected.Union(playerStatus.NotesCollected).ToArray();
         GD.Print($"Cutscenes watched --- _gameState null? {_gameState.CutscenesWatched == null} . playerStatus null ? {playerStatus.CutscenesWatched == null}");
         _gameState.CutscenesWatched = _gameState.CutscenesWatched.Union(playerStatus.CutscenesWatched).Distinct().ToArray();
         if (playerStatus.EquipedWeapon != null)
@@ -267,6 +269,7 @@ public partial class DataSaver : Node3D
         public int[] TriggeredEvents;
         public int[] DoorsUnlocked;
         public int[] CutscenesWatched;
+        public int[] NotesCollected;
     }
 
     public class ItemState

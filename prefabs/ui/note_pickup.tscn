@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bawbwbepm50es"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/NotePickup.cs" id="1_bvtyw"]
+[ext_resource type="Script" path="res://scripts/data/NoteData.cs" id="1_l0hk5"]
+[ext_resource type="PackedScene" uid="uid://bylix1b3casa6" path="res://prefabs/sparkle_sprite.tscn" id="1_m54ph"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nsl7e"]
+
+[node name="NotePickup" type="Node3D"]
+script = ExtResource("1_l0hk5")
+
+[node name="SparkleSprite" parent="." instance=ExtResource("1_m54ph")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0127272, 0)
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("NoteData")]
+script = ExtResource("1_bvtyw")
+NoteData = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_nsl7e")

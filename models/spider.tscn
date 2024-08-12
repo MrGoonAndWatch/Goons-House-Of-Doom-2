@@ -101,21 +101,21 @@ node_connections = [&"output", 0, &"Animation"]
 [node name="spider" instance=ExtResource("1_0um4f")]
 
 [node name="Skeleton3D" parent="Armature" index="0"]
-bones/2/rotation = Quaternion(7.19498e-11, -1.86156e-09, -0.0386215, 0.999254)
-bones/3/rotation = Quaternion(4.57699e-09, -1.1842e-07, -0.0386215, 0.999254)
-bones/4/rotation = Quaternion(2.34695e-10, 3.03133e-09, 0.0771918, 0.997016)
+bones/2/rotation = Quaternion(1.81507e-09, -1.86285e-09, -0.0102737, 0.999947)
+bones/3/rotation = Quaternion(-7.3269e-09, -1.18503e-07, -0.0102737, 0.999947)
+bones/4/rotation = Quaternion(1.66135e-08, 3.03976e-09, 0.0205385, 0.999789)
 bones/5/rotation = Quaternion(0.707107, -2.31239e-07, -1.99496e-07, 0.707107)
-bones/6/rotation = Quaternion(5.34634e-08, -5.19698e-09, 0.00999768, 0.99995)
-bones/7/rotation = Quaternion(-2.6676e-07, 2.46259e-08, -0.391901, 0.920007)
+bones/6/rotation = Quaternion(9.06141e-10, -7.93725e-11, 0.066677, 0.997775)
+bones/7/rotation = Quaternion(-2.18195e-07, 2.15124e-08, -0.443433, 0.896307)
 bones/8/rotation = Quaternion(-0.5, -0.5, 0.5, 0.5)
-bones/9/rotation = Quaternion(0.00999768, -1.64992e-08, -9.33792e-08, 0.99995)
-bones/10/rotation = Quaternion(-0.391901, -4.47607e-14, 4.95594e-07, 0.920007)
+bones/9/rotation = Quaternion(0.066677, -1.64633e-08, 1.10017e-09, 0.997775)
+bones/10/rotation = Quaternion(-0.443433, -1.79854e-14, 4.10857e-07, 0.896307)
 bones/11/rotation = Quaternion(0.707107, -2.91652e-07, -2.8379e-07, 0.707107)
-bones/12/rotation = Quaternion(3.98298e-08, 2.06622e-07, 0.00999766, 0.99995)
-bones/13/rotation = Quaternion(-2.00073e-07, 3.86163e-15, -0.391901, 0.920007)
+bones/12/rotation = Quaternion(1.37776e-08, 2.06172e-07, 0.066677, 0.997775)
+bones/13/rotation = Quaternion(-1.65864e-07, 1.17521e-14, -0.443433, 0.896307)
 bones/14/rotation = Quaternion(-0.5, -0.5, 0.5, 0.5)
-bones/15/rotation = Quaternion(0.00999768, 4.2838e-07, -4.10073e-08, 0.99995)
-bones/16/rotation = Quaternion(-0.391901, 3.85308e-14, 1.94564e-07, 0.920007)
+bones/15/rotation = Quaternion(0.066677, 4.27448e-07, -2.85645e-08, 0.997775)
+bones/16/rotation = Quaternion(-0.443433, 3.99402e-14, 1.61297e-07, 0.896307)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 libraries = {
