@@ -72,7 +72,7 @@ public partial class PlayerStatus : Node
         // TODO: Hard coding this to normal difficulty for now.
         GameSettings = new GameSettings
         {
-            GameDifficulty = GameDifficulty.Normal,
+            GameDifficulty = GameDifficulty.Hard,
             //IsRandomized = true,
             //RandomizerSeed = RandomizerSeed.GenerateRandomizer(randomizerSettings),
             FunnyMode = false,
