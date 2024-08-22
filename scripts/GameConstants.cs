@@ -163,6 +163,7 @@ public partial class GameConstants : GodotObject
             public const string SceneRoot = "/root/root/SubViewport";
             public const string Player = SceneRoot + "/Player";
             public const string PlayerInventory = Player + "/PlayerInventory";
+            public const string PlayerStatusScreenHeader = Player + "PlayerInventoryUi/Header";
             public const string ItemBoxControl = Player + "/PlayerItemBoxControl";
             public const string PlayerInteract = Player + "/InteractHitbox";
             public const string InspectTextUi = Player + "/InspectTextUI";

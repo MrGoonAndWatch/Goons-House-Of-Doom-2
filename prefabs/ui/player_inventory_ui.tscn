@@ -1,8 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cejaneqj6o6nl"]
+[gd_scene load_steps=12 format=3 uid="uid://cejaneqj6o6nl"]
 
+[ext_resource type="Script" path="res://scripts/game_ui/StatusScreenHeader.cs" id="1_6nsos"]
 [ext_resource type="PackedScene" uid="uid://dm1r6v5ighikj" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_8u6o3"]
+[ext_resource type="Script" path="res://scripts/game_ui/InventoryStatusUi.cs" id="1_11ul4"]
 [ext_resource type="Script" path="res://scripts/game_ui/MenuAction.cs" id="2_sdnk2"]
 [ext_resource type="Texture2D" uid="uid://d2vp8an608wqg" path="res://textures/medieval-art1.jpg" id="3_7co6t"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="4_87q4t"]
+[ext_resource type="Script" path="res://scripts/game_ui/NotesStatusUi.cs" id="4_br3k6"]
+[ext_resource type="Script" path="res://scripts/game_ui/MapStatusUi.cs" id="5_2aby6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jng7x"]
 font_size = 24
@@ -31,7 +36,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.443137, 0.886275, 0.447059)
 
-[node name="ItemWindow" type="Control" parent="."]
+[node name="Inventory" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_11ul4")
+
+[node name="ItemWindow" type="Control" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -45,7 +59,7 @@ offset_bottom = -189.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ItemBg" type="ColorRect" parent="ItemWindow"]
+[node name="ItemBg" type="ColorRect" parent="Inventory/ItemWindow"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 5.825
@@ -58,7 +72,7 @@ offset_right = 233.0
 offset_bottom = 116.0
 color = Color(0, 0, 0, 1)
 
-[node name="ItemTextureRect" type="TextureRect" parent="ItemWindow"]
+[node name="ItemTextureRect" type="TextureRect" parent="Inventory/ItemWindow"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 6.075
@@ -70,7 +84,7 @@ offset_top = -103.0
 offset_right = 103.0
 offset_bottom = 103.0
 
-[node name="ItemDescription" type="Control" parent="."]
+[node name="ItemDescription" type="Control" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -84,7 +98,7 @@ offset_bottom = 143.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="ItemDescription"]
+[node name="ColorRect" type="ColorRect" parent="Inventory/ItemDescription"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 5.825
@@ -97,7 +111,7 @@ offset_right = 233.0
 offset_bottom = 20.0
 color = Color(0, 0, 0, 1)
 
-[node name="ItemDescriptionLabel" type="Label" parent="ItemDescription"]
+[node name="ItemDescriptionLabel" type="Label" parent="Inventory/ItemDescription"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 5.825
@@ -111,10 +125,10 @@ offset_bottom = 20.0
 text = "Pee pee poo poo"
 vertical_alignment = 1
 
-[node name="ItemSlots" parent="." instance=ExtResource("1_8u6o3")]
+[node name="ItemSlots" parent="Inventory" instance=ExtResource("1_8u6o3")]
 layout_mode = 1
 
-[node name="Actions" type="Control" parent="."]
+[node name="Actions" type="Control" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -128,20 +142,20 @@ offset_bottom = 121.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="ActionCursor" type="ColorRect" parent="Actions"]
+[node name="ActionCursor" type="ColorRect" parent="Inventory/Actions"]
 layout_mode = 0
 offset_right = 130.0
 offset_bottom = 50.0
 color = Color(1, 1, 0, 1)
 
-[node name="Action-Use" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+[node name="Action-Use" type="Control" parent="Inventory/Actions" node_paths=PackedStringArray("Textbox")]
 anchors_preset = 0
 offset_right = 130.0
 offset_bottom = 50.0
 script = ExtResource("2_sdnk2")
 Textbox = NodePath("ActionLabel")
 
-[node name="ActionBg" type="ColorRect" parent="Actions/Action-Use"]
+[node name="ActionBg" type="ColorRect" parent="Inventory/Actions/Action-Use"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -149,7 +163,7 @@ offset_right = 125.0
 offset_bottom = 45.0
 color = Color(0.603922, 0.603922, 0.603922, 1)
 
-[node name="ActionLabel" type="Label" parent="Actions/Action-Use"]
+[node name="ActionLabel" type="Label" parent="Inventory/Actions/Action-Use"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -160,7 +174,7 @@ label_settings = SubResource("LabelSettings_jng7x")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Action-Combine" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+[node name="Action-Combine" type="Control" parent="Inventory/Actions" node_paths=PackedStringArray("Textbox")]
 anchors_preset = 0
 offset_top = 60.0
 offset_right = 130.0
@@ -169,7 +183,7 @@ script = ExtResource("2_sdnk2")
 ActionType = 1
 Textbox = NodePath("ActionLabel")
 
-[node name="ActionBg" type="ColorRect" parent="Actions/Action-Combine"]
+[node name="ActionBg" type="ColorRect" parent="Inventory/Actions/Action-Combine"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -177,7 +191,7 @@ offset_right = 125.0
 offset_bottom = 45.0
 color = Color(0.603922, 0.603922, 0.603922, 1)
 
-[node name="ActionLabel" type="Label" parent="Actions/Action-Combine"]
+[node name="ActionLabel" type="Label" parent="Inventory/Actions/Action-Combine"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -188,7 +202,7 @@ label_settings = SubResource("LabelSettings_jng7x")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Action-Examine" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+[node name="Action-Examine" type="Control" parent="Inventory/Actions" node_paths=PackedStringArray("Textbox")]
 anchors_preset = 0
 offset_top = 120.0
 offset_right = 130.0
@@ -197,7 +211,7 @@ script = ExtResource("2_sdnk2")
 ActionType = 2
 Textbox = NodePath("ActionLabel")
 
-[node name="ActionBg" type="ColorRect" parent="Actions/Action-Examine"]
+[node name="ActionBg" type="ColorRect" parent="Inventory/Actions/Action-Examine"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -205,7 +219,7 @@ offset_right = 125.0
 offset_bottom = 45.0
 color = Color(0.603922, 0.603922, 0.603922, 1)
 
-[node name="ActionLabel" type="Label" parent="Actions/Action-Examine"]
+[node name="ActionLabel" type="Label" parent="Inventory/Actions/Action-Examine"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -216,7 +230,7 @@ label_settings = SubResource("LabelSettings_jng7x")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Action-Discard" type="Control" parent="Actions" node_paths=PackedStringArray("Textbox")]
+[node name="Action-Discard" type="Control" parent="Inventory/Actions" node_paths=PackedStringArray("Textbox")]
 anchors_preset = 0
 offset_top = 180.0
 offset_right = 130.0
@@ -225,7 +239,7 @@ script = ExtResource("2_sdnk2")
 ActionType = 3
 Textbox = NodePath("ActionLabel")
 
-[node name="ActionBg" type="ColorRect" parent="Actions/Action-Discard"]
+[node name="ActionBg" type="ColorRect" parent="Inventory/Actions/Action-Discard"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -233,7 +247,7 @@ offset_right = 125.0
 offset_bottom = 45.0
 color = Color(0.603922, 0.603922, 0.603922, 1)
 
-[node name="ActionLabel" type="Label" parent="Actions/Action-Discard"]
+[node name="ActionLabel" type="Label" parent="Inventory/Actions/Action-Discard"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -244,7 +258,7 @@ label_settings = SubResource("LabelSettings_jng7x")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StatusBar" type="Control" parent="."]
+[node name="StatusBar" type="Control" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -255,19 +269,19 @@ offset_right = 424.0
 offset_bottom = -171.0
 grow_vertical = 2
 
-[node name="StatusBg" type="ColorRect" parent="StatusBar"]
+[node name="StatusBg" type="ColorRect" parent="Inventory/StatusBar"]
 layout_mode = 1
 offset_right = 198.0
 offset_bottom = 104.0
 color = Color(0, 0, 0, 1)
 
-[node name="StatusImg" type="ColorRect" parent="StatusBar"]
+[node name="StatusImg" type="ColorRect" parent="Inventory/StatusBar"]
 layout_mode = 0
 offset_right = 198.0
 offset_bottom = 75.0
 color = Color(1, 1, 0, 1)
 
-[node name="StatusText" type="Label" parent="StatusBar"]
+[node name="StatusText" type="Label" parent="Inventory/StatusBar"]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 75.0
@@ -278,7 +292,7 @@ label_settings = SubResource("LabelSettings_n8uul")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Portrait" type="Control" parent="."]
+[node name="Portrait" type="Control" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -289,7 +303,7 @@ offset_right = 431.0
 offset_bottom = 249.0
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="Portrait"]
+[node name="ColorRect" type="ColorRect" parent="Inventory/Portrait"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -304,7 +318,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="TextureRect" type="TextureRect" parent="Portrait"]
+[node name="TextureRect" type="TextureRect" parent="Inventory/Portrait"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -320,7 +334,7 @@ grow_vertical = 2
 texture = ExtResource("3_7co6t")
 expand_mode = 1
 
-[node name="EquippedItem" type="Control" parent="."]
+[node name="EquippedItem" type="Control" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -330,7 +344,7 @@ anchor_bottom = 0.5
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="EquippedItem"]
+[node name="Label" type="Label" parent="Inventory/EquippedItem"]
 layout_mode = 0
 offset_left = -280.0
 offset_top = -332.0
@@ -340,7 +354,7 @@ text = "Equipped"
 label_settings = SubResource("LabelSettings_0vscq")
 horizontal_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="EquippedItem"]
+[node name="ColorRect" type="ColorRect" parent="Inventory/EquippedItem"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -352,7 +366,7 @@ offset_top = -300.0
 offset_right = -195.0
 offset_bottom = -220.0
 
-[node name="TextureRect" type="TextureRect" parent="EquippedItem"]
+[node name="TextureRect" type="TextureRect" parent="Inventory/EquippedItem"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -364,3 +378,194 @@ offset_top = -300.0
 offset_right = -195.0
 offset_bottom = -220.0
 expand_mode = 1
+
+[node name="Notes" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_br3k6")
+
+[node name="ColorRect" type="ColorRect" parent="Notes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[node name="Map" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_2aby6")
+
+[node name="Header" type="Control" parent="." node_paths=PackedStringArray("Tabs", "TabHighlights", "StatusUiPrefab")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -900.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6nsos")
+Tabs = [NodePath("../Inventory"), NodePath("../Notes"), NodePath("../Map")]
+TabHighlights = [NodePath("Statuses/Inventory/InventoryHighlight"), NodePath("Statuses/Notes/NotesHighlight"), NodePath("Statuses/Map/MapHighlight")]
+StatusUiPrefab = NodePath("..")
+
+[node name="ColorRect" type="ColorRect" parent="Header"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+color = Color(0.537255, 0.537255, 0.537255, 1)
+
+[node name="Statuses" type="HBoxContainer" parent="Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inventory" type="Control" parent="Header/Statuses"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InventoryHighlight" type="ColorRect" parent="Header/Statuses/Inventory"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 108.0
+offset_top = 12.0
+offset_right = -105.0
+offset_bottom = -9.0
+color = Color(0.937255, 0.937255, 0, 1)
+
+[node name="EmptyHighlightHack" type="ColorRect" parent="Header/Statuses/Inventory"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 115.0
+offset_top = 19.0
+offset_right = -111.0
+offset_bottom = -16.0
+color = Color(0.537255, 0.537255, 0.537255, 1)
+
+[node name="StatusLabel" type="Label" parent="Header/Statuses/Inventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_87q4t")
+theme_type_variation = &"HeaderMedium"
+theme_override_colors/font_color = Color(0.172549, 0.172549, 0.172549, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Items"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Notes" type="Control" parent="Header/Statuses"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NotesHighlight" type="ColorRect" parent="Header/Statuses/Notes"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 108.0
+offset_top = 12.0
+offset_right = -105.0
+offset_bottom = -9.0
+color = Color(0.937255, 0.937255, 0, 1)
+
+[node name="EmptyHighlightHack" type="ColorRect" parent="Header/Statuses/Notes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 115.0
+offset_top = 19.0
+offset_right = -111.0
+offset_bottom = -16.0
+color = Color(0.537255, 0.537255, 0.537255, 1)
+
+[node name="NotesLabel" type="Label" parent="Header/Statuses/Notes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_87q4t")
+theme_type_variation = &"HeaderMedium"
+theme_override_colors/font_color = Color(0.172549, 0.172549, 0.172549, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Notes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Map" type="Control" parent="Header/Statuses"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MapHighlight" type="ColorRect" parent="Header/Statuses/Map"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 108.0
+offset_top = 12.0
+offset_right = -105.0
+offset_bottom = -9.0
+color = Color(0.937255, 0.937255, 0, 1)
+
+[node name="EmptyHighlightHack" type="ColorRect" parent="Header/Statuses/Map"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 115.0
+offset_top = 19.0
+offset_right = -111.0
+offset_bottom = -16.0
+color = Color(0.537255, 0.537255, 0.537255, 1)
+
+[node name="StatusLabel" type="Label" parent="Header/Statuses/Map"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_87q4t")
+theme_type_variation = &"HeaderMedium"
+theme_override_colors/font_color = Color(0.172549, 0.172549, 0.172549, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Map"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Filler" type="Control" parent="Header/Statuses"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Filler2" type="Control" parent="Header/Statuses"]
+layout_mode = 2
+size_flags_horizontal = 3

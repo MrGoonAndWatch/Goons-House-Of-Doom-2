@@ -250,8 +250,9 @@ public partial class PlayerStatus : Node
 
         if (MenuOpened)
         {
+            // TODO: Probably won't need this once we make the game pause while inventory is open!
             // Note: Getting node here instead of _Ready() or something because this is a singleton and we need to recalc this every scene!
-            var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
+            var inv = GetNode<StatusScreenHeader>(NodePaths.FromSceneRoot.PlayerStatusScreenHeader);
             inv.ToggleMenu();
         }
 

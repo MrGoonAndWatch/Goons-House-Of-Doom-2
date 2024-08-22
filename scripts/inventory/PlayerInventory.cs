@@ -19,9 +19,11 @@ public partial class PlayerInventory : Node3D
     [Export]
     private Control ActionCursor;
     [Export]
-    private Control MenuPrefab;
-    [Export]
     private TextureRect EquipSlot;
+    [Export]
+    private StatusScreenHeader StatusScreenHeader;
+    [Export]
+    private InventoryStatusUi InventoryStatusUi;
 
     private int _currentItemIndex;
     private bool _actionMenuOpen;
@@ -44,13 +46,10 @@ public partial class PlayerInventory : Node3D
     private PlayerStatus _playerStatus;
     private PlayerItemBoxControl _itemBoxControl;
 
-    private bool _menuEnabled;
-
     public override void _Ready()
     {
         _playerStatus = PlayerStatus.GetInstance();
         _itemBoxControl = GetNode<PlayerItemBoxControl>(GameConstants.NodePaths.FromSceneRoot.ItemBoxControl);
-        MenuPrefab.Visible = false;
 
         ItemDirty = new bool[6];
         for (var i = 0; i < ItemDirty.Length; i++)
@@ -73,17 +72,13 @@ public partial class PlayerInventory : Node3D
 
     public override void _Process(double delta)
     {
-        if (_playerStatus.CanOpenMenu() &&
-            Input.IsActionJustPressed(GameConstants.Controls.inventory.ToString()))
-            ToggleMenu();
-
         if (!SyncedWithItemBox)
         {
             _itemBoxControl.SyncInventory(Items);
             SyncedWithItemBox = true;
         }
 
-        if (!_playerStatus.MenuOpened)
+        if (!_playerStatus.MenuOpened || !InventoryStatusUi.IsCurrentlyActiveTab())
             return;
 
         for (var i = 0; i < ItemDirty.Length; i++)
@@ -167,7 +162,7 @@ public partial class PlayerInventory : Node3D
         else if (_actionMenuOpen)
             CloseActionMenu();
         else
-            ToggleMenu();
+            StatusScreenHeader.ReturnFocus();
     }
 
     void HandleActionCursorMovement(float vertical)
@@ -303,7 +298,7 @@ public partial class PlayerInventory : Node3D
                 if (usedItem)
                     UsedItem();
                 CloseActionMenu();
-                ToggleMenu();
+                StatusScreenHeader.ToggleMenu();
                 break;
             case GameConstants.MenuActionType.Combine:
                 _combiningItems = true;
@@ -447,17 +442,6 @@ public partial class PlayerInventory : Node3D
         for (var i = 0; i < ItemDirty.Length; i++)
             ItemDirty[i] = true;
         SyncedWithItemBox = false;
-    }
-
-    public void ToggleMenu()
-    {
-        _menuEnabled = !_menuEnabled;
-        _playerStatus.MenuOpened = _menuEnabled;
-
-        MenuPrefab.Visible = _menuEnabled;
-
-        if (_menuEnabled)
-            OnOpenMenu();
     }
 
     public Key GetKeyOfType(GameConstants.KeyType type)
