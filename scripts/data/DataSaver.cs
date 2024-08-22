@@ -36,7 +36,7 @@ public partial class DataSaver : Node3D
             GrabbedItems = new int[0],
             TriggeredEvents = new int[0],
             CutscenesWatched = new int[0],
-            NotesCollected = new int[0],
+            NotesCollected = new NoteData[0],
             Inventory = new ItemState[0],
             ItemBox = new ItemState[0],
             Health = PlayerStatus.MaxHealth,
@@ -216,6 +216,8 @@ public partial class DataSaver : Node3D
         }
         playerStatus.GrabbedItems = _gameState.GrabbedItems.ToList();
         playerStatus.DeadEnemies = _gameState.DeadEnemies.ToList();
+        playerStatus.NotesCollected = _gameState.NotesCollected.ToList();
+        playerStatus.CutscenesWatched = _gameState.CutscenesWatched.ToList();
     }
 
     private void LoadInventory(PlayerInventory playerInventory, PlayerItemBoxControl playerItemBox)
@@ -269,7 +271,7 @@ public partial class DataSaver : Node3D
         public int[] TriggeredEvents;
         public int[] DoorsUnlocked;
         public int[] CutscenesWatched;
-        public int[] NotesCollected;
+        public NoteData[] NotesCollected;
     }
 
     public class ItemState

@@ -7,7 +7,16 @@ public partial class NotePickup : Area3D
 
     public override void _Ready()
     {
-        if (PlayerStatus.GetInstance()?.NotesCollected?.Contains(NoteData.NoteId) ?? false)
-            GetParent().QueueFree();
+        var playerStatus = PlayerStatus.GetInstance();
+        if (playerStatus == null) return;
+
+        for(int i = 0; i < playerStatus.NotesCollected.Count; i++)
+        {
+            if (playerStatus.NotesCollected[i].NoteId == NoteData.NoteId)
+            {
+                GetParent().QueueFree();
+                break;
+            }
+        }
     }
 }

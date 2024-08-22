@@ -33,7 +33,7 @@ public partial class PlayerStatus : Node
     public List<int> GrabbedItems;
     public List<int> DoorsUnlocked;
     public List<int> CutscenesWatched;
-    public List<int> NotesCollected;
+    public List<NoteData> NotesCollected;
 
     [Export(hintString: "Time (in seconds) between when player hp reaches 0 and when the game over screen comes up.")]
     public float GameOverUiDelay = 6.0f;
@@ -94,7 +94,7 @@ public partial class PlayerStatus : Node
         GrabbedItems = new List<int>();
         DoorsUnlocked = new List<int>();
         CutscenesWatched = new List<int>();
-        NotesCollected = new List<int>();
+        NotesCollected = new List<NoteData>();
 
         Health = MaxHealth;
     }
@@ -395,7 +395,7 @@ public partial class PlayerStatus : Node
     {
         if (_instance == null) return;
 
-        _instance.NotesCollected.Add(noteData.NoteId);
+        _instance.NotesCollected.Add(noteData.Clone());
     }
 
     public void UseKey(Key key)
