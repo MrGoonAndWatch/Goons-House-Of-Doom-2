@@ -133,7 +133,7 @@ public partial class PlayerInteract : Node
         var note = validNotes.First();
 
         PlayerStatus.CollectNote(note.NoteData);
-        _noteReader.StartReadingNote(note.NoteData.NoteText, note.NoteData.NoteTexturePath);
+        _noteReader.StartReadingNote(note.NoteData);
 
         var noteParent = note.GetParent();
         _touchingNotes.RemoveAll(i => i.GetInstanceId() == note.GetInstanceId());

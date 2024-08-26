@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://p02f6pm2kp7m"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/MenuNote.cs" id="1_e3ni2"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="2_oq2yy"]
+
+[node name="MenuNote" type="Control" node_paths=PackedStringArray("NoteButton")]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_e3ni2")
+NoteButton = NodePath("NoteButton")
+
+[node name="NoteButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_oq2yy")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Example Note Title"
+text_overrun_behavior = 1
+icon_alignment = 1
+
+[connection signal="pressed" from="NoteButton" to="." method="_OnNoteButtonPressed"]

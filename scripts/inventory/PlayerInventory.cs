@@ -21,8 +21,6 @@ public partial class PlayerInventory : Node3D
     [Export]
     private TextureRect EquipSlot;
     [Export]
-    private StatusScreenHeader StatusScreenHeader;
-    [Export]
     private InventoryStatusUi InventoryStatusUi;
 
     private int _currentItemIndex;
@@ -162,7 +160,7 @@ public partial class PlayerInventory : Node3D
         else if (_actionMenuOpen)
             CloseActionMenu();
         else
-            StatusScreenHeader.ReturnFocus();
+            InventoryStatusUi.ReturnFocus();
     }
 
     void HandleActionCursorMovement(float vertical)
@@ -298,7 +296,7 @@ public partial class PlayerInventory : Node3D
                 if (usedItem)
                     UsedItem();
                 CloseActionMenu();
-                StatusScreenHeader.ToggleMenu();
+                InventoryStatusUi.ToggleMenu();
                 break;
             case GameConstants.MenuActionType.Combine:
                 _combiningItems = true;

@@ -99,6 +99,8 @@ public partial class GameConstants : GodotObject
     public const string SaveFileButtonUi = "res://prefabs/ui/save_menu_file_ui.tscn";
     public const string SaveFileNewSaveText = "(create new save)";
 
+    public const string StatusNoteUi = "res://prefabs/ui/menu_note.tscn";
+
     public static Dictionary<ItemSpawnType, string> ItemPrefabLookup = new Dictionary<ItemSpawnType, string>()
     {
         {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
@@ -227,5 +229,21 @@ public partial class GameConstants : GodotObject
     public static class ShaderParameters
     {
         public const string Gamma = "gamma";
+    }
+
+    public static Vector2 GetMovementVectorWithDeadzone()
+    {
+        var inputDir = Input.GetVector(Controls.left.ToString(), Controls.right.ToString(), Controls.up.ToString(), Controls.down.ToString());
+
+        var horizontalInput = inputDir.X;
+        // Note: For some reason the Deadzone property in the project's InputMap wasn't being respected, leading to weird menu movement some of the time.
+        if ((horizontalInput < 0 && horizontalInput > -ControllerMenuDeadzone) ||
+            (horizontalInput > 0 && horizontalInput < ControllerMenuDeadzone))
+            horizontalInput = 0;
+        var verticalInput = inputDir.Y;
+        if ((verticalInput < 0 && verticalInput > -ControllerMenuDeadzone) ||
+            (verticalInput > 0 && verticalInput < ControllerMenuDeadzone))
+            verticalInput = 0;
+        return new Vector2(horizontalInput, verticalInput);
     }
 }

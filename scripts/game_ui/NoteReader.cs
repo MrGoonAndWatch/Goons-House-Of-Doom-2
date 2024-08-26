@@ -11,6 +11,8 @@ public partial class NoteReader : Control
     private Control _nextPageArrow;
     [Export]
     private Label _currentPageTextLabel;
+    [Export]
+    private NotesStatusUi _notesStatusUi;
 
     /// <summary>
     /// 0 indexed number of what page is currently being displayed by the reader (1:1 w/ CurrentNoteText).
@@ -20,13 +22,13 @@ public partial class NoteReader : Control
     private bool IsReadingNote;
     private bool IsChangingPage;
 
-    public void StartReadingNote(string[] noteText, string noteBackgroundFilePath)
+    public void StartReadingNote(NoteData noteData)
     {
         CurrentNotePage = 0;
-        CurrentNoteText = noteText;
+        CurrentNoteText = noteData.NoteText;
         IsReadingNote = true;
 
-        var image = Image.LoadFromFile(noteBackgroundFilePath);
+        var image = Image.LoadFromFile(noteData.NoteTexturePath);
         _noteBackgroundImage.Texture = ImageTexture.CreateFromImage(image);
 
         SwitchToPage(CurrentNotePage);
@@ -88,5 +90,8 @@ public partial class NoteReader : Control
         CurrentNotePage = 0;
         CurrentNoteText = null;
         IsReadingNote = false;
+
+        if (PlayerStatus.GetInstance().MenuOpened)
+            _notesStatusUi.StopReadingNote();
     }
 }

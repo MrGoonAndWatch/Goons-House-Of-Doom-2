@@ -9,4 +9,14 @@ public partial class InventoryStatusUi : StatusScreenTab
     {
         playerInventory.OnOpenMenu();
     }
+
+    public void ToggleMenu()
+    {
+        StatusScreenHeader.ToggleMenu();
+    }
+
+    public void ReturnFocus()
+    {
+        StatusScreenHeader.ReturnFocus();
+    }
 }

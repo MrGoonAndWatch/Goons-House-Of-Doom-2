@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cejaneqj6o6nl"]
+[gd_scene load_steps=13 format=3 uid="uid://cejaneqj6o6nl"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/StatusScreenHeader.cs" id="1_6nsos"]
 [ext_resource type="PackedScene" uid="uid://dm1r6v5ighikj" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_8u6o3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="4_87q4t"]
 [ext_resource type="Script" path="res://scripts/game_ui/NotesStatusUi.cs" id="4_br3k6"]
 [ext_resource type="Script" path="res://scripts/game_ui/MapStatusUi.cs" id="5_2aby6"]
+[ext_resource type="PackedScene" uid="uid://p02f6pm2kp7m" path="res://prefabs/ui/menu_note.tscn" id="6_v1v5b"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jng7x"]
 font_size = 24
@@ -36,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.443137, 0.886275, 0.447059)
 
-[node name="Inventory" type="Control" parent="."]
+[node name="Inventory" type="Control" parent="." node_paths=PackedStringArray("StatusScreenHeader")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -45,6 +46,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_11ul4")
+StatusScreenHeader = NodePath("../Header")
 
 [node name="ItemWindow" type="Control" parent="Inventory"]
 layout_mode = 1
@@ -380,14 +382,17 @@ offset_right = -195.0
 offset_bottom = -220.0
 expand_mode = 1
 
-[node name="Notes" type="Control" parent="."]
+[node name="Notes" type="Control" parent="." node_paths=PackedStringArray("NoteListParent", "StatusScreenHeader")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_br3k6")
+NoteListParent = NodePath("ScrollContainer/VBoxContainer")
+StatusScreenHeader = NodePath("../Header")
 
 [node name="ColorRect" type="ColorRect" parent="Notes"]
 layout_mode = 1
@@ -404,6 +409,8 @@ anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -504.0
+offset_right = 504.0
 grow_horizontal = 2
 grow_vertical = 2
 follow_focus = true
@@ -414,35 +421,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="Notes/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 200)
+[node name="MenuNote" parent="Notes/ScrollContainer/VBoxContainer" instance=ExtResource("6_v1v5b")]
 layout_mode = 2
 
-[node name="Control2" type="Control" parent="Notes/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-
-[node name="Control3" type="Control" parent="Notes/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-
-[node name="Control4" type="Control" parent="Notes/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-
-[node name="Control5" type="Control" parent="Notes/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-
-[node name="Control6" type="Control" parent="Notes/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-
-[node name="Control7" type="Control" parent="Notes/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-
-[node name="Map" type="Control" parent="."]
+[node name="Map" type="Control" parent="." node_paths=PackedStringArray("StatusScreenHeader")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -450,6 +432,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_2aby6")
+StatusScreenHeader = NodePath("../Header")
 
 [node name="Header" type="Control" parent="." node_paths=PackedStringArray("Tabs", "TabHighlights", "StatusUiPrefab")]
 layout_mode = 1

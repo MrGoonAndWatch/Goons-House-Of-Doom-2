@@ -16,6 +16,8 @@ public partial class StatusScreenHeader : Control
     private bool _pressingRight;
     private bool _pressingLeft;
 
+    private bool _returnFocus;
+
     public override void _Ready()
     {
         _playerStatus = PlayerStatus.GetInstance();
@@ -56,22 +58,27 @@ public partial class StatusScreenHeader : Control
 
     private void HandleHeaderInput()
     {
+        // HACK: Need to wait a frame before processing anything otherwise the back button will get double-processed when leaving a tab, causing the menu to instantly close.
+        //       For some reason this only happens on the notes and map tabs.
+        if (_returnFocus)
+        {
+            _returnFocus = false;
+            _hasFocus = true;
+            return;
+        }
         if (!_hasFocus) return;
 
         HandleTabSwapping();
         if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
             EnterCurrentTab();
+        if (Input.IsActionJustPressed(GameConstants.Controls.aim.ToString()))
+            ToggleMenu();
     }
 
     private void HandleTabSwapping()
     {
-        var inputDir = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString());
-
+        var inputDir = GameConstants.GetMovementVectorWithDeadzone();
         var horizontalInput = inputDir.X;
-        // Note: For some reason the Deadzone property in the project's InputMap wasn't being respected, leading to weird menu movement some of the time.
-        if ((horizontalInput < 0 && horizontalInput > -GameConstants.ControllerMenuDeadzone) ||
-            (horizontalInput > 0 && horizontalInput < GameConstants.ControllerMenuDeadzone))
-            horizontalInput = 0;
 
         if (horizontalInput > 0 && !_pressingRight)
         {
@@ -127,7 +134,7 @@ public partial class StatusScreenHeader : Control
 
     public void ReturnFocus()
     {
-        _hasFocus = true;
+        _returnFocus = true;
         Tabs[_currentTabIndex].SwitchOffTab();
         TabHighlights[_currentTabIndex].Visible = true;
     }

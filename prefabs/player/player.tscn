@@ -93,6 +93,9 @@ visible = false
 [node name="Inventory" parent="PlayerInventoryUi" index="1" node_paths=PackedStringArray("playerInventory")]
 playerInventory = NodePath("../../PlayerInventory")
 
+[node name="Notes" parent="PlayerInventoryUi" index="2" node_paths=PackedStringArray("NoteReader")]
+NoteReader = NodePath("../../note_reader")
+
 [node name="descriptive_text" type="Control" parent="."]
 visible = false
 layout_mode = 3
@@ -138,12 +141,13 @@ clip_text = true
 [node name="pause_ui" parent="." instance=ExtResource("5_q718m")]
 visible = false
 
-[node name="note_reader" parent="." instance=ExtResource("8_2pvdi")]
+[node name="note_reader" parent="." node_paths=PackedStringArray("_notesStatusUi") instance=ExtResource("8_2pvdi")]
 visible = false
+_notesStatusUi = NodePath("../PlayerInventoryUi/Notes")
 
 [node name="GammaCorrection" parent="." instance=ExtResource("8_64i7v")]
 
-[node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "EquipSlot", "StatusScreenHeader", "InventoryStatusUi")]
+[node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "EquipSlot", "InventoryStatusUi")]
 script = ExtResource("4_h7s4o")
 ExamineText = NodePath("../PlayerInventoryUi/Inventory/ItemDescription/ItemDescriptionLabel")
 ExamineTexture = NodePath("../PlayerInventoryUi/Inventory/ItemWindow/ItemTextureRect")
@@ -153,7 +157,6 @@ MenuActionRoot = NodePath("../PlayerInventoryUi/Inventory/Actions")
 MenuActions = [NodePath("../PlayerInventoryUi/Inventory/Actions/Action-Use"), NodePath("../PlayerInventoryUi/Inventory/Actions/Action-Combine"), NodePath("../PlayerInventoryUi/Inventory/Actions/Action-Examine"), NodePath("../PlayerInventoryUi/Inventory/Actions/Action-Discard")]
 ActionCursor = NodePath("../PlayerInventoryUi/Inventory/Actions/ActionCursor")
 EquipSlot = NodePath("../PlayerInventoryUi/Inventory/EquippedItem/TextureRect")
-StatusScreenHeader = NodePath("../PlayerInventoryUi/Header")
 InventoryStatusUi = NodePath("../PlayerInventoryUi/Inventory")
 
 [node name="PlayerItemBoxControl" type="Node3D" parent="." node_paths=PackedStringArray("ItemBoxUi", "PlayerItems", "ItemBoxItems", "InventoryCursor", "ItemBoxCursor", "ItemBoxScroll")]
@@ -175,7 +178,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.259712, -0.173706, 0.0307851, 0.949436)
+bones/6/rotation = Quaternion(-0.152778, -0.102184, 0.0180291, 0.982798)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
