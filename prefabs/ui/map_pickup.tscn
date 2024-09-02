@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://c30c1eao8m1df"]
+
+[ext_resource type="PackedScene" uid="uid://bawbwbepm50es" path="res://prefabs/ui/note_pickup.tscn" id="1_thepo"]
+[ext_resource type="Script" path="res://scripts/game_ui/MapPickup.cs" id="2_7depq"]
+[ext_resource type="Script" path="res://scripts/game_ui/MapPickupData.cs" id="2_718jc"]
+
+[node name="MapPickup" instance=ExtResource("1_thepo")]
+script = ExtResource("2_718jc")
+MapName = ""
+AreaId = 0
+
+[node name="Area3D" parent="." index="1" node_paths=PackedStringArray("MapPickupData")]
+script = ExtResource("2_7depq")
+MapPickupData = NodePath("..")

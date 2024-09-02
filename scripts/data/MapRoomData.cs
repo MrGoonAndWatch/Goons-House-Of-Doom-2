@@ -18,18 +18,21 @@ public partial class MapRoomData : Control
     private static Color UnvisitedRoomColor = new Color(0.5f, 0.5f, 0.5f);
     private static Color ClearedRoomColor = new Color(0.0f, 1.0f, 0.5f);
     private static Color VisitedRoomColor = new Color(0.0f, 0.5f, 1.0f);
+    private static Color InRoomColor = new Color(0.5f, 0.1f, 0.1f);
 
     public override void _Ready()
     {
         RoomLabel.Text = RoomName;
     }
 
-    public void UpdateStatus(bool hasMap)
+    public void UpdateStatus(bool hasMap, bool isInRoom)
     {
         Visible = hasMap || PlayerVisitedRoom;
 
         var currentStatusColor = UnvisitedRoomColor;
-        if (PlayerClearedRoom)
+        if (isInRoom)
+            currentStatusColor = InRoomColor;
+        else if (PlayerClearedRoom)
             currentStatusColor = ClearedRoomColor;
         else if (PlayerVisitedRoom)
             currentStatusColor = VisitedRoomColor;

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static GameConstants;
 
 public partial class PlayerInteract : Node
 {
@@ -13,6 +14,7 @@ public partial class PlayerInteract : Node
 
     private List<Item> _touchingItems;
     private List<NotePickup> _touchingNotes;
+    private List<MapPickup> _touchingMaps;
     private List<SimpleLock> _touchingSimpleLocks;
     private List<Door> _touchingDoors;
     private List<ItemBox> _touchingItemBoxes;
@@ -23,6 +25,7 @@ public partial class PlayerInteract : Node
         _playerStatus = PlayerStatus.GetInstance();
         _touchingItems = new List<Item>();
         _touchingNotes = new List<NotePickup>();
+        _touchingMaps = new List<MapPickup>();
         _touchingSimpleLocks = new List<SimpleLock>();
         _touchingDoors = new List<Door>();
         _touchingItemBoxes = new List<ItemBox>();
@@ -32,13 +35,15 @@ public partial class PlayerInteract : Node
 	public override void _Process(double delta)
 	{
         if (_playerStatus.CanInteract() &&
-            !Input.IsActionPressed(GameConstants.Controls.aim.ToString()) &&
-            Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
+            !Input.IsActionPressed(Controls.aim.ToString()) &&
+            Input.IsActionJustPressed(Controls.confirm.ToString()))
         {
             if (_touchingItems.Any())
                 PickupCurrentItem();
             else if (_touchingNotes.Any())
                 PickupCurrentNote();
+            else if (_touchingMaps.Any())
+                PickupCurrentMap();
             else if (_touchingSimpleLocks.Any())
                 _touchingSimpleLocks.First().Inspect();
             else if (_touchingPassCodes.Any())
@@ -91,6 +96,8 @@ public partial class PlayerInteract : Node
             _touchingItems.Add(obj as Item);
         if (obj is NotePickup)
             _touchingNotes.Add(obj as NotePickup);
+        if (obj is MapPickup)
+            _touchingMaps.Add(obj as MapPickup);
     }
 
     public void _OnAreaExited(Area3D obj)
@@ -100,6 +107,8 @@ public partial class PlayerInteract : Node
             _touchingItems.RemoveAll(matchByInstanceId);
         if (obj is NotePickup)
             _touchingNotes.RemoveAll(matchByInstanceId);
+        if (obj is MapPickup)
+            _touchingMaps.RemoveAll(matchByInstanceId);
     }
 
     void PickupCurrentItem()
@@ -138,6 +147,23 @@ public partial class PlayerInteract : Node
         var noteParent = note.GetParent();
         _touchingNotes.RemoveAll(i => i.GetInstanceId() == note.GetInstanceId());
         noteParent.QueueFree();
+    }
+
+    private void PickupCurrentMap()
+    {
+        var validMaps = _touchingMaps.Where(i => i != null).ToArray();
+        if (!validMaps.Any())
+            return;
+
+        var map = validMaps.First();
+
+        MapStatus.GetInstance().PickupMap(map.MapPickupData.AreaId);
+        var inspectText = GetNode<InspectTextUi>(NodePaths.FromSceneRoot.InspectTextUi);
+        inspectText.ReadText(new[] { $"Picked up the {map.MapPickupData.MapName} map" });
+
+        var mapParent = map.GetParent();
+        _touchingMaps.RemoveAll(i => i.GetInstanceId() == map.GetInstanceId());
+        mapParent.QueueFree();
     }
 
     private void RemoveItem(Item item)

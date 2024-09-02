@@ -135,6 +135,14 @@ public partial class GameConstants : GodotObject
         TestCode = 1,
     }
 
+    public enum DoorMapStatus
+    {
+        Unseen = 0,
+        Unknown = 1,
+        Opened = 2,
+        Locked = 3,
+    }
+
     public static Dictionary<GameDifficulty, Dictionary<PassCodeType, string>> PassCodeLookup = new()
     {
         { GameDifficulty.Easy, new Dictionary<PassCodeType, string> {
@@ -275,5 +283,13 @@ public partial class GameConstants : GodotObject
             GD.PrintErr($"Couldn't find room_info object in scene {node.GetTree().Root.Name}!");
             return -1;
         }
+    }
+
+    public static bool ListContainsValue(int value, System.Collections.Generic.List<int> list)
+    {
+        for (var i = 0; i < list.Count; i++)
+            if (list[i] == value)
+                return true;
+        return false;
     }
 }

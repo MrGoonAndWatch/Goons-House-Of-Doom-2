@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using static GameConstants;
 
 public partial class SceneChanger : Node
@@ -42,8 +41,9 @@ public partial class SceneChanger : Node
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
         var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
+        var mapStatus = MapStatus.GetInstance();
         playerInteract.ResetState();
-        _dataSaver.SaveGameStateFromScene(playerStatus, playerInventory, sceneLoadData, playerItemBox);
+        _dataSaver.SaveGameStateFromScene(playerStatus, playerInventory, sceneLoadData, playerItemBox, mapStatus);
 
         if (doorScene == DoorLoadType.None)
             FinishSceneLoad();
@@ -65,11 +65,12 @@ public partial class SceneChanger : Node
         var sceneLoadData = _dataSaver.GetSceneLoadData();
         player.Position = sceneLoadData.LoadPosition;
         player.RotationDegrees = sceneLoadData.LoadRotation;
-        GD.Print($"Set player position to {sceneLoadData.LoadPosition} and rotation to {sceneLoadData.LoadRotation} in new scene.");
+        //GD.Print($"Set player position to {sceneLoadData.LoadPosition} and rotation to {sceneLoadData.LoadRotation} in new scene.");
 
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
-        _dataSaver.LoadFromGameState(playerStatus, playerInventory, playerItemBox);
+        var mapStatus = MapStatus.GetInstance();
+        _dataSaver.LoadFromGameState(playerStatus, playerInventory, playerItemBox, mapStatus);
     }
 }

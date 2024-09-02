@@ -48,10 +48,7 @@ public partial class OptionsMenuUi : Control
         for (var i = 0; i < ResolutionPicker.ItemCount; i++)
         {
             if (ResolutionPicker.GetItemText(i).Equals(resolution, System.StringComparison.InvariantCultureIgnoreCase))
-            {
-                GD.Print($"Found resolution option at slot {i}");
                 return i;
-            }
         }
 
         return DefaultResolutionChoice;
@@ -61,7 +58,6 @@ public partial class OptionsMenuUi : Control
     {
         if(!_initialized && GhodAudioManager.IsInitialized())
         {
-            GD.Print("audio manager is initialized, initializing volumes!");
             SyncAllVolumes();
             _initialized = true;
         }
@@ -181,9 +177,7 @@ public partial class OptionsMenuUi : Control
     private void UpdateGamma(float gamma)
     {
         var node = GetNode(GameConstants.NodePaths.FromSceneRoot.GammaCorrectionPlayer);
-        GD.Print($"UpdateGamma, node type = {node.GetType()}");
         var gammaRect = GetNode<CanvasItem>(GameConstants.NodePaths.FromSceneRoot.GammaCorrectionPlayer);
-        GD.Print("SUCCESS!!!!!!!");
         var gammaShader = gammaRect.Material as ShaderMaterial;
         gammaShader.SetShaderParameter(GameConstants.ShaderParameters.Gamma, gamma);
     }

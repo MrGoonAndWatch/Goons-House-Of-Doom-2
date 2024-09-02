@@ -7,9 +7,9 @@ public partial class MapData : Control
     [Export]
     public string AreaName;
     [Export]
-    public bool PlayerHasMap;
-    [Export]
     public MapRoomData[] RoomData;
+    [Export]
+    public MapDoorData[] DoorData;
 
     [Export]
     private Label AreaLabel;
@@ -22,8 +22,29 @@ public partial class MapData : Control
 
     public void RefreshMap()
     {
+        var mapStatus = MapStatus.GetInstance();
+        var hasMap = mapStatus.HasMap(AreaId);
+
         for (var i = 0; i < RoomData.Length; i++)
-            RoomData[i].UpdateStatus(PlayerHasMap);
+        {
+            RoomData[i].PlayerVisitedRoom = mapStatus.VisitedRoom(RoomData[i].RoomId);
+            RoomData[i].PlayerClearedRoom = mapStatus.ClearedRoom(RoomData[i].RoomId);
+            RoomData[i].UpdateStatus(hasMap, RoomData[i].RoomId == GameConstants.GetCurrentRoomId(this));
+        }
+
+        for (var i = 0; i < DoorData.Length; i++)
+        {
+            var doorStatus = GameConstants.DoorMapStatus.Unseen;
+            if (mapStatus.EnteredDoor(DoorData[i].DoorId))
+                doorStatus = GameConstants.DoorMapStatus.Opened;
+            else if (mapStatus.LockedDoorFound(DoorData[i].DoorId))
+                doorStatus = GameConstants.DoorMapStatus.Locked;
+            else if (hasMap || mapStatus.HasSeenDoor(DoorData[i].DoorId))
+                doorStatus = GameConstants.DoorMapStatus.Unknown;
+            DoorData[i].UpdateStatus(doorStatus);
+
+            GD.Print($"Set Door {DoorData[i].DoorId} to Status {doorStatus}");
+        }
     }
 
     public MapRoomData GetRoom(int roomId)

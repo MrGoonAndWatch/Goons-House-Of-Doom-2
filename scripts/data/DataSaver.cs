@@ -40,6 +40,12 @@ public partial class DataSaver : Node3D
             Inventory = new ItemState[0],
             ItemBox = new ItemState[0],
             Health = PlayerStatus.MaxHealth,
+            MapsCollected = new int[0],
+            RoomsCleared = new int[0],
+            RoomsVisited = new int[0],
+            DoorsFound = new int[0],
+            DoorsEntered = new int[0],
+            LockedDoorsInspected = new int[0],
             SceneLoadData = new SceneLoadData
             {
                 TargetScene = GetTree().CurrentScene.Name,
@@ -109,12 +115,13 @@ public partial class DataSaver : Node3D
         fileAccess.Close();
     }
 
-    public void SaveGameStateFromScene(PlayerStatus playerStatus, PlayerInventory playerInventory, SceneLoadData sceneLoadData, PlayerItemBoxControl playerItemBox)
+    public void SaveGameStateFromScene(PlayerStatus playerStatus, PlayerInventory playerInventory, SceneLoadData sceneLoadData, PlayerItemBoxControl playerItemBox, MapStatus mapStatus)
     {
         SavePlayerStatus(playerStatus, playerInventory);
         SaveInventory(playerInventory);
         SaveItemBox(playerItemBox);
         SaveSceneLoadData(sceneLoadData);
+        SaveMapStatus(mapStatus);
     }
 
     private void SavePlayerStatus(PlayerStatus playerStatus, PlayerInventory playerInventory)
@@ -125,7 +132,6 @@ public partial class DataSaver : Node3D
         _gameState.GrabbedItems = _gameState.GrabbedItems.Union(playerStatus.GrabbedItems).Distinct().ToArray();
         _gameState.TriggeredEvents = _gameState.TriggeredEvents.Union(playerStatus.TriggeredEvents.Select(e => (int)e)).Distinct().ToArray();
         _gameState.NotesCollected = _gameState.NotesCollected.Union(playerStatus.NotesCollected).ToArray();
-        GD.Print($"Cutscenes watched --- _gameState null? {_gameState.CutscenesWatched == null} . playerStatus null ? {playerStatus.CutscenesWatched == null}");
         _gameState.CutscenesWatched = _gameState.CutscenesWatched.Union(playerStatus.CutscenesWatched).Distinct().ToArray();
         if (playerStatus.EquipedWeapon != null)
             for (var i = 0; i < playerInventory.Items.Length; i++)
@@ -179,20 +185,32 @@ public partial class DataSaver : Node3D
         _gameState.SceneLoadData = sceneLoadData;
     }
 
+    private void SaveMapStatus(MapStatus mapStatus)
+    {
+        _gameState.MapsCollected = mapStatus._mapsCollected.ToArray();
+        _gameState.RoomsVisited = mapStatus._roomsVisited.ToArray();
+        _gameState.RoomsCleared = mapStatus._roomsCleared.ToArray();
+        _gameState.DoorsFound = mapStatus._doorsFound.ToArray();
+        _gameState.DoorsEntered = mapStatus._doorsEntered.ToArray();
+        _gameState.LockedDoorsInspected = mapStatus._lockedDoorsInspected.ToArray();
+    }
+
     public void LoadGameStateFromFileData(GameState data)
     {
         _gameState = data;
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
-        LoadFromGameState(playerStatus, playerInventory, playerItemBox);
+        var mapStatus = MapStatus.GetInstance();
+        LoadFromGameState(playerStatus, playerInventory, playerItemBox, mapStatus);
     }
 
-    public void LoadFromGameState(PlayerStatus playerStatus, PlayerInventory playerInventory, PlayerItemBoxControl playerItemBox)
+    public void LoadFromGameState(PlayerStatus playerStatus, PlayerInventory playerInventory, PlayerItemBoxControl playerItemBox, MapStatus mapStatus)
     {
         LoadInventory(playerInventory, playerItemBox);
         LoadItemBox(playerItemBox);
         LoadPlayerStatus(playerStatus, playerInventory);
+        LoadMapStatus(mapStatus);
     }
 
     public SceneLoadData GetSceneLoadData()
@@ -218,6 +236,16 @@ public partial class DataSaver : Node3D
         playerStatus.DeadEnemies = _gameState.DeadEnemies.ToList();
         playerStatus.NotesCollected = _gameState.NotesCollected.ToList();
         playerStatus.CutscenesWatched = _gameState.CutscenesWatched.ToList();
+    }
+
+    private void LoadMapStatus(MapStatus mapStatus)
+    {
+        mapStatus._mapsCollected = mapStatus._mapsCollected.Union(_gameState.MapsCollected).Distinct().ToList();
+        mapStatus._roomsVisited = mapStatus._roomsVisited.Union(_gameState.RoomsVisited).Distinct().ToList();
+        mapStatus._roomsCleared = mapStatus._roomsCleared.Union(_gameState.RoomsCleared).Distinct().ToList();
+        mapStatus._doorsFound = mapStatus._doorsFound.Union(_gameState.DoorsFound).Distinct().ToList();
+        mapStatus._doorsEntered = mapStatus._doorsEntered.Union(_gameState.DoorsEntered).Distinct().ToList();
+        mapStatus._lockedDoorsInspected = mapStatus._lockedDoorsInspected.Union(_gameState.LockedDoorsInspected).Distinct().ToList();
     }
 
     private void LoadInventory(PlayerInventory playerInventory, PlayerItemBoxControl playerItemBox)
@@ -272,6 +300,12 @@ public partial class DataSaver : Node3D
         public int[] DoorsUnlocked;
         public int[] CutscenesWatched;
         public NoteData[] NotesCollected;
+        public int[] MapsCollected;
+        public int[] RoomsVisited;
+        public int[] RoomsCleared;
+        public int[] DoorsFound;
+        public int[] DoorsEntered;
+        public int[] LockedDoorsInspected;
     }
 
     public class ItemState

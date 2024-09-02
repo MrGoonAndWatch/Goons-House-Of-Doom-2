@@ -66,6 +66,7 @@ public partial class SaveGame : Control
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(GameConstants.NodePaths.FromSceneRoot.ItemBoxControl);
+        var mapStatus = MapStatus.GetInstance();
         var sceneName = GameConstants.GetCurrentSceneFilepath(this);
         var sceneInfo = new SceneLoadData
         {
@@ -76,7 +77,7 @@ public partial class SaveGame : Control
 
         var saver = DataSaver.GetInstance();
         playerStatus.HasSaveLoadUiOpen = false;
-        saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo, playerItemBox);
+        saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo, playerItemBox, mapStatus);
         var data = saver.GetGameState();
 
         var roomStr = GameConstants.GetCurrentRoomName(this);

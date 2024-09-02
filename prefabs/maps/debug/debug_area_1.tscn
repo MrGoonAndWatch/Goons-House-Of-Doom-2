@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3c4s22bga1qp"]
+[gd_scene load_steps=5 format=3 uid="uid://d3c4s22bga1qp"]
 
 [ext_resource type="Script" path="res://scripts/data/MapData.cs" id="1_yar0t"]
 [ext_resource type="Script" path="res://scripts/data/MapRoomData.cs" id="2_es0xs"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="3_n4t2o"]
+[ext_resource type="Script" path="res://scripts/data/MapDoorData.cs" id="4_v1ulp"]
 
-[node name="DebugArea1" type="Control" node_paths=PackedStringArray("RoomData", "AreaLabel")]
+[node name="DebugArea1" type="Control" node_paths=PackedStringArray("RoomData", "DoorData", "AreaLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +16,7 @@ script = ExtResource("1_yar0t")
 AreaId = 1
 AreaName = "Area 1"
 RoomData = [NodePath("Room1"), NodePath("Room2"), NodePath("Room3")]
+DoorData = [NodePath("Door1"), NodePath("Door2"), NodePath("Door3"), NodePath("Door4")]
 AreaLabel = NodePath("AreaLabel")
 
 [node name="AreaLabel" type="Label" parent="."]
@@ -137,3 +139,90 @@ text = "Room Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Door1" type="Control" parent="." node_paths=PackedStringArray("DoorColor")]
+anchors_preset = 0
+offset_left = 1010.0
+offset_top = 496.0
+offset_right = 1040.0
+offset_bottom = 506.0
+script = ExtResource("4_v1ulp")
+DoorId = 1
+FromRoomId = 1
+ToRoomId = 2
+DoorColor = NodePath("DoorColor")
+
+[node name="DoorColor" type="ColorRect" parent="Door1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.603922, 0, 0.709804, 1)
+
+[node name="Door2" type="Control" parent="." node_paths=PackedStringArray("DoorColor")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 940.0
+offset_top = 496.0
+offset_right = 970.0
+offset_bottom = 506.0
+script = ExtResource("4_v1ulp")
+DoorId = 2
+FromRoomId = 1
+ToRoomId = 2
+DoorColor = NodePath("DoorColor")
+
+[node name="DoorColor" type="ColorRect" parent="Door2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.607843, 0, 0.698039, 1)
+
+[node name="Door3" type="Control" parent="." node_paths=PackedStringArray("DoorColor")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 860.0
+offset_top = 496.0
+offset_right = 890.0
+offset_bottom = 506.0
+script = ExtResource("4_v1ulp")
+DoorId = 3
+FromRoomId = 1
+ToRoomId = 2
+DoorColor = NodePath("DoorColor")
+
+[node name="DoorColor" type="ColorRect" parent="Door3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.45098, 0.407843, 1)
+
+[node name="Door4" type="Control" parent="." node_paths=PackedStringArray("DoorColor")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1045.0
+offset_top = 620.0
+offset_right = 1055.0
+offset_bottom = 650.0
+script = ExtResource("4_v1ulp")
+DoorId = 4
+FromRoomId = 2
+ToRoomId = 3
+DoorColor = NodePath("DoorColor")
+
+[node name="DoorColor" type="ColorRect" parent="Door4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.443137, 0.392157, 0, 1)

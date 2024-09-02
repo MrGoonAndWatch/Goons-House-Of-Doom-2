@@ -13,6 +13,13 @@ public partial class MapStatus : Node
 
     private bool _initialized;
 
+    public System.Collections.Generic.List<int> _mapsCollected;
+    public System.Collections.Generic.List<int> _roomsVisited;
+    public System.Collections.Generic.List<int> _roomsCleared;
+    public System.Collections.Generic.List<int> _doorsFound;
+    public System.Collections.Generic.List<int> _doorsEntered;
+    public System.Collections.Generic.List<int> _lockedDoorsInspected;
+
     private const string MapFolder = "res://prefabs/maps/debug/";
 
     public override void _Ready()
@@ -28,6 +35,13 @@ public partial class MapStatus : Node
         Instance = this;
 
         var mapScenes = DirAccess.GetFilesAt(MapFolder);
+
+        _mapsCollected = new System.Collections.Generic.List<int>();
+        _roomsVisited = new System.Collections.Generic.List<int>();
+        _roomsCleared = new System.Collections.Generic.List<int>();
+        _doorsFound = new System.Collections.Generic.List<int>();
+        _doorsEntered = new System.Collections.Generic.List<int>();
+        _lockedDoorsInspected = new System.Collections.Generic.List<int>();
 
         AreaNameToMapDataLookup = new Dictionary<int, MapData>();
         RoomNameToAreaNameLookup = new Dictionary<int, int>();
@@ -52,7 +66,12 @@ public partial class MapStatus : Node
         _initialized = true;
     }
 
-    // TODO: Add load data from file method!
+    public void LoadMapData(System.Collections.Generic.List<int> mapsCollected, System.Collections.Generic.List<int> roomsVisited, System.Collections.Generic.List<int> roomsCleared)
+    {
+        _mapsCollected = mapsCollected;
+        _roomsVisited = roomsVisited;
+        _roomsCleared = roomsCleared;
+    }
 
     public static MapStatus GetInstance()
     {
@@ -65,15 +84,28 @@ public partial class MapStatus : Node
         return Instance;
     }
 
+    public static void PrintDebug()
+    {
+        if (Instance == null)
+        {
+            GD.Print("MapStatus Instance is null!");
+            return;
+        }
+
+        var mapsCollected = string.Join(",", Instance._mapsCollected);
+        var roomsVisitedStr = string.Join(",", Instance._roomsVisited);
+        var roomsClearedStr = string.Join(",", Instance._roomsCleared);
+        GD.Print($"Maps collected = ({mapsCollected}) | rooms visited = ({roomsVisitedStr}) | rooms cleared = ({roomsClearedStr})");
+
+    }
+
     public bool IsInitialized()
     {
         return _initialized;
     }
 
-    // TODO: Call this when saving data!
     public Dictionary<int, MapData> GetMapData()
     {
-        GD.Print($"GetMapData() - type is {AreaNameToMapDataLookup?.GetType()?.ToString() ?? "Null"}");
         return AreaNameToMapDataLookup;
     }
 
@@ -94,19 +126,71 @@ public partial class MapStatus : Node
         }
     }
 
+    public bool HasMap(int areaId)
+    {
+        return GameConstants.ListContainsValue(areaId, _mapsCollected);
+    }
+
+    public bool VisitedRoom(int roomId)
+    {
+        var result = GameConstants.ListContainsValue(roomId, _roomsVisited);
+        return result;
+    }
+
+    public bool ClearedRoom(int roomId)
+    {
+        return GameConstants.ListContainsValue(roomId, _roomsCleared);
+    }
+
+    public bool HasSeenDoor(int doorId)
+    {
+        return GameConstants.ListContainsValue(doorId, _doorsFound);
+    }
+
+    public bool EnteredDoor(int doorId)
+    {
+        return GameConstants.ListContainsValue(doorId, _doorsEntered);
+    }
+
+    public bool LockedDoorFound(int doorId)
+    {
+        return GameConstants.ListContainsValue(doorId, _lockedDoorsInspected);
+    }
+
     public void PickupMap(int areaId)
     {
-        AreaNameToMapDataLookup[areaId].PlayerHasMap = true;
+        if (HasMap(areaId)) return;
+        _mapsCollected.Add(areaId);
     }
 
     public void VisitRoom(int roomId)
     {
-        AreaNameToMapDataLookup[RoomNameToAreaNameLookup[roomId]].GetRoom(roomId).PlayerVisitedRoom = true;
+        if (VisitedRoom(roomId)) return;
+        _roomsVisited.Add(roomId);
     }
 
     public void ClearRoom(int roomId)
     {
-        AreaNameToMapDataLookup[RoomNameToAreaNameLookup[roomId]].GetRoom(roomId).PlayerClearedRoom = true;
+        if(ClearedRoom(roomId)) return;
+        _roomsCleared.Add(roomId);
+    }
+
+    public void FoundDoor(int doorId)
+    {
+        if (HasSeenDoor(doorId)) return;
+        _doorsFound.Add(doorId);
+    }
+
+    public void EnterDoor(int doorId)
+    {
+        if (EnteredDoor(doorId)) return;
+        _doorsEntered.Add(doorId);
+    }
+
+    public void FoundLockedDoor(int doorId)
+    {
+        if (LockedDoorFound(doorId)) return;
+        _lockedDoorsInspected.Add(doorId);
     }
 
     public void ReturnMaps()

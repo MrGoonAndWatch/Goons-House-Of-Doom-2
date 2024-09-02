@@ -47,6 +47,8 @@ public partial class Door : Node3D
     {
         if (_unlocked)
         {
+            var mapStatus = MapStatus.GetInstance();
+            mapStatus.EnterDoor(DoorId);
             var sceneChanger = SceneChanger.GetInstance();
             var sceneChangeInfo = new SceneLoadData
             {
@@ -61,11 +63,18 @@ public partial class Door : Node3D
             var key = _playerInventory.GetKeyOfType(LocksWith);
             if (key != null)
                 Unlock(key);
-            else if (LockedText?.Any() ?? false)
-                _textReader.ReadText(LockedText);
+            else
+            {
+                MapStatus.GetInstance().FoundLockedDoor(DoorId);
+                if (LockedText?.Any() ?? false)
+                    _textReader.ReadText(LockedText);
+            }
         }
         else if (UnlocksOnEvent != GlobalEvent.None && (LockedText?.Any() ?? false))
+        {
+            MapStatus.GetInstance().FoundLockedDoor(DoorId);
             _textReader.ReadText(LockedText);
+        }
     }
 
     public void Unlock(Key key)
@@ -76,6 +85,8 @@ public partial class Door : Node3D
         _unlocked = true;
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.UnlockDoor(DoorId);
+        var mapStatus = MapStatus.GetInstance();
+        mapStatus.EnterDoor(DoorId);
         if (UnlockText?.Any() ?? false)
             _textReader.ReadText(UnlockText);
     }

@@ -34,7 +34,6 @@ public partial class CutsceneManager : Node
 	private void SetSizings()
 	{
         var viewportSize = BottomBar.GetViewportRect().End;
-        GD.Print($"windowSize = ({viewportSize.X},{viewportSize.Y})");
 
         var barSize = new Vector2(viewportSize.X, 100);
         TopBar.SetSize(barSize);
