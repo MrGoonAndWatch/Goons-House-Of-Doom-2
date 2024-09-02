@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ulesvfw0vtsy"]
+[gd_scene load_steps=10 format=3 uid="uid://ulesvfw0vtsy"]
 
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_gqfn6"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="1_k4weh"]
+[ext_resource type="Script" path="res://scripts/data/RoomInfo.cs" id="2_aimic"]
 [ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="2_i6rse"]
 [ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="3_0pa5d"]
 [ext_resource type="Script" path="res://scripts/game_flow/Cutscene.cs" id="4_0isfa"]
@@ -17,6 +18,11 @@ material = ExtResource("1_gqfn6")
 handle_input_locally = false
 size = Vector2i(1900, 1000)
 render_target_update_mode = 4
+
+[node name="room_info" type="Node3D" parent="SubViewport"]
+script = ExtResource("2_aimic")
+RoomName = "Debug Cutscene"
+RoomId = 3
 
 [node name="Player" parent="SubViewport" instance=ExtResource("1_k4weh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0.5, 1.20095)

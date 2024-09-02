@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdfkbexd4iqus"]
+[gd_scene load_steps=15 format=3 uid="uid://bdfkbexd4iqus"]
 
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_mgspb"]
 [ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="1_qgu7j"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_50rh5"]
 [ext_resource type="Script" path="res://scripts/puzzles/PassCode.cs" id="7_1id0d"]
 [ext_resource type="Material" uid="uid://c1tvta0dbmvqj" path="res://materials/flat_black_material.tres" id="9_jsbhq"]
+[ext_resource type="Script" path="res://scripts/data/RoomInfo.cs" id="10_tsqqu"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_umokm"]
 vertices = PackedVector3Array(3.5, 0, -4.5, 4.25, 0, -3.25, 5.5, 0, -3.25, 5.5, 0, -7.5, -5.5, 0, -3.25, -3.5, 0, -3.25, -3.25, 0, -4.5, -5.5, 0, -7.5, -3.25, 0, -4.5, 3.5, 0, -4.5, 5.5, 0, -7.5, -5.5, 0, -7.5, 5.5, 0, -3.25, 4.25, 0, -3.25, 4, 0, -2.5, 5.5, 0, 1.5, -3.25, 0, -2.25, -3.5, 0, -3.25, -5.5, 0, -3.25, -5.5, 0, 1.5, 5.5, 0, 1.5, 4, 0, -2.5, 3.25, 0, -2.25, 3.25, 0, -2.25, -3.25, 0, -2.25, -5.5, 0, 1.5, 5.5, 0, 1.5)
@@ -30,6 +31,11 @@ material = ExtResource("1_mgspb")
 handle_input_locally = false
 size = Vector2i(1900, 1000)
 render_target_update_mode = 4
+
+[node name="room_info" type="Node3D" parent="SubViewport"]
+script = ExtResource("10_tsqqu")
+RoomName = "Debug Room 1"
+RoomId = 1
 
 [node name="Cameras" type="Node3D" parent="SubViewport"]
 

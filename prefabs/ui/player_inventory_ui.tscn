@@ -383,6 +383,7 @@ offset_bottom = -220.0
 expand_mode = 1
 
 [node name="Notes" type="Control" parent="." node_paths=PackedStringArray("NoteListParent", "StatusScreenHeader")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -429,6 +430,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 102.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_2aby6")

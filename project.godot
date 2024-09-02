@@ -23,6 +23,7 @@ SceneChanger="*res://scripts/data/SceneChanger.cs"
 ItemGenerator="*res://scripts/data/ItemGenerator.cs"
 LoadGameData="*res://scripts/data/LoadGameData.cs"
 AudioManager="*res://prefabs/player/audio-manager.tscn"
+MapStatus="*res://prefabs/map_status.tscn"
 
 [display]
 

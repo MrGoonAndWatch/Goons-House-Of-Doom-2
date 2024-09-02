@@ -66,7 +66,7 @@ public partial class SaveGame : Control
         var playerStatus = PlayerStatus.GetInstance();
         var playerInventory = GetNode<PlayerInventory>(GameConstants.NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(GameConstants.NodePaths.FromSceneRoot.ItemBoxControl);
-        var sceneName = GetTree().CurrentScene.SceneFilePath.Replace(GameConstants.ScenesDirectory, "").Replace(".tscn", "");
+        var sceneName = GameConstants.GetCurrentSceneFilepath(this);
         var sceneInfo = new SceneLoadData
         {
             TargetScene = sceneName,
@@ -79,7 +79,7 @@ public partial class SaveGame : Control
         saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo, playerItemBox);
         var data = saver.GetGameState();
 
-        var roomStr = sceneName.Contains('/') ? sceneName.Substring(sceneName.LastIndexOf('/') + 1) : sceneName;
+        var roomStr = GameConstants.GetCurrentRoomName(this);
         var dateStr = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
         var newFilename = $"{roomStr} - {dateStr}.sav";
 

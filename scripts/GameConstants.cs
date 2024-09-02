@@ -175,6 +175,7 @@ public partial class GameConstants : GodotObject
             public const string CutsceneManager = Player + "/cutscene_ui";
             public const string GammaCorrectionPlayer = Player + "/GammaCorrection/GammaRect";
             public const string GammaCorrectionSolo = SceneRoot + "/GammaCorrection/GammaRect";
+            public const string RoomInfo = SceneRoot + "/room_info";
         }
     }
 
@@ -245,5 +246,34 @@ public partial class GameConstants : GodotObject
             (verticalInput > 0 && verticalInput < ControllerMenuDeadzone))
             verticalInput = 0;
         return new Vector2(horizontalInput, verticalInput);
+    }
+
+    public static string GetCurrentRoomName(Node node)
+    {
+        if (node.HasNode(NodePaths.FromSceneRoot.RoomInfo))
+            return node.GetNode<RoomInfo>(NodePaths.FromSceneRoot.RoomInfo).RoomName;
+        else // Fallback on scene filename if the scene didn't specify a room name
+        {
+            var sceneName = GetCurrentSceneFilepath(node);
+            var roomStr = sceneName.Contains('/') ? sceneName.Substring(sceneName.LastIndexOf('/') + 1) : sceneName;
+            return roomStr;
+        }
+    }
+
+    public static string GetCurrentSceneFilepath(Node node)
+    {
+        var roomFileName = node.GetTree().CurrentScene.SceneFilePath.Replace(ScenesDirectory, "").Replace(".tscn", "");
+        return roomFileName;
+    }
+
+    public static int GetCurrentRoomId(Node node)
+    {
+        if (node.HasNode(NodePaths.FromSceneRoot.RoomInfo))
+            return node.GetNode<RoomInfo>(NodePaths.FromSceneRoot.RoomInfo).RoomId;
+        else
+        {
+            GD.PrintErr($"Couldn't find room_info object in scene {node.GetTree().Root.Name}!");
+            return -1;
+        }
     }
 }

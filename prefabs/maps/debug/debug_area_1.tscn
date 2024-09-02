@@ -1,0 +1,139 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3c4s22bga1qp"]
+
+[ext_resource type="Script" path="res://scripts/data/MapData.cs" id="1_yar0t"]
+[ext_resource type="Script" path="res://scripts/data/MapRoomData.cs" id="2_es0xs"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="3_n4t2o"]
+
+[node name="DebugArea1" type="Control" node_paths=PackedStringArray("RoomData", "AreaLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yar0t")
+AreaId = 1
+AreaName = "Area 1"
+RoomData = [NodePath("Room1"), NodePath("Room2"), NodePath("Room3")]
+AreaLabel = NodePath("AreaLabel")
+
+[node name="AreaLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_n4t2o")
+text = "Area Name"
+horizontal_alignment = 1
+
+[node name="Room1" type="Control" parent="." node_paths=PackedStringArray("RoomLabel", "RoomStatus")]
+anchors_preset = 0
+offset_left = 750.0
+offset_top = 300.0
+offset_right = 1150.0
+offset_bottom = 500.0
+script = ExtResource("2_es0xs")
+RoomName = "Debug Room 1"
+RoomId = 1
+RoomLabel = NodePath("RoomName")
+RoomStatus = NodePath("RoomState")
+
+[node name="RoomState" type="ColorRect" parent="Room1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoomName" type="Label" parent="Room1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_n4t2o")
+theme_type_variation = &"HeaderSmall"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Room Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Room2" type="Control" parent="." node_paths=PackedStringArray("RoomLabel", "RoomStatus")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 850.0
+offset_top = 500.0
+offset_right = 1050.0
+offset_bottom = 900.0
+script = ExtResource("2_es0xs")
+RoomName = "Debug Item Box"
+RoomId = 2
+RoomLabel = NodePath("RoomName")
+RoomStatus = NodePath("RoomState")
+
+[node name="RoomState" type="ColorRect" parent="Room2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoomName" type="Label" parent="Room2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_n4t2o")
+theme_type_variation = &"HeaderSmall"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Room Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Room3" type="Control" parent="." node_paths=PackedStringArray("RoomLabel", "RoomStatus")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1050.0
+offset_top = 600.0
+offset_right = 1250.0
+offset_bottom = 800.0
+script = ExtResource("2_es0xs")
+RoomName = "Debug Cutscene"
+RoomId = 3
+RoomLabel = NodePath("RoomName")
+RoomStatus = NodePath("RoomState")
+
+[node name="RoomState" type="ColorRect" parent="Room3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoomName" type="Label" parent="Room3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_n4t2o")
+theme_type_variation = &"HeaderSmall"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Room Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
