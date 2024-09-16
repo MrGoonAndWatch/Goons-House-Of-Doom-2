@@ -171,6 +171,9 @@ public partial class Player : ICutsceneActor
 
 		MoveAndSlide();
 
+        //GD.Print($"Rotation = {Rotation} , RotationDegrees = {RotationDegrees}");
+        //var angle = Mathf.Atan2(Rotation.Z, Rotation.X);
+        _playerStatus.UpdatePlayerPosition(Position, RotationDegrees.Y);
         //_playerPositionLabel.Text = Position.ToString("0.00");
     }
 

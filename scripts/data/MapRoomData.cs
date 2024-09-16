@@ -13,6 +13,10 @@ public partial class MapRoomData : Control
     private Label RoomLabel;
     [Export]
     private ColorRect RoomStatus;
+    [Export]
+    public Vector2 PlayerMapPositionScale = new Vector2(1, 1);
+    [Export]
+    public Vector2 RoomOriginOffset = new Vector2(0, 0);
 
     public bool PlayerVisitedRoom;
     public bool PlayerClearedRoom;

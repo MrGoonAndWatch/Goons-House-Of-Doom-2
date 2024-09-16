@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3c4s22bga1qp"]
+[gd_scene load_steps=6 format=3 uid="uid://d3c4s22bga1qp"]
 
 [ext_resource type="Script" path="res://scripts/data/MapData.cs" id="1_yar0t"]
 [ext_resource type="Script" path="res://scripts/data/MapRoomData.cs" id="2_es0xs"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="3_n4t2o"]
 [ext_resource type="Script" path="res://scripts/data/MapDoorData.cs" id="4_v1ulp"]
+[ext_resource type="Texture2D" uid="uid://b3wi04nwg2pjc" path="res://textures/PlayerArrow.png" id="5_72wfm"]
 
-[node name="DebugArea1" type="Control" node_paths=PackedStringArray("RoomData", "DoorData", "AreaLabel")]
+[node name="DebugArea1" type="Control" node_paths=PackedStringArray("RoomData", "DoorData", "AreaLabel", "PlayerIcon")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +19,7 @@ AreaName = "Area 1"
 RoomData = [NodePath("Room1"), NodePath("Room2"), NodePath("Room3")]
 DoorData = [NodePath("Door1"), NodePath("Door2"), NodePath("Door3"), NodePath("Door4")]
 AreaLabel = NodePath("AreaLabel")
+PlayerIcon = NodePath("PlayerIcon")
 
 [node name="AreaLabel" type="Label" parent="."]
 layout_mode = 1
@@ -41,6 +43,8 @@ RoomName = "Debug Room 1"
 RoomId = 1
 RoomLabel = NodePath("RoomName")
 RoomStatus = NodePath("RoomState")
+PlayerMapPositionScale = Vector2(35, 20)
+RoomOriginOffset = Vector2(5, 8)
 
 [node name="RoomState" type="ColorRect" parent="Room1"]
 layout_mode = 1
@@ -227,3 +231,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.443137, 0.392157, 0, 1)
+
+[node name="PlayerIcon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("5_72wfm")
+expand_mode = 1

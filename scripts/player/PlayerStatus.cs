@@ -44,6 +44,9 @@ public partial class PlayerStatus : Node
     public float HitCooldown = 1.0f;
     private double _remainingHitCooldown;
 
+    private Vector3 _playerPosition;
+    private float _playerAngle;
+
     private static PlayerStatus _instance;
 
     public override void _Ready()
@@ -402,6 +405,22 @@ public partial class PlayerStatus : Node
     {
         var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);
         playerInteract.UseKey(key);
+    }
+
+    public void UpdatePlayerPosition(Vector3 position, float angle)
+    {
+        _playerPosition = position;
+        _playerAngle = angle;
+    }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return _playerPosition;
+    }
+
+    public float GetPlayerAngle()
+    {
+        return _playerAngle;
     }
 
     public static void DebugPrintPlayerStatus()

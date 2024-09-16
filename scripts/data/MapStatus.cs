@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System.Net.NetworkInformation;
 
 public partial class MapStatus : Node
 {

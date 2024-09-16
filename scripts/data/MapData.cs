@@ -13,11 +13,44 @@ public partial class MapData : Control
 
     [Export]
     private Label AreaLabel;
+    [Export]
+    private TextureRect PlayerIcon;
+
+    private MapRoomData _currentRoom;
 
     public override void _Ready()
     {
         AreaLabel.Text = AreaName;
         RefreshMap();
+    }
+
+    public override void _Process(double delta)
+    {
+        MovePlayerIcon(delta);
+    }
+
+    private void MovePlayerIcon(double delta)
+    {
+        PlayerIcon.Visible = _currentRoom != null;
+        if (_currentRoom == null) return;
+
+        var playerStatus = PlayerStatus.GetInstance();
+        var playerPos = playerStatus.GetPlayerPosition();
+        var scaledPlayerPos = new Vector2((playerPos.X + _currentRoom.RoomOriginOffset.X) * _currentRoom.PlayerMapPositionScale.X, (playerPos.Z + _currentRoom.RoomOriginOffset.Y) * _currentRoom.PlayerMapPositionScale.Y);
+        PlayerIcon.Position = _currentRoom.Position + scaledPlayerPos;
+        PlayerIcon.RotationDegrees = (-playerStatus.GetPlayerAngle()) + 90;
+    }
+
+    public void SetCurrentRoom(int roomId)
+    {
+        _currentRoom = null;
+        for (var i = 0; i < RoomData.Length; i++)
+        {
+            if (RoomData[i].RoomId == roomId)
+            {
+                _currentRoom = RoomData[i];
+            }
+        }
     }
 
     public void RefreshMap()

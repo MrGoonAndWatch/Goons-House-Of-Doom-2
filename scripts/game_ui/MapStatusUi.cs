@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class MapStatusUi : StatusScreenTab
 {
-    private const float MapScrollSpeed = 69;
+    private const float MapScrollSpeed = 400;
 
     private Dictionary<int, int> _mapIdToChildIndexLookup;
     private bool _initialized;
@@ -50,6 +50,7 @@ public partial class MapStatusUi : StatusScreenTab
         var movement = GameConstants.GetMovementVectorWithDeadzone();
 
         if (movement.Equals(Vector2.Zero)) return;
+        movement *= -1;
 
         var newPos = _currentMapNode.Position + (movement * MapScrollSpeed * (float)delta);
         _currentMapNode.SetPosition(newPos);
@@ -66,6 +67,7 @@ public partial class MapStatusUi : StatusScreenTab
         var mapData = mapStatus.GetMapDataForRoom(roomId);
         // TODO: Handle case where room is not on a map? Default map to open?
 
+        mapData.SetCurrentRoom(roomId);
         mapData.RefreshMap();
         _currentMapNode = GetCurrentMapNode(mapData.AreaId);
         _currentMapNode.SetPosition(Vector2.Zero);
