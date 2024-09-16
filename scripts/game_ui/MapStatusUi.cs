@@ -3,12 +3,16 @@ using System.Collections.Generic;
 
 public partial class MapStatusUi : StatusScreenTab
 {
+    private const float MapScrollSpeed = 69;
+
     private Dictionary<int, int> _mapIdToChildIndexLookup;
     private bool _initialized;
+    private Control _currentMapNode;
 
     public override void _Process(double delta)
     {
         Initialize();
+        CheckForMovement(delta);
         CheckForReturnToHeader();
     }
 
@@ -39,6 +43,18 @@ public partial class MapStatusUi : StatusScreenTab
         _initialized = true;
     }
 
+    private void CheckForMovement(double delta)
+    {
+        if (!IsActiveTab) return;
+
+        var movement = GameConstants.GetMovementVectorWithDeadzone();
+
+        if (movement.Equals(Vector2.Zero)) return;
+
+        var newPos = _currentMapNode.Position + (movement * MapScrollSpeed * (float)delta);
+        _currentMapNode.SetPosition(newPos);
+    }
+
     public override void OnOpenMenu()
     {
         var childrenCount = GetChildren().Count;
@@ -46,19 +62,23 @@ public partial class MapStatusUi : StatusScreenTab
             ((Control)GetChild(i)).Visible = false;
         var mapStatus = MapStatus.GetInstance();
 
-        //GD.Print("Got MapStatus instance!");
         var roomId = GameConstants.GetCurrentRoomId(this);
-        //GD.Print($"Got current room id {roomId}");
         var mapData = mapStatus.GetMapDataForRoom(roomId);
-        //GD.Print($"Got mapData for room id {roomId} (area id {mapData.AreaId})");
         // TODO: Handle case where room is not on a map? Default map to open?
 
         mapData.RefreshMap();
-        ((Control)GetChild(_mapIdToChildIndexLookup[mapData.AreaId])).Visible = true;
+        _currentMapNode = GetCurrentMapNode(mapData.AreaId);
+        _currentMapNode.SetPosition(Vector2.Zero);
+        _currentMapNode.Visible = true;
     }
 
     private void _OnSceneExit()
     {
         MapStatus.GetInstance().ReturnMaps();
+    }
+
+    private Control GetCurrentMapNode(int mapId)
+    {
+        return (Control)GetChild(_mapIdToChildIndexLookup[mapId]);
     }
 }

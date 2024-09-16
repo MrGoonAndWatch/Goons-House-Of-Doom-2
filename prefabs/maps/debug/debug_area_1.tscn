@@ -113,6 +113,7 @@ offset_bottom = 800.0
 script = ExtResource("2_es0xs")
 RoomName = "Debug Cutscene"
 RoomId = 3
+RoomHasNoPickups = true
 RoomLabel = NodePath("RoomName")
 RoomStatus = NodePath("RoomState")
 

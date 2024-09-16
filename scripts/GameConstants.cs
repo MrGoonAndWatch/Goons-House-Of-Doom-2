@@ -4,7 +4,7 @@ using Godot.Collections;
 public partial class GameConstants : GodotObject
 {
     public const float GreenMedicineHp = 25.0f;
-    public const float ControllerMenuDeadzone = 0.72f;
+    public const float ControllerMenuDeadzone = 0.52f;
 
     public const string SaveDirectoryPath = "user://saves";
     public const string ScenesDirectory = "res://scenes/";

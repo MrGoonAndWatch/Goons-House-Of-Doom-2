@@ -33,9 +33,14 @@ public partial class PassCode : Node3D
             OnPassCodeSuccess();
     }
 
+	public bool IsSolved()
+	{
+		return !_interactable;
+	}
+
 	public void Inspect()
 	{
-		if (_interactable == false) return;
+		if (IsSolved()) return;
 		_textReader.ReadText(InspectText, DigitOptions, OnCodeEntered, NumberOfDigits);
     }
 
@@ -53,6 +58,7 @@ public partial class PassCode : Node3D
             if (OnUnlockSuccessText != null && OnUnlockSuccessText.Length > 0)
                 _textReader.ReadText(OnUnlockSuccessText, overrideRead: true);
 			OnPassCodeSuccess();
+			MapStatus.CheckForRoomCleared();
         }
         else {
             if (OnUnlockFailText != null && OnUnlockFailText.Length > 0)

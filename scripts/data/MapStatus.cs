@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System.Net.NetworkInformation;
 
 public partial class MapStatus : Node
 {
@@ -197,5 +198,60 @@ public partial class MapStatus : Node
     {
         foreach (var mapAreaId in AreaNameToMapDataLookup.Keys)
             AreaNameToMapDataLookup[mapAreaId].Reparent(MapParent);
+    }
+
+    // TODO: Revisit this approach. Cycling through every object in the scene can't be efficient but it is a nice way to dynamically handle checking whether a room is cleared.
+    // TODO: Potentially skip checks on certain objects that have a lot of children but will never have an uncleared item in it (Player, enemies, etc.).
+    public static void CheckForRoomCleared(ulong? ignoreNodeId = null)
+    {
+        var instance = GetInstance();
+        if (instance == null || !instance.IsInitialized())
+        {
+            GD.PrintErr("Could not CheckForRoomCleared, MapStatus instance was null!");
+            return;
+        }
+
+        var root = instance.GetNode(GameConstants.NodePaths.FromSceneRoot.SceneRoot);
+        var containsPendingItem = ContainsPendingItem(root, ignoreNodeId);
+
+        if (!containsPendingItem)
+        {
+            var roomId = GameConstants.GetCurrentRoomId(instance);
+            instance.ClearRoom(roomId);
+            var mapData = instance.GetMapDataForRoom(roomId);
+            mapData.RefreshMap();
+        }
+    }
+
+    private static bool ContainsPendingItem(Node node, ulong? ignoreNodeId)
+    {
+        if ((ignoreNodeId == null || node.GetInstanceId() != ignoreNodeId.Value) && IsUnclearedNode(node))
+            return true;
+        var children = node.GetChildren();
+        for (var i = 0; i < children.Count; i++)
+        {
+            var child = children[i];
+            if (ContainsPendingItem(child, ignoreNodeId))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool IsUnclearedNode(Node node)
+    {
+        if (node is ItemContainer || node is MapPickup || node is NotePickup)
+        {
+            GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was an ItemContainer, MapPickup, or NotePickup!");
+            return true;
+        }
+
+        if (node is PassCode && !(node as PassCode).IsSolved())
+        {
+            GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was a puzzle and is unsolved!");
+            return true;
+        }
+
+        return false;
     }
 }

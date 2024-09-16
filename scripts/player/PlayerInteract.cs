@@ -118,6 +118,9 @@ public partial class PlayerInteract : Node
             return;
 
         var item = validItems.First();
+        // NOTE: This is jank, we are using the parent's instance id because we check for ItemPickup rather than Item since Item gets instantiated inside the player's inventory.
+        //      THINGS WILL BREAK if you change the hirearchy of item prefabs.
+        var itemInstanceId = item.GetParent().GetInstanceId();
         
         var remainingQty = _inventory.AddItem(item);
         if (item.ItemId != 0 && remainingQty != item.QtyOnPickup)
@@ -131,6 +134,7 @@ public partial class PlayerInteract : Node
             item.QtyOnPickup = remainingQty;
 
         RemoveItem(item);
+        MapStatus.CheckForRoomCleared(itemInstanceId);
     }
 
     private void PickupCurrentNote()
@@ -140,6 +144,7 @@ public partial class PlayerInteract : Node
             return;
 
         var note = validNotes.First();
+        var noteInstanceId = note.GetInstanceId();
 
         PlayerStatus.CollectNote(note.NoteData);
         _noteReader.StartReadingNote(note.NoteData);
@@ -147,6 +152,7 @@ public partial class PlayerInteract : Node
         var noteParent = note.GetParent();
         _touchingNotes.RemoveAll(i => i.GetInstanceId() == note.GetInstanceId());
         noteParent.QueueFree();
+        MapStatus.CheckForRoomCleared(noteInstanceId);
     }
 
     private void PickupCurrentMap()
@@ -156,6 +162,7 @@ public partial class PlayerInteract : Node
             return;
 
         var map = validMaps.First();
+        var mapInstanceId = map.GetInstanceId();
 
         MapStatus.GetInstance().PickupMap(map.MapPickupData.AreaId);
         var inspectText = GetNode<InspectTextUi>(NodePaths.FromSceneRoot.InspectTextUi);
@@ -164,6 +171,7 @@ public partial class PlayerInteract : Node
         var mapParent = map.GetParent();
         _touchingMaps.RemoveAll(i => i.GetInstanceId() == map.GetInstanceId());
         mapParent.QueueFree();
+        MapStatus.CheckForRoomCleared(mapInstanceId);
     }
 
     private void RemoveItem(Item item)
