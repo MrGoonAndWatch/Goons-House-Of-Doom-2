@@ -3,6 +3,7 @@ using System;
 
 public partial class DoorLoad : Node3D
 {
+	[Export]
 	private float OpeningTime = 1.0f;
 	private float _timeElapsed;
 

@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfyu0xk8cpccd"]
+
+[ext_resource type="Shader" path="res://shaders/cc0/ps1-scene.gdshader" id="1_s7tdk"]
+[ext_resource type="PackedScene" uid="uid://ydnc1vlpplu5" path="res://prefabs/room_info.tscn" id="2_samsg"]
+[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="3_164g0"]
+[ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="4_je1bn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o7y4s"]
+shader = ExtResource("1_s7tdk")
+shader_parameter/enabled = true
+shader_parameter/dithering = true
+shader_parameter/colors = 12
+shader_parameter/dither_size = 1
+
+[node name="root" type="SubViewportContainer"]
+material = SubResource("ShaderMaterial_o7y4s")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1900, 1000)
+
+[node name="room_info" parent="SubViewport" instance=ExtResource("2_samsg")]
+RoomName = "Starting Room"
+RoomId = 1
+
+[node name="Player" parent="SubViewport" instance=ExtResource("3_164g0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.495189, 0)
+
+[node name="test_grid_map" parent="SubViewport" instance=ExtResource("4_je1bn")]
+data = {
+"cells": PackedInt32Array(-65537, 0, 0, -65537, 65535, 0, -131072, 65535, 0, -131072, 0, 0, -131071, 65535, 0, -131071, 65534, 0, -131072, 65534, 0, -65537, 65534, 0, -65538, 65534, 0, -65538, 65535, 0, -65538, 0, 0, -65538, 1, 0, -65537, 1, 0, -131071, 0, 0, -131071, 1, 0, -131072, 1, 0)
+}
+metadata/_editor_floor_ = Vector3(0, -2, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.37172, 4.80479)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3.73912, 5.55766)

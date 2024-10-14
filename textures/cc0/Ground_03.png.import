@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cggoanbjj5qhc"
-path.s3tc="res://.godot/imported/PaintedWood008C_1K-PNG_AmbientOcclusion.png-16b056c7182996b435be0632de4f0419.s3tc.ctex"
+uid="uid://br75sqtc3fsb1"
+path.s3tc="res://.godot/imported/Ground_03.png-d3875a4cb46a81961ea53ae5013a02d8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/cc0/PaintedWood008C_1K-PNG_AmbientOcclusion.png"
-dest_files=["res://.godot/imported/PaintedWood008C_1K-PNG_AmbientOcclusion.png-16b056c7182996b435be0632de4f0419.s3tc.ctex"]
+source_file="res://textures/cc0/Ground_03.png"
+dest_files=["res://.godot/imported/Ground_03.png-d3875a4cb46a81961ea53ae5013a02d8.s3tc.ctex"]
 
 [params]
 
@@ -24,8 +24,8 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=8
-roughness/src_normal="res://textures/cc0/Ground_01_Nrm.png"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

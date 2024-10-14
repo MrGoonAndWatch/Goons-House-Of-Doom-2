@@ -1,12 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0h22hpdgo8q4"]
+[gd_scene load_steps=18 format=3 uid="uid://c0h22hpdgo8q4"]
 
+[ext_resource type="Texture2D" uid="uid://c41hjkkgljjsm" path="res://textures/cc0/PaintedWood008C_1K-PNG_Color.png" id="1_4i10x"]
 [ext_resource type="Material" uid="uid://cvkbgh1nucbox" path="res://materials/wood_mat.tres" id="1_ktlbh"]
+[ext_resource type="Texture2D" uid="uid://cggoanbjj5qhc" path="res://textures/cc0/PaintedWood008C_1K-PNG_AmbientOcclusion.png" id="2_8h7e1"]
+[ext_resource type="Texture2D" uid="uid://cx0rhwwcuhmbf" path="res://textures/cc0/PaintedWood008C_1K-PNG_NormalGL.png" id="3_0hbrp"]
 [ext_resource type="PackedScene" uid="uid://c20qpo5dnhban" path="res://models/Tiles/hedge.tscn" id="3_2wbrp"]
 [ext_resource type="PackedScene" uid="uid://c0ebwwxri4d1m" path="res://models/Tiles/stairs_redo.tscn" id="3_thp7j"]
+[ext_resource type="Material" uid="uid://c2m3es0sr2pud" path="res://materials/RockGround2.tres" id="4_hxji6"]
+[ext_resource type="Material" uid="uid://dsyv07h47gk12" path="res://materials/RockGround1.tres" id="4_q8l5v"]
+[ext_resource type="Material" uid="uid://cl7l2sdq0pn2r" path="res://materials/RockGround3.tres" id="6_4jv7f"]
+[ext_resource type="Material" uid="uid://727tmacd37yy" path="res://materials/RockGround4.tres" id="8_38fv7"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_r36yc"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xqjj4"]
+albedo_texture = ExtResource("1_4i10x")
+normal_enabled = true
+normal_texture = ExtResource("3_0hbrp")
+ao_enabled = true
+ao_texture = ExtResource("2_8h7e1")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_mbo8q"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vb7i3"]
+material = ExtResource("4_q8l5v")
+
+[sub_resource type="BoxMesh" id="BoxMesh_up2bd"]
+material = ExtResource("4_hxji6")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6u4ni"]
+material = ExtResource("6_4jv7f")
+
+[sub_resource type="BoxMesh" id="BoxMesh_lgmrm"]
+material = ExtResource("8_38fv7")
 
 [node name="tiles" type="Node3D"]
 
@@ -15,11 +41,57 @@
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WoodFloor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_r36yc")
-surface_material_override/0 = ExtResource("1_ktlbh")
+surface_material_override/0 = SubResource("StandardMaterial3D_xqjj4")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="WoodFloor/MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WoodFloor/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_mbo8q")
+
+[node name="RockGround1" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RockGround1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_vb7i3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RockGround1/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RockGround1/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_mbo8q")
+
+[node name="RockGround2" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RockGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_up2bd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RockGround2/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RockGround2/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_mbo8q")
+
+[node name="RockGround3" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RockGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_6u4ni")
+surface_material_override/0 = ExtResource("1_ktlbh")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RockGround3/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RockGround3/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_mbo8q")
+
+[node name="RockGround4" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RockGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_lgmrm")
+surface_material_override/0 = ExtResource("1_ktlbh")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RockGround4/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RockGround4/MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_mbo8q")
 
 [node name="hedge" parent="." instance=ExtResource("3_2wbrp")]
