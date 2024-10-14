@@ -16,7 +16,9 @@ shader_parameter/dither_size = 1
 material = SubResource("ShaderMaterial_o7y4s")
 
 [node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
 size = Vector2i(1900, 1000)
+render_target_update_mode = 4
 
 [node name="room_info" parent="SubViewport" instance=ExtResource("2_samsg")]
 RoomName = "Starting Room"
