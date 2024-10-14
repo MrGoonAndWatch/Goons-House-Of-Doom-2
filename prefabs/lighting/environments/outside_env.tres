@@ -1,0 +1,8 @@
+[gd_resource type="Environment" format=3 uid="uid://ct85ebvxy1vvm"]
+
+[resource]
+background_mode = 1
+background_color = Color(0.109804, 0.109804, 0.521569, 1)
+volumetric_fog_enabled = true
+volumetric_fog_length = 28.69
+volumetric_fog_sky_affect = 0.3

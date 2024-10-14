@@ -7,3 +7,4 @@
 albedo_texture = ExtResource("1_44pw6")
 normal_enabled = true
 normal_texture = ExtResource("2_pvnaw")
+uv1_scale = Vector3(3, 3, 3)
