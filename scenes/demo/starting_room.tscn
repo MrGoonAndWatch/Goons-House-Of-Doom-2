@@ -36,8 +36,9 @@ data = {
 metadata/_editor_floor_ = Vector3(0, -2, 0)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.37172, 4.80479)
+transform = Transform3D(1, 0, 0, 0, 0.92641, 0.376515, 0, -0.376515, 0.92641, 0, 3.37172, 7.46006)
 environment = ExtResource("5_t1w2j")
+fov = 60.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3.73912, 5.55766)

@@ -6,9 +6,15 @@ public partial class GameConstants : GodotObject
     public const float GreenMedicineHp = 25.0f;
     public const float ControllerMenuDeadzone = 0.52f;
 
+    public const string Mode = "debug";
     public const string SaveDirectoryPath = "user://saves";
     public const string ScenesDirectory = "res://scenes/";
     public const string GlobalSettingsFilename = "global.config";
+
+    public const string TitleScreenScenePath = $"{ScenesDirectory}/title_screen.tscn";
+    public const string StagingAreaScenePath = $"{ScenesDirectory}/staging_area.tscn";
+    //public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/starting_room.tscn";
+    public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/test_scene.tscn";
 
     public static class Colors
     {

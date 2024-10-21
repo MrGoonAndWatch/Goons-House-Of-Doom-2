@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://83omm7sbk1ws"]
+[gd_scene load_steps=4 format=3 uid="uid://83omm7sbk1ws"]
 
 [ext_resource type="Script" path="res://scripts/data/SaveGame.cs" id="1_os25d"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="2_odbvt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_13ymv"]
 font_size = 200
@@ -19,7 +20,6 @@ SaveFileList = NodePath("SaveUiBase/FileWindow/ScrollContainer/FileListContainer
 SaveFilesScroll = NodePath("SaveUiBase/FileWindow/ScrollContainer")
 
 [node name="SaveUiBase" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +34,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 1, 0, 0.521569)
+color = Color(0, 0, 0, 1)
 
 [node name="FileWindow" type="Control" parent="SaveUiBase"]
 layout_mode = 1
@@ -64,8 +64,9 @@ anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -4.0
-offset_right = 4.0
+offset_left = -500.0
+offset_right = 500.0
+offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 follow_focus = true
@@ -82,3 +83,31 @@ layout_mode = 2
 [node name="SpacerBottom" type="Control" parent="SaveUiBase/FileWindow/ScrollContainer/FileListContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
+
+[node name="BackButtonContainer" type="Control" parent="SaveUiBase/FileWindow"]
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -75.0
+offset_right = 250.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BackButton" type="Button" parent="SaveUiBase/FileWindow/BackButtonContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_right = 69.0
+offset_bottom = 75.0
+grow_horizontal = 2
+theme = ExtResource("2_odbvt")
+text = " Back "
+
+[connection signal="pressed" from="SaveUiBase/FileWindow/BackButtonContainer/BackButton" to="." method="_OnBackButtonPressed"]

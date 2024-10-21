@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://xrfgmfoqgxgu"]
+
+[ext_resource type="FontFile" uid="uid://cg3lnk4ofh2wd" path="res://prefabs/ui/title_font.tres" id="1_fgiqr"]
+
+[resource]
+font = ExtResource("1_fgiqr")
+font_size = 100

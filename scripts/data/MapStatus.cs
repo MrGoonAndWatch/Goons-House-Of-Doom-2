@@ -20,7 +20,7 @@ public partial class MapStatus : Node
     public System.Collections.Generic.List<int> _doorsEntered;
     public System.Collections.Generic.List<int> _lockedDoorsInspected;
 
-    private const string MapFolder = "res://prefabs/maps/debug/";
+    private const string MapFolder = $"res://prefabs/maps/{GameConstants.Mode}/";
 
     public override void _Ready()
     {

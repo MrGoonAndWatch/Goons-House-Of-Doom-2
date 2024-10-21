@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Goons House Of Doom 2"
-run/main_scene="res://scenes/debug/test_scene.tscn"
+run/main_scene="res://scenes/title_screen.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

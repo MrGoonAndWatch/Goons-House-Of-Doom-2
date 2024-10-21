@@ -105,10 +105,8 @@ public partial class OptionsMenuUi : Control
         var parent = GetParent();
         if (parent is PauseScreenUi)
             (parent as PauseScreenUi).OnOptionsMenuClosed();
-        // TODO: Handle title screen UI logic!
-        //else if(parent is TitleScreenUi)
-        //{
-        //}
+        if (parent is TitleScreenUi)
+            (parent as TitleScreenUi)._OnBackToMainMenu();
     }
 
     private void SaveCurrentValues()
@@ -176,7 +174,7 @@ public partial class OptionsMenuUi : Control
 
     private void UpdateGamma(float gamma)
     {
-        var node = GetNode(GameConstants.NodePaths.FromSceneRoot.GammaCorrectionPlayer);
+        if (!HasNode(GameConstants.NodePaths.FromSceneRoot.GammaCorrectionPlayer)) return;
         var gammaRect = GetNode<CanvasItem>(GameConstants.NodePaths.FromSceneRoot.GammaCorrectionPlayer);
         var gammaShader = gammaRect.Material as ShaderMaterial;
         gammaShader.SetShaderParameter(GameConstants.ShaderParameters.Gamma, gamma);

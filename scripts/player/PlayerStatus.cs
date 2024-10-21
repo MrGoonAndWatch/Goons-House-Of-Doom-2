@@ -92,6 +92,11 @@ public partial class PlayerStatus : Node
         }
         _instance = this;
 
+        ResetGame();
+    }
+
+    private void ResetGame()
+    {
         DeadEnemies = new List<int>();
         TriggeredEvents = new List<GlobalEvent>();
         GrabbedItems = new List<int>();
@@ -100,6 +105,18 @@ public partial class PlayerStatus : Node
         NotesCollected = new List<NoteData>();
 
         Health = MaxHealth;
+
+        MenuOpened = false;
+        Reading = false;
+        QuickTurning = false;
+        TakingDamage = false;
+        Aiming = false;
+        Shooting = false;
+        HasSaveLoadUiOpen = false;
+        Paused = false;
+        ItemBoxOpened = false;
+        ReadyToShoot = false;
+        IsInCutscene = false;
     }
 
     public override void _Process(double delta)
@@ -127,6 +144,12 @@ public partial class PlayerStatus : Node
     }
 
     public static PlayerStatus GetInstance() { return _instance; }
+
+    public void SetupNewGame(GameSettings settings)
+    {
+        GameSettings = settings;
+        ResetGame();
+    }
 
     private void ProcessGameOverUi(double delta)
     {

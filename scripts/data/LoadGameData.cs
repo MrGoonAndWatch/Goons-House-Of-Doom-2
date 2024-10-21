@@ -1,4 +1,5 @@
 using Godot;
+using static DataSaver;
 
 public partial class LoadGameData : Node3D
 {
@@ -25,8 +26,14 @@ public partial class LoadGameData : Node3D
     public void SetGameState(DataSaver.GameState gameState)
     {
         _gameState = gameState;
+        GetTree().ChangeSceneToFile(GameConstants.StagingAreaScenePath);
+    }
+
+    public void FinishLoadingFromFile()
+    {
+        GD.Print($"FinishLoadingFromFile. Loading scene {_gameState.SceneLoadData}...");
         DataSaver.GetInstance().LoadGameStateFromFileData(_gameState);
-        SceneChanger.GetInstance().ChangeScene(gameState.SceneLoadData);
+        SceneChanger.GetInstance().ChangeScene(_gameState.SceneLoadData);
     }
 
     public DataSaver.GameState GetGameState()

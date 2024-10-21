@@ -77,11 +77,13 @@ public partial class PauseScreenUi : Control
 
     public void _OnExitToMainMenu()
     {
-        // TODO: Here I'd change the scene to the main menu screen... IF I HAD ONE
+        // TODO: Confirm before exiting!
+        GetTree().ChangeSceneToFile(GameConstants.TitleScreenScenePath);
     }
 
     public void _OnExitToDesktop()
     {
+        // TODO: Confirm before exiting!
         GetTree().Quit();
     }
 }

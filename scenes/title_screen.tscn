@@ -1,0 +1,429 @@
+[gd_scene load_steps=11 format=3 uid="uid://bsuii6xr2tp36"]
+
+[ext_resource type="Script" path="res://scripts/game_ui/TitleScreenUi.cs" id="1_muklk"]
+[ext_resource type="LabelSettings" uid="uid://xrfgmfoqgxgu" path="res://prefabs/ui/title_label.tres" id="2_vbbv1"]
+[ext_resource type="FontFile" uid="uid://qoog8jprg8ka" path="res://prefabs/ui/ui_font.tres" id="3_po7kf"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="4_ovylp"]
+[ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="5_k25iy"]
+[ext_resource type="PackedScene" uid="uid://b3plxc1qko6mn" path="res://prefabs/ui/options_menu_ui.tscn" id="5_nmfgy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gpvy1"]
+font_size = 100
+font_color = Color(1, 0, 0, 1)
+outline_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_v651h"]
+font = ExtResource("3_po7kf")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_4ohct"]
+font = ExtResource("3_po7kf")
+font_size = 72
+
+[sub_resource type="LabelSettings" id="LabelSettings_8k67j"]
+line_spacing = 10.0
+font = ExtResource("3_po7kf")
+font_size = 50
+
+[node name="TitleScreen" type="Control" node_paths=PackedStringArray("MainMenu", "NewGameMenu", "LoadGameMenu", "OptionsMenu", "Credits", "InitFocusMainMenu", "InitFocusNewGame", "InitFocusOptions", "InitFocusCredits", "NewGameDifficultyButtons")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_muklk")
+MainMenu = NodePath("MainMenu")
+NewGameMenu = NodePath("NewGameMenu")
+LoadGameMenu = NodePath("LoadGameMenu")
+OptionsMenu = NodePath("OptionsMenu")
+Credits = NodePath("Credits")
+InitFocusMainMenu = NodePath("MainMenu/VBoxContainer/NewGame_Button")
+InitFocusNewGame = NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton")
+InitFocusOptions = NodePath("OptionsMenu/VBoxContainer/Resolution/OptionButton")
+InitFocusCredits = NodePath("Credits/BackButtonContainer/CreditsBackButton")
+NewGameDifficultyButtons = [NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/NormalButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/HardButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/ImpossibleButton")]
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainBackground" type="TextureRect" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 100.0
+offset_bottom = 371.0
+grow_horizontal = 2
+text = "Goon's House
+of Doom 2"
+label_settings = ExtResource("2_vbbv1")
+horizontal_alignment = 1
+
+[node name="DemoLabel" type="Label" parent="MainMenu"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 187.0
+offset_top = 698.0
+offset_right = 475.0
+offset_bottom = 969.0
+grow_horizontal = 2
+rotation = -0.37775
+text = "Demo"
+label_settings = SubResource("LabelSettings_gpvy1")
+horizontal_alignment = 1
+
+[node name="VersionLabel" type="Label" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -55.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "v1.0.0  "
+label_settings = SubResource("LabelSettings_v651h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.5
+offset_top = -501.0
+offset_right = 170.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NewGame_Button" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "New Game"
+
+[node name="Spacer" type="Control" parent="MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="LoadGame_Button" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Load Game"
+
+[node name="Spacer2" type="Control" parent="MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="OptionsGame_Button" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Options"
+
+[node name="Spacer3" type="Control" parent="MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Credits_Button" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Credits"
+
+[node name="Spacer4" type="Control" parent="MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Exit_Button" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Exit to Desktop"
+
+[node name="Spacer5" type="Control" parent="MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="NewGameMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGameBackground" type="TextureRect" parent="NewGameMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NewGameMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -706.5
+offset_top = -233.5
+offset_right = 706.5
+offset_bottom = 233.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DifficultyContainer" type="HBoxContainer" parent="NewGameMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Difficulty: "
+
+[node name="EasyButton" type="Button" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Easy"
+
+[node name="Spacer" type="Control" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="NormalButton" type="Button" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+self_modulate = Color(1, 1, 0.392157, 1)
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Normal"
+
+[node name="Spacer2" type="Control" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="HardButton" type="Button" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Hard"
+
+[node name="Spacer3" type="Control" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="ImpossibleButton" type="Button" parent="NewGameMenu/VBoxContainer/DifficultyContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Impossible"
+
+[node name="Spacer1" type="Control" parent="NewGameMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="RandomizerSeed" type="HBoxContainer" parent="NewGameMenu/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NewGameMenu/VBoxContainer/RandomizerSeed"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Randomizer Seed: "
+
+[node name="TextEdit" type="TextEdit" parent="NewGameMenu/VBoxContainer/RandomizerSeed"]
+custom_minimum_size = Vector2(800, 80)
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+placeholder_text = "Leave empty for a random seed"
+editable = false
+
+[node name="Spacer2" type="Control" parent="NewGameMenu/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="ItemRandomizer" type="HBoxContainer" parent="NewGameMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Item Randomizer: "
+
+[node name="CheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+disabled = true
+
+[node name="DemoDisclaimer" type="Label" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "(not available in demo)"
+
+[node name="Spacer3" type="Control" parent="NewGameMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="EnemyRandomizer" type="HBoxContainer" parent="NewGameMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Enemy Randomizer: "
+
+[node name="CheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+disabled = true
+
+[node name="DemoDisclaimer" type="Label" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "(not available in demo)"
+
+[node name="Spacer4" type="Control" parent="NewGameMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="StartNewGameButton" type="Button" parent="NewGameMenu/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_ovylp")
+text = "New Game"
+
+[node name="Spacer5" type="Control" parent="NewGameMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="NewGameBackButton" type="Button" parent="NewGameMenu/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_ovylp")
+text = "Back"
+
+[node name="LoadGameMenu" parent="." instance=ExtResource("5_k25iy")]
+layout_mode = 1
+
+[node name="SaveUiBase" parent="LoadGameMenu" index="0"]
+visible = false
+
+[node name="OptionsMenu" parent="." instance=ExtResource("5_nmfgy")]
+visible = false
+layout_mode = 1
+
+[node name="Credits" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Label" parent="Credits"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -222.0
+offset_right = 222.0
+offset_bottom = 87.0
+grow_horizontal = 2
+text = "CREDITS"
+label_settings = SubResource("LabelSettings_4ohct")
+horizontal_alignment = 1
+
+[node name="Credits" type="Label" parent="Credits"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -222.0
+offset_top = -43.5
+offset_right = 222.0
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "A game by Mr_GoonAndWatch"
+label_settings = SubResource("LabelSettings_8k67j")
+
+[node name="BackButtonContainer" type="Control" parent="Credits"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -150.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CreditsBackButton" type="Button" parent="Credits/BackButtonContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -83.0
+offset_right = 83.0
+offset_bottom = 75.0
+grow_horizontal = 2
+theme = ExtResource("4_ovylp")
+text = "  Back  "
+
+[connection signal="pressed" from="MainMenu/VBoxContainer/NewGame_Button" to="." method="_OnNewGamePressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/LoadGame_Button" to="." method="_OnLoadGamePressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/OptionsGame_Button" to="." method="_OnOptionsPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Credits_Button" to="." method="_OnCreditsPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Exit_Button" to="." method="_OnExitPressed"]
+[connection signal="pressed" from="NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton" to="." method="_OnDifficultySelectedEasy"]
+[connection signal="pressed" from="NewGameMenu/VBoxContainer/DifficultyContainer/NormalButton" to="." method="_OnDifficultySelectedNormal"]
+[connection signal="pressed" from="NewGameMenu/VBoxContainer/DifficultyContainer/HardButton" to="." method="_OnDifficultySelectedHard"]
+[connection signal="pressed" from="NewGameMenu/VBoxContainer/DifficultyContainer/ImpossibleButton" to="." method="_OnDifficultySelectedImpossible"]
+[connection signal="pressed" from="NewGameMenu/VBoxContainer/StartNewGameButton" to="." method="_OnStartNewGamePressed"]
+[connection signal="pressed" from="NewGameMenu/VBoxContainer/NewGameBackButton" to="." method="_OnBackToMainMenu"]
+[connection signal="pressed" from="LoadGameMenu/SaveUiBase/FileWindow/BackButtonContainer/BackButton" to="." method="_OnBackToMainMenu"]
+[connection signal="pressed" from="Credits/BackButtonContainer/CreditsBackButton" to="." method="_OnBackToMainMenu"]
+
+[editable path="LoadGameMenu"]
+[editable path="OptionsMenu"]

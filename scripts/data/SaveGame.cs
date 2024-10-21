@@ -109,7 +109,7 @@ public partial class SaveGame : Control
         _menuOpened = true;
     }
 
-    private void CloseSaveUi()
+    public void CloseSaveUi()
     {
         _menuOpened = false;
 
@@ -143,6 +143,7 @@ public partial class SaveGame : Control
             var saveFileButton = (saveFileButtonScene.Instantiate()) as SaveFileUi;
             saveFileButton.SaveFileButton.Text = cleanFileName;
             saveFileButton.SaveFileName = saveFileName;
+            saveFileButton.SaveGameUi = this;
             _saveFiles.Add(saveFileButton);
             SaveFileList.AddSibling(saveFileButton);
         }
@@ -153,6 +154,7 @@ public partial class SaveGame : Control
             var newSaveFileButton = (newSaveFileButtonScene.Instantiate()) as SaveFileUi;
             newSaveFileButton.SaveFileButton.Text = GameConstants.SaveFileNewSaveText;
             newSaveFileButton.IsNewFileSlot = true;
+            newSaveFileButton.SaveGameUi = this;
             _saveFiles.Add(newSaveFileButton);
             SaveFileList.AddSibling(newSaveFileButton);
         }
@@ -206,6 +208,11 @@ public partial class SaveGame : Control
         GD.Print($"Save data as game state==null? {gameState == null}, saveData:\r\n{saveData}");
         LoadGameData.GetInstance().SetGameState(gameState);
 
+        CloseSaveUi();
+    }
+
+    private void _OnBackButtonPressed()
+    {
         CloseSaveUi();
     }
 }

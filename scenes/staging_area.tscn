@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://cc0rdip6ngykf"]
+
+[ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_q6pqr"]
+[ext_resource type="PackedScene" uid="uid://ydnc1vlpplu5" path="res://prefabs/room_info.tscn" id="2_l3ljw"]
+[ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="3_8dqh6"]
+[ext_resource type="Script" path="res://scripts/data/StagingArea.cs" id="4_frkdy"]
+
+[node name="root" type="SubViewportContainer"]
+material = ExtResource("1_q6pqr")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1900, 1000)
+
+[node name="HideScreen" type="Control" parent="SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/HideScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+
+[node name="room_info" parent="SubViewport" instance=ExtResource("2_l3ljw")]
+RoomName = "LOADING"
+RoomId = -1
+
+[node name="Player" parent="SubViewport" instance=ExtResource("3_8dqh6")]
+
+[node name="StagingArea" type="Node3D" parent="SubViewport"]
+script = ExtResource("4_frkdy")
