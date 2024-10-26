@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bsuii6xr2tp36"]
+[gd_scene load_steps=12 format=3 uid="uid://bsuii6xr2tp36"]
 
 [ext_resource type="Script" path="res://scripts/game_ui/TitleScreenUi.cs" id="1_muklk"]
 [ext_resource type="LabelSettings" uid="uid://xrfgmfoqgxgu" path="res://prefabs/ui/title_label.tres" id="2_vbbv1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="4_ovylp"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="5_k25iy"]
 [ext_resource type="PackedScene" uid="uid://b3plxc1qko6mn" path="res://prefabs/ui/options_menu_ui.tscn" id="5_nmfgy"]
+[ext_resource type="PackedScene" uid="uid://b551tbih1cuj1" path="res://prefabs/ui/controls_setup.tscn" id="7_4ye8e"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gpvy1"]
 font_size = 100
@@ -25,7 +26,7 @@ line_spacing = 10.0
 font = ExtResource("3_po7kf")
 font_size = 50
 
-[node name="TitleScreen" type="Control" node_paths=PackedStringArray("MainMenu", "NewGameMenu", "LoadGameMenu", "OptionsMenu", "Credits", "InitFocusMainMenu", "InitFocusNewGame", "InitFocusOptions", "InitFocusCredits", "NewGameDifficultyButtons")]
+[node name="TitleScreen" type="Control" node_paths=PackedStringArray("MainMenu", "NewGameMenu", "LoadGameMenu", "OptionsMenu", "ControlsMenu", "Credits", "InitFocusMainMenu", "InitFocusNewGame", "InitFocusOptions", "InitFocusControls", "InitFocusCredits", "NewGameDifficultyButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,10 +38,12 @@ MainMenu = NodePath("MainMenu")
 NewGameMenu = NodePath("NewGameMenu")
 LoadGameMenu = NodePath("LoadGameMenu")
 OptionsMenu = NodePath("OptionsMenu")
+ControlsMenu = NodePath("ControlsMenu")
 Credits = NodePath("Credits")
 InitFocusMainMenu = NodePath("MainMenu/VBoxContainer/NewGame_Button")
 InitFocusNewGame = NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton")
 InitFocusOptions = NodePath("OptionsMenu/VBoxContainer/Resolution/OptionButton")
+InitFocusControls = NodePath("ControlsMenu/ControlsRemap/Forwards/Forwards (Keyboard)")
 InitFocusCredits = NodePath("Credits/BackButtonContainer/CreditsBackButton")
 NewGameDifficultyButtons = [NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/NormalButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/HardButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/ImpossibleButton")]
 
@@ -75,8 +78,8 @@ stretch_mode = 5
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 100.0
-offset_bottom = 371.0
+offset_top = 50.0
+offset_bottom = 321.0
 grow_horizontal = 2
 text = "Goon's House
 of Doom 2"
@@ -88,13 +91,13 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 187.0
-offset_top = 698.0
-offset_right = 475.0
-offset_bottom = 969.0
+offset_left = 299.0
+offset_top = 613.0
+offset_right = 587.0
+offset_bottom = 890.0
 grow_horizontal = 2
 rotation = -0.37775
-text = "Demo"
+text = "Tech Demo"
 label_settings = SubResource("LabelSettings_gpvy1")
 horizontal_alignment = 1
 
@@ -144,7 +147,7 @@ text = "Load Game"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="OptionsGame_Button" type="Button" parent="MainMenu/VBoxContainer"]
+[node name="Options_Button" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_ovylp")
 text = "Options"
@@ -153,12 +156,21 @@ text = "Options"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
+[node name="Controls_Button" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Controls"
+
+[node name="Spacer4" type="Control" parent="MainMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
 [node name="Credits_Button" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_ovylp")
 text = "Credits"
 
-[node name="Spacer4" type="Control" parent="MainMenu/VBoxContainer"]
+[node name="Spacer5" type="Control" parent="MainMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
@@ -167,7 +179,7 @@ layout_mode = 2
 theme = ExtResource("4_ovylp")
 text = "Exit to Desktop"
 
-[node name="Spacer5" type="Control" parent="MainMenu/VBoxContainer"]
+[node name="Spacer6" type="Control" parent="MainMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
@@ -378,6 +390,10 @@ visible = false
 visible = false
 layout_mode = 1
 
+[node name="ControlsMenu" parent="." instance=ExtResource("7_4ye8e")]
+visible = false
+layout_mode = 1
+
 [node name="Credits" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -444,7 +460,8 @@ text = "  Back  "
 
 [connection signal="pressed" from="MainMenu/VBoxContainer/NewGame_Button" to="." method="_OnNewGamePressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/LoadGame_Button" to="." method="_OnLoadGamePressed"]
-[connection signal="pressed" from="MainMenu/VBoxContainer/OptionsGame_Button" to="." method="_OnOptionsPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Options_Button" to="." method="_OnOptionsPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Controls_Button" to="." method="_OnControlsPressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/Credits_Button" to="." method="_OnCreditsPressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/Exit_Button" to="." method="_OnExitPressed"]
 [connection signal="pressed" from="NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton" to="." method="_OnDifficultySelectedEasy"]
@@ -454,7 +471,9 @@ text = "  Back  "
 [connection signal="pressed" from="NewGameMenu/VBoxContainer/StartNewGameButton" to="." method="_OnStartNewGamePressed"]
 [connection signal="pressed" from="NewGameMenu/VBoxContainer/NewGameBackButton" to="." method="_OnBackToMainMenu"]
 [connection signal="pressed" from="LoadGameMenu/SaveUiBase/FileWindow/BackButtonContainer/BackButton" to="." method="_OnBackToMainMenu"]
+[connection signal="pressed" from="ControlsMenu/MenuButtons/ExitButton" to="." method="_OnBackToMainMenu"]
 [connection signal="pressed" from="Credits/BackButtonContainer/CreditsBackButton" to="." method="_OnBackToMainMenu"]
 
 [editable path="LoadGameMenu"]
 [editable path="OptionsMenu"]
+[editable path="ControlsMenu"]

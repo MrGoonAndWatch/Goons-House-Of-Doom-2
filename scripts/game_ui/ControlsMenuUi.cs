@@ -14,6 +14,7 @@ public partial class ControlsMenuUi : Control
 
     public void _OnBackClicked()
     {
-        _pauseScreenUi.OnControlsClosed();
+        if(_pauseScreenUi != null)
+            _pauseScreenUi.OnControlsClosed();
     }
 }

@@ -11,15 +11,17 @@ public partial class TitleScreenUi : Node
     [Export]
     private Control OptionsMenu;
     [Export]
+    private Control ControlsMenu;
+    [Export]
     private Control Credits;
     [Export]
     private Control InitFocusMainMenu;
     [Export]
     private Control InitFocusNewGame;
     [Export]
-    private Control InitFocusLoadGame;
-    [Export]
     private Control InitFocusOptions;
+    [Export]
+    private Control InitFocusControls;
     [Export]
     private Control InitFocusCredits;
 
@@ -34,6 +36,7 @@ public partial class TitleScreenUi : Node
         NewGameMenu.Visible = false;
         OptionsMenu.Visible = false;
         LoadGameMenu.Visible = false;
+        ControlsMenu.Visible = false;
         Credits.Visible = false;
         SwapToMenu(MainMenu, InitFocusMainMenu);
     }
@@ -82,6 +85,11 @@ public partial class TitleScreenUi : Node
     private void _OnOptionsPressed()
     {
         SwapToMenu(OptionsMenu, InitFocusOptions);
+    }
+
+    private void _OnControlsPressed()
+    {
+        SwapToMenu(ControlsMenu, InitFocusControls);
     }
 
     private void _OnCreditsPressed()
@@ -134,5 +142,6 @@ public partial class TitleScreenUi : Node
     #endregion
 
     #region ControlsEvents
+
     #endregion
 }
