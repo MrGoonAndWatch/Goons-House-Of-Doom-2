@@ -31,6 +31,12 @@ public abstract partial class Enemy : CharacterBody3D
         _player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
     }
 
+    protected virtual bool CanMove()
+    {
+        var playerStatus = PlayerStatus.GetInstance();
+        return !playerStatus.HasAnyUiOpen();
+    }
+
     protected void LookAtPoint(Vector3 lookAt)
     {
         LookAt(new Vector3(lookAt.X, GlobalPosition.Y, lookAt.Z), Vector3.Up);

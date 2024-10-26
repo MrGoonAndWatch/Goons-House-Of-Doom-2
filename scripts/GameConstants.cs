@@ -176,10 +176,12 @@ public partial class GameConstants : GodotObject
     {
         public static class FromSceneRoot
         {
+            public const string TitleScreen = "/root/TitleScreen";
+
             public const string SceneRoot = "/root/root/SubViewport";
             public const string Player = SceneRoot + "/Player";
             public const string PlayerInventory = Player + "/PlayerInventory";
-            public const string PlayerStatusScreenHeader = Player + "PlayerInventoryUi/Header";
+            public const string PlayerStatusScreenHeader = Player + "PlayerStatusScreen/Header";
             public const string ItemBoxControl = Player + "/PlayerItemBoxControl";
             public const string PlayerInteract = Player + "/InteractHitbox";
             public const string InspectTextUi = Player + "/InspectTextUI";
@@ -246,9 +248,15 @@ public partial class GameConstants : GodotObject
         public const string Gamma = "gamma";
     }
 
-    public static Vector2 GetMovementVectorWithDeadzone()
+    public static Vector2 GetMovementVectorRaw()
     {
         var inputDir = Input.GetVector(Controls.left.ToString(), Controls.right.ToString(), Controls.up.ToString(), Controls.down.ToString());
+        return inputDir;
+    }
+
+    public static Vector2 GetMovementVectorWithDeadzone()
+    {
+        var inputDir = GetMovementVectorRaw();
 
         var horizontalInput = inputDir.X;
         // Note: For some reason the Deadzone property in the project's InputMap wasn't being respected, leading to weird menu movement some of the time.
@@ -286,7 +294,10 @@ public partial class GameConstants : GodotObject
             return node.GetNode<RoomInfo>(NodePaths.FromSceneRoot.RoomInfo).RoomId;
         else
         {
-            GD.PrintErr($"Couldn't find room_info object in scene {node.GetTree().Root.Name}!");
+            if (node.HasNode(NodePaths.FromSceneRoot.TitleScreen))
+                GD.Print("Couldn't find room_info object in scene but this is the title screen so that's expected!");
+            else
+                GD.PrintErr($"Couldn't find room_info object in scene {node.GetTree().Root.Name}!");
             return -1;
         }
     }

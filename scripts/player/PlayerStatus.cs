@@ -95,7 +95,7 @@ public partial class PlayerStatus : Node
         ResetGame();
     }
 
-    private void ResetGame()
+    public void ResetGame()
     {
         DeadEnemies = new List<int>();
         TriggeredEvents = new List<GlobalEvent>();

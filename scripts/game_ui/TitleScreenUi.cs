@@ -33,6 +33,7 @@ public partial class TitleScreenUi : Node
     {
         NewGameMenu.Visible = false;
         OptionsMenu.Visible = false;
+        LoadGameMenu.Visible = false;
         Credits.Visible = false;
         SwapToMenu(MainMenu, InitFocusMainMenu);
     }
@@ -73,7 +74,8 @@ public partial class TitleScreenUi : Node
     private void _OnLoadGamePressed()
     {
         MainMenu.Visible = false;
-        _currentMenu = null;
+        _currentMenu = LoadGameMenu;
+        LoadGameMenu.Visible = true;
         LoadGameMenu.ShowLoadUi();
     }
 

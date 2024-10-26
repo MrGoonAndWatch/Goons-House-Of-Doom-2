@@ -25,6 +25,8 @@ public partial class Shambler : Enemy
 
     public override void _PhysicsProcess(double delta)
     {
+        if (!CanMove()) return;
+
         if (_postAttackIdleTime > 0)
             _postAttackIdleTime -= (float)delta;
 

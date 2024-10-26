@@ -164,7 +164,7 @@ public partial class Player : ICutsceneActor
         var velocity = Velocity;
 		velocity = ProcessGravity(delta, velocity);
 
-        var input_dir = Input.GetVector(Controls.left.ToString(), Controls.right.ToString(), Controls.up.ToString(), Controls.down.ToString());
+        var input_dir = GameConstants.GetMovementVectorWithDeadzone();
         velocity = ProcessMovement(delta, velocity, input_dir.Y);
         ProcessRotation(delta, input_dir.X);
 		Velocity = velocity;

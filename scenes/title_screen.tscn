@@ -281,7 +281,11 @@ layout_mode = 2
 [node name="Label" type="Label" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
 layout_mode = 2
 theme = ExtResource("4_ovylp")
-text = "Item Randomizer: "
+text = "Randomize Items: "
+
+[node name="Spacer" type="Control" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
 
 [node name="CheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
 layout_mode = 2
@@ -303,9 +307,9 @@ layout_mode = 2
 [node name="Label" type="Label" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
 layout_mode = 2
 theme = ExtResource("4_ovylp")
-text = "Enemy Randomizer: "
+text = "Randomize Enemies: "
 
-[node name="CheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
+[node name="EnemyRandomizerCheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
 layout_mode = 2
 theme = ExtResource("4_ovylp")
 disabled = true
@@ -316,6 +320,32 @@ theme = ExtResource("4_ovylp")
 text = "(not available in demo)"
 
 [node name="Spacer4" type="Control" parent="NewGameMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="CodeRandomizer" type="HBoxContainer" parent="NewGameMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NewGameMenu/VBoxContainer/CodeRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "Randomize Codes: "
+
+[node name="Spacer" type="Control" parent="NewGameMenu/VBoxContainer/CodeRandomizer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="RandomCodeCheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/CodeRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+disabled = true
+
+[node name="DemoDisclaimer" type="Label" parent="NewGameMenu/VBoxContainer/CodeRandomizer"]
+layout_mode = 2
+theme = ExtResource("4_ovylp")
+text = "(not available in demo)"
+
+[node name="Spacer5" type="Control" parent="NewGameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
@@ -326,7 +356,7 @@ size_flags_horizontal = 4
 theme = ExtResource("4_ovylp")
 text = "New Game"
 
-[node name="Spacer5" type="Control" parent="NewGameMenu/VBoxContainer"]
+[node name="Spacer6" type="Control" parent="NewGameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
@@ -338,6 +368,7 @@ theme = ExtResource("4_ovylp")
 text = "Back"
 
 [node name="LoadGameMenu" parent="." instance=ExtResource("5_k25iy")]
+visible = false
 layout_mode = 1
 
 [node name="SaveUiBase" parent="LoadGameMenu" index="0"]

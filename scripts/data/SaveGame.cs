@@ -193,7 +193,6 @@ public partial class SaveGame : Control
 
     public void LoadSaveFile(string targetFile)
     {
-        // TODO: will we need to concatinate the path in here?
         var targetFilePath = $"{GameConstants.SaveDirectoryPath}/{targetFile}";
         GD.Print($"Loading save file '{targetFilePath}'");
 

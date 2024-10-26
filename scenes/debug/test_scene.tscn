@@ -36,7 +36,7 @@ render_target_update_mode = 4
 [node name="room_info" parent="SubViewport" node_paths=PackedStringArray("doors") instance=ExtResource("2_06yp6")]
 RoomName = "Debug Room 1"
 RoomId = 1
-doors = [null, null, null]
+doors = [NodePath("../test_door/DoorBody"), NodePath("../test_door2/DoorBody"), NodePath("../test_door3/DoorBody")]
 
 [node name="Cameras" type="Node3D" parent="SubViewport"]
 

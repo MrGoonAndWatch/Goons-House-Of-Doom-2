@@ -40,7 +40,7 @@ public partial class NoteReader : Control
         if (!IsReadingNote)
             return;
 
-        var input_dir = Input.GetVector(Controls.left.ToString(), Controls.right.ToString(), Controls.up.ToString(), Controls.down.ToString());
+        var input_dir = GameConstants.GetMovementVectorRaw();
         var confirmWasPressed = Input.IsActionJustPressed(Controls.confirm.ToString());
         var closeNotesFromConfirm = confirmWasPressed && CurrentNotePage == CurrentNoteText.Length - 1;
 

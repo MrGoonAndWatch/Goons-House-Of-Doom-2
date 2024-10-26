@@ -99,7 +99,7 @@ public partial class PlayerItemBoxControl : Node3D
             _itemBoxCursorDirty = false;
         }
 
-        var inputDir = Input.GetVector(GameConstants.Controls.left.ToString(), GameConstants.Controls.right.ToString(), GameConstants.Controls.up.ToString(), GameConstants.Controls.down.ToString());
+        var inputDir = GameConstants.GetMovementVectorRaw();
 
         if (_inItemBox)
             HandleItemBoxMovement(inputDir.Y);
