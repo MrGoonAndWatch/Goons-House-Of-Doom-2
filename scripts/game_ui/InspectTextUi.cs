@@ -83,7 +83,11 @@ public partial class InspectTextUi : Node
         if (_currentLineIndex >= _currentLines.Length)
         {
             if (_currentChoices == null || !_currentChoices.Any())
+            {
+                if (_onChoiceConfirmed != null)
+                    _onChoiceConfirmed(null);
                 ForceCloseTextbox();
+            }
             else
             {
                 _makingChoice = true;

@@ -18,8 +18,9 @@ handle_input_locally = false
 size = Vector2i(1900, 1000)
 render_target_update_mode = 4
 
-[node name="DoorContainer" type="Node3D" parent="SubViewport"]
+[node name="DoorContainer" type="Node3D" parent="SubViewport" node_paths=PackedStringArray("DoorsToRotate")]
 script = ExtResource("1_8fn44")
+DoorsToRotate = [NodePath(".")]
 
 [node name="Brown Door2" parent="SubViewport/DoorContainer" instance=ExtResource("3_lmtm8")]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0.5, 0, 0)

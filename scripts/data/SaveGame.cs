@@ -32,13 +32,13 @@ public partial class SaveGame : Control
         RefreshSaveFileList();
     }
 
-	public override void _Process(double delta)
-	{
-        if (Input.IsActionJustPressed("DEBUG_Save"))
-            ShowSaveUi();
-        if (Input.IsActionJustPressed("DEBUG_Load"))
-            ShowLoadUi();
-    }
+	//public override void _Process(double delta)
+	//{
+    //    if (Input.IsActionJustPressed("DEBUG_Save"))
+    //        ShowSaveUi();
+    //    if (Input.IsActionJustPressed("DEBUG_Load"))
+    //        ShowLoadUi();
+    //}
 
     public void ShowSaveUi()
     {

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0gfmgx70imkd"]
+
+[ext_resource type="PackedScene" uid="uid://dtiuwl87oktkn" path="res://models/third-party/cc0/kenny-building-kit/stairs-closed.glb" id="1_4qic3"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xqylg"]
+points = PackedVector3Array(0.65, 0, -2.3, -0.65, 0, -2.3, -0.65, 0, 2, 0.65, 0, 2, -0.65, 2.5, 1.5, 0.65, 2.5, 1.5, -0.65, 2.5, 2, 0.65, 2.5, 2)
+
+[node name="stairs-closed2" instance=ExtResource("1_4qic3")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_xqylg")
+
+[node name="Node3D" type="Node3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 2.5, 2)

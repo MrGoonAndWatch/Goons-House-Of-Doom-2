@@ -11,34 +11,32 @@ public partial class SimpleLock : Node3D
 
     private bool _unlocked;
     private bool _looted;
-    private InspectTextUi _textReader;
     private PlayerInventory _playerInventory;
 
     public override void _Ready()
 	{
-        _textReader = GetNode<InspectTextUi>(NodePaths.FromSceneRoot.InspectTextUi);
         _playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
     }
 
-    public virtual void Inspect()
+    public virtual void Inspect(InspectTextUi inspectTextUi)
     {
         if (_looted)
-            _textReader.ReadText(new[] { LootedText });
+            inspectTextUi.ReadText(new[] { LootedText });
         else if (_unlocked)
         {
             _playerInventory.AddItem(ContainsItem);
             _looted = true;
         }
         else
-            _textReader.ReadText(LockedText);
+            inspectTextUi.ReadText(LockedText);
     }
 
-    public virtual void Unlock(Key key)
+    public virtual void Unlock(Key key, InspectTextUi inspectTextUi)
     {
         if (_unlocked || key.GetKeyType() != UnlocksWith)
             return;
 
         _unlocked = true;
-        _textReader.ReadText(UnlockText);
+        inspectTextUi.ReadText(UnlockText);
     }
 }

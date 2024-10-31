@@ -10,6 +10,10 @@ public partial class PlayerInteract : Node
     private PlayerInventory _inventory;
     [Export]
     private NoteReader _noteReader;
+    [Export]
+    private InspectTextUi _inspectTextUi;
+    [Export]
+    private SaveGame _saveUi;
     private PlayerStatus _playerStatus;
 
     private List<Item> _touchingItems;
@@ -19,6 +23,8 @@ public partial class PlayerInteract : Node
     private List<Door> _touchingDoors;
     private List<ItemBox> _touchingItemBoxes;
     private List<PassCode> _touchingPassCodes;
+    private List<ShowTextOnInspectHitbox> _touchingShowTextOnInspects;
+    private List<SaveOnInspect> _touchingSaveOnInspects;
 
     public override void _Ready()
 	{
@@ -30,6 +36,8 @@ public partial class PlayerInteract : Node
         _touchingDoors = new List<Door>();
         _touchingItemBoxes = new List<ItemBox>();
         _touchingPassCodes = new List<PassCode>();
+        _touchingShowTextOnInspects = new List<ShowTextOnInspectHitbox>();
+        _touchingSaveOnInspects = new List<SaveOnInspect>();
     }
 
 	public override void _Process(double delta)
@@ -38,20 +46,24 @@ public partial class PlayerInteract : Node
             !Input.IsActionPressed(Controls.aim.ToString()) &&
             Input.IsActionJustPressed(Controls.confirm.ToString()))
         {
-            if (_touchingItems.Any())
+            if (_touchingSaveOnInspects.Any())
+                _touchingSaveOnInspects.First().StartSave(_inspectTextUi, _saveUi);
+            else if (_touchingItems.Any())
                 PickupCurrentItem();
             else if (_touchingNotes.Any())
                 PickupCurrentNote();
             else if (_touchingMaps.Any())
                 PickupCurrentMap();
             else if (_touchingSimpleLocks.Any())
-                _touchingSimpleLocks.First().Inspect();
+                _touchingSimpleLocks.First().Inspect(_inspectTextUi);
             else if (_touchingPassCodes.Any())
-                _touchingPassCodes.First().Inspect();
+                _touchingPassCodes.First().Inspect(_inspectTextUi);
             else if (_touchingItemBoxes.Any())
                 _touchingItemBoxes.First().OpenBox();
             else if (_touchingDoors.Any())
-                _touchingDoors.First().Inspect();
+                _touchingDoors.First().Inspect(_inspectTextUi);
+            else if (_touchingShowTextOnInspects.Any())
+                _touchingShowTextOnInspects.First().ShowTextOnInspect.StartInspection(_inspectTextUi);
         }
     }
 
@@ -63,6 +75,8 @@ public partial class PlayerInteract : Node
         _touchingSimpleLocks.RemoveAll(_ => true);
         _touchingItemBoxes.RemoveAll(_ => true);
         _touchingPassCodes.RemoveAll(_ => true);
+        _touchingShowTextOnInspects.RemoveAll(_ => true);
+        _touchingSaveOnInspects.RemoveAll(_ => true);
     }
 
     public void _OnBodyEntered(Node3D obj)
@@ -75,6 +89,8 @@ public partial class PlayerInteract : Node
             _touchingItemBoxes.Add(obj as ItemBox);
         if (obj is PassCode)
             _touchingPassCodes.Add(obj as PassCode);
+        if (obj is SaveOnInspect)
+            _touchingSaveOnInspects.Add(obj as SaveOnInspect);
     }
 
     public void _OnBodyExited(Node3D obj)
@@ -88,6 +104,8 @@ public partial class PlayerInteract : Node
             _touchingItemBoxes.RemoveAll(matchByInstanceId);
         if (obj is PassCode)
             _touchingPassCodes.RemoveAll(matchByInstanceId);
+        if (obj is SaveOnInspect)
+            _touchingSaveOnInspects.RemoveAll(matchByInstanceId);
     }
 
     public void _OnAreaEntered(Area3D obj)
@@ -98,6 +116,8 @@ public partial class PlayerInteract : Node
             _touchingNotes.Add(obj as NotePickup);
         if (obj is MapPickup)
             _touchingMaps.Add(obj as MapPickup);
+        if (obj is ShowTextOnInspectHitbox)
+            _touchingShowTextOnInspects.Add(obj as ShowTextOnInspectHitbox);
     }
 
     public void _OnAreaExited(Area3D obj)
@@ -109,6 +129,8 @@ public partial class PlayerInteract : Node
             _touchingNotes.RemoveAll(matchByInstanceId);
         if (obj is MapPickup)
             _touchingMaps.RemoveAll(matchByInstanceId);
+        if (obj is ShowTextOnInspectHitbox)
+            _touchingShowTextOnInspects.RemoveAll(matchByInstanceId);
     }
 
     void PickupCurrentItem()
@@ -182,8 +204,8 @@ public partial class PlayerInteract : Node
     public void UseKey(Key key)
     {
         if (_touchingSimpleLocks.Any())
-            _touchingSimpleLocks.First().Unlock(key);
+            _touchingSimpleLocks.First().Unlock(key, _inspectTextUi);
         else if (_touchingDoors.Any())
-            _touchingDoors.First().Unlock(key);
+            _touchingDoors.First().Unlock(key, _inspectTextUi);
     }
 }

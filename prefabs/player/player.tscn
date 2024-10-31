@@ -178,7 +178,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.0506679, -0.0338882, 0.00585156, 0.998123)
+bones/6/rotation = Quaternion(-0.0861201, -0.0576001, 0.0100792, 0.994567)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
@@ -192,11 +192,13 @@ bones/18/rotation = Quaternion(0.689446, 0.0506068, -0.00810963, 0.722522)
 [node name="HumanLow" parent="human_low/ArmLow/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("ShaderMaterial_lpkus")
 
-[node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader")]
+[node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
 script = ExtResource("3_gxx5q")
 _inventory = NodePath("../PlayerInventory")
 _noteReader = NodePath("../note_reader")
+_inspectTextUi = NodePath("../InspectTextUI")
+_saveUi = NodePath("../save_game_ui")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractHitbox"]
 shape = SubResource("BoxShape3D_mv370")

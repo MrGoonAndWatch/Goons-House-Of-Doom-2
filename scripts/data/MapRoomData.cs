@@ -65,7 +65,7 @@ public partial class MapRoomData : Control
         if (RoomHasNoPickups)
         {
             var mapStatus = MapStatus.GetInstance();
-            mapStatus.ClearRoom(RoomId);
+            mapStatus.MarkRoomCleared(RoomId);
             PlayerClearedRoom = true;
         }
 

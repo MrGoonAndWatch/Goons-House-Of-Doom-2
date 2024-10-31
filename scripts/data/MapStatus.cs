@@ -8,8 +8,8 @@ public partial class MapStatus : Node
 
     private static MapStatus Instance;
 
-    private Dictionary<int, MapData> AreaNameToMapDataLookup;
-    private Dictionary<int, int> RoomNameToAreaNameLookup;
+    private Dictionary<int, MapData> AreaToMapLookup;
+    private Dictionary<int, int> RoomToAreaLookup;
 
     private bool _initialized;
 
@@ -43,8 +43,8 @@ public partial class MapStatus : Node
         _doorsEntered = new System.Collections.Generic.List<int>();
         _lockedDoorsInspected = new System.Collections.Generic.List<int>();
 
-        AreaNameToMapDataLookup = new Dictionary<int, MapData>();
-        RoomNameToAreaNameLookup = new Dictionary<int, int>();
+        AreaToMapLookup = new Dictionary<int, MapData>();
+        RoomToAreaLookup = new Dictionary<int, int>();
 
         for (var i = 0; i < mapScenes.Length; i++)
         {
@@ -56,13 +56,27 @@ public partial class MapStatus : Node
 
             var areaId = mapData.AreaId;
             GD.Print($"Adding area {areaId}...");
-            AreaNameToMapDataLookup.Add(areaId, mapData);
+            AreaToMapLookup.Add(areaId, mapData);
             for (var j = 0; j < mapData.RoomData.Length; j++) {
+                var roomData = mapData.RoomData[j];
+                if (roomData == null)
+                {
+                    GD.PrintErr($"RoomData at index {j} of area {mapData.AreaId} map ({mapData.AreaName}) is null! Please check the map scene's root object's 'RoomData' and remove null rows, though this shouldn't impact gameplay if you don't.");
+                    continue;
+                }
+
                 GD.Print($"Mapping room {mapData.RoomData[j].RoomId} to area {areaId}");
-                RoomNameToAreaNameLookup.Add(mapData.RoomData[j].RoomId, areaId);
+                RoomToAreaLookup.Add(mapData.RoomData[j].RoomId, areaId);
+            }
+            // Note: this for loop is strictly just here for console warnings if a scene is setup weird. I was doing this in the spot where the actual null reference error occurs, but that causes the error to print out every time you open your menu.
+            for (var j = 0; j < mapData.DoorData.Length; j++)
+            {
+                if (mapData.DoorData[j] == null)
+                    GD.PrintErr($"Door at index {i} of area {mapData.AreaId} map ({mapData.AreaName}) is null! Please check this map's scene root object's 'DoorData' property and remove any null rows, though this shouldn't impact gameplay if you don't.");
             }
             MapParent.AddChild(mapData);
         }
+
         _initialized = true;
     }
 
@@ -106,22 +120,22 @@ public partial class MapStatus : Node
 
     public Dictionary<int, MapData> GetMapData()
     {
-        return AreaNameToMapDataLookup;
+        return AreaToMapLookup;
     }
 
     public MapData GetMapDataForRoom(int roomId)
     {
-        if (RoomNameToAreaNameLookup.ContainsKey(roomId))
-            if (AreaNameToMapDataLookup.ContainsKey(RoomNameToAreaNameLookup[roomId]))
-                return AreaNameToMapDataLookup[RoomNameToAreaNameLookup[roomId]];
+        if (RoomToAreaLookup.ContainsKey(roomId))
+            if (AreaToMapLookup.ContainsKey(RoomToAreaLookup[roomId]))
+                return AreaToMapLookup[RoomToAreaLookup[roomId]];
             else
             {
-                GD.PrintErr($"Found area id '{RoomNameToAreaNameLookup[roomId]}' for room '{roomId}' but didn't find that area in the area lookup!");
+                GD.PrintErr($"Found area id '{RoomToAreaLookup[roomId]}' for room '{roomId}' but didn't find that area in the area lookup!");
                 return null;
             }
         else
         {
-            GD.PrintErr($"Did not find area mapped to room '{roomId}'. Ensure this map has a room_info object with valid parameters!");
+            GD.PrintErr($"Did not find area mapped to room '{roomId}' ({GameConstants.GetCurrentRoomName(this)}). Ensure this map has a room_info object with valid parameters!");
             return null;
         }
     }
@@ -169,9 +183,10 @@ public partial class MapStatus : Node
         _roomsVisited.Add(roomId);
     }
 
-    public void ClearRoom(int roomId)
+    public void MarkRoomCleared(int roomId)
     {
         if(ClearedRoom(roomId)) return;
+        GD.Print($"Marked room {roomId} as cleared!");
         _roomsCleared.Add(roomId);
     }
 
@@ -195,8 +210,8 @@ public partial class MapStatus : Node
 
     public void ReturnMaps()
     {
-        foreach (var mapAreaId in AreaNameToMapDataLookup.Keys)
-            AreaNameToMapDataLookup[mapAreaId].Reparent(MapParent);
+        foreach (var mapAreaId in AreaToMapLookup.Keys)
+            AreaToMapLookup[mapAreaId].Reparent(MapParent);
     }
 
     // TODO: Revisit this approach. Cycling through every object in the scene can't be efficient but it is a nice way to dynamically handle checking whether a room is cleared.
@@ -216,7 +231,7 @@ public partial class MapStatus : Node
         if (!containsPendingItem)
         {
             var roomId = GameConstants.GetCurrentRoomId(instance);
-            instance.ClearRoom(roomId);
+            instance.MarkRoomCleared(roomId);
             var mapData = instance.GetMapDataForRoom(roomId);
             mapData.RefreshMap();
         }

@@ -16,7 +16,7 @@ public partial class RoomInfo : Node
     /// References to every door in the current room, used for marking their status on the map.
     /// </summary>
     [Export]
-    public Door[] doors;
+    public Teleporter[] doors;
 
     public override void _Ready()
     {
@@ -25,5 +25,7 @@ public partial class RoomInfo : Node
 
         for (int i = 0; i < doors.Length; i++)
             mapStatus.FoundDoor(doors[i].DoorId);
+
+        MapStatus.CheckForRoomCleared();
     }
 }

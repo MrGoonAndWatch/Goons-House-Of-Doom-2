@@ -45,7 +45,7 @@ public partial class MapStatusUi : StatusScreenTab
 
     private void CheckForMovement(double delta)
     {
-        if (!IsActiveTab) return;
+        if (!IsActiveTab || _currentMapNode == null) return;
 
         var movement = GameConstants.GetMovementVectorWithDeadzone();
 
@@ -66,6 +66,7 @@ public partial class MapStatusUi : StatusScreenTab
         var roomId = GameConstants.GetCurrentRoomId(this);
         var mapData = mapStatus.GetMapDataForRoom(roomId);
         // TODO: Handle case where room is not on a map? Default map to open?
+        if (mapData == null) return;
 
         mapData.SetCurrentRoom(roomId);
         mapData.RefreshMap();

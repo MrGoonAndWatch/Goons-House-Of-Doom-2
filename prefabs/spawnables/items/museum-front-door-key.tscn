@@ -1,0 +1,21 @@
+[gd_scene load_steps=6 format=3 uid="uid://crvna2fauk0r6"]
+
+[ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_ysun7"]
+[ext_resource type="PackedScene" uid="uid://bylix1b3casa6" path="res://prefabs/sparkle_sprite.tscn" id="2_g0fag"]
+[ext_resource type="Script" path="res://scripts/items/MuseumFrontDoorKey.cs" id="3_ymmnq"]
+[ext_resource type="Texture2D" uid="uid://5oseuxyksv2k" path="res://textures/WestHallKey.png" id="4_b64ac"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1iqm5"]
+
+[node name="museum-front-door-key" type="Node3D" node_paths=PackedStringArray("Item")]
+script = ExtResource("1_ysun7")
+Item = NodePath("Item")
+
+[node name="SparkleSprite" parent="." instance=ExtResource("2_g0fag")]
+
+[node name="Item" type="Area3D" parent="."]
+script = ExtResource("3_ymmnq")
+MenuIcon = ExtResource("4_b64ac")
+
+[node name="ItemCollisionShape" type="CollisionShape3D" parent="Item"]
+shape = SubResource("BoxShape3D_1iqm5")

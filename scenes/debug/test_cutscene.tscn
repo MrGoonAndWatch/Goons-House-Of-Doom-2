@@ -39,7 +39,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.002
 
 [node name="DoorBody" parent="SubViewport/test_door" index="1"]
 DoorId = 4
-GoesToRoom = "debug/test_scene2"
 StartAtPosition = Vector3(-3.75, 0, -1.5)
 StartAtAngle = Vector3(0, 270, 0)
 

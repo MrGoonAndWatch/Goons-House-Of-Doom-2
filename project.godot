@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="Goons House Of Doom 2"
+config/version="0.1.0"
 run/main_scene="res://scenes/title_screen.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://textures/EvilGoon.png"
 
 [autoload]
 

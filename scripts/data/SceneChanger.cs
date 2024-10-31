@@ -55,6 +55,7 @@ public partial class SceneChanger : Node
     {
         var sceneLoadData = _dataSaver.GetSceneLoadData();
         _loadScene = true;
+        GD.Print($"FinishSceneLoad to {sceneLoadData.GetTargetSceneFullPath()}");
         GetTree().ChangeSceneToFile(sceneLoadData.GetTargetSceneFullPath());
     }
 

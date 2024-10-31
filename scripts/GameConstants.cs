@@ -6,15 +6,20 @@ public partial class GameConstants : GodotObject
     public const float GreenMedicineHp = 25.0f;
     public const float ControllerMenuDeadzone = 0.52f;
 
-    public const string Mode = "debug";
+    /// <summary>
+    /// Targets different folders when loading map and scene data.
+    /// </summary>
+    public const string Mode = "demo";
     public const string SaveDirectoryPath = "user://saves";
     public const string ScenesDirectory = "res://scenes/";
     public const string GlobalSettingsFilename = "global.config";
 
     public const string TitleScreenScenePath = $"{ScenesDirectory}/title_screen.tscn";
     public const string StagingAreaScenePath = $"{ScenesDirectory}/staging_area.tscn";
-    //public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/starting_room.tscn";
-    public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/test_scene.tscn";
+    // Starting room for the /demo/ and /full/ maps.
+    public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/park_start.tscn";
+    // Starting room for the /debug/ maps
+    //public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/test_scene.tscn";
 
     public static class Colors
     {
@@ -59,18 +64,22 @@ public partial class GameConstants : GodotObject
     {
         None = 0,
         BigKey = 1,
+        MuseumFrontDoor = 2,
     }
 
     public enum DoorLoadType
     {
         None = 0,
         WoodDoor1 = 1,
+        ParkWalkway = 2,
+        MuseumFrontDoor = 3,
     }
 
     public enum GlobalEvent
     {
         None = 0,
         TestKeypadUnlocked = 1,
+        StartedDemoSong = 2,
     }
 
     // Note: These are powers of 2 to allow the randomizer settings to use a singular field to store which of these are enabled.
@@ -89,6 +98,7 @@ public partial class GameConstants : GodotObject
         Pistol = 3,
         PistolAmmo = 4,
         BigKey = 5,
+        MuseumFrontDoorKey = 6,
     }
 
     private const string EnemyPrefabFolder = "res://prefabs/spawnables/enemies/";
@@ -113,6 +123,7 @@ public partial class GameConstants : GodotObject
         {ItemSpawnType.Pistol, $"{ItemPrefabFolderPath}/pistol.tscn"},
         {ItemSpawnType.PistolAmmo, $"{ItemPrefabFolderPath}/pistol-ammo.tscn"},
         {ItemSpawnType.BigKey, $"{ItemPrefabFolderPath}/big-key.tscn" },
+        {ItemSpawnType.MuseumFrontDoorKey, $"{ItemPrefabFolderPath}/museum-front-door-key.tscn" }
     };
 
     public enum Controls
@@ -225,8 +236,10 @@ public partial class GameConstants : GodotObject
 
         public const string CountdownSongPath = $"{MusicPrefabFolderPath}/10MinutesTillBadEnd.wav";
         public const string ClownSongPath = $"{MusicPrefabFolderPath}/Hall of Confused Clowns.wav";
+        public const string DemoSongPath = $"{MusicPrefabFolderPath}/atmo.wav";
 
         public const string PainSfxPath = $"{SfxPrefabFolderPath}/Pain.ogg";
+        public const string GunshotSfxPath = $"{SfxPrefabFolderPath}/Gunshot.ogg";
     }
 
     public static Dictionary<int, ZoneRequirements> ZoneKeyMap = new()
@@ -297,7 +310,7 @@ public partial class GameConstants : GodotObject
             if (node.HasNode(NodePaths.FromSceneRoot.TitleScreen))
                 GD.Print("Couldn't find room_info object in scene but this is the title screen so that's expected!");
             else
-                GD.PrintErr($"Couldn't find room_info object in scene {node.GetTree().Root.Name}!");
+                GD.PrintErr($"Couldn't find room_info object in scene {GetCurrentRoomName(node)}!");
             return -1;
         }
     }

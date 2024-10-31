@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgwutbmmke3qm"]
+
+[ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_pcxls"]
+[ext_resource type="Script" path="res://scripts/game_flow/DoorLoad.cs" id="2_kr8yf"]
+[ext_resource type="PackedScene" uid="uid://qci3y34d86a1" path="res://models/third-party/cc0/Brown Door.glb" id="3_r2n2t"]
+[ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="4_gtbn5"]
+[ext_resource type="Environment" uid="uid://ct85ebvxy1vvm" path="res://prefabs/lighting/environments/outside_env.tres" id="4_n3ict"]
+[ext_resource type="Script" path="res://scripts/game_flow/DoorLoadMoving.cs" id="5_bgau6"]
+[ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="5_lu7yu"]
+
+[node name="root" type="SubViewportContainer"]
+material = ExtResource("1_pcxls")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1900, 1000)
+render_target_update_mode = 4
+
+[node name="DoorContainer" type="Node3D" parent="SubViewport" node_paths=PackedStringArray("DoorsToRotate")]
+visible = false
+script = ExtResource("2_kr8yf")
+DoorsToRotate = []
+
+[node name="Brown Door2" parent="SubViewport/DoorContainer" instance=ExtResource("3_r2n2t")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0.5, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31574, 2.07778)
+environment = ExtResource("4_n3ict")
+script = ExtResource("5_bgau6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.542163, 0.840273, 0, -0.840273, 0.542163, 0, 9.10998, 0)
+light_energy = 0.527
+
+[node name="GammaCorrection" parent="SubViewport" instance=ExtResource("4_gtbn5")]
+
+[node name="test_grid_map" parent="SubViewport" instance=ExtResource("5_lu7yu")]
+data = {
+"cells": PackedInt32Array(-65537, 0, 3, -65537, 65535, 3, -65537, 65534, 3, -65538, 0, 7, -65538, 65535, 7, -65538, 65534, 7, -65538, 65532, 10, -65538, 65533, 7, -65538, 65531, 10, -65537, 65531, 3, -131072, 65531, 3, -131071, 65531, 7, -65537, 65532, 5, -65537, 65533, 3, -131072, 65532, 3, -131071, 65532, 7, -131071, 65533, 7, -131072, 65533, 3, -131071, 65534, 10, -131072, 65534, 3, -131072, 65535, 5, -131072, 0, 3, -131071, 0, 7, -131071, 65535, 10, -4, 0, 1, -4, 65534, 1, -4, 65532, 1, -4, 65530, 1, -65533, 0, 1, -65533, 65534, 1, -65533, 65532, 1, -65533, 65530, 1, -131070, 65531, 7, -131070, 65532, 7, -131070, 65533, 10, -131070, 65534, 10, -131070, 65535, 10, -131070, 0, 7, -65539, 0, 7, -65539, 65535, 7, -65539, 65534, 7, -65539, 65533, 7, -65539, 65532, 10, -65539, 65531, 10, -65539, 65530, 7, -65540, 65530, 7, -65540, 65529, 7, -65539, 65529, 7, -65538, 65529, 7, -65538, 65530, 7, -131071, 65530, 10, -131071, 65529, 10, -131070, 65529, 7, -131070, 65530, 10, -65537, 65530, 3, -65537, 65529, 3, -131072, 65529, 5, -131072, 65530, 3)
+}
+metadata/_editor_floor_ = Vector3(0, -2, 0)

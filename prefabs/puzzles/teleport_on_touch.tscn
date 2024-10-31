@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfqiqnu7b0uot"]
+
+[ext_resource type="Script" path="res://scripts/puzzles/TeleportToRoomOnTouch.cs" id="1_vv42v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wf5xy"]
+
+[node name="teleport_on_touch" type="Node3D"]
+script = ExtResource("1_vv42v")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_wf5xy")
+
+[connection signal="body_entered" from="Area3D" to="." method="_OnBodyEntered"]

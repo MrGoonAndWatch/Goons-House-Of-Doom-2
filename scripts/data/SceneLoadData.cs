@@ -13,6 +13,10 @@ public partial class SceneLoadData : GodotObject
 
     public static string GetSceneFullPath(string sceneName)
     {
-        return $"res://scenes/{sceneName}.tscn";
+        //GD.Print($"{sceneName} contains = {sceneName.Contains($"{GameConstants.Mode}/")}");
+        if(sceneName.Contains($"{GameConstants.Mode}/"))
+            return $"res://scenes/{sceneName}.tscn";
+        else
+            return $"res://scenes/{GameConstants.Mode}/{sceneName}.tscn";
     }
 }

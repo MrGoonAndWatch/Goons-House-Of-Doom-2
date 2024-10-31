@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bopftyjohhbi2"]
+
+[ext_resource type="Script" path="res://scripts/puzzles/ShowTextOnInspect.cs" id="1_ckkpc"]
+[ext_resource type="Script" path="res://scripts/puzzles/ShowTextOnInspectHitbox.cs" id="2_8bce7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xt4cs"]
+
+[node name="inspect_text" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5472, 0, 0)
+script = ExtResource("1_ckkpc")
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("ShowTextOnInspect")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("2_8bce7")
+ShowTextOnInspect = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_xt4cs")

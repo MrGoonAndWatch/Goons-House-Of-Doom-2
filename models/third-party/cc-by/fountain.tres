@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dmc73lasvts36"]
+
+[ext_resource type="Texture2D" uid="uid://cloxm8u4j7jqe" path="res://models/third-party/cc-by/fuente_difuso.jpg" id="1_yvpxp"]
+[ext_resource type="Texture2D" uid="uid://rv0c7b7k8640" path="res://models/third-party/cc-by/fuente_bump.jpg" id="2_3gfo4"]
+
+[resource]
+albedo_texture = ExtResource("1_yvpxp")
+normal_enabled = true
+normal_texture = ExtResource("2_3gfo4")

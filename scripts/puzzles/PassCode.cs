@@ -22,12 +22,10 @@ public partial class PassCode : Node3D
 
 	private bool _interactable = true;
 
-	private InspectTextUi _textReader;
+	private InspectTextUi _inspectTextUi;
 
     public override void _Ready()
 	{
-        _textReader = GetNode<InspectTextUi>(GameConstants.NodePaths.FromSceneRoot.InspectTextUi);
-
 		var gameState = DataSaver.GetInstance().GetGameState();
 		if (gameState.TriggeredEvents.Contains((int)SetEventOnUnlock))
             OnPassCodeSuccess();
@@ -38,10 +36,11 @@ public partial class PassCode : Node3D
 		return !_interactable;
 	}
 
-	public void Inspect()
+	public void Inspect(InspectTextUi inspectTextUi)
 	{
 		if (IsSolved()) return;
-		_textReader.ReadText(InspectText, DigitOptions, OnCodeEntered, NumberOfDigits);
+        _inspectTextUi = inspectTextUi;
+        inspectTextUi.ReadText(InspectText, DigitOptions, OnCodeEntered, NumberOfDigits);
     }
 
     public void OnCodeEntered(List<string> code)
@@ -56,13 +55,13 @@ public partial class PassCode : Node3D
 		{
 			playerStatus.TriggeredEvent(SetEventOnUnlock);
             if (OnUnlockSuccessText != null && OnUnlockSuccessText.Length > 0)
-                _textReader.ReadText(OnUnlockSuccessText, overrideRead: true);
+                _inspectTextUi.ReadText(OnUnlockSuccessText, overrideRead: true);
 			OnPassCodeSuccess();
 			MapStatus.CheckForRoomCleared();
         }
         else {
             if (OnUnlockFailText != null && OnUnlockFailText.Length > 0)
-				_textReader.ReadText(OnUnlockFailText, overrideRead: true);
+                _inspectTextUi.ReadText(OnUnlockFailText, overrideRead: true);
 		}
     }
 

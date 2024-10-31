@@ -46,7 +46,7 @@ public partial class MapData : Control
         _currentRoom = null;
         for (var i = 0; i < RoomData.Length; i++)
         {
-            if (RoomData[i].RoomId == roomId)
+            if (RoomData[i]?.RoomId == roomId)
             {
                 _currentRoom = RoomData[i];
             }
@@ -60,6 +60,7 @@ public partial class MapData : Control
 
         for (var i = 0; i < RoomData.Length; i++)
         {
+            if (RoomData[i] == null) continue;
             RoomData[i].PlayerVisitedRoom = mapStatus.VisitedRoom(RoomData[i].RoomId);
             RoomData[i].PlayerClearedRoom = mapStatus.ClearedRoom(RoomData[i].RoomId);
             RoomData[i].UpdateStatus(hasMap, RoomData[i].RoomId == GameConstants.GetCurrentRoomId(this));
@@ -67,16 +68,19 @@ public partial class MapData : Control
 
         for (var i = 0; i < DoorData.Length; i++)
         {
-            var doorStatus = GameConstants.DoorMapStatus.Unseen;
-            if (mapStatus.EnteredDoor(DoorData[i].DoorId))
-                doorStatus = GameConstants.DoorMapStatus.Opened;
-            else if (mapStatus.LockedDoorFound(DoorData[i].DoorId))
-                doorStatus = GameConstants.DoorMapStatus.Locked;
-            else if (hasMap || mapStatus.HasSeenDoor(DoorData[i].DoorId))
-                doorStatus = GameConstants.DoorMapStatus.Unknown;
-            DoorData[i].UpdateStatus(doorStatus);
+            var doorData = DoorData[i];
+            if(doorData == null) continue;
 
-            GD.Print($"Set Door {DoorData[i].DoorId} to Status {doorStatus}");
+            var doorStatus = GameConstants.DoorMapStatus.Unseen;
+            if (mapStatus.EnteredDoor(doorData.DoorId))
+                doorStatus = GameConstants.DoorMapStatus.Opened;
+            else if (mapStatus.LockedDoorFound(doorData.DoorId))
+                doorStatus = GameConstants.DoorMapStatus.Locked;
+            else if (hasMap || mapStatus.HasSeenDoor(doorData.DoorId))
+                doorStatus = GameConstants.DoorMapStatus.Unknown;
+            doorData.UpdateStatus(doorStatus);
+
+            GD.Print($"Set Door {doorData.DoorId} to Status {doorStatus}");
         }
     }
 

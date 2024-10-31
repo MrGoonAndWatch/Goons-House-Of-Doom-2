@@ -112,7 +112,7 @@ offset_left = -103.0
 offset_top = -55.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "v1.0.0  "
+text = "v0.1.0  "
 label_settings = SubResource("LabelSettings_v651h")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
@@ -423,14 +423,33 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -222.0
-offset_top = -43.5
-offset_right = 222.0
-offset_bottom = 43.5
+offset_left = -340.0
+offset_top = -244.0
+offset_right = 340.0
+offset_bottom = -157.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "A game by Mr_GoonAndWatch"
 label_settings = SubResource("LabelSettings_8k67j")
+
+[node name="Label" type="Label" parent="Credits"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 10.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_ovylp")
+text = "Third Party Assets:
+
+Fountain by Alejandro CG: https://opengameart.org/content/fountain-1
+
+(additional models, sfx, music and shaders were used in making this demo 
+ with authors' permissions with no attribution via CC0 copyright)"
+horizontal_alignment = 1
 
 [node name="BackButtonContainer" type="Control" parent="Credits"]
 custom_minimum_size = Vector2(200, 150)

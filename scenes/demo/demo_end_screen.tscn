@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct4akb4bcwxgd"]
+
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_1ogw6"]
+[ext_resource type="Script" path="res://scripts/game_flow/DemoEndScreen.cs" id="1_nhgkx"]
+
+[node name="DemoEndScreen" type="Control" node_paths=PackedStringArray("ReturnToTitleButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nhgkx")
+ReturnToTitleButton = NodePath("ReturnToTitleButton")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0.133333, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 1893.0
+offset_bottom = 907.0
+theme = ExtResource("1_1ogw6")
+theme_type_variation = &"HeaderLarge"
+text = "You have reached the end of this demo.
+ 
+Thank you for playing! If you're interested in the final version
+please follow my itch.io page for updates!
+https://mrgoonandwatch.itch.io/goons-house-of-doom-2
+ 
+You can also catch live streams of me working on this and other projects at
+https://twitch.tv/mr_goonandwatch
+ 
+Hope you had a good time playing this tech demo. Originally my goal was to have the
+final version of the game ready by now but game dev is always full of surprises!
+Other stuff to look forward to in the full release include a built in randomizer for
+enemies, puzzles, and items, a full story, and unlockable NG+ content!"
+horizontal_alignment = 1
+
+[node name="ReturnToTitleButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -219.0
+offset_top = -75.0
+offset_right = 219.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_1ogw6")
+text = "Back to Title Screen"
+
+[connection signal="pressed" from="ReturnToTitleButton" to="." method="_OnReturnToTitlePressed"]

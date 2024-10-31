@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://671rls55wvhh"]
+
+[ext_resource type="PackedScene" uid="uid://dd20tofhmprlw" path="res://models/third-party/cc-by/fountain.glb" id="1_75qlm"]
+[ext_resource type="Material" uid="uid://dmc73lasvts36" path="res://models/third-party/cc-by/fountain.tres" id="2_1k0kj"]
+[ext_resource type="Script" path="res://scripts/data/SaveOnInspect.cs" id="3_4iu3e"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_i0qvr"]
+height = 3.0
+radius = 3.4
+
+[node name="fountain2" instance=ExtResource("1_75qlm")]
+
+[node name="fountain" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_1k0kj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+script = ExtResource("3_4iu3e")
+InspectNotes = PackedStringArray("As you gaze in to the fountain you reflect upon your journey.", "It fills you with a brief moment of relaxation.")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3728, 0)
+shape = SubResource("CylinderShape3D_i0qvr")

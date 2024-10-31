@@ -81,7 +81,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.827,
 
 [node name="DoorBody" parent="SubViewport/test_door" index="1"]
 DoorId = 1
-GoesToRoom = "debug/test_scene2"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="SubViewport"]
 navigation_mesh = SubResource("NavigationMesh_umokm")
@@ -105,11 +104,10 @@ EnemySpawnOnImpossible = 4
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.55223, 0.5, 1.89509)
 
 [node name="DoorBody" parent="SubViewport/test_door2" index="1"]
-DoorId = 2
-GoesToRoom = "debug/test_scene2"
 LockedText = PackedStringArray("The Door Is Locked With a Big Keyhole")
 UnlockText = PackedStringArray("You unlocked it with the big key!")
 LocksWith = 1
+DoorId = 2
 
 [node name="ammo-spawn" parent="SubViewport" instance=ExtResource("6_50rh5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.436, 0.5, 0)
@@ -149,10 +147,9 @@ shape = SubResource("BoxShape3D_srbyp")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.13054, 0.5, 1.85975)
 
 [node name="DoorBody" parent="SubViewport/test_door3" index="1"]
-DoorId = 3
-GoesToRoom = "debug/test_scene2"
 LockedText = PackedStringArray("The door is locked by some mysterious force...")
 UnlocksOnEvent = 1
+DoorId = 3
 
 [node name="TV" type="Node3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6065, 0, 0)

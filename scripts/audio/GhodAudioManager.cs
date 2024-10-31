@@ -17,6 +17,7 @@ public partial class GhodAudioManager : Node
 
     private AudioStreamWav _clownSong;
     private AudioStreamWav _countdownSong;
+    private AudioStreamWav _demoSong;
 
     private static GhodAudioManager _instance;
 
@@ -42,8 +43,9 @@ public partial class GhodAudioManager : Node
 
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSong(GameConstants.AudioAssetPaths.ClownSongPath); _clownSong = source; }));
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSong(GameConstants.AudioAssetPaths.CountdownSongPath); _countdownSong = source; }));
+        _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSong(GameConstants.AudioAssetPaths.DemoSongPath); _demoSong = source; }));
         _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSound(GameConstants.AudioAssetPaths.PainSfxPath); _painSound = source; }));
-        _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSound(GameConstants.AudioAssetPaths.PainSfxPath); _pistolShotSound = source; }));
+        _audioLoadingTasks.Add(Task.Run(() => { var source = LoadSound(GameConstants.AudioAssetPaths.GunshotSfxPath); _pistolShotSound = source; }));
 
         _masterBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.MasterAudioBusName);
         _musicBusIndex = AudioServer.GetBusIndex(GameConstants.AudioBusNames.MusicAudioBusName);
@@ -61,6 +63,12 @@ public partial class GhodAudioManager : Node
             _initializedAudio = true;
         }
 	}
+
+    public static void PlayDemoSong()
+    {
+        _instance._musicPlayer.Stream = _instance._demoSong;
+        _instance._musicPlayer.Play();
+    }
 
     public static AudioStream LoadVoiceClip(string soundPath)
     {
