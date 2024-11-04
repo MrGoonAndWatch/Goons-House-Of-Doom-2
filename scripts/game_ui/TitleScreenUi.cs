@@ -33,6 +33,9 @@ public partial class TitleScreenUi : Node
 
     public override void _Ready()
     {
+        // TODO: Maybe put a song/ambience for the title screen at some point.
+        GhodAudioManager.StopMusic();
+
         NewGameMenu.Visible = false;
         OptionsMenu.Visible = false;
         LoadGameMenu.Visible = false;

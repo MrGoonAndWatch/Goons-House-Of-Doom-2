@@ -21,6 +21,10 @@ public partial class GameConstants : GodotObject
     // Starting room for the /debug/ maps
     //public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/test_scene.tscn";
 
+    public static string[] RoomClearCheckBlacklist = {
+        "root/root/SubViewport/Player"
+    };
+
     public static class Colors
     {
         public static Color Clear = Color.Color8(0, 0, 0, 0);

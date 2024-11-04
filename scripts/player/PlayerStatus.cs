@@ -117,6 +117,9 @@ public partial class PlayerStatus : Node
         ItemBoxOpened = false;
         ReadyToShoot = false;
         IsInCutscene = false;
+
+        DataSaver.ResetState();
+        MapStatus.GetInstance()?.InitializeMapStatus();
     }
 
     public override void _Process(double delta)

@@ -1,5 +1,7 @@
 using Godot;
 using Godot.Collections;
+using System.Diagnostics;
+using System.Linq;
 
 public partial class MapStatus : Node
 {
@@ -34,6 +36,11 @@ public partial class MapStatus : Node
 
         Instance = this;
 
+        InitializeMapStatus();
+    }
+
+    public void InitializeMapStatus()
+    {
         var mapScenes = DirAccess.GetFilesAt(MapFolder);
 
         _mapsCollected = new System.Collections.Generic.List<int>();
@@ -57,7 +64,8 @@ public partial class MapStatus : Node
             var areaId = mapData.AreaId;
             GD.Print($"Adding area {areaId}...");
             AreaToMapLookup.Add(areaId, mapData);
-            for (var j = 0; j < mapData.RoomData.Length; j++) {
+            for (var j = 0; j < mapData.RoomData.Length; j++)
+            {
                 var roomData = mapData.RoomData[j];
                 if (roomData == null)
                 {
@@ -185,6 +193,8 @@ public partial class MapStatus : Node
 
     public void MarkRoomCleared(int roomId)
     {
+        var stack = new StackTrace();
+        GD.Print($"MarkRoomCleared: {stack.ToString()}");
         if(ClearedRoom(roomId)) return;
         GD.Print($"Marked room {roomId} as cleared!");
         _roomsCleared.Add(roomId);
@@ -239,6 +249,8 @@ public partial class MapStatus : Node
 
     private static bool ContainsPendingItem(Node node, ulong? ignoreNodeId)
     {
+        if (GameConstants.RoomClearCheckBlacklist.Contains(node.GetPath().GetConcatenatedNames()))
+            return false;
         if ((ignoreNodeId == null || node.GetInstanceId() != ignoreNodeId.Value) && IsUnclearedNode(node))
             return true;
         var children = node.GetChildren();
@@ -254,6 +266,8 @@ public partial class MapStatus : Node
 
     private static bool IsUnclearedNode(Node node)
     {
+        GD.Print($"IsUnclearedNode for '{node.GetPath().GetConcatenatedNames()}'");
+
         if (node is ItemContainer || node is MapPickup || node is NotePickup)
         {
             GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was an ItemContainer, MapPickup, or NotePickup!");

@@ -182,4 +182,11 @@ public partial class GhodAudioManager : Node
         //GD.Print($"Converted sliderValue '{sliderValue}' to '{dbVolume}'db");
         return dbVolume;
     }
+
+    public static void StopMusic()
+    {
+        if (_instance == null) return;
+
+        _instance._musicPlayer.Stop();
+    }
 }

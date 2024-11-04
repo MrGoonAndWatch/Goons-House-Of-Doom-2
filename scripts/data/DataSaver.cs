@@ -29,7 +29,25 @@ public partial class DataSaver : Node3D
 
         Instance = this;
 
-        _gameState = new GameState
+        ResetState();
+
+        _globalSettings = new GlobalSettings
+        {
+            TotalVolume = 80.0f,
+            MusicVolume = 80.0f,
+            SfxVolume = 80.0f,
+            VoiceVolume = 80.0f,
+            Resolution = "1680x1050",
+        };
+
+        LoadGlobalSettingsFromFile();
+    }
+
+    public static void ResetState()
+    {
+        if (Instance == null) { return; }
+
+        Instance._gameState = new GameState
         {
             DeadEnemies = new int[0],
             DoorsUnlocked = new int[0],
@@ -48,23 +66,12 @@ public partial class DataSaver : Node3D
             LockedDoorsInspected = new int[0],
             SceneLoadData = new SceneLoadData
             {
-                TargetScene = GetTree().CurrentScene.Name,
+                TargetScene = Instance.GetTree().CurrentScene.Name,
                 LoadPosition = Vector3.Zero,
                 LoadRotation = Vector3.Zero,
             },
             EquipedWeaponIndex = null,
         };
-
-        _globalSettings = new GlobalSettings
-        {
-            TotalVolume = 80.0f,
-            MusicVolume = 80.0f,
-            SfxVolume = 80.0f,
-            VoiceVolume = 80.0f,
-            Resolution = "1680x1050",
-        };
-
-        LoadGlobalSettingsFromFile();
     }
 
     private void LoadGlobalSettingsFromFile()

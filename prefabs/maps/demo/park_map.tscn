@@ -212,7 +212,7 @@ script = ExtResource("4_46t2y")
 DoorId = 2
 FromRoomId = 2
 ToRoomId = 2
-DoorColor = NodePath("../Door1/DoorColor")
+DoorColor = NodePath("DoorColor")
 
 [node name="DoorColor" type="ColorRect" parent="Door2"]
 layout_mode = 1
@@ -233,7 +233,7 @@ script = ExtResource("4_46t2y")
 DoorId = 3
 FromRoomId = 2
 ToRoomId = 3
-DoorColor = NodePath("../Door1/DoorColor")
+DoorColor = NodePath("DoorColor")
 
 [node name="DoorColor" type="ColorRect" parent="Door3"]
 layout_mode = 1
@@ -254,7 +254,7 @@ script = ExtResource("4_46t2y")
 DoorId = 4
 FromRoomId = 2
 ToRoomId = 4
-DoorColor = NodePath("../Door1/DoorColor")
+DoorColor = NodePath("DoorColor")
 
 [node name="DoorColor" type="ColorRect" parent="Door4"]
 layout_mode = 1

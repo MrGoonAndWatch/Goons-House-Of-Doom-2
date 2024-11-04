@@ -18,8 +18,14 @@ public partial class RoomInfo : Node
     [Export]
     public Teleporter[] doors;
 
-    public override void _Ready()
+    private bool _initialized;
+
+    public override void _Process(double delta)
     {
+        if (_initialized) return;
+
+        // Note: needed to do this logic in here because otherwise item spawns wouldn't count towards room clear check.
+        _initialized = true;
         var mapStatus = MapStatus.GetInstance();
         mapStatus.VisitRoom(RoomId);
 

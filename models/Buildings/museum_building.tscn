@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://crw3mra1ef70s"]
+
+[ext_resource type="PackedScene" uid="uid://cj1o4uyepqjxo" path="res://models/Buildings/museum-building.glb" id="1_qyvn0"]
+[ext_resource type="Material" uid="uid://cny2uh0scnior" path="res://textures/cc0/materials/window_rusted.tres" id="2_eb1w2"]
+[ext_resource type="Material" uid="uid://drp02q3q44w6q" path="res://textures/cc0/materials/concrete1.tres" id="2_naod8"]
+[ext_resource type="Material" uid="uid://dhjh308ah18cx" path="res://textures/cc0/materials/museum_skylight.tres" id="3_fg6uc"]
+[ext_resource type="Material" uid="uid://tde46qt2jmew" path="res://textures/cc0/materials/roof_border.tres" id="4_hpsc0"]
+[ext_resource type="Material" uid="uid://bkprey760qduw" path="res://textures/cc0/materials/museum_door.tres" id="6_agrmn"]
+
+[node name="museum-building" instance=ExtResource("1_qyvn0")]
+transform = Transform3D(-6, 0, -5.24537e-07, 0, 6, 0, 5.24537e-07, 0, -6, 0, 0, 0)
+
+[node name="BuldingBase" parent="." index="0"]
+material_override = ExtResource("2_naod8")
+
+[node name="RoofBorder_001" parent="." index="1"]
+material_override = ExtResource("4_hpsc0")
+
+[node name="RoofBorder_002" parent="." index="2"]
+material_override = ExtResource("4_hpsc0")
+
+[node name="RoofBorder_003" parent="." index="3"]
+material_override = ExtResource("4_hpsc0")
+
+[node name="RoofBorder_004" parent="." index="4"]
+material_override = ExtResource("4_hpsc0")
+
+[node name="SkylightBase" parent="." index="5"]
+material_override = ExtResource("4_hpsc0")
+
+[node name="SkylightGlass_001" parent="." index="6"]
+material_override = ExtResource("3_fg6uc")
+
+[node name="SkylightGlass_002" parent="." index="7"]
+material_override = ExtResource("3_fg6uc")
+
+[node name="Window_001" parent="." index="8"]
+material_override = ExtResource("2_eb1w2")
+
+[node name="Window_002" parent="." index="9"]
+material_override = ExtResource("2_eb1w2")
+
+[node name="Door_001" parent="." index="10"]
+material_override = ExtResource("6_agrmn")
+
+[node name="Door_002" parent="." index="11"]
+material_override = ExtResource("6_agrmn")
