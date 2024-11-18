@@ -56,7 +56,6 @@ public abstract partial class Enemy : CharacterBody3D
         // TODO: Implement...
         _attackTime = AttackDuration;
         _isAttacking = true;
-        GD.Print("Start attacking!");
 
         if (_touchingPlayer)
             HitPlayer();
@@ -75,7 +74,6 @@ public abstract partial class Enemy : CharacterBody3D
     {
         _hitPlayerThisAttack = false;
         _isAttacking = false;
-        GD.Print("End attack!");
     }
 
     public virtual void OnBodyEntered(Node3D node)

@@ -59,7 +59,6 @@ public partial class InspectTextUi : Node
         if ((_playerStatus.Reading && !overrideRead) || _advanceTextCooldownRemaining > 0)
             return;
 
-        GD.Print("ReadText started!");
         _advanceTextCooldownRemaining = AdvanceTextCooldown;
         _currentLineIndex = 0;
         _currentLines = lines;
@@ -77,8 +76,6 @@ public partial class InspectTextUi : Node
 
     private void AdvanceText()
     {
-        GD.Print("AdvanceText called");
-
         _advanceTextCooldownRemaining = AdvanceTextCooldown;
         if (_currentLineIndex >= _currentLines.Length)
         {

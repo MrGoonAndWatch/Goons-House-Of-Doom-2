@@ -242,7 +242,7 @@ public partial class PlayerStatus : Node
 
     public void HitByAttack(double damage, string hitAnimationVariable)
     {
-        GD.Print($"Player was hit for {damage} damage and started animation '{hitAnimationVariable}'");
+        //GD.Print($"Player was hit for {damage} damage and started animation '{hitAnimationVariable}'");
 
         if (GetHealthStatus() == HealthStatus.Dead)
             return;

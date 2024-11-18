@@ -29,6 +29,11 @@ public partial class Door : Teleporter
         _playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
     }
 
+    public bool IsLocked()
+    {
+        return !_unlocked;
+    }
+
     public void Inspect(InspectTextUi inspectTextUi)
     {
         if (_unlocked)
@@ -62,6 +67,7 @@ public partial class Door : Teleporter
         _unlocked = true;
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.UnlockDoor(DoorId);
+        MapStatus.CheckForRoomCleared(GetInstanceId());
         var mapStatus = MapStatus.GetInstance();
         mapStatus.EnterDoor(DoorId);
         if (UnlockText?.Any() ?? false)
@@ -76,6 +82,7 @@ public partial class Door : Teleporter
         _unlocked = true;
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.UnlockDoor(DoorId);
+        MapStatus.CheckForRoomCleared(GetInstanceId());
     }
 
     public void ForceUnlock()

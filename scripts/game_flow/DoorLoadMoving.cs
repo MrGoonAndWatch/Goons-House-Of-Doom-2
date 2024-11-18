@@ -29,7 +29,7 @@ public partial class DoorLoadMoving : Node3D
         Position = Position + movement;
 
         _remainingTimeS -= delta;
-        if (_remainingTimeS <= 0)
+        if (_remainingTimeS <= 0 || Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
         {
             _finished = true;
             var sceneChanger = SceneChanger.GetInstance();

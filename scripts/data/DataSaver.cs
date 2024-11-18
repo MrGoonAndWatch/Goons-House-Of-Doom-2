@@ -184,7 +184,6 @@ public partial class DataSaver : Node3D
         }
 
         _gameState.ItemBox = itemBoxData.ToArray();
-        GD.Print($"Saved {_gameState.ItemBox.Length} ItemBox items to _gameState...");
     }
 
     private void SaveSceneLoadData(SceneLoadData sceneLoadData)

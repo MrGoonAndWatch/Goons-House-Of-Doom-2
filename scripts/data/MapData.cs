@@ -80,7 +80,7 @@ public partial class MapData : Control
                 doorStatus = GameConstants.DoorMapStatus.Unknown;
             doorData.UpdateStatus(doorStatus);
 
-            GD.Print($"Set Door {doorData.DoorId} to Status {doorStatus}");
+            //GD.Print($"Set Door {doorData.DoorId} to Status {doorStatus}");
         }
     }
 

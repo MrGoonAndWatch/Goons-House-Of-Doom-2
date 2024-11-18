@@ -84,7 +84,7 @@ public partial class SaveGame : Control
         var dateStr = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
         var newFilename = $"{roomStr} - {dateStr}.sav";
 
-        GD.Print($"Trying to save data to {newFilename}...");
+        //GD.Print($"Trying to save data to {newFilename}...");
         var fileAccess = FileAccess.Open($"{GameConstants.SaveDirectoryPath}/{newFilename}", FileAccess.ModeFlags.Write);
         var dataJson = JsonConvert.SerializeObject(data);
         fileAccess.StoreString(dataJson);
@@ -94,7 +94,7 @@ public partial class SaveGame : Control
 
         CloseSaveUi();
 
-        GD.Print($"Finished saving file '{newFilename}'");
+        //GD.Print($"Finished saving file '{newFilename}'");
     }
 
     private void OpenSaveLoadUi()

@@ -311,10 +311,10 @@ public partial class GameConstants : GodotObject
             return node.GetNode<RoomInfo>(NodePaths.FromSceneRoot.RoomInfo).RoomId;
         else
         {
-            if (node.HasNode(NodePaths.FromSceneRoot.TitleScreen))
-                GD.Print("Couldn't find room_info object in scene but this is the title screen so that's expected!");
-            else
+            if (!node.HasNode(NodePaths.FromSceneRoot.TitleScreen))
                 GD.PrintErr($"Couldn't find room_info object in scene {GetCurrentRoomName(node)}!");
+            //else
+            //    GD.Print("Couldn't find room_info object in scene but this is the title screen so that's expected!");
             return -1;
         }
     }

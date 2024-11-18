@@ -1,8 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgwutbmmke3qm"]
+[gd_scene load_steps=6 format=3 uid="uid://bgwutbmmke3qm"]
 
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_pcxls"]
-[ext_resource type="Script" path="res://scripts/game_flow/DoorLoad.cs" id="2_kr8yf"]
-[ext_resource type="PackedScene" uid="uid://qci3y34d86a1" path="res://models/third-party/cc0/Brown Door.glb" id="3_r2n2t"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="4_gtbn5"]
 [ext_resource type="Environment" uid="uid://ct85ebvxy1vvm" path="res://prefabs/lighting/environments/outside_env.tres" id="4_n3ict"]
 [ext_resource type="Script" path="res://scripts/game_flow/DoorLoadMoving.cs" id="5_bgau6"]
@@ -15,14 +13,6 @@ material = ExtResource("1_pcxls")
 handle_input_locally = false
 size = Vector2i(1900, 1000)
 render_target_update_mode = 4
-
-[node name="DoorContainer" type="Node3D" parent="SubViewport" node_paths=PackedStringArray("DoorsToRotate")]
-visible = false
-script = ExtResource("2_kr8yf")
-DoorsToRotate = []
-
-[node name="Brown Door2" parent="SubViewport/DoorContainer" instance=ExtResource("3_r2n2t")]
-transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0.5, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31574, 2.07778)

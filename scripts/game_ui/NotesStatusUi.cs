@@ -59,7 +59,7 @@ public partial class NotesStatusUi : StatusScreenTab
         var notes = PlayerStatus.GetInstance().NotesCollected;
         for (var i = 0; i < notes.Count; i++)
         {
-            GD.Print($"Creating prefab for note {i} (noteId = {notes[i].NoteId}, noteTitle = {notes[i].NoteTitle})");
+            //GD.Print($"Creating prefab for note {i} (noteId = {notes[i].NoteId}, noteTitle = {notes[i].NoteTitle})");
             AddNoteButton(notes[i]);
         }
     }

@@ -41,6 +41,8 @@ public partial class MapStatus : Node
 
     public void InitializeMapStatus()
     {
+        _initialized = false;
+
         var mapScenes = DirAccess.GetFilesAt(MapFolder);
 
         _mapsCollected = new System.Collections.Generic.List<int>();
@@ -55,14 +57,17 @@ public partial class MapStatus : Node
 
         for (var i = 0; i < mapScenes.Length; i++)
         {
-            if (!mapScenes[i].EndsWith(".tscn")) continue;
+            var cleanedSceneName = mapScenes[i];
+            if (cleanedSceneName.EndsWith(".remap"))
+                cleanedSceneName = cleanedSceneName.Substring(0, cleanedSceneName.LastIndexOf(".remap"));
 
-            var mapScene = GD.Load<PackedScene>($"{MapFolder}{mapScenes[i]}");
+            if (!cleanedSceneName.EndsWith(".tscn")) continue;
+
+            var mapScene = GD.Load<PackedScene>($"{MapFolder}{cleanedSceneName}");
             var mapSceneLoaded = mapScene.Instantiate();
             var mapData = mapSceneLoaded as MapData;
 
             var areaId = mapData.AreaId;
-            GD.Print($"Adding area {areaId}...");
             AreaToMapLookup.Add(areaId, mapData);
             for (var j = 0; j < mapData.RoomData.Length; j++)
             {
@@ -73,7 +78,7 @@ public partial class MapStatus : Node
                     continue;
                 }
 
-                GD.Print($"Mapping room {mapData.RoomData[j].RoomId} to area {areaId}");
+                ///GD.Print($"Mapping room {mapData.RoomData[j].RoomId} to area {areaId}");
                 RoomToAreaLookup.Add(mapData.RoomData[j].RoomId, areaId);
             }
             // Note: this for loop is strictly just here for console warnings if a scene is setup weird. I was doing this in the spot where the actual null reference error occurs, but that causes the error to print out every time you open your menu.
@@ -133,6 +138,8 @@ public partial class MapStatus : Node
 
     public MapData GetMapDataForRoom(int roomId)
     {
+        if (roomId == -1) return null;
+
         if (RoomToAreaLookup.ContainsKey(roomId))
             if (AreaToMapLookup.ContainsKey(RoomToAreaLookup[roomId]))
                 return AreaToMapLookup[RoomToAreaLookup[roomId]];
@@ -193,9 +200,7 @@ public partial class MapStatus : Node
 
     public void MarkRoomCleared(int roomId)
     {
-        var stack = new StackTrace();
-        GD.Print($"MarkRoomCleared: {stack.ToString()}");
-        if(ClearedRoom(roomId)) return;
+        if (roomId == -1 || ClearedRoom(roomId)) return;
         GD.Print($"Marked room {roomId} as cleared!");
         _roomsCleared.Add(roomId);
     }
@@ -236,6 +241,8 @@ public partial class MapStatus : Node
         }
 
         var root = instance.GetNode(GameConstants.NodePaths.FromSceneRoot.SceneRoot);
+        if (root == null)
+            GD.Print("CheckForRoomCleared: ROOT WAS NULL!");
         var containsPendingItem = ContainsPendingItem(root, ignoreNodeId);
 
         if (!containsPendingItem)
@@ -266,17 +273,23 @@ public partial class MapStatus : Node
 
     private static bool IsUnclearedNode(Node node)
     {
-        GD.Print($"IsUnclearedNode for '{node.GetPath().GetConcatenatedNames()}'");
+        //GD.Print($"IsUnclearedNode for '{node.GetPath().GetConcatenatedNames()}'");
 
         if (node is ItemContainer || node is MapPickup || node is NotePickup)
         {
-            GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was an ItemContainer, MapPickup, or NotePickup!");
+            //GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was an ItemContainer, MapPickup, or NotePickup!");
             return true;
         }
 
         if (node is PassCode && !(node as PassCode).IsSolved())
         {
-            GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was a puzzle and is unsolved!");
+            //GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was an unsolved puzzle!");
+            return true;
+        }
+
+        if (node is Door && (node as Door).IsLocked())
+        {
+            //GD.Print($"node '{node.GetPath().GetConcatenatedNames()}' was a locked door!");
             return true;
         }
 

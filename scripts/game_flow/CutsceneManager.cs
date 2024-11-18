@@ -45,8 +45,8 @@ public partial class CutsceneManager : Node
         StartTopBarYPos = 0;
         EndTopBarYPos = -(barSize.Y);
 
-        GD.Print($"Init set bottom bar to ({BottomBar.GlobalPosition.X},{BottomBar.GlobalPosition.Y})");
-        GD.Print($"Target bottom bar start = {StartBottomBarYPos}");
+        //GD.Print($"Init set bottom bar to ({BottomBar.GlobalPosition.X},{BottomBar.GlobalPosition.Y})");
+        //GD.Print($"Target bottom bar start = {StartBottomBarYPos}");
     }
 
     public override void _Process(double delta)
