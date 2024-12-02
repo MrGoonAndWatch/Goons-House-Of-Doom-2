@@ -250,7 +250,10 @@ public partial class MapStatus : Node
             var roomId = GameConstants.GetCurrentRoomId(instance);
             instance.MarkRoomCleared(roomId);
             var mapData = instance.GetMapDataForRoom(roomId);
-            mapData.RefreshMap();
+            if (mapData != null)
+                mapData.RefreshMap();
+            else if (roomId != -1)
+                GD.PrintErr($"Can't refresh map after finding a cleared room '{roomId}'. Room returned null map.");
         }
     }
 

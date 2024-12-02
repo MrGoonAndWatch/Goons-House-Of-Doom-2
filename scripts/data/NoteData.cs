@@ -14,12 +14,18 @@ public partial class NoteData : Node
 
     public NoteData Clone()
     {
+        var copiedNoteText = new string[NoteText.Length];
+        for (var i = 0; i < NoteText.Length; i++)
+        {
+            copiedNoteText[i] = NoteText[i].ToString();
+        }
+
         return new NoteData()
         {
             NoteId = NoteId,
-            NoteTitle = NoteTitle,
-            NoteText = NoteText,
-            NoteTexturePath = NoteTexturePath,
+            NoteTitle = NoteTitle.ToString(),
+            NoteText = copiedNoteText,
+            NoteTexturePath = NoteTexturePath.ToString(),
         };
     }
 }

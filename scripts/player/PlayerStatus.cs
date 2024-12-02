@@ -302,11 +302,11 @@ public partial class PlayerStatus : Node
         //PlayerAnimator.SetBool(AnimationVariables.Player.Dead, true);
     }
 
-    public void EquipWeapon(Weapon weapon)
+    public void EquipWeapon(Weapon weapon, bool forceEquip = false)
     {
         var player = GetNode<Player>(NodePaths.FromSceneRoot.Player);
 
-        if (EquipedWeapon != null && EquipedWeapon.ItemId == weapon.ItemId)
+        if (!forceEquip && EquipedWeapon != null && EquipedWeapon.ItemId == weapon.ItemId)
         {
             player.WeaponUnequipped(weapon);
             EquipedWeapon = null;

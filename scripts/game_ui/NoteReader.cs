@@ -28,8 +28,8 @@ public partial class NoteReader : Control
         CurrentNoteText = noteData.NoteText;
         IsReadingNote = true;
 
-        var image = Image.LoadFromFile(noteData.NoteTexturePath);
-        _noteBackgroundImage.Texture = ImageTexture.CreateFromImage(image);
+        var imageTexture = ResourceLoader.Load(noteData.NoteTexturePath, cacheMode: ResourceLoader.CacheMode.Reuse);
+        _noteBackgroundImage.Texture = (CompressedTexture2D) imageTexture;
 
         SwitchToPage(CurrentNotePage);
         Visible = true;

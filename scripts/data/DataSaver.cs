@@ -232,7 +232,7 @@ public partial class DataSaver : Node3D
             var targetWeapon = playerInventory.Items[_gameState.EquipedWeaponIndex.Value].Item as Weapon;
             if (targetWeapon != null)
             {
-                playerStatus.EquipWeapon(targetWeapon);
+                playerStatus.EquipWeapon(targetWeapon, true);
                 playerInventory.EquipDirty = true;
             }
             else

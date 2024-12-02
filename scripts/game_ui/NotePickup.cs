@@ -10,7 +10,7 @@ public partial class NotePickup : Area3D
         var playerStatus = PlayerStatus.GetInstance();
         if (playerStatus == null) return;
 
-        for(int i = 0; i < playerStatus.NotesCollected.Count; i++)
+        for (int i = 0; i < playerStatus.NotesCollected.Count; i++)
         {
             if (playerStatus.NotesCollected[i].NoteId == NoteData.NoteId)
             {

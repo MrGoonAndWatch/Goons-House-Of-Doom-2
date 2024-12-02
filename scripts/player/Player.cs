@@ -35,7 +35,6 @@ public partial class Player : ICutsceneActor
             _playerPositionLabel.Text = "";
 
         _playerStatus = PlayerStatus.GetInstance();
-        WeaponEquipped(_playerStatus.EquipedWeapon);
     }
 
     public override void _Process(double delta)
