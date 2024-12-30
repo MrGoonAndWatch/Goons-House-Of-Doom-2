@@ -1,4 +1,6 @@
 using Godot;
+using System;
+using System.Collections.Generic;
 
 public partial class TitleScreenUi : Node
 {
@@ -24,6 +26,12 @@ public partial class TitleScreenUi : Node
     private Control InitFocusControls;
     [Export]
     private Control InitFocusCredits;
+    [Export]
+    private CheckBox ItemRandomizerCheckbox;
+    [Export]
+    private CheckBox EnemyRandomizerCheckbox;
+    [Export]
+    private CheckBox CodeRandomizerCheckbox;
 
     [Export]
     private Button[] NewGameDifficultyButtons;
@@ -131,16 +139,51 @@ public partial class TitleScreenUi : Node
 
     private void _OnStartNewGamePressed()
     {
-        var gameSetttings = new GameSettings()
+        var isRandomized = ItemRandomizerCheckbox.ButtonPressed || EnemyRandomizerCheckbox.ButtonPressed || CodeRandomizerCheckbox.ButtonPressed;
+        GD.Print($"ItemRandomizerCheckbox.ButtonPressed || EnemyRandomizerCheckbox.ButtonPressed || CodeRandomizerCheckbox.ButtonPressed = {ItemRandomizerCheckbox.ButtonPressed} || {EnemyRandomizerCheckbox.ButtonPressed} || {CodeRandomizerCheckbox.ButtonPressed}");
+
+        var gameSettings = new GameSettings()
         {
             GameDifficulty = (GameConstants.GameDifficulty) _currentDifficultyIndex,
             FunnyMode = false,
-            IsRandomized = false,
-            //RandomizerSeed = RandomizerSeed.GenerateRandomizer(settings)
+            IsRandomized = isRandomized,
         };
+        if (gameSettings.IsRandomized)
+        {
+            SetupRandomizer(gameSettings);
+        }
+
         var playerStatus = PlayerStatus.GetInstance();
-        playerStatus.SetupNewGame(gameSetttings);
+        playerStatus.SetupNewGame(gameSettings);
         GetTree().ChangeSceneToFile(GameConstants.NewGameStartingScenePath);
+    }
+
+    private void SetupRandomizer(GameSettings gameSettings)
+    {
+        // TODO: This is a hard coded randomizer setup, need UI for starting game in randomizer mode.
+        var randomizerSettings = new RandomizerSettings
+        {
+            RandomizeItems = ItemRandomizerCheckbox.ButtonPressed,
+            RandomizeEnemies = EnemyRandomizerCheckbox.ButtonPressed,
+            RandomizePuzzleCodes = CodeRandomizerCheckbox.ButtonPressed,
+            AllowSpawnsOnEmptyEnemySlotsForDifficulty = true,
+            AllowSpawnsOnEmptyItemSlotsForDifficulty = true,
+            EnemySpawnProbabilities = new List<Tuple<GameConstants.EnemySpawnType, float>>
+            {
+                new Tuple<GameConstants.EnemySpawnType, float>(GameConstants.EnemySpawnType.None, 0.10f),
+                new Tuple<GameConstants.EnemySpawnType, float>(GameConstants.EnemySpawnType.Shambler, 0.25f),
+                new Tuple<GameConstants.EnemySpawnType, float>(GameConstants.EnemySpawnType.Chaser, 0.65f),
+            },
+            ItemSpawnProbabilities = new List<Tuple<GameConstants.ItemSpawnType, float>>
+            {
+                new Tuple<GameConstants.ItemSpawnType, float>(GameConstants.ItemSpawnType.None, 0.34f),
+                new Tuple<GameConstants.ItemSpawnType, float>(GameConstants.ItemSpawnType.GreenJuice, 0.33f),
+                new Tuple<GameConstants.ItemSpawnType, float>(GameConstants.ItemSpawnType.PistolAmmo, 0.33f),
+            },
+            //Seed = 1234
+        };
+
+        gameSettings.RandomizerSeed = RandomizerSeed.GenerateRandomizer(randomizerSettings);
     }
     #endregion
 

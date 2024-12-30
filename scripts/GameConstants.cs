@@ -248,8 +248,7 @@ public partial class GameConstants : GodotObject
 
     public static Dictionary<int, ZoneRequirements> ZoneKeyMap = new()
     {
-        {1, new ZoneRequirements { KeysRequiredToPassZone = new System.Collections.Generic.List<ItemSpawnType> { ItemSpawnType.BigKey }, ItemIdsInZone = new System.Collections.Generic.List<int>{ 2, 3 } } },
-        {2, new ZoneRequirements { KeysRequiredToPassZone = new System.Collections.Generic.List<ItemSpawnType> { ItemSpawnType.Pistol }, ItemIdsInZone = new System.Collections.Generic.List<int>{ 1, 2, 3, 4 } } }
+        {1, new ZoneRequirements { KeysRequiredToPassZone = new System.Collections.Generic.List<ItemSpawnType> { ItemSpawnType.MuseumFrontDoorKey, ItemSpawnType.Pistol }, ItemIdsInZone = new System.Collections.Generic.List<int>{ 1, 2, 3, 4, 5 } } },
     };
 
     public static System.Collections.Generic.List<ItemSpawnType> ItemsWithQty = new() { ItemSpawnType.Pistol, ItemSpawnType.PistolAmmo };

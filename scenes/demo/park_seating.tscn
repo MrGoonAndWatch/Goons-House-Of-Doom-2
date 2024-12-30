@@ -72,33 +72,6 @@ DoorLoadType = 2
 StartAtPosition = Vector3(11.8, 0.495, -13.686)
 StartAtAngle = Vector3(0, 270, 0)
 
-[node name="ammo-spawn1" parent="SubViewport" instance=ExtResource("9_irmi7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.048, -0.377, -5.65)
-ItemId = 2
-QtyOnPickup = 6
-ItemSpawnOnEasy = 4
-ItemSpawnOnNormal = 4
-ItemSpawnOnHard = 1
-ItemSpawnOnImpossible = 1
-
-[node name="ammo-spawn2" parent="SubViewport" instance=ExtResource("9_irmi7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0478, -0.37725, -7.64958)
-ItemId = 3
-QtyOnPickup = 6
-ItemSpawnOnEasy = 4
-ItemSpawnOnNormal = 1
-ItemSpawnOnHard = 1
-ItemSpawnOnImpossible = 1
-
-[node name="ammo-spawn3" parent="SubViewport" instance=ExtResource("9_irmi7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.443, -0.377, -6.242)
-ItemId = 3
-QtyOnPickup = 6
-ItemSpawnOnEasy = 4
-ItemSpawnOnNormal = 1
-ItemSpawnOnHard = 1
-ItemSpawnOnImpossible = 1
-
 [node name="key-spawn-point" parent="SubViewport" instance=ExtResource("9_irmi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -1)
 ItemId = 5

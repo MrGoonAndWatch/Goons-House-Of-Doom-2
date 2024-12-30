@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfkyrote2syyk"
 path.s3tc="res://.godot/imported/Ground_02_Nrm.png-fe2c12040c0a88e3ad7e698065b5e206.s3tc.ctex"
+path.etc2="res://.godot/imported/Ground_02_Nrm.png-fe2c12040c0a88e3ad7e698065b5e206.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/cc0/Ground_02_Nrm.png"
-dest_files=["res://.godot/imported/Ground_02_Nrm.png-fe2c12040c0a88e3ad7e698065b5e206.s3tc.ctex"]
+dest_files=["res://.godot/imported/Ground_02_Nrm.png-fe2c12040c0a88e3ad7e698065b5e206.s3tc.ctex", "res://.godot/imported/Ground_02_Nrm.png-fe2c12040c0a88e3ad7e698065b5e206.etc2.ctex"]
 
 [params]
 

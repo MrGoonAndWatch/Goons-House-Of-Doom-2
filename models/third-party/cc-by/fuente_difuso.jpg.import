@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cloxm8u4j7jqe"
 path.s3tc="res://.godot/imported/fuente_difuso.jpg-d41df99ca1d0db03c53db78d351b6441.s3tc.ctex"
+path.etc2="res://.godot/imported/fuente_difuso.jpg-d41df99ca1d0db03c53db78d351b6441.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/third-party/cc-by/fuente_difuso.jpg"
-dest_files=["res://.godot/imported/fuente_difuso.jpg-d41df99ca1d0db03c53db78d351b6441.s3tc.ctex"]
+dest_files=["res://.godot/imported/fuente_difuso.jpg-d41df99ca1d0db03c53db78d351b6441.s3tc.ctex", "res://.godot/imported/fuente_difuso.jpg-d41df99ca1d0db03c53db78d351b6441.etc2.ctex"]
 
 [params]
 

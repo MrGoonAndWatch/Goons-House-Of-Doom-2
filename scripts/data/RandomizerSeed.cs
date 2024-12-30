@@ -6,8 +6,8 @@ using System.Linq;
 
 public class RandomizerSeed
 {
-    private const int MaxEnemyId = 1;
-    private const int MaxItemId = 4;
+    private const int MaxEnemyId = 3;
+    private const int MaxItemId = 5;
 
     public static RandomizerSeed GenerateRandomizer(RandomizerSettings settings)
     {

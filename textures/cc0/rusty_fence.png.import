@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cl0uihf1mtwpq"
 path.s3tc="res://.godot/imported/rusty_fence.png-6189e6538d35bc63efd5829bc0b96602.s3tc.ctex"
+path.etc2="res://.godot/imported/rusty_fence.png-6189e6538d35bc63efd5829bc0b96602.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/cc0/rusty_fence.png"
-dest_files=["res://.godot/imported/rusty_fence.png-6189e6538d35bc63efd5829bc0b96602.s3tc.ctex"]
+dest_files=["res://.godot/imported/rusty_fence.png-6189e6538d35bc63efd5829bc0b96602.s3tc.ctex", "res://.godot/imported/rusty_fence.png-6189e6538d35bc63efd5829bc0b96602.etc2.ctex"]
 
 [params]
 

@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cglic2e7fifno"
 path.s3tc="res://.godot/imported/fence_IMGP6032.jpg-85ae5c710c725e47d8d6ed86767a7254.s3tc.ctex"
+path.etc2="res://.godot/imported/fence_IMGP6032.jpg-85ae5c710c725e47d8d6ed86767a7254.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={}
@@ -13,7 +14,7 @@ generator_parameters={}
 [deps]
 
 source_file="res://models/Tiles/fence_IMGP6032.jpg"
-dest_files=["res://.godot/imported/fence_IMGP6032.jpg-85ae5c710c725e47d8d6ed86767a7254.s3tc.ctex"]
+dest_files=["res://.godot/imported/fence_IMGP6032.jpg-85ae5c710c725e47d8d6ed86767a7254.s3tc.ctex", "res://.godot/imported/fence_IMGP6032.jpg-85ae5c710c725e47d8d6ed86767a7254.etc2.ctex"]
 
 [params]
 

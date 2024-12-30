@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5gd34yyyxp7g"
 path.s3tc="res://.godot/imported/PistolAmmo.png-58eaae1b49140a0461c3a351b6ec343f.s3tc.ctex"
+path.etc2="res://.godot/imported/PistolAmmo.png-58eaae1b49140a0461c3a351b6ec343f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/PistolAmmo.png"
-dest_files=["res://.godot/imported/PistolAmmo.png-58eaae1b49140a0461c3a351b6ec343f.s3tc.ctex"]
+dest_files=["res://.godot/imported/PistolAmmo.png-58eaae1b49140a0461c3a351b6ec343f.s3tc.ctex", "res://.godot/imported/PistolAmmo.png-58eaae1b49140a0461c3a351b6ec343f.etc2.ctex"]
 
 [params]
 

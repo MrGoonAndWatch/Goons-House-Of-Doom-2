@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b3hfw4022512n"
 path.s3tc="res://.godot/imported/fence_ChainLink.png-281ed8ee183634adb29d61b8734740f3.s3tc.ctex"
+path.etc2="res://.godot/imported/fence_ChainLink.png-281ed8ee183634adb29d61b8734740f3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={}
@@ -13,7 +14,7 @@ generator_parameters={}
 [deps]
 
 source_file="res://models/Tiles/fence_ChainLink.png"
-dest_files=["res://.godot/imported/fence_ChainLink.png-281ed8ee183634adb29d61b8734740f3.s3tc.ctex"]
+dest_files=["res://.godot/imported/fence_ChainLink.png-281ed8ee183634adb29d61b8734740f3.s3tc.ctex", "res://.godot/imported/fence_ChainLink.png-281ed8ee183634adb29d61b8734740f3.etc2.ctex"]
 
 [params]
 

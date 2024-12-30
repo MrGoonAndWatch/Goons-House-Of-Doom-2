@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2vp8an608wqg"
 path.s3tc="res://.godot/imported/medieval-art1.jpg-970b72055dea31354d1dd21c437da9d5.s3tc.ctex"
+path.etc2="res://.godot/imported/medieval-art1.jpg-970b72055dea31354d1dd21c437da9d5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/medieval-art1.jpg"
-dest_files=["res://.godot/imported/medieval-art1.jpg-970b72055dea31354d1dd21c437da9d5.s3tc.ctex"]
+dest_files=["res://.godot/imported/medieval-art1.jpg-970b72055dea31354d1dd21c437da9d5.s3tc.ctex", "res://.godot/imported/medieval-art1.jpg-970b72055dea31354d1dd21c437da9d5.etc2.ctex"]
 
 [params]
 

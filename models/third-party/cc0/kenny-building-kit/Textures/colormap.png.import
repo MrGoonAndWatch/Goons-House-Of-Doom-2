@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://qsrvqwog5vih"
 path.s3tc="res://.godot/imported/colormap.png-bebf7ced40ab3b8175b8522bdbcdc13b.s3tc.ctex"
+path.etc2="res://.godot/imported/colormap.png-bebf7ced40ab3b8175b8522bdbcdc13b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/third-party/cc0/kenny-building-kit/Textures/colormap.png"
-dest_files=["res://.godot/imported/colormap.png-bebf7ced40ab3b8175b8522bdbcdc13b.s3tc.ctex"]
+dest_files=["res://.godot/imported/colormap.png-bebf7ced40ab3b8175b8522bdbcdc13b.s3tc.ctex", "res://.godot/imported/colormap.png-bebf7ced40ab3b8175b8522bdbcdc13b.etc2.ctex"]
 
 [params]
 

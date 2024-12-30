@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://kgtq0yspm4ym"
 path.s3tc="res://.godot/imported/sign_browndoor_sideways.png-341d0c26b143a8037a8bbe065e0a3993.s3tc.ctex"
+path.etc2="res://.godot/imported/sign_browndoor_sideways.png-341d0c26b143a8037a8bbe065e0a3993.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/cc0/sign_browndoor_sideways.png"
-dest_files=["res://.godot/imported/sign_browndoor_sideways.png-341d0c26b143a8037a8bbe065e0a3993.s3tc.ctex"]
+dest_files=["res://.godot/imported/sign_browndoor_sideways.png-341d0c26b143a8037a8bbe065e0a3993.s3tc.ctex", "res://.godot/imported/sign_browndoor_sideways.png-341d0c26b143a8037a8bbe065e0a3993.etc2.ctex"]
 
 [params]
 

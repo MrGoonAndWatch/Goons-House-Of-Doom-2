@@ -26,7 +26,7 @@ line_spacing = 10.0
 font = ExtResource("3_po7kf")
 font_size = 50
 
-[node name="TitleScreen" type="Control" node_paths=PackedStringArray("MainMenu", "NewGameMenu", "LoadGameMenu", "OptionsMenu", "ControlsMenu", "Credits", "InitFocusMainMenu", "InitFocusNewGame", "InitFocusOptions", "InitFocusControls", "InitFocusCredits", "NewGameDifficultyButtons")]
+[node name="TitleScreen" type="Control" node_paths=PackedStringArray("MainMenu", "NewGameMenu", "LoadGameMenu", "OptionsMenu", "ControlsMenu", "Credits", "InitFocusMainMenu", "InitFocusNewGame", "InitFocusOptions", "InitFocusControls", "InitFocusCredits", "ItemRandomizerCheckbox", "EnemyRandomizerCheckbox", "CodeRandomizerCheckbox", "NewGameDifficultyButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,6 +45,9 @@ InitFocusNewGame = NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/EasyB
 InitFocusOptions = NodePath("OptionsMenu/VBoxContainer/Resolution/OptionButton")
 InitFocusControls = NodePath("ControlsMenu/ControlsRemap/Forwards/Forwards (Keyboard)")
 InitFocusCredits = NodePath("Credits/BackButtonContainer/CreditsBackButton")
+ItemRandomizerCheckbox = NodePath("NewGameMenu/VBoxContainer/ItemRandomizer/ItemRandomizerCheckBox")
+EnemyRandomizerCheckbox = NodePath("NewGameMenu/VBoxContainer/EnemyRandomizer/EnemyRandomizerCheckBox")
+CodeRandomizerCheckbox = NodePath("NewGameMenu/VBoxContainer/CodeRandomizer/RandomCodeCheckBox")
 NewGameDifficultyButtons = [NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/NormalButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/HardButton"), NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/ImpossibleButton")]
 
 [node name="BackgroundColor" type="ColorRect" parent="."]
@@ -112,7 +115,7 @@ offset_left = -103.0
 offset_top = -55.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "v0.1.1  "
+text = "v0.1.2  "
 label_settings = SubResource("LabelSettings_v651h")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
@@ -299,15 +302,9 @@ text = "Randomize Items: "
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
+[node name="ItemRandomizerCheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
 layout_mode = 2
 theme = ExtResource("4_ovylp")
-disabled = true
-
-[node name="DemoDisclaimer" type="Label" parent="NewGameMenu/VBoxContainer/ItemRandomizer"]
-layout_mode = 2
-theme = ExtResource("4_ovylp")
-text = "(not available in demo)"
 
 [node name="Spacer3" type="Control" parent="NewGameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
@@ -324,12 +321,6 @@ text = "Randomize Enemies: "
 [node name="EnemyRandomizerCheckBox" type="CheckBox" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
 layout_mode = 2
 theme = ExtResource("4_ovylp")
-disabled = true
-
-[node name="DemoDisclaimer" type="Label" parent="NewGameMenu/VBoxContainer/EnemyRandomizer"]
-layout_mode = 2
-theme = ExtResource("4_ovylp")
-text = "(not available in demo)"
 
 [node name="Spacer4" type="Control" parent="NewGameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)

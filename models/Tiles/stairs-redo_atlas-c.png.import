@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ceu2sa4gk8lry"
 path.s3tc="res://.godot/imported/stairs-redo_atlas-c.png-ab616b6b2c263aea26d2e2dcbfb0aecb.s3tc.ctex"
+path.etc2="res://.godot/imported/stairs-redo_atlas-c.png-ab616b6b2c263aea26d2e2dcbfb0aecb.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={}
@@ -13,7 +14,7 @@ generator_parameters={}
 [deps]
 
 source_file="res://models/Tiles/stairs-redo_atlas-c.png"
-dest_files=["res://.godot/imported/stairs-redo_atlas-c.png-ab616b6b2c263aea26d2e2dcbfb0aecb.s3tc.ctex"]
+dest_files=["res://.godot/imported/stairs-redo_atlas-c.png-ab616b6b2c263aea26d2e2dcbfb0aecb.s3tc.ctex", "res://.godot/imported/stairs-redo_atlas-c.png-ab616b6b2c263aea26d2e2dcbfb0aecb.etc2.ctex"]
 
 [params]
 

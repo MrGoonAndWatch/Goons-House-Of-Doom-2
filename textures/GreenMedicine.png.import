@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://yio1f4tds1he"
 path.s3tc="res://.godot/imported/GreenMedicine.png-1fb98458d2ec4a42a63c1278ec260145.s3tc.ctex"
+path.etc2="res://.godot/imported/GreenMedicine.png-1fb98458d2ec4a42a63c1278ec260145.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/GreenMedicine.png"
-dest_files=["res://.godot/imported/GreenMedicine.png-1fb98458d2ec4a42a63c1278ec260145.s3tc.ctex"]
+dest_files=["res://.godot/imported/GreenMedicine.png-1fb98458d2ec4a42a63c1278ec260145.s3tc.ctex", "res://.godot/imported/GreenMedicine.png-1fb98458d2ec4a42a63c1278ec260145.etc2.ctex"]
 
 [params]
 
