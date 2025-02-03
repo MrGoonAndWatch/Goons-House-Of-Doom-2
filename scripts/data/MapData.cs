@@ -28,12 +28,7 @@ public partial class MapData : Control
         RefreshMap();
     }
 
-    public override void _Process(double delta)
-    {
-        MovePlayerIcon(delta);
-    }
-
-    private void MovePlayerIcon(double delta)
+    private void MovePlayerIcon()
     {
         PlayerIcon.Visible = _currentRoom != null;
         if (_currentRoom == null) return;
@@ -67,6 +62,7 @@ public partial class MapData : Control
                 _currentRoom = RoomData[i];
             }
         }
+        MovePlayerIcon();
     }
 
     public void RefreshMap()

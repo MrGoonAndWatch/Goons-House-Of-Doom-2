@@ -44,6 +44,7 @@ _pauseScreenUi = NodePath("pause_ui")
 _hitscanRay = NodePath("WeaponHitscan")
 
 [node name="DEBUG_UI" type="Control" parent="." node_paths=PackedStringArray("PlayerPositionLabel", "PlayerRotationLabel")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,6 +68,7 @@ offset_bottom = 23.0
 text = "AAAAA"
 
 [node name="PlayerRotationLabel" type="Label" parent="DEBUG_UI/ColorRect"]
+layout_mode = 0
 offset_top = 20.0
 offset_right = 53.0
 offset_bottom = 43.0
@@ -193,7 +195,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.319499, -0.213694, 0.0379187, 0.922398)
+bones/6/rotation = Quaternion(-0.0618395, -0.0413603, 0.00718374, 0.997203)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)

@@ -83,7 +83,7 @@ RoomId = 2
 RoomLabel = NodePath("RoomName")
 RoomStatus = NodePath("RoomState")
 PlayerMapPositionScale = Vector2(16.67, 16.67)
-RoomOriginOffset = Vector2(0, -15)
+RoomOriginOffset = Vector2(0, 15)
 
 [node name="RoomState" type="ColorRect" parent="Room2"]
 layout_mode = 1
