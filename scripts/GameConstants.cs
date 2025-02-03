@@ -140,7 +140,8 @@ public partial class GameConstants : GodotObject
         inventory,
         confirm,
         aim,
-        pause
+        pause,
+        debug_noclip
     }
 
     public enum ControlBinding

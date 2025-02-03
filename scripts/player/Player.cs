@@ -11,9 +11,6 @@ public partial class Player : ICutsceneActor
     [Export]
     private RayCast3D _hitscanRay;
 
-    [Export]
-    private Label _playerPositionLabel;
-
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
 	const float BACKWARDS_MODIFIER = 0.5f;
@@ -27,13 +24,13 @@ public partial class Player : ICutsceneActor
 
     private PlayerStatus _playerStatus;
 
-    private AudioStream _audioStream;
+    private bool _isDebugging;
+    private bool _noClipping;
+    private const float NOCLIP_SPEED_BONUS = 5.0f;
 
     public override void _Ready()
     {
-        if (_playerPositionLabel != null)
-            _playerPositionLabel.Text = "";
-
+        _isDebugging = OS.IsDebugBuild();
         _playerStatus = PlayerStatus.GetInstance();
     }
 
@@ -42,6 +39,7 @@ public partial class Player : ICutsceneActor
         HandlePauseMenu();
         HandleAiming();
         HandleShooting();
+        HandleDebugInput();
     }
 
     private void HandlePauseMenu()
@@ -72,6 +70,20 @@ public partial class Player : ICutsceneActor
         }
         else if (!_playerStatus.HasAnyUiOpen() && _playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
             EndAiming();
+    }
+
+    private void HandleDebugInput()
+    {
+        if (!_isDebugging) return;
+
+        if (Input.IsActionJustPressed(Controls.debug_noclip.ToString()))
+            ToggleNoClip();
+    }
+
+    private void ToggleNoClip()
+    {
+        _noClipping = !_noClipping;
+        CollisionMask = _noClipping ? (uint)0 : 1;
     }
 
     public void WeaponEquipped(Weapon weapon)
@@ -156,7 +168,6 @@ public partial class Player : ICutsceneActor
         // Note: override for when we're moving in a cutscene per cutscene instructions.
         if (_currentTargetPosition.HasValue) {
             MoveAndSlide();
-            //_playerPositionLabel.Text = $"{Position.ToString("0.00")}";
             return;
         }
 
@@ -171,14 +182,12 @@ public partial class Player : ICutsceneActor
 		MoveAndSlide();
 
         //GD.Print($"Rotation = {Rotation} , RotationDegrees = {RotationDegrees}");
-        //var angle = Mathf.Atan2(Rotation.Z, Rotation.X);
         _playerStatus.UpdatePlayerPosition(Position, RotationDegrees.Y);
-        //_playerPositionLabel.Text = Position.ToString("0.00");
     }
 
 	private Vector3 ProcessGravity(double delta, Vector3 velocity)
 	{
-        if (!IsOnFloor())
+        if (!_noClipping && !IsOnFloor())
             velocity.Y -= (float)(Gravity * delta);
         return velocity;
 	}
@@ -205,11 +214,12 @@ public partial class Player : ICutsceneActor
             if (inputMovement > 0)
                 backwardsMod = BACKWARDS_MODIFIER;
 
+            var noclipMod = _noClipping ? NOCLIP_SPEED_BONUS : 1.0f;
 
             if (inputMovement > 0 && Input.IsActionJustPressed(Controls.run.ToString()))
                 StartQuickTurn();
 
-            var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod;
+            var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod * noclipMod;
 
             velocity.X = movement.X;
             velocity.Z = movement.Z;
@@ -228,8 +238,9 @@ public partial class Player : ICutsceneActor
     {
         if (_playerStatus.IsRotationPrevented()) return;
 
+        var noclipFactor = _noClipping ? NOCLIP_SPEED_BONUS : 1;
         if (inputRotation != 0 && !IsQuickTurning)
-            RotateY(inputRotation * ROTATION_SPEED * (float)delta * -1);
+            RotateY(inputRotation * ROTATION_SPEED * (float)delta * -1 * noclipFactor);
     }
 
     private void StartQuickTurn() {

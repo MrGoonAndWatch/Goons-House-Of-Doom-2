@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=22 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
 [ext_resource type="PackedScene" uid="uid://dov4b3kwtujxh" path="res://prefabs/ui/note_reader.tscn" id="8_2pvdi"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="8_64i7v"]
+[ext_resource type="Script" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
 [ext_resource type="Shader" path="res://shaders/cc0/ps1-model.gdshader" id="11_mfdbx"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2prw7"]
@@ -35,27 +36,41 @@ shader_parameter/resolution = Vector2i(320, 240)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree", "_pauseScreenUi", "_hitscanRay", "_playerPositionLabel") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree", "_pauseScreenUi", "_hitscanRay") groups=["player"]]
 floor_max_angle = 1.0472
 script = ExtResource("1_wlo0u")
 _tree = NodePath("human_low/AnimationTree")
 _pauseScreenUi = NodePath("pause_ui")
 _hitscanRay = NodePath("WeaponHitscan")
-_playerPositionLabel = NodePath("DEBUG_UI/PlayerPosLabel")
 
-[node name="DEBUG_UI" type="Control" parent="."]
-visible = false
+[node name="DEBUG_UI" type="Control" parent="." node_paths=PackedStringArray("PlayerPositionLabel", "PlayerRotationLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("9_a87b7")
+PlayerPositionLabel = NodePath("ColorRect/PlayerPositionLabel")
+PlayerRotationLabel = NodePath("ColorRect/PlayerRotationLabel")
 
-[node name="PlayerPosLabel" type="Label" parent="DEBUG_UI"]
+[node name="ColorRect" type="ColorRect" parent="DEBUG_UI"]
 layout_mode = 0
-offset_right = 40.0
+offset_right = 150.0
+offset_bottom = 50.0
+color = Color(0, 0, 0, 1)
+
+[node name="PlayerPositionLabel" type="Label" parent="DEBUG_UI/ColorRect"]
+layout_mode = 0
+offset_right = 53.0
 offset_bottom = 23.0
+text = "AAAAA"
+
+[node name="PlayerRotationLabel" type="Label" parent="DEBUG_UI/ColorRect"]
+offset_top = 20.0
+offset_right = 53.0
+offset_bottom = 43.0
+text = "AAAAA"
 
 [node name="cutscene_ui" type="Control" parent="." node_paths=PackedStringArray("TopBar", "BottomBar")]
 layout_direction = 2
@@ -176,7 +191,18 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.96, 0)
 
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
-bones/6/rotation = Quaternion(-0.00076687, -0.00051226, -9.84827e-05, 1)
+bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
+bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
+bones/6/rotation = Quaternion(-0.172092, -0.115102, 0.0203328, 0.978122)
+bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
+bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
+bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
+bones/12/rotation = Quaternion(0.0979958, -0.289406, -0.16221, 0.938258)
+bones/13/rotation = Quaternion(-0.118536, 0.0982626, -0.00322419, 0.98807)
+bones/14/rotation = Quaternion(0.689382, -0.0464481, 0.0114179, 0.722817)
+bones/16/rotation = Quaternion(0.112654, 0.258428, 0.152396, 0.947259)
+bones/17/rotation = Quaternion(-0.118087, -0.0367386, 0.0107796, 0.992265)
+bones/18/rotation = Quaternion(0.689446, 0.0506068, -0.00810963, 0.722522)
 
 [node name="HumanLow" parent="human_low/ArmLow/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("ShaderMaterial_lpkus")
