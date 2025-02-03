@@ -24,13 +24,11 @@ public partial class Player : ICutsceneActor
 
     private PlayerStatus _playerStatus;
 
-    private bool _isDebugging;
     private bool _noClipping;
     private const float NOCLIP_SPEED_BONUS = 5.0f;
 
     public override void _Ready()
     {
-        _isDebugging = OS.IsDebugBuild();
         _playerStatus = PlayerStatus.GetInstance();
     }
 
@@ -74,7 +72,7 @@ public partial class Player : ICutsceneActor
 
     private void HandleDebugInput()
     {
-        if (!_isDebugging) return;
+        if (!DataSaver.IsDebugBuild()) return;
 
         if (Input.IsActionJustPressed(Controls.debug_noclip.ToString()))
             ToggleNoClip();

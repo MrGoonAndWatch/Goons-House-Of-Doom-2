@@ -43,8 +43,8 @@ RoomName = "Park Entrance"
 RoomId = 1
 RoomLabel = NodePath("RoomName")
 RoomStatus = NodePath("RoomState")
-PlayerMapPositionScale = Vector2(35, 20)
-RoomOriginOffset = Vector2(5, 8)
+PlayerMapPositionScale = Vector2(15, 15)
+RoomOriginOffset = Vector2(5, 5)
 
 [node name="RoomState" type="ColorRect" parent="Room1"]
 layout_mode = 1
@@ -82,6 +82,8 @@ RoomName = "Park Fountain"
 RoomId = 2
 RoomLabel = NodePath("RoomName")
 RoomStatus = NodePath("RoomState")
+PlayerMapPositionScale = Vector2(16.67, 16.67)
+RoomOriginOffset = Vector2(0, -15)
 
 [node name="RoomState" type="ColorRect" parent="Room2"]
 layout_mode = 1
@@ -113,12 +115,15 @@ anchors_preset = 0
 offset_left = 982.0
 offset_top = 720.0
 offset_right = 1132.0
-offset_bottom = 920.0
+offset_bottom = 970.0
 script = ExtResource("3_uvj5g")
 RoomName = "Park Gazebo"
 RoomId = 3
 RoomLabel = NodePath("RoomName")
 RoomStatus = NodePath("RoomState")
+PlayerMapPositionScale = Vector2(10, 14.29)
+RoomOriginOffset = Vector2(-6, 0)
+RoomOrientation = 270
 
 [node name="RoomState" type="ColorRect" parent="Room3"]
 layout_mode = 1
@@ -148,14 +153,17 @@ autowrap_mode = 2
 layout_mode = 3
 anchors_preset = 0
 offset_left = 1115.0
-offset_top = 20.0
-offset_right = 1265.0
+offset_top = 40.0
+offset_right = 1275.0
 offset_bottom = 220.0
 script = ExtResource("3_uvj5g")
 RoomName = "Park Seating"
 RoomId = 4
 RoomLabel = NodePath("RoomName")
 RoomStatus = NodePath("RoomState")
+PlayerMapPositionScale = Vector2(10, 10)
+RoomOriginOffset = Vector2(7, -18)
+RoomOrientation = 90
 
 [node name="RoomState" type="ColorRect" parent="Room4"]
 layout_mode = 1
@@ -246,9 +254,9 @@ color = Color(0.603922, 0, 0.709804, 1)
 
 [node name="Door4" type="Control" parent="." node_paths=PackedStringArray("DoorColor")]
 anchors_preset = 0
-offset_left = 1161.0
+offset_left = 1165.0
 offset_top = 217.0
-offset_right = 1221.0
+offset_right = 1225.0
 offset_bottom = 227.0
 script = ExtResource("4_46t2y")
 DoorId = 4

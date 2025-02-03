@@ -11,6 +11,7 @@ public partial class DataSaver : Node3D
 
     private GameState _gameState;
     private GlobalSettings _globalSettings;
+    private bool _debugBuild;
 
     private const string GlobalSettingsFullFilepath = $"{SaveDirectoryPath}/{GlobalSettingsFilename}";
 
@@ -31,6 +32,7 @@ public partial class DataSaver : Node3D
 
         ResetState();
 
+        _debugBuild = OS.IsDebugBuild();
         _globalSettings = new GlobalSettings
         {
             TotalVolume = 80.0f,
@@ -41,6 +43,12 @@ public partial class DataSaver : Node3D
         };
 
         LoadGlobalSettingsFromFile();
+    }
+
+    public static bool IsDebugBuild()
+    {
+        if (Instance == null) return false;
+        return Instance._debugBuild;
     }
 
     public static void ResetState()

@@ -141,7 +141,10 @@ public partial class GameConstants : GodotObject
         confirm,
         aim,
         pause,
-        debug_noclip
+        debug_noclip,
+        debug_savegame,
+        debug_loadgame,
+        debug_warp
     }
 
     public enum ControlBinding
@@ -163,6 +166,14 @@ public partial class GameConstants : GodotObject
         Unknown = 1,
         Opened = 2,
         Locked = 3,
+    }
+
+    public enum RoomOrientation
+    {
+        Normal = 0,
+        Rotated90Degrees = 90,
+        Rotated180Degrees = 180,
+        Rotated270Degrees = 270
     }
 
     public static Dictionary<GameDifficulty, Dictionary<PassCodeType, string>> PassCodeLookup = new()

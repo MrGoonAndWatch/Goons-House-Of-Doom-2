@@ -95,7 +95,7 @@ RoomId = 2
 doors = [NodePath("../teleport_to_entrace"), NodePath("../museum_door/DoorBody"), NodePath("../teleport_to_gazebo"), NodePath("../teleport_to_seating")]
 
 [node name="Player" parent="SubViewport" instance=ExtResource("3_817eo")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.79959, 0.495189, 13.3138)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.79959, 0.495189, 12.1799)
 
 [node name="test_grid_map" parent="SubViewport" instance=ExtResource("4_5l6xx")]
 data = {

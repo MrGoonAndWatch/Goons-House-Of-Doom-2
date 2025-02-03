@@ -18,9 +18,13 @@ public partial class MapData : Control
 
     private MapRoomData _currentRoom;
 
+    private Vector2 _playerIconCenteringOffset;
+
     public override void _Ready()
     {
         AreaLabel.Text = AreaName;
+        _playerIconCenteringOffset = PlayerIcon.Size / 2;
+        GD.Print($"_playerIconCenteringOffset={_playerIconCenteringOffset}");
         RefreshMap();
     }
 
@@ -36,9 +40,21 @@ public partial class MapData : Control
 
         var playerStatus = PlayerStatus.GetInstance();
         var playerPos = playerStatus.GetPlayerPosition();
-        var scaledPlayerPos = new Vector2((playerPos.X + _currentRoom.RoomOriginOffset.X) * _currentRoom.PlayerMapPositionScale.X, (playerPos.Z + _currentRoom.RoomOriginOffset.Y) * _currentRoom.PlayerMapPositionScale.Y);
+        var isSideways = _currentRoom.RoomOrientation == GameConstants.RoomOrientation.Rotated90Degrees || _currentRoom.RoomOrientation == GameConstants.RoomOrientation.Rotated270Degrees;
+        var playerX = isSideways ? playerPos.Z : playerPos.X;
+        var playerY = isSideways ? playerPos.X : playerPos.Z;
+        var flipX = _currentRoom.RoomOrientation == GameConstants.RoomOrientation.Rotated270Degrees;
+        var flipY = _currentRoom.RoomOrientation == GameConstants.RoomOrientation.Rotated90Degrees || _currentRoom.RoomOrientation == GameConstants.RoomOrientation.Rotated180Degrees;
+        var backwardsRoomMultiplier = new Vector2(flipX ? -1 : 1, flipY ? -1 : 1);
+        float roomRotation = (int)_currentRoom.RoomOrientation;
+
+        var scaledPlayerPos = new Vector2((playerX + _currentRoom.RoomOriginOffset.X) * _currentRoom.PlayerMapPositionScale.X, 
+            (playerY + _currentRoom.RoomOriginOffset.Y) * _currentRoom.PlayerMapPositionScale.Y) 
+            * backwardsRoomMultiplier + _playerIconCenteringOffset;
         PlayerIcon.Position = _currentRoom.Position + scaledPlayerPos;
-        PlayerIcon.RotationDegrees = (-playerStatus.GetPlayerAngle()) + 90;
+        PlayerIcon.RotationDegrees = (-(playerStatus.GetPlayerAngle() + roomRotation)) + 90;
+
+        //GD.Print($"PlayerMapPosUpdate: playerPos={playerPos} | isSideways={isSideways} | isBackwards={isBackwards} | playerX={playerX} | playerY={playerY} | backwardsRoomMultiplier={backwardsRoomMultiplier} | roomRotation={roomRotation} | scaledPlayerPos={scaledPlayerPos} | PlayerIcon.Position={PlayerIcon.Position} | PlayerIcon.RotationDegrees={PlayerIcon.RotationDegrees}");
     }
 
     public void SetCurrentRoom(int roomId)
