@@ -93,6 +93,7 @@ public partial class PlayerStatus : Node
         ItemBoxOpened = false;
         ReadyToShoot = false;
         IsInCutscene = false;
+        EquipedWeapon = null;
 
         DataSaver.ResetState();
         MapStatus.GetInstance()?.InitializeMapStatus();

@@ -33,11 +33,10 @@ public abstract partial class Weapon : Item
         return false;
     }
 
-    public override bool UseItem(PlayerInventory playerInventory)
+    public override bool UseItem()
     {
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.EquipWeapon(this);
-        RefreshInventoryUi(playerInventory);
 
         return false;
     }

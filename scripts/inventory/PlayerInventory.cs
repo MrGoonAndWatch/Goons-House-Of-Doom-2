@@ -292,9 +292,10 @@ public partial class PlayerInventory : Node3D
         switch (action)
         {
             case GameConstants.MenuActionType.Use:
-                var usedItem = Items[_currentItemIndex].Item.UseItem(this);
+                var usedItem = Items[_currentItemIndex].Item.UseItem();
                 if (usedItem)
                     UsedItem();
+                RefreshItemUi();
                 CloseActionMenu();
                 InventoryStatusUi.ToggleMenu();
                 break;
@@ -439,6 +440,7 @@ public partial class PlayerInventory : Node3D
     {
         for (var i = 0; i < ItemDirty.Length; i++)
             ItemDirty[i] = true;
+        EquipDirty = true;
         SyncedWithItemBox = false;
     }
 

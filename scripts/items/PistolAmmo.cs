@@ -35,7 +35,7 @@ public partial class PistolAmmo : Item
         return true;
     }
 
-    public override bool UseItem(PlayerInventory playerInventory)
+    public override bool UseItem()
     {
         return false;
     }
