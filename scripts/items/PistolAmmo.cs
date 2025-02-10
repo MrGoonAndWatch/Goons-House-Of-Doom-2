@@ -1,5 +1,3 @@
-using Godot;
-
 public partial class PistolAmmo : Item
 {
     public override ComboResult Combine(Item otherItem)

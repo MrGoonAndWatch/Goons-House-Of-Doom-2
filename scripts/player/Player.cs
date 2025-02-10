@@ -5,13 +5,13 @@ using static GameConstants;
 public partial class Player : ICutsceneActor
 {
     [Export]
-    private AnimationTree _tree;
-    [Export]
     private PauseScreenUi _pauseScreenUi;
     [Export]
     private RayCast3D _hitscanRay;
     [Export]
     private PlayerInventory _playerInventory;
+    [Export]
+    private PlayerAnimationControl _playerAnimationControl;
 
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
@@ -66,7 +66,7 @@ public partial class Player : ICutsceneActor
         {
             _playerStatus.Aiming = true;
             _playerStatus.ReadyToShoot = false;
-            _tree.Set(GameConstants.Animation.Player.Aiming, true);
+            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Aiming, true);
         }
         else if (!_playerStatus.HasAnyUiOpen() && _playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
             EndAiming();
@@ -90,14 +90,14 @@ public partial class Player : ICutsceneActor
     {
         if (weapon == null) return;
 
-        _tree.Set(weapon.GetEquipAnimationName(), true);
+        _playerAnimationControl.SetAnimationVariable(weapon.GetEquipAnimationName(), true);
     }
 
     public void WeaponUnequipped(Weapon weapon)
     {
         if (weapon == null) return;
         EndAiming();
-        _tree.Set(weapon.GetEquipAnimationName(), false);
+        _playerAnimationControl.SetAnimationVariable(weapon.GetEquipAnimationName(), false);
     }
 
     public void OnShootingReady()
@@ -108,18 +108,18 @@ public partial class Player : ICutsceneActor
     private void EndAiming()
     {
         _playerStatus.Aiming = false;
-        _tree.Set(GameConstants.Animation.Player.Aiming, false);
+        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Aiming, false);
     }
 
     private void HandleShooting()
     {
         if (_playerStatus.CanShoot() && _playerStatus.Aiming && Input.IsActionJustPressed(Controls.confirm.ToString()))
-            _playerStatus.EquipedWeapon.ShootWeapon(_playerInventory, _hitscanRay, _tree);
+            _playerStatus.EquipedWeapon.ShootWeapon(_playerInventory, _hitscanRay, _playerAnimationControl);
     }
 
     public void OnShootingEnded()
     {
-        _tree.Set(GameConstants.Animation.Player.Fire, false);
+        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Fire, false);
         _playerStatus.ReadyToShoot = true;
     }
 
@@ -156,7 +156,7 @@ public partial class Player : ICutsceneActor
     {
         if (_playerStatus.IsMovementPrevented())
         {
-            _tree.Set(GameConstants.Animation.Player.Walking, false);
+            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
             return new Vector3(0, velocity.Y, 0);
         }
 
@@ -184,12 +184,12 @@ public partial class Player : ICutsceneActor
             velocity.X = movement.X;
             velocity.Z = movement.Z;
 
-            _tree.Set(GameConstants.Animation.Player.Walking, true);
+            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, true);
         }
         else
         {
             velocity = new Vector3(0, velocity.Y, 0);
-            _tree.Set(GameConstants.Animation.Player.Walking, false);
+            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
         }
         return velocity;
     }
@@ -224,7 +224,7 @@ public partial class Player : ICutsceneActor
 
     public override void SetAnimationFlag(string flagName, Variant value)
     {
-        _tree.Set(flagName, value);
+        _playerAnimationControl.SetAnimationVariable(flagName, value);
     }
 
     public void DebugTweenToAngle(float angle, Action callback)

@@ -56,13 +56,13 @@ public abstract partial class Weapon : Item
         return true;
     }
 
-    public void ShootWeapon(PlayerInventory playerInventory, RayCast3D hitscanRay, AnimationTree tree)
+    public void ShootWeapon(PlayerInventory playerInventory, RayCast3D hitscanRay, PlayerAnimationControl playerAnimationControl)
     {
         var playerStatus = PlayerStatus.GetInstance();
         if (GetAmmo() > 0)
         {
             playerStatus.ReadyToShoot = false;
-            tree.Set(GameConstants.Animation.Player.Fire, true);
+            playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Fire, true);
             PlaySfx();
             AddAmmo(-1);
             playerInventory.SetAllDirty();

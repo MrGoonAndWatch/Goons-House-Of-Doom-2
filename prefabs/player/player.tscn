@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=23 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="8_64i7v"]
 [ext_resource type="Script" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
 [ext_resource type="Shader" path="res://shaders/cc0/ps1-model.gdshader" id="11_mfdbx"]
+[ext_resource type="Script" path="res://scripts/player/PlayerAnimationControl.cs" id="13_0urwd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2prw7"]
 font = ExtResource("6_f4pxk")
@@ -36,13 +37,13 @@ shader_parameter/resolution = Vector2i(320, 240)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_tree", "_pauseScreenUi", "_hitscanRay", "_playerInventory") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_playerAnimationControl") groups=["player"]]
 floor_max_angle = 1.0472
 script = ExtResource("1_wlo0u")
-_tree = NodePath("human_low/AnimationTree")
 _pauseScreenUi = NodePath("pause_ui")
 _hitscanRay = NodePath("WeaponHitscan")
 _playerInventory = NodePath("PlayerInventory")
+_playerAnimationControl = NodePath("PlayerAnimationControl")
 
 [node name="DEBUG_UI" type="Control" parent="." node_paths=PackedStringArray("PlayerPositionLabel", "PlayerRotationLabel")]
 visible = false
@@ -186,6 +187,10 @@ InventoryCursor = NodePath("../item_box/ItemSlots/ItemCursor")
 ItemBoxCursor = NodePath("../item_box/ItemBoxCursor")
 ItemBoxScroll = NodePath("../item_box/ScrollContainer")
 
+[node name="PlayerAnimationControl" type="Node3D" parent="." node_paths=PackedStringArray("_animationTree")]
+script = ExtResource("13_0urwd")
+_animationTree = NodePath("../human_low/AnimationTree")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
@@ -196,7 +201,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.0791956, -0.0529688, 0.00925345, 0.995408)
+bones/6/rotation = Quaternion(-0.211782, -0.141648, 0.0250671, 0.966673)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
