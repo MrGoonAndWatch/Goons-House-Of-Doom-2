@@ -25,7 +25,7 @@ public partial class GreenJuice : Item
         return null;
     }
 
-    public override bool UseItem()
+    public override bool UseItem(PlayerInventory playerInventory)
     {
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.AddHealth(GameConstants.GreenMedicineHp);

@@ -25,7 +25,7 @@ public partial class Garbage : Item
         return 99;
     }
 
-    public override bool UseItem()
+    public override bool UseItem(PlayerInventory playerInventory)
     {
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.SetHealth(40);

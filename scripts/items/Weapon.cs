@@ -1,3 +1,4 @@
+using Godot;
 using System;
 
 public abstract partial class Weapon : Item
@@ -14,10 +15,11 @@ public abstract partial class Weapon : Item
         return IsUnlimited() ? 1 : Ammo;
     }
 
-    public void AddAmmo(int amount = -1)
+    public void AddAmmo(int amount)
     {
         if (IsUnlimited()) return;
         Ammo += amount;
+        if (Ammo < 0) Ammo = 0;
     }
 
     public abstract void PlaySfx();
@@ -31,11 +33,12 @@ public abstract partial class Weapon : Item
         return false;
     }
 
-    public override bool UseItem()
+    public override bool UseItem(PlayerInventory playerInventory)
     {
         var playerStatus = PlayerStatus.GetInstance();
         playerStatus.EquipWeapon(this);
-        playerStatus.SetInventoryEquipDirty();
+        RefreshInventoryUi(playerInventory);
+
         return false;
     }
 
@@ -51,5 +54,37 @@ public abstract partial class Weapon : Item
     public virtual bool ShowQty()
     {
         return true;
+    }
+
+    public void ShootWeapon(PlayerInventory playerInventory, RayCast3D hitscanRay, AnimationTree tree)
+    {
+        var playerStatus = PlayerStatus.GetInstance();
+        if (GetAmmo() > 0)
+        {
+            playerStatus.ReadyToShoot = false;
+            tree.Set(GameConstants.Animation.Player.Fire, true);
+            PlaySfx();
+            AddAmmo(-1);
+            playerInventory.SetAllDirty();
+            if (IsHitscan())
+            {
+                var collider = hitscanRay.GetCollider();
+                if (collider is Enemy)
+                    (collider as Enemy).TakeDamage(GetDamagePerHit());
+            }
+            else
+            {
+                // TODO: Handle knives and other non-hitscan weapons!
+            }
+        }
+        else if (playerStatus.HasAmmoInInventory(playerInventory))
+        {
+            // TODO: Play reload animation.
+            playerStatus.AddAmmoToCurrentWeaponFromInventory(playerInventory);
+        }
+        else
+        {
+            // TODO: Play no ammo click.
+        }
     }
 }

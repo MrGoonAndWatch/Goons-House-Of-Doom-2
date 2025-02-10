@@ -298,12 +298,6 @@ public partial class PlayerStatus : Node
         //PlayerAnimator.SetLayerWeight(layerIndex, weight);
     }
 
-    public void SetInventoryEquipDirty()
-    {
-        var menu = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
-        menu.EquipDirty = true;
-    }
-
     public HealthStatus GetHealthStatus()
     {
         if (Health == 0)
@@ -356,30 +350,23 @@ public partial class PlayerStatus : Node
 
     public bool CanShoot()
     {
-        return ReadyToShoot && !IsInCutscene && !TakingDamage && Health > 0 && !HasAnyUiOpen();
+        return ReadyToShoot && !IsInCutscene && !TakingDamage && Health > 0 && EquipedWeapon != null && !HasAnyUiOpen();
     }
 
-    public bool WeaponHasAmmo()
+    public bool HasAmmoInInventory(PlayerInventory playerInventory)
     {
-        return EquipedWeapon != null && EquipedWeapon.GetAmmo() > 0;
+        return GetFirstCompatibleAmmoSlot(EquipedWeapon, playerInventory) != null;
     }
 
-    public bool HasAmmoInInventory()
+    public void AddAmmoToCurrentWeaponFromInventory(PlayerInventory playerInventory)
     {
-        var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
-        return GetFirstCompatibleAmmoSlot(EquipedWeapon, inv) != null;
-    }
-
-    public void AddAmmoToCurrentWeaponFromInventory()
-    {
-        var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
-        var ammoSlot = GetFirstCompatibleAmmoSlot(EquipedWeapon, inv);
+        var ammoSlot = GetFirstCompatibleAmmoSlot(EquipedWeapon, playerInventory);
         if (ammoSlot == null) return;
 
-        foreach(var item in inv.Items)
+        foreach(var item in playerInventory.Items)
             if(item?.Item != null && item.Item.ItemId == EquipedWeapon.ItemId)
                 item.Combine(ammoSlot);
-        inv.SetAllDirty();
+        playerInventory.SetAllDirty();
     }
 
     private static ItemSlot GetFirstCompatibleAmmoSlot(Weapon weapon, PlayerInventory inv)

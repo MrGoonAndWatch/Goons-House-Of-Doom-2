@@ -10,6 +10,8 @@ public partial class Player : ICutsceneActor
     private PauseScreenUi _pauseScreenUi;
     [Export]
     private RayCast3D _hitscanRay;
+    [Export]
+    private PlayerInventory _playerInventory;
 
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
@@ -112,47 +114,7 @@ public partial class Player : ICutsceneActor
     private void HandleShooting()
     {
         if (_playerStatus.CanShoot() && _playerStatus.Aiming && Input.IsActionJustPressed(Controls.confirm.ToString()))
-        {
-            if (_playerStatus.WeaponHasAmmo())
-            {
-                _playerStatus.ReadyToShoot = false;
-                _tree.Set(GameConstants.Animation.Player.Fire, true);
-                _playerStatus.EquipedWeapon.PlaySfx();
-                // NOTE: Can subtract more than 1 here if we need to, probably would need to add another property to the weapon class/implementation.
-                _playerStatus.EquipedWeapon.AddAmmo();
-                var inv = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
-                inv.SetAllDirty();
-                if (_playerStatus.EquipedWeapon.IsHitscan())
-                {
-                    var collider = _hitscanRay.GetCollider();
-                    if(collider is Enemy)
-                    {
-                        (collider as Enemy).TakeDamage(_playerStatus.EquipedWeapon.GetDamagePerHit());
-                    }
-                    //else if(collider is Node)
-                    //{
-                    //    GD.Print($"Didn't hit enemy, hit '{(collider as Node).Name}' instead.");
-                    //}
-                    //else
-                    //{
-                    //    GD.Print($"Hit nothing? Collider==null={collider == null}, collider.type={collider?.GetType()}");
-                    //}
-                }
-                else
-                {
-                    // TODO: Handle knives and other non-hitscan weapons!
-                }
-            }
-            else if (_playerStatus.HasAmmoInInventory())
-            {
-                // TODO: Play reload animation.
-                _playerStatus.AddAmmoToCurrentWeaponFromInventory();
-            }
-            else
-            {
-                // TODO: Play no ammo click.
-            }
-        }
+            _playerStatus.EquipedWeapon.ShootWeapon(_playerInventory, _hitscanRay, _tree);
     }
 
     public void OnShootingEnded()

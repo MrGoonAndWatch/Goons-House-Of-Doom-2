@@ -24,12 +24,17 @@ public abstract partial class Item : Area3D
     public abstract bool IsStackable();
     public abstract int? GetMaxStackSize();
 
-    public abstract bool UseItem();
+    public abstract bool UseItem(PlayerInventory playerInventory);
     public abstract ComboResult Combine(Item otherItem);
 
     public void ForceDestroy()
     {
         if (this is Weapon) (this as Weapon).AddAmmo(QtyOnPickup);
         GetParent().QueueFree();
+    }
+
+    protected static void RefreshInventoryUi(PlayerInventory playerInventory)
+    {
+        playerInventory.EquipDirty = true;
     }
 }

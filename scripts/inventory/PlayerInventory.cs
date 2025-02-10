@@ -292,7 +292,7 @@ public partial class PlayerInventory : Node3D
         switch (action)
         {
             case GameConstants.MenuActionType.Use:
-                var usedItem = Items[_currentItemIndex].Item.UseItem();
+                var usedItem = Items[_currentItemIndex].Item.UseItem(this);
                 if (usedItem)
                     UsedItem();
                 CloseActionMenu();

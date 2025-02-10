@@ -16,11 +16,11 @@ vec4 snap_to_position(vec4 base_position)
 {
 	vec4 snapped_position = base_position;
 	snapped_position.xyz = base_position.xyz / base_position.w;
-	
+
 	vec2 snap_resulotion = floor(vec2(resolution) * (1.0 - jitter));
 	snapped_position.x = floor(snap_resulotion.x * snapped_position.x) / snap_resulotion.x;
 	snapped_position.y = floor(snap_resulotion.y * snapped_position.y) / snap_resulotion.y;
-	
+
 	snapped_position.xyz *= base_position.w;
 	return snapped_position;
 }

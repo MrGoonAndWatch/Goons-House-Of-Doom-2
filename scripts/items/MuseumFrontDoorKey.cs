@@ -1,5 +1,3 @@
-using Godot;
-using System;
 using static GameConstants;
 
 public partial class MuseumFrontDoorKey : Key
