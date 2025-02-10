@@ -2,11 +2,11 @@ using Godot;
 
 public partial class NotePickup : Area3D
 {
-    [Export]
     public NoteData NoteData;
 
     public override void _Ready()
     {
+        NoteData = GetParent<NoteData>();
         var playerStatus = PlayerStatus.GetInstance();
         if (playerStatus == null) return;
 
