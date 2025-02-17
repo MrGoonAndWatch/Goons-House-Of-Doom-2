@@ -51,7 +51,7 @@ public partial class CutsceneManager : Node
 
     public override void _Process(double delta)
 	{
-		if (Input.IsActionJustPressed(GameConstants.Controls.pause.ToString()))
+		if (Input.IsActionJustPressed(GameConstants.Controls.pause.ToString()) && !DebugManager.IsDebugConsoleActive())
 		{
 			SkipCutscene();
 			return;

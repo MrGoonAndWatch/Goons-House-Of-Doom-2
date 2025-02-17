@@ -26,12 +26,12 @@ public partial class Player : ICutsceneActor
 
     private PlayerStatus _playerStatus;
 
-    private bool _noClipping;
     private const float NOCLIP_SPEED_BONUS = 5.0f;
 
     public override void _Ready()
     {
         _playerStatus = PlayerStatus.GetInstance();
+        RefreshNoClip();
     }
 
     public override void _Process(double delta)
@@ -39,12 +39,11 @@ public partial class Player : ICutsceneActor
         HandlePauseMenu();
         HandleAiming();
         HandleShooting();
-        HandleDebugInput();
     }
 
     private void HandlePauseMenu()
     {
-        if (Input.IsActionJustPressed(Controls.pause.ToString()))
+        if (Input.IsActionJustPressed(Controls.pause.ToString()) && !DebugManager.IsDebugConsoleActive())
         {
             if (_playerStatus.Paused)
             {
@@ -72,18 +71,10 @@ public partial class Player : ICutsceneActor
             EndAiming();
     }
 
-    private void HandleDebugInput()
+    public void RefreshNoClip()
     {
-        if (!DataSaver.IsDebugBuild()) return;
-
-        if (Input.IsActionJustPressed(Controls.debug_noclip.ToString()))
-            ToggleNoClip();
-    }
-
-    private void ToggleNoClip()
-    {
-        _noClipping = !_noClipping;
-        CollisionMask = _noClipping ? (uint)0 : 1;
+        var noClipping = DebugManager.IsPlayerNoClipping();
+        CollisionMask = noClipping ? (uint)0 : 1;
     }
 
     public void WeaponEquipped(Weapon weapon)
@@ -147,7 +138,7 @@ public partial class Player : ICutsceneActor
 
 	private Vector3 ProcessGravity(double delta, Vector3 velocity)
 	{
-        if (!_noClipping && !IsOnFloor())
+        if (!DebugManager.IsPlayerNoClipping() && !IsOnFloor())
             velocity.Y -= (float)(Gravity * delta);
         return velocity;
 	}
@@ -174,7 +165,7 @@ public partial class Player : ICutsceneActor
             if (inputMovement > 0)
                 backwardsMod = BACKWARDS_MODIFIER;
 
-            var noclipMod = _noClipping ? NOCLIP_SPEED_BONUS : 1.0f;
+            var noclipMod = DebugManager.IsPlayerNoClipping() ? NOCLIP_SPEED_BONUS : 1.0f;
 
             if (inputMovement > 0 && Input.IsActionJustPressed(Controls.run.ToString()))
                 StartQuickTurn();
@@ -198,7 +189,7 @@ public partial class Player : ICutsceneActor
     {
         if (_playerStatus.IsRotationPrevented()) return;
 
-        var noclipFactor = _noClipping ? NOCLIP_SPEED_BONUS : 1;
+        var noclipFactor = DebugManager.IsPlayerNoClipping() ? NOCLIP_SPEED_BONUS : 1;
         if (inputRotation != 0 && !IsQuickTurning)
             RotateY(inputRotation * ROTATION_SPEED * (float)delta * -1 * noclipFactor);
     }

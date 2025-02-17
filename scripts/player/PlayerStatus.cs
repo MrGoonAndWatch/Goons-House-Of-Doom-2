@@ -166,7 +166,7 @@ public partial class PlayerStatus : Node
         if (!_showingGameOverUi)
             return;
 
-        if (Input.IsActionJustPressed(Controls.pause.ToString()))
+        if (Input.IsActionJustPressed(Controls.pause.ToString()) && !DebugManager.IsDebugConsoleActive())
             GetTree().Quit();
     }
 
@@ -321,7 +321,7 @@ public partial class PlayerStatus : Node
 
     public bool CanOpenMenu()
     {
-        return !IsInCutscene && !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen;
+        return !IsInCutscene && !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen && !DebugManager.IsDebugConsoleActive();
     }
 
     public bool HasAnyUiOpen()

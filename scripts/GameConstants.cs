@@ -141,10 +141,8 @@ public partial class GameConstants : GodotObject
         confirm,
         aim,
         pause,
-        debug_noclip,
-        debug_savegame,
-        debug_loadgame,
-        debug_warp
+        debug_console,
+        debug_console_enter
     }
 
     public enum ControlBinding

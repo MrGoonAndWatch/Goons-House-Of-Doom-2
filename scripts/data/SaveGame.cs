@@ -32,16 +32,6 @@ public partial class SaveGame : Control
         RefreshSaveFileList();
     }
 
-	public override void _Process(double delta)
-	{
-        if (!DataSaver.IsDebugBuild()) return;
-
-        if (Input.IsActionJustPressed(GameConstants.Controls.debug_savegame.ToString()))
-            ShowSaveUi();
-        if (Input.IsActionJustPressed(GameConstants.Controls.debug_loadgame.ToString()))
-            ShowLoadUi();
-    }
-
     public void ShowSaveUi()
     {
         _isLoading = false;

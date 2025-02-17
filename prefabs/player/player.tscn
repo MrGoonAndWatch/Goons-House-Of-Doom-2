@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=24 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dov4b3kwtujxh" path="res://prefabs/ui/note_reader.tscn" id="8_2pvdi"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="8_64i7v"]
 [ext_resource type="Script" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
+[ext_resource type="PackedScene" uid="uid://cegxkqddyvfme" path="res://prefabs/debug_console.tscn" id="10_1ehqn"]
 [ext_resource type="Shader" path="res://shaders/cc0/ps1-model.gdshader" id="11_mfdbx"]
 [ext_resource type="Script" path="res://scripts/player/PlayerAnimationControl.cs" id="13_0urwd"]
 
@@ -201,7 +202,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 [node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.378029, -0.252841, 0.0449034, 0.889466)
+bones/6/rotation = Quaternion(-0.00891202, -0.00596004, 0.000872669, 0.999942)
 bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
 bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
@@ -238,6 +239,8 @@ script = ExtResource("8_0mwpg")
 [node name="WeaponHitscan" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52849, 0, 0)
 target_position = Vector3(1000, 0, 0)
+
+[node name="DebugConsole" parent="." instance=ExtResource("10_1ehqn")]
 
 [connection signal="area_entered" from="InteractHitbox" to="InteractHitbox" method="_OnAreaEntered"]
 [connection signal="area_exited" from="InteractHitbox" to="InteractHitbox" method="_OnAreaExited"]
