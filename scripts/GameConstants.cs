@@ -142,7 +142,8 @@ public partial class GameConstants : GodotObject
         aim,
         pause,
         debug_console,
-        debug_console_enter
+        debug_console_enter,
+        debug_console_backspace
     }
 
     public enum ControlBinding
