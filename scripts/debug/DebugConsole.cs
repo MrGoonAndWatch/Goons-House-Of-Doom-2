@@ -6,6 +6,8 @@ public partial class DebugConsole : Node
     private Control _consoleUi;
     [Export]
     private TextEdit _consoleLine;
+    [Export]
+    private Label _consoleOutput;
 
     private int _previousCommandRetrievalIndex = -1;
 
@@ -36,12 +38,7 @@ public partial class DebugConsole : Node
             RefreshConsole();
         }
         else if (DebugManager.IsDebugConsoleActive() && Input.IsActionJustPressed(GameConstants.Controls.debug_console_enter.ToString()))
-        {
-            DebugManager.ProcessCommand(_consoleLine.Text);
-            _consoleLine.Text = "";
-            DebugManager.ToggleDebugConsole();
-            RefreshConsole();
-        }
+            ProcessCommand();
         else if (DebugManager.IsDebugConsoleActive() && Input.IsActionJustPressed(GameConstants.Controls.debug_console_backspace.ToString()))
             BackspaceConsole();
         else if (DebugManager.IsDebugConsoleActive() && Input.IsActionJustPressed(GameConstants.Controls.up.ToString()))
@@ -57,6 +54,18 @@ public partial class DebugConsole : Node
                 _previousCommandRetrievalIndex--;
             SetCommandFromHistory();
         }
+    }
+
+    private void ProcessCommand()
+    {
+        (var success, var consoleOutput) = DebugManager.ProcessCommand(_consoleLine.Text);
+        _consoleLine.Text = "";
+        if (!string.IsNullOrEmpty(consoleOutput))
+        {
+            _consoleOutput.Modulate = success ? GameConstants.Colors.White : GameConstants.Colors.Red;
+            _consoleOutput.Text = consoleOutput;
+        }
+        RefreshConsole();
     }
 
     private bool SetCommandFromHistory()

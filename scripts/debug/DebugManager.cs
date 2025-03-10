@@ -42,15 +42,15 @@ public partial class DebugManager : Node
         return _instance?._playerIsNoClipping ?? false;
     }
 
-    public static void ProcessCommand(string rawCommand)
+    public static (bool, string) ProcessCommand(string rawCommand)
     {
-        if (_instance == null || !DataSaver.IsDebugBuild()) return;
+        if (_instance == null || !DataSaver.IsDebugBuild()) return (true, "");
 
         var tokenizedCommand = rawCommand.Split(' ')
             .Select(str => str.Trim())
             .Where(str => !string.IsNullOrEmpty(str))
             .ToArray();
-        _instance.ProcessCommand(tokenizedCommand, rawCommand);
+        return _instance.ProcessCommand(tokenizedCommand, rawCommand);
     }
 
     public static Tuple<string, bool> GetPreviousCommand(int commandIndex)
@@ -75,9 +75,12 @@ public partial class DebugManager : Node
         return new Tuple<string, bool>(_previousCommands[index], endOfList);
     }
 
-    private void ProcessCommand(string[] tokenizedCommand, string rawCommand)
+    private (bool, string) ProcessCommand(string[] tokenizedCommand, string rawCommand)
     {
-        if (tokenizedCommand.Length == 0) return;
+        var success = true;
+        var consoleOutput = "";
+
+        if (tokenizedCommand.Length == 0) return (success, consoleOutput);
 
         var baseCommand = tokenizedCommand[0].ToLower();
 
@@ -85,19 +88,31 @@ public partial class DebugManager : Node
         {
             case "noclip":
                 ToggleNoclip();
+                consoleOutput = _playerIsNoClipping ? "noclip enabled" : "noclip disabled";
                 break;
             case "save":
                 OpenSaveUi();
+                consoleOutput = "save screen opened";
                 break;
             case "load":
                 OpenLoadUi();
+                consoleOutput = "load screen opened";
                 break;
             case "go":
-                WarpToScene(tokenizedCommand);
+                (success, consoleOutput) = WarpToScene(tokenizedCommand);
+                break;
+            case "help":
+                consoleOutput = GetHelpCommandPrintout();
+                break;
+            default:
+                consoleOutput = $"unrecognized command '{baseCommand}'";
+                success = false;
                 break;
         }
 
         SaveCommandInHistory(rawCommand);
+
+        return (success, consoleOutput);
     }
 
     private void SaveCommandInHistory(string rawCommand)
@@ -126,19 +141,27 @@ public partial class DebugManager : Node
         saveGameUi.ShowLoadUi();
     }
 
-    private static void WarpToScene(string[] args)
+    private static (bool, string) WarpToScene(string[] args)
     {
         if(args.Length < 2)
         {
-            GD.PrintErr("Cannot run 'go' command without a target scene in the second param!");
-            return;
+            var errorMessage = "cannot run 'go' command without a target scene in the second param!";
+            GD.PrintErr(errorMessage);
+            return (false, errorMessage);
+        }
+
+        var firstArgSanitized = args[1]?.Replace("-", "").ToLower();
+        if (firstArgSanitized == "help" || firstArgSanitized == "h")
+        {
+            return (true, "go {scene-filename-nopath} [{target-x} {target-y} {target-z}] [{target-rot-degrees}] [{door-load-type}]");
         }
 
         var sceneChanger = SceneChanger.GetInstance();
         if (sceneChanger == null)
         {
-            GD.PrintErr("Failed to run 'go' command: failed to find a SceneChanger instance.");
-            return;
+            var errorMessage = "failed to run 'go' command: failed to find a SceneChanger instance.";
+            GD.PrintErr(errorMessage);
+            return (false, errorMessage);
         }
 
         var targetRoom = args[1];
@@ -171,6 +194,17 @@ public partial class DebugManager : Node
             LoadPosition = targetPosition,
             LoadRotation = targetRotation,
         };
+
+        (var validSceneChange, var sceneChangeError) = SceneChanger.IsValidSceneChange(sceneLoadData, doorLoadType);
+        if (!validSceneChange)
+            return (validSceneChange, sceneChangeError);
+
         sceneChanger.ChangeScene(sceneLoadData, doorLoadType);
+        return (true, $"successfully set warp to {targetRoom}");
+    }
+
+    private static string GetHelpCommandPrintout()
+    {
+        return "noclip - toggles noclip\r\nsave - open save screen\r\nload - open load screen\r\ngo - warp to room";
     }
 }

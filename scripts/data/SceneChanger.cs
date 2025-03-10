@@ -35,6 +35,24 @@ public partial class SceneChanger : Node
             OnNewSceneLoaded();
     }
 
+    public static (bool, string) IsValidSceneChange(SceneLoadData sceneLoadData, DoorLoadType doorSceneRaw)
+    {
+        var validSettings = true;
+        var errorMessage = "";
+        if (!ResourceLoader.Exists(sceneLoadData.GetTargetSceneFullPath()))
+        {
+            validSettings = false;
+            errorMessage += $"target scene not found '{sceneLoadData.GetTargetSceneFullPath()}'\r\n";
+        }
+        else if (doorSceneRaw != DoorLoadType.None && !ResourceLoader.Exists($"res://scenes/door_loads/{doorSceneRaw}.tscn"))
+        {
+            validSettings = false;
+            errorMessage += $"invalid DoorLoadType specified '{doorSceneRaw}'\r\n";
+        }
+
+        return (validSettings, errorMessage);
+    }
+
     public void ChangeScene(SceneLoadData sceneLoadData, DoorLoadType doorScene = DoorLoadType.None)
     {
         var playerStatus = PlayerStatus.GetInstance();

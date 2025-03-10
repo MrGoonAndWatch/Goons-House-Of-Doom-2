@@ -2,10 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/debug/DebugConsole.cs" id="1_chw3f"]
 
-[node name="DebugConsole" type="Node3D" node_paths=PackedStringArray("_consoleUi", "_consoleLine")]
+[node name="DebugConsole" type="Node3D" node_paths=PackedStringArray("_consoleUi", "_consoleLine", "_consoleOutput")]
 script = ExtResource("1_chw3f")
 _consoleUi = NodePath("Console")
 _consoleLine = NodePath("Console/DebugTextInput")
+_consoleOutput = NodePath("Console/DebugOutput")
 
 [node name="Console" type="Control" parent="."]
 layout_mode = 3
@@ -15,13 +16,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="DebugOutputBg" type="ColorRect" parent="Console"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_bottom = 100.0
+grow_horizontal = 2
+color = Color(0.447755, 0.44865, 0.509213, 1)
+
 [node name="DebugTextInput" type="TextEdit" parent="Console"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 45.0
+offset_bottom = 50.0
 grow_horizontal = 2
 theme_override_colors/background_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="DebugOutput" type="Label" parent="Console"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_bottom = 250.0
+grow_horizontal = 2
 
 [connection signal="focus_exited" from="Console/DebugTextInput" to="." method="_OnConsoleFocusExit"]
