@@ -53,16 +53,16 @@ public partial class DebugManager : Node
         return _instance.ProcessCommand(tokenizedCommand, rawCommand);
     }
 
-    public static Tuple<string, bool> GetPreviousCommand(int commandIndex)
+    public static (string, bool) GetPreviousCommand(int commandIndex)
     {
-        if (_instance == null) return new Tuple<string, bool>("", false);
+        if (_instance == null) return ("", false);
 
         return _instance.GetPreviousCommandFromCountdown(commandIndex);
     }
 
-    private Tuple<string, bool> GetPreviousCommandFromCountdown(int countFromMostRecent)
+    private (string, bool) GetPreviousCommandFromCountdown(int countFromMostRecent)
     {
-        if (countFromMostRecent < 0) return new Tuple<string, bool>("", false);
+        if (countFromMostRecent < 0) return ("", false);
 
         var endOfList = false;
         if (countFromMostRecent >= _previousCommands.Count)
@@ -72,7 +72,7 @@ public partial class DebugManager : Node
         }
 
         var index = _previousCommands.Count - 1 - countFromMostRecent;
-        return new Tuple<string, bool>(_previousCommands[index], endOfList);
+        return (_previousCommands[index], endOfList);
     }
 
     private (bool, string) ProcessCommand(string[] tokenizedCommand, string rawCommand)

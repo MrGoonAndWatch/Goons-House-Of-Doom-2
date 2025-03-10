@@ -70,9 +70,9 @@ public partial class DebugConsole : Node
 
     private bool SetCommandFromHistory()
     {
-        var previousCommandInfo = DebugManager.GetPreviousCommand(_previousCommandRetrievalIndex);
-        _consoleLine.Text = previousCommandInfo.Item1;
-        return previousCommandInfo.Item2;
+        (var previousCommand, var endOfList) = DebugManager.GetPreviousCommand(_previousCommandRetrievalIndex);
+        _consoleLine.Text = previousCommand;
+        return endOfList;
     }
 
     private void BackspaceConsole()
