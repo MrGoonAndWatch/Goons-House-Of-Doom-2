@@ -7,6 +7,8 @@ public partial class DebugConsole : Node
     [Export]
     private TextEdit _consoleLine;
 
+    private int _previousCommandRetrievalIndex = -1;
+
     public override void _Ready()
     {
         RefreshConsole();
@@ -16,10 +18,12 @@ public partial class DebugConsole : Node
     {
         if (DebugManager.IsDebugConsoleActive())
         {
-            _consoleLine.Text = "";
+            _consoleLine.Text = _consoleLine.Text.Replace("`", "");
             _consoleLine.GrabFocus();
+            _consoleLine.SetCaretColumn(_consoleLine.Text.Length);
         }
         _consoleUi.Visible = DebugManager.IsDebugConsoleActive();
+        _previousCommandRetrievalIndex = -1;
     }
 
     public override void _Process(double delta)
@@ -34,13 +38,32 @@ public partial class DebugConsole : Node
         else if (DebugManager.IsDebugConsoleActive() && Input.IsActionJustPressed(GameConstants.Controls.debug_console_enter.ToString()))
         {
             DebugManager.ProcessCommand(_consoleLine.Text);
+            _consoleLine.Text = "";
             DebugManager.ToggleDebugConsole();
             RefreshConsole();
         }
         else if (DebugManager.IsDebugConsoleActive() && Input.IsActionJustPressed(GameConstants.Controls.debug_console_backspace.ToString()))
-        {
             BackspaceConsole();
+        else if (DebugManager.IsDebugConsoleActive() && Input.IsActionJustPressed(GameConstants.Controls.up.ToString()))
+        {
+            _previousCommandRetrievalIndex++;
+            var endOfList = SetCommandFromHistory();
+            if (endOfList)
+                _previousCommandRetrievalIndex--;
         }
+        else if (DebugManager.IsDebugConsoleActive() && Input.IsActionJustPressed(GameConstants.Controls.down.ToString()))
+        {
+            if (_previousCommandRetrievalIndex > -1)
+                _previousCommandRetrievalIndex--;
+            SetCommandFromHistory();
+        }
+    }
+
+    private bool SetCommandFromHistory()
+    {
+        var previousCommandInfo = DebugManager.GetPreviousCommand(_previousCommandRetrievalIndex);
+        _consoleLine.Text = previousCommandInfo.Item1;
+        return previousCommandInfo.Item2;
     }
 
     private void BackspaceConsole()

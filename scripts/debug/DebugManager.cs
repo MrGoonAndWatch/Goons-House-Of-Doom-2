@@ -1,4 +1,6 @@
 using Godot;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public partial class DebugManager : Node
@@ -9,6 +11,9 @@ public partial class DebugManager : Node
 
     private bool _playerIsNoClipping;
 
+    private List<string> _previousCommands;
+    private const int MaxCommandHistory = 20;
+
     public override void _Ready()
     {
         if(_instance != null)
@@ -18,6 +23,7 @@ public partial class DebugManager : Node
         }
 
         _instance = this;
+        _previousCommands = new List<string>();
     }
 
     public static bool IsDebugConsoleActive()
@@ -44,10 +50,32 @@ public partial class DebugManager : Node
             .Select(str => str.Trim())
             .Where(str => !string.IsNullOrEmpty(str))
             .ToArray();
-        _instance.ProcessCommand(tokenizedCommand);
+        _instance.ProcessCommand(tokenizedCommand, rawCommand);
     }
 
-    private void ProcessCommand(string[] tokenizedCommand)
+    public static Tuple<string, bool> GetPreviousCommand(int commandIndex)
+    {
+        if (_instance == null) return new Tuple<string, bool>("", false);
+
+        return _instance.GetPreviousCommandFromCountdown(commandIndex);
+    }
+
+    private Tuple<string, bool> GetPreviousCommandFromCountdown(int countFromMostRecent)
+    {
+        if (countFromMostRecent < 0) return new Tuple<string, bool>("", false);
+
+        var endOfList = false;
+        if (countFromMostRecent >= _previousCommands.Count)
+        {
+            countFromMostRecent = _previousCommands.Count - 1;
+            endOfList = true;
+        }
+
+        var index = _previousCommands.Count - 1 - countFromMostRecent;
+        return new Tuple<string, bool>(_previousCommands[index], endOfList);
+    }
+
+    private void ProcessCommand(string[] tokenizedCommand, string rawCommand)
     {
         if (tokenizedCommand.Length == 0) return;
 
@@ -68,6 +96,15 @@ public partial class DebugManager : Node
                 WarpToScene(tokenizedCommand);
                 break;
         }
+
+        SaveCommandInHistory(rawCommand);
+    }
+
+    private void SaveCommandInHistory(string rawCommand)
+    {
+        _previousCommands.Add(rawCommand);
+        if (_previousCommands.Count > MaxCommandHistory)
+            _previousCommands.RemoveAt(0);
     }
 
     private void ToggleNoclip()
