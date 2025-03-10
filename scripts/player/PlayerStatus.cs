@@ -326,7 +326,7 @@ public partial class PlayerStatus : Node
 
     public bool HasAnyUiOpen()
     {
-        return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveLoadUiOpen;
+        return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveLoadUiOpen || DebugManager.IsDebugConsoleActive();
     }
 
     public bool IsRotationPrevented()
