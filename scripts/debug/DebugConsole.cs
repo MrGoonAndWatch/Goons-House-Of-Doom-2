@@ -63,4 +63,12 @@ public partial class DebugConsole : Node
         _consoleLine.Text = newText;
         _consoleLine.SetCaretColumn(newCaretColumn);
     }
+
+    // Refocus back to the console input if the focus moves.
+    public void _OnConsoleFocusExit()
+    {
+        if (!DebugManager.IsDebugConsoleActive()) return;
+
+        _consoleLine.GrabFocus();
+    }
 }
