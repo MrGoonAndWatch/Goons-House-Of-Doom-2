@@ -121,6 +121,12 @@ public partial class GhodAudioManager : Node
         PlayOneShotOnPlayer(_instance?._pistolShotSound);
     }
 
+    public static void PlayDeathSfx()
+    {
+        // TODO: Add a death sound and uncomment this!
+        //PlayOneShotOnPlayer(_instance?._playerDeathSound);
+    }
+
     private static void PlayOneShotOnPlayer(AudioStream sound)
     {
         PlayOneShotSound(_instance._playerSfxPlayer, sound);

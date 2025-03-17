@@ -3,6 +3,11 @@ using static GameConstants;
 
 public partial class SceneChanger : Node
 {
+    private const string SceneBasePath = "res://scenes/";
+    public const string GameOverScreen = $"{SceneBasePath}game-over.tscn";
+    public const string StagingArea = $"{SceneBasePath}staging_area.tscn";
+    public const string TitleScreenScene = $"{SceneBasePath}title_screen.tscn";
+
     private static SceneChanger Instance;
 
     private DataSaver _dataSaver;
@@ -67,6 +72,11 @@ public partial class SceneChanger : Node
             FinishSceneLoad();
         else
             GetTree().ChangeSceneToFile($"res://scenes/door_loads/{doorScene}.tscn");
+    }
+
+    public void ChangeSceneDirectly(string targetScene)
+    {
+        GetTree().ChangeSceneToFile(targetScene);
     }
 
     public void FinishSceneLoad()

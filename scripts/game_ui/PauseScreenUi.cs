@@ -78,7 +78,7 @@ public partial class PauseScreenUi : Control
     public void _OnExitToMainMenu()
     {
         // TODO: Confirm before exiting!
-        GetTree().ChangeSceneToFile(GameConstants.TitleScreenScenePath);
+        GetTree().ChangeSceneToFile(SceneChanger.TitleScreenScene);
     }
 
     public void _OnExitToDesktop()

@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://pcie8fsmt8tx"]
+
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="3_bsbjo"]
+[ext_resource type="Script" path="res://scripts/game_ui/GameOverScreen.cs" id="3_wo166"]
+
+[node name="root" type="SubViewportContainer"]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1900, 1000)
+render_target_update_mode = 4
+
+[node name="GameOver" type="Control" parent="SubViewport" node_paths=PackedStringArray("_titleScreenButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_wo166")
+_titleScreenButton = NodePath("VBoxContainer/TitleScreenButton")
+
+[node name="Overlay" type="ColorRect" parent="SubViewport/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.699195, 2.08165e-06, 6.73831e-07, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spacer-Top" type="Control" parent="SubViewport/GameOver/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewport/GameOver/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_bsbjo")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 100
+text = "You Died"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="SubViewport/GameOver/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="TitleScreenButton" type="Button" parent="SubViewport/GameOver/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_bsbjo")
+text = "Return To
+Title Screen"
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+
+[connection signal="pressed" from="SubViewport/GameOver/VBoxContainer/TitleScreenButton" to="SubViewport/GameOver" method="_OnReturnToTitle"]

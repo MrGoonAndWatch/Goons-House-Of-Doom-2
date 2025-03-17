@@ -118,7 +118,6 @@ public partial class PlayerStatus : Node
         //     if(RandomizerEnabled)
         //         RandomizerSeed = RandomizerSeed.GenerateRandomizer(settings);
         // }
-        ProcessGameOverUi(delta);
         ProcessExitInput();
         ProcessHitCooldown(delta);
     }
@@ -129,36 +128,6 @@ public partial class PlayerStatus : Node
     {
         GameSettings = settings;
         ResetGame();
-    }
-
-    private void ProcessGameOverUi(double delta)
-    {
-        if (Health > 0 || _timeUntilShowGameOverUi <= 0)
-            return;
-
-        _timeUntilShowGameOverUi -= delta;
-
-        if (_timeUntilShowGameOverUi <= 0)
-        {
-            EnableGameOverUi();
-        }
-    }
-
-    public void ForceGameOverUi()
-    {
-        EnableGameOverUi();
-    }
-
-    private void EnableGameOverUi()
-    {
-        var hordeModeManager = GetNode<HordeModeManager>(NodePaths.FromSceneRoot.HordeModeManager);
-        if (hordeModeManager == null)
-        {
-            GameOverUi.Visible = true;
-            _showingGameOverUi = true;
-        }
-        else
-            hordeModeManager.OnGameEnd();
     }
 
     private void ProcessExitInput()
@@ -221,7 +190,7 @@ public partial class PlayerStatus : Node
     {
         //GD.Print($"Player was hit for {damage} damage and started animation '{hitAnimationVariable}'");
 
-        if (GetHealthStatus() == HealthStatus.Dead)
+        if (Health <= 0)
             return;
 
         //SoundManager.PlayHitSfx();
@@ -254,6 +223,15 @@ public partial class PlayerStatus : Node
 
         _timeUntilShowGameOverUi = GameOverUiDelay;
 
+        CloseAllOpenUi();
+
+        GhodAudioManager.PlayDeathSfx();
+        var player = GetNode<Player>(NodePaths.FromSceneRoot.Player);
+        player.StartDeath();
+    }
+
+    private void CloseAllOpenUi()
+    {
         if (MenuOpened)
         {
             // TODO: Probably won't need this once we make the game pause while inventory is open!
@@ -274,9 +252,6 @@ public partial class PlayerStatus : Node
             var textReader = GetNode<InspectTextUi>(NodePaths.FromSceneRoot.InspectTextUi);
             textReader.ForceCloseTextbox();
         }
-
-        //SoundManager.PlayDeathSfx();
-        //PlayerAnimator.SetBool(AnimationVariables.Player.Dead, true);
     }
 
     public void EquipWeapon(Weapon weapon, bool forceEquip = false)
@@ -293,10 +268,8 @@ public partial class PlayerStatus : Node
             player.WeaponEquipped(weapon);
             EquipedWeapon = weapon;
         }
-    
-        //var layerIndex = PlayerAnimator.GetLayerIndex(AnimationLayers.Player.EquipLayer);
+
         var weight = EquipedWeapon == null ? 0 : 1;
-        //PlayerAnimator.SetLayerWeight(layerIndex, weight);
     }
 
     public HealthStatus GetHealthStatus()

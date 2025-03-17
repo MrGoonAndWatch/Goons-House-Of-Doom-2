@@ -12,6 +12,6 @@ public partial class DemoEndScreen : Node
 
     private void _OnReturnToTitlePressed()
     {
-        GetTree().ChangeSceneToFile(GameConstants.TitleScreenScenePath);
+        GetTree().ChangeSceneToFile(SceneChanger.TitleScreenScene);
     }
 }

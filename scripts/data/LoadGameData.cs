@@ -27,7 +27,7 @@ public partial class LoadGameData : Node3D
     {
         PlayerStatus.GetInstance().ResetGame();
         _gameState = gameState;
-        GetTree().ChangeSceneToFile(GameConstants.StagingAreaScenePath);
+        GetTree().ChangeSceneToFile(SceneChanger.StagingArea);
     }
 
     public void FinishLoadingFromFile()

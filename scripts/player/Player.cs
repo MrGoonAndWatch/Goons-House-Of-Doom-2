@@ -12,6 +12,10 @@ public partial class Player : ICutsceneActor
     private PlayerInventory _playerInventory;
     [Export]
     private PlayerAnimationControl _playerAnimationControl;
+    [Export]
+    private Control _deathFadeUi;
+    [Export]
+    private ColorRect _deathFadeBg;
 
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
@@ -19,8 +23,11 @@ public partial class Player : ICutsceneActor
 
 	const float QUICK_TURN_DURATION = 0.25f;
 	const float ROTATION_SPEED = 2.0f;
+    const float DEATH_FADEOUT_TIMEOUT = 5.0f;
 
     private bool IsQuickTurning;
+    private bool IsDying;
+    private double _deathFadeoutTimeLeft;
 
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 100;
 
@@ -39,6 +46,7 @@ public partial class Player : ICutsceneActor
         HandlePauseMenu();
         HandleAiming();
         HandleShooting();
+        HandleDeath(delta);
     }
 
     private void HandlePauseMenu()
@@ -112,6 +120,29 @@ public partial class Player : ICutsceneActor
     {
         _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Fire, false);
         _playerStatus.ReadyToShoot = true;
+    }
+
+    private void HandleDeath(double delta)
+    {
+        if (!IsDying) return;
+
+        _deathFadeoutTimeLeft -= delta;
+        UpdateDeathFade();
+
+        if (_deathFadeoutTimeLeft <= 0)
+            FinishDying();
+    }
+
+    private void UpdateDeathFade()
+    {
+        var newAlpha = (DEATH_FADEOUT_TIMEOUT - _deathFadeoutTimeLeft) / DEATH_FADEOUT_TIMEOUT;
+        var newColor = new Color(1, 0, 0, (float)newAlpha);
+        _deathFadeBg.Color = newColor;
+    }
+
+    private void FinishDying()
+    {
+        SceneChanger.GetInstance().ChangeSceneDirectly(SceneChanger.GameOverScreen);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -229,5 +260,25 @@ public partial class Player : ICutsceneActor
     public RayCast3D GetHitscan()
     {
         return _hitscanRay;
+    }
+
+    public void StartDeath()
+    {
+        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.DeathBlendAmount, 1.0);
+        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.DeathGeneric, true);
+
+        // TODO: remove this line when we have real death animations playing!
+        OnDeathAnimationFinished("");
+    }
+
+    public void OnDeathAnimationFinished(string animationName)
+    {
+        // TODO: Eventually we should load in different game over screens based on which animation finished (or set a different visual in the game over screen or whatever makes sense implementation-wise).
+        //         Whenever that happens, use the method param to set something in the state or wherever to help determine what scene to load/visuals to load.
+
+        _deathFadeoutTimeLeft = DEATH_FADEOUT_TIMEOUT;
+        UpdateDeathFade();
+        _deathFadeUi.Visible = true;
+        IsDying = true;
     }
 }
