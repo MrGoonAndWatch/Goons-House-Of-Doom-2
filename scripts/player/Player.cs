@@ -200,11 +200,12 @@ public partial class Player : ICutsceneActor
                 backwardsMod = BACKWARDS_MODIFIER;
 
             var noclipMod = DebugManager.IsPlayerNoClipping() ? NOCLIP_SPEED_BONUS : 1.0f;
+            var speedMod = DebugManager.GetSpeedMod();
 
             if (inputMovement > 0 && Input.IsActionJustPressed(Controls.run.ToString()))
                 StartQuickTurn();
 
-            var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod * noclipMod;
+            var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod * noclipMod * speedMod;
 
             velocity.X = movement.X;
             velocity.Z = movement.Z;

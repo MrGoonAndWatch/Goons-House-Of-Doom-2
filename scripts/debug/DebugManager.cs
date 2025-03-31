@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +12,7 @@ public partial class DebugManager : Node
 
     private List<string> _previousCommands;
     private const int MaxCommandHistory = 20;
+    private float? SpeedMod;
 
     public override void _Ready()
     {
@@ -24,6 +24,13 @@ public partial class DebugManager : Node
 
         _instance = this;
         _previousCommands = new List<string>();
+    }
+
+    public static float GetSpeedMod()
+    {
+        if (_instance == null) return 1.0f;
+        if (_instance.SpeedMod == null) return 1.0f;
+        return _instance.SpeedMod.Value;
     }
 
     public static bool IsDebugConsoleActive()
@@ -100,6 +107,9 @@ public partial class DebugManager : Node
                 break;
             case "go":
                 (success, consoleOutput) = WarpToScene(tokenizedCommand);
+                break;
+            case "speed":
+                (success, consoleOutput) = SetSpeed(tokenizedCommand);
                 break;
             case "help":
                 consoleOutput = GetHelpCommandPrintout();
@@ -203,8 +213,24 @@ public partial class DebugManager : Node
         return (true, $"successfully set warp to {targetRoom}");
     }
 
+    private (bool, string) SetSpeed(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            return (false, "failed to run 'speed' command, no speed specified!");
+        }
+
+        if (float.TryParse(args[1], out var speed))
+        {
+            SpeedMod = speed;
+            return (true, $"set SpeedMod to {speed}x");
+        }
+
+        return (false, "failed to run 'speed' command, second parameter must be a valid float!");
+    }
+
     private static string GetHelpCommandPrintout()
     {
-        return "noclip - toggles noclip\r\nsave - open save screen\r\nload - open load screen\r\ngo - warp to room";
+        return "noclip - toggles noclip\r\nsave - open save screen\r\nload - open load screen\r\ngo - warp to room\r\nspeed - set speed mod";
     }
 }
