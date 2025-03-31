@@ -55,6 +55,8 @@ public partial class DataSaver : Node3D
     {
         if (Instance == null) { return; }
 
+        GD.Print("DataSaver.ResetState called!");
+
         Instance._gameState = new GameState
         {
             DeadEnemies = new int[0],
@@ -72,6 +74,7 @@ public partial class DataSaver : Node3D
             DoorsFound = new int[0],
             DoorsEntered = new int[0],
             LockedDoorsInspected = new int[0],
+            GameSettings = PlayerStatus.GetInstance()?.GameSettings,
             SceneLoadData = new SceneLoadData
             {
                 TargetScene = Instance.GetTree().CurrentScene.Name,
@@ -221,6 +224,7 @@ public partial class DataSaver : Node3D
     {
         _gameState = data;
         var playerStatus = PlayerStatus.GetInstance();
+        playerStatus.GameSettings = _gameState.GameSettings;
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
         var mapStatus = MapStatus.GetInstance();
@@ -311,6 +315,8 @@ public partial class DataSaver : Node3D
 
     public class GameState
     {
+        public GameSettings GameSettings;
+
         public SceneLoadData SceneLoadData;
         public ItemState[] Inventory;
         public ItemState[] ItemBox;
