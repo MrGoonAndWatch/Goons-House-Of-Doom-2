@@ -70,6 +70,7 @@ public partial class SaveGame : Control
         var saver = DataSaver.GetInstance();
         playerStatus.HasSaveLoadUiOpen = false;
         saver.SaveGameStateFromScene(playerStatus, playerInventory, sceneInfo, playerItemBox, mapStatus);
+        saver.IncreaseSaveCount();
         var data = saver.GetGameState();
 
         var roomStr = GameConstants.GetCurrentRoomName(this);
