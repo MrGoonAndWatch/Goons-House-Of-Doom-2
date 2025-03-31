@@ -16,6 +16,8 @@ public partial class Player : ICutsceneActor
     private Control _deathFadeUi;
     [Export]
     private ColorRect _deathFadeBg;
+    [Export]
+    private SaveGame _saveUi;
 
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
@@ -142,6 +144,7 @@ public partial class Player : ICutsceneActor
 
     private void FinishDying()
     {
+        AttemptToWipeSaveData();
         SceneChanger.GetInstance().ChangeSceneDirectly(SceneChanger.GameOverScreen);
     }
 
@@ -280,5 +283,25 @@ public partial class Player : ICutsceneActor
         UpdateDeathFade();
         _deathFadeUi.Visible = true;
         IsDying = true;
+    }
+
+    private void AttemptToWipeSaveData()
+    {
+        if (_playerStatus.GameSettings == null)
+        {
+            GD.PrintErr("Unable to perform RNG chance to delete save files on death. No 'GameSettings' were found under the current PlayerStatus object. Game will assume 'Funny Mode' is turned off and thus not run this check!");
+            return;
+        }
+
+        if (!_playerStatus.GameSettings.FunnyMode) return;
+
+        GD.Print("Rolling dice to see if save data should be wiped.");
+        var randomNumber = GD.Randf();
+        if (randomNumber < FunnyModeProbabilities.ChanceToWipeSaveFileOnDeath)
+        {
+            GD.Print("Actually attempting to wipe save data...");
+            _saveUi.DeleteAllSaveFilesInPlaythrough(_playerStatus.GameSettings.PlaythroughId);
+            // TODO: Taunt the player that we wiped all their saves (maybe with something on the game over screen?).
+        }
     }
 }

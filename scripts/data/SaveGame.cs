@@ -32,6 +32,42 @@ public partial class SaveGame : Control
         RefreshSaveFileList();
     }
 
+    public void DeleteAllSaveFilesInPlaythrough(Guid playthroughId)
+    {
+        if (playthroughId == Guid.Empty)
+        {
+            GD.PrintErr("DeleteAllSaveFilesInPlaythrough was called with an empty Guid, this call will be ignored (so as to not accidentally wipe old save files that existed before PlaythroughId)!");
+            return;
+        }
+
+        RefreshSaveFileList();
+
+        var filesToDelete = new List<string>();
+        for (var i = 0; i < _saveFileNames.Count; i++)
+        {
+            (var saveData, _) = ParseSaveFile(_saveFileNames[i]);
+            if (saveData?.GameSettings?.PlaythroughId == playthroughId)
+                filesToDelete.Add(_saveFileNames[i]);
+        }
+
+        for (var i = 0; i < filesToDelete.Count; i++)
+        {
+            //GD.Print($"Going to delete file '{filesToDelete[i]}'");
+            DeleteFile(filesToDelete[i]);
+        }
+
+        RefreshSaveFileList();
+    }
+
+    private static void DeleteFile(string targetFile)
+    {
+        var targetFilePath = $"{GameConstants.SaveDirectoryPath}/{targetFile}";
+        GD.Print($"Deleting save file '{targetFilePath}'");
+
+        var dir = DirAccess.Open(GameConstants.SaveDirectoryPath);
+        dir.Remove(targetFilePath);
+    }
+
     public void ShowSaveUi()
     {
         _isLoading = false;
@@ -186,21 +222,28 @@ public partial class SaveGame : Control
 
     public void LoadSaveFile(string targetFile)
     {
-        var targetFilePath = $"{GameConstants.SaveDirectoryPath}/{targetFile}";
-        GD.Print($"Loading save file '{targetFilePath}'");
-
-        if (string.IsNullOrEmpty(targetFile) || !FileAccess.FileExists(targetFilePath))
-            return;
-        
-        var file = FileAccess.Open(targetFilePath, FileAccess.ModeFlags.Read);
-        var saveData = file.GetAsText();
-        file.Close();
-        var gameState = JsonConvert.DeserializeObject<DataSaver.GameState>(saveData);
+        (var gameState, var saveData) = ParseSaveFile(targetFile);
+        if (gameState == null) return;
 
         GD.Print($"Save data as game state==null? {gameState == null}, saveData:\r\n{saveData}");
         LoadGameData.GetInstance().SetGameState(gameState);
 
         CloseSaveUi();
+    }
+
+    private static (DataSaver.GameState, string) ParseSaveFile(string targetFile)
+    {
+        var targetFilePath = $"{GameConstants.SaveDirectoryPath}/{targetFile}";
+        GD.Print($"Loading save file '{targetFilePath}'");
+
+        if (string.IsNullOrEmpty(targetFile) || !FileAccess.FileExists(targetFilePath))
+            return (null, null);
+
+        var file = FileAccess.Open(targetFilePath, FileAccess.ModeFlags.Read);
+        var saveData = file.GetAsText();
+        file.Close();
+        var gameState = JsonConvert.DeserializeObject<DataSaver.GameState>(saveData);
+        return (gameState, saveData);
     }
 
     private void _OnBackButtonPressed()

@@ -259,6 +259,11 @@ public partial class GameConstants : GodotObject
         public const string GunshotSfxPath = $"{SfxPrefabFolderPath}/Gunshot.ogg";
     }
 
+    public static class FunnyModeProbabilities
+    {
+        public const float ChanceToWipeSaveFileOnDeath = 0.1f;
+    }
+
     public static Dictionary<int, ZoneRequirements> ZoneKeyMap = new()
     {
         {1, new ZoneRequirements { KeysRequiredToPassZone = new System.Collections.Generic.List<ItemSpawnType> { ItemSpawnType.MuseumFrontDoorKey, ItemSpawnType.Pistol }, ItemIdsInZone = new System.Collections.Generic.List<int>{ 1, 2, 3, 4, 5 } } },

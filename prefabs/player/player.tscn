@@ -38,7 +38,7 @@ shader_parameter/resolution = Vector2i(320, 240)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_playerAnimationControl", "_deathFadeUi", "_deathFadeBg") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_playerAnimationControl", "_deathFadeUi", "_deathFadeBg", "_saveUi") groups=["player"]]
 floor_max_angle = 1.0472
 script = ExtResource("1_wlo0u")
 _pauseScreenUi = NodePath("pause_ui")
@@ -47,6 +47,7 @@ _playerInventory = NodePath("PlayerInventory")
 _playerAnimationControl = NodePath("PlayerAnimationControl")
 _deathFadeUi = NodePath("GameOverFadeUiContainer/GameOverFadeUi")
 _deathFadeBg = NodePath("GameOverFadeUiContainer/GameOverFadeUi/ColorRect")
+_saveUi = NodePath("save_game_ui")
 
 [node name="DEBUG_UI" type="Control" parent="." node_paths=PackedStringArray("PlayerPositionLabel", "PlayerRotationLabel")]
 visible = false
@@ -208,19 +209,30 @@ bones/1/rotation = Quaternion(0.0004745, 1, 4.92726e-07, 0.000336842)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/rotation = Quaternion(-0.472447, 0.325457, 0.674514, 0.464653)
 bones/2/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/3/scale = Vector3(1, 1, 1)
+bones/4/rotation = Quaternion(0.135057, 0.0825111, -0.0168072, 0.987253)
 bones/5/rotation = Quaternion(-0.00639156, 0.00736758, -0.0729528, 0.997288)
-bones/6/rotation = Quaternion(-0.340987, -0.228066, 0.0404828, 0.911084)
+bones/6/rotation = Quaternion(-0.361078, -0.241504, 0.0428804, 0.8997)
+bones/7/rotation = Quaternion(-0.453578, -0.312205, 0.687603, -0.473284)
 bones/7/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(0.135034, -0.0600816, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728707, 0.997127)
 bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.224945, -0.0482026, 0.951451, -0.204495)
 bones/11/scale = Vector3(1, 1, 1)
+bones/12/rotation = Quaternion(0.0979959, -0.289406, -0.16221, 0.938258)
 bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(-0.118536, 0.0982631, -0.00322417, 0.98807)
 bones/13/scale = Vector3(1, 1, 1)
+bones/14/rotation = Quaternion(0.689382, -0.0464487, 0.0114175, 0.722817)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/rotation = Quaternion(0.252838, -0.054622, 0.944297, 0.203452)
 bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(0.112654, 0.258428, 0.152396, 0.947259)
+bones/17/rotation = Quaternion(-0.118087, -0.0367388, 0.0107796, 0.992265)
 bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(0.689446, 0.0506059, -0.00811049, 0.722522)
 bones/18/scale = Vector3(1, 1, 1)
 
 [node name="HumanLow" parent="human_low/ArmLow/Skeleton3D" index="0"]
