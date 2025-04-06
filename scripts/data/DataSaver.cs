@@ -55,8 +55,12 @@ public partial class DataSaver : Node3D
     {
         if (Instance == null) { return; }
 
+        GD.Print("DataSaver.ResetState called!");
+
         Instance._gameState = new GameState
         {
+            GameSettings = PlayerStatus.GetInstance()?.GameSettings,
+            SaveCount = 0,
             DeadEnemies = new int[0],
             DoorsUnlocked = new int[0],
             GrabbedItems = new int[0],
@@ -137,6 +141,11 @@ public partial class DataSaver : Node3D
         SaveItemBox(playerItemBox);
         SaveSceneLoadData(sceneLoadData);
         SaveMapStatus(mapStatus);
+    }
+
+    public void IncreaseSaveCount()
+    {
+        _gameState.SaveCount++;
     }
 
     private void SavePlayerStatus(PlayerStatus playerStatus, PlayerInventory playerInventory)
@@ -221,6 +230,7 @@ public partial class DataSaver : Node3D
     {
         _gameState = data;
         var playerStatus = PlayerStatus.GetInstance();
+        playerStatus.GameSettings = _gameState.GameSettings;
         var playerInventory = GetNode<PlayerInventory>(NodePaths.FromSceneRoot.PlayerInventory);
         var playerItemBox = GetNode<PlayerItemBoxControl>(NodePaths.FromSceneRoot.ItemBoxControl);
         var mapStatus = MapStatus.GetInstance();
@@ -311,6 +321,9 @@ public partial class DataSaver : Node3D
 
     public class GameState
     {
+        public GameSettings GameSettings;
+        public int SaveCount;
+
         public SceneLoadData SceneLoadData;
         public ItemState[] Inventory;
         public ItemState[] ItemBox;

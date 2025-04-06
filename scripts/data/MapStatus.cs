@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System.Diagnostics;
 using System.Linq;
 
 public partial class MapStatus : Node

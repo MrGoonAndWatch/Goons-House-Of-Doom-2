@@ -3,6 +3,11 @@ using static GameConstants;
 
 public partial class SceneChanger : Node
 {
+    private const string SceneBasePath = "res://scenes/";
+    public const string GameOverScreen = $"{SceneBasePath}game-over.tscn";
+    public const string StagingArea = $"{SceneBasePath}staging_area.tscn";
+    public const string TitleScreenScene = $"{SceneBasePath}title_screen.tscn";
+
     private static SceneChanger Instance;
 
     private DataSaver _dataSaver;
@@ -35,6 +40,24 @@ public partial class SceneChanger : Node
             OnNewSceneLoaded();
     }
 
+    public static (bool, string) IsValidSceneChange(SceneLoadData sceneLoadData, DoorLoadType doorSceneRaw)
+    {
+        var validSettings = true;
+        var errorMessage = "";
+        if (!ResourceLoader.Exists(sceneLoadData.GetTargetSceneFullPath()))
+        {
+            validSettings = false;
+            errorMessage += $"target scene not found '{sceneLoadData.GetTargetSceneFullPath()}'\r\n";
+        }
+        else if (doorSceneRaw != DoorLoadType.None && !ResourceLoader.Exists($"res://scenes/door_loads/{doorSceneRaw}.tscn"))
+        {
+            validSettings = false;
+            errorMessage += $"invalid DoorLoadType specified '{doorSceneRaw}'\r\n";
+        }
+
+        return (validSettings, errorMessage);
+    }
+
     public void ChangeScene(SceneLoadData sceneLoadData, DoorLoadType doorScene = DoorLoadType.None)
     {
         var playerStatus = PlayerStatus.GetInstance();
@@ -49,6 +72,11 @@ public partial class SceneChanger : Node
             FinishSceneLoad();
         else
             GetTree().ChangeSceneToFile($"res://scenes/door_loads/{doorScene}.tscn");
+    }
+
+    public void ChangeSceneDirectly(string targetScene)
+    {
+        GetTree().ChangeSceneToFile(targetScene);
     }
 
     public void FinishSceneLoad()

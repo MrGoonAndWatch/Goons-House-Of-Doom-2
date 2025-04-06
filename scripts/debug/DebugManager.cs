@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 using System.Linq;
 
 public partial class DebugManager : Node
@@ -9,6 +10,10 @@ public partial class DebugManager : Node
 
     private bool _playerIsNoClipping;
 
+    private List<string> _previousCommands;
+    private const int MaxCommandHistory = 20;
+    private float? SpeedMod;
+
     public override void _Ready()
     {
         if(_instance != null)
@@ -18,6 +23,14 @@ public partial class DebugManager : Node
         }
 
         _instance = this;
+        _previousCommands = new List<string>();
+    }
+
+    public static float GetSpeedMod()
+    {
+        if (_instance == null) return 1.0f;
+        if (_instance.SpeedMod == null) return 1.0f;
+        return _instance.SpeedMod.Value;
     }
 
     public static bool IsDebugConsoleActive()
@@ -36,20 +49,45 @@ public partial class DebugManager : Node
         return _instance?._playerIsNoClipping ?? false;
     }
 
-    public static void ProcessCommand(string rawCommand)
+    public static (bool, string) ProcessCommand(string rawCommand)
     {
-        if (_instance == null || !DataSaver.IsDebugBuild()) return;
+        if (_instance == null || !DataSaver.IsDebugBuild()) return (true, "");
 
         var tokenizedCommand = rawCommand.Split(' ')
             .Select(str => str.Trim())
             .Where(str => !string.IsNullOrEmpty(str))
             .ToArray();
-        _instance.ProcessCommand(tokenizedCommand);
+        return _instance.ProcessCommand(tokenizedCommand, rawCommand);
     }
 
-    private void ProcessCommand(string[] tokenizedCommand)
+    public static (string, bool) GetPreviousCommand(int commandIndex)
     {
-        if (tokenizedCommand.Length == 0) return;
+        if (_instance == null) return ("", false);
+
+        return _instance.GetPreviousCommandFromCountdown(commandIndex);
+    }
+
+    private (string, bool) GetPreviousCommandFromCountdown(int countFromMostRecent)
+    {
+        if (countFromMostRecent < 0) return ("", false);
+
+        var endOfList = false;
+        if (countFromMostRecent >= _previousCommands.Count)
+        {
+            countFromMostRecent = _previousCommands.Count - 1;
+            endOfList = true;
+        }
+
+        var index = _previousCommands.Count - 1 - countFromMostRecent;
+        return (_previousCommands[index], endOfList);
+    }
+
+    private (bool, string) ProcessCommand(string[] tokenizedCommand, string rawCommand)
+    {
+        var success = true;
+        var consoleOutput = "";
+
+        if (tokenizedCommand.Length == 0) return (success, consoleOutput);
 
         var baseCommand = tokenizedCommand[0].ToLower();
 
@@ -57,17 +95,41 @@ public partial class DebugManager : Node
         {
             case "noclip":
                 ToggleNoclip();
+                consoleOutput = _playerIsNoClipping ? "noclip enabled" : "noclip disabled";
                 break;
             case "save":
                 OpenSaveUi();
+                consoleOutput = "save screen opened";
                 break;
             case "load":
                 OpenLoadUi();
+                consoleOutput = "load screen opened";
                 break;
             case "go":
-                WarpToScene(tokenizedCommand);
+                (success, consoleOutput) = WarpToScene(tokenizedCommand);
+                break;
+            case "speed":
+                (success, consoleOutput) = SetSpeed(tokenizedCommand);
+                break;
+            case "help":
+                consoleOutput = GetHelpCommandPrintout();
+                break;
+            default:
+                consoleOutput = $"unrecognized command '{baseCommand}'";
+                success = false;
                 break;
         }
+
+        SaveCommandInHistory(rawCommand);
+
+        return (success, consoleOutput);
+    }
+
+    private void SaveCommandInHistory(string rawCommand)
+    {
+        _previousCommands.Add(rawCommand);
+        if (_previousCommands.Count > MaxCommandHistory)
+            _previousCommands.RemoveAt(0);
     }
 
     private void ToggleNoclip()
@@ -89,19 +151,27 @@ public partial class DebugManager : Node
         saveGameUi.ShowLoadUi();
     }
 
-    private static void WarpToScene(string[] args)
+    private static (bool, string) WarpToScene(string[] args)
     {
         if(args.Length < 2)
         {
-            GD.PrintErr("Cannot run 'go' command without a target scene in the second param!");
-            return;
+            var errorMessage = "cannot run 'go' command without a target scene in the second param!";
+            GD.PrintErr(errorMessage);
+            return (false, errorMessage);
+        }
+
+        var firstArgSanitized = args[1]?.Replace("-", "").ToLower();
+        if (firstArgSanitized == "help" || firstArgSanitized == "h")
+        {
+            return (true, "go {scene-filename-nopath} [{target-x} {target-y} {target-z}] [{target-rot-degrees}] [{door-load-type}]");
         }
 
         var sceneChanger = SceneChanger.GetInstance();
         if (sceneChanger == null)
         {
-            GD.PrintErr("Failed to run 'go' command: failed to find a SceneChanger instance.");
-            return;
+            var errorMessage = "failed to run 'go' command: failed to find a SceneChanger instance.";
+            GD.PrintErr(errorMessage);
+            return (false, errorMessage);
         }
 
         var targetRoom = args[1];
@@ -134,6 +204,33 @@ public partial class DebugManager : Node
             LoadPosition = targetPosition,
             LoadRotation = targetRotation,
         };
+
+        (var validSceneChange, var sceneChangeError) = SceneChanger.IsValidSceneChange(sceneLoadData, doorLoadType);
+        if (!validSceneChange)
+            return (validSceneChange, sceneChangeError);
+
         sceneChanger.ChangeScene(sceneLoadData, doorLoadType);
+        return (true, $"successfully set warp to {targetRoom}");
+    }
+
+    private (bool, string) SetSpeed(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            return (false, "failed to run 'speed' command, no speed specified!");
+        }
+
+        if (float.TryParse(args[1], out var speed))
+        {
+            SpeedMod = speed;
+            return (true, $"set SpeedMod to {speed}x");
+        }
+
+        return (false, "failed to run 'speed' command, second parameter must be a valid float!");
+    }
+
+    private static string GetHelpCommandPrintout()
+    {
+        return "noclip - toggles noclip\r\nsave - open save screen\r\nload - open load screen\r\ngo - warp to room\r\nspeed - set speed mod";
     }
 }

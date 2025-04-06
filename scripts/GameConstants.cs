@@ -14,8 +14,6 @@ public partial class GameConstants : GodotObject
     public const string ScenesDirectory = "res://scenes/";
     public const string GlobalSettingsFilename = "global.config";
 
-    public const string TitleScreenScenePath = $"{ScenesDirectory}/title_screen.tscn";
-    public const string StagingAreaScenePath = $"{ScenesDirectory}/staging_area.tscn";
     // Starting room for the /demo/ and /full/ maps.
     public const string NewGameStartingScenePath = $"{ScenesDirectory}/{Mode}/park_start.tscn";
     // Starting room for the /debug/ maps
@@ -29,6 +27,7 @@ public partial class GameConstants : GodotObject
     {
         public static Color Clear = Color.Color8(0, 0, 0, 0);
         public static Color White = Color.Color8(255, 255, 255);
+        public static Color Red   = Color.Color8(255, 0, 0);
     }
 
     public enum CutsceneInstructionEndType
@@ -203,6 +202,7 @@ public partial class GameConstants : GodotObject
         public static class FromSceneRoot
         {
             public const string TitleScreen = "/root/TitleScreen";
+            public const string GameOverScreen = $"{SceneRoot}/GameOver";
 
             public const string SceneRoot = "/root/root/SubViewport";
             public const string Player = SceneRoot + "/Player";
@@ -212,7 +212,6 @@ public partial class GameConstants : GodotObject
             public const string PlayerInteract = Player + "/InteractHitbox";
             public const string InspectTextUi = Player + "/InspectTextUI";
             public const string PlayerStatus = "/root/root/PlayerStatus";
-            public const string HordeModeManager = "/root/root/HordeModeManager";
             public const string SaveGameUi = Player + "/save_game_ui";
             public const string CutsceneManager = Player + "/cutscene_ui";
             public const string GammaCorrectionPlayer = Player + "/GammaCorrection/GammaRect";
@@ -232,6 +231,9 @@ public partial class GameConstants : GodotObject
             public const string EquipPistol = "parameters/Arms/conditions/equipPistol";
             public const string Aiming = "parameters/Arms/conditions/aiming";
             public const string Fire = "parameters/Arms/conditions/fire";
+
+            public const string DeathBlendAmount = "parameters/DeathStateMachine/conditions/death-generic";
+            public const string DeathGeneric = "parameters/";
         }
     }
 
@@ -255,6 +257,11 @@ public partial class GameConstants : GodotObject
 
         public const string PainSfxPath = $"{SfxPrefabFolderPath}/Pain.ogg";
         public const string GunshotSfxPath = $"{SfxPrefabFolderPath}/Gunshot.ogg";
+    }
+
+    public static class FunnyModeProbabilities
+    {
+        public const float ChanceToWipeSaveFileOnDeath = 0.1f;
     }
 
     public static Dictionary<int, ZoneRequirements> ZoneKeyMap = new()
@@ -321,7 +328,7 @@ public partial class GameConstants : GodotObject
             return node.GetNode<RoomInfo>(NodePaths.FromSceneRoot.RoomInfo).RoomId;
         else
         {
-            if (!node.HasNode(NodePaths.FromSceneRoot.TitleScreen))
+            if (!node.HasNode(NodePaths.FromSceneRoot.TitleScreen) && !node.HasNode(NodePaths.FromSceneRoot.GameOverScreen))
                 GD.PrintErr($"Couldn't find room_info object in scene {GetCurrentRoomName(node)}!");
             //else
             //    GD.Print("Couldn't find room_info object in scene but this is the title screen so that's expected!");

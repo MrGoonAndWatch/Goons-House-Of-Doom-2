@@ -1,5 +1,4 @@
 using Godot;
-using static GameConstants.Animation;
 
 public abstract partial class ICutsceneActor: CharacterBody3D
 {

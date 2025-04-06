@@ -67,6 +67,7 @@ public partial class PlayerInteract : Node
         }
     }
 
+    // TODO: This _should_ be not needed any longer because this script runs on a per-scene existance, unlike the Unity ver. where the entire player became a singleton on game start.
     public void ResetState()
     {
         _touchingItems.RemoveAll(_ => true);

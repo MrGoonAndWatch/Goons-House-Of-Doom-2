@@ -144,6 +144,7 @@ public partial class TitleScreenUi : Node
 
         var gameSettings = new GameSettings()
         {
+            PlaythroughId = Guid.NewGuid(),
             GameDifficulty = (GameConstants.GameDifficulty) _currentDifficultyIndex,
             FunnyMode = false,
             IsRandomized = isRandomized,

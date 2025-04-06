@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class PlayerAnimationEventHandler : AnimationTree
 {
@@ -12,10 +11,13 @@ public partial class PlayerAnimationEventHandler : AnimationTree
 
 	public void _OnAnimationFinished(StringName animationName)
 	{
-		//GD.Print($"_OnAnimationFinished('{animationName}')");
-		if (animationName.ToString().StartsWith("Fire-"))
+		var animationStr = animationName.ToString();
+        //GD.Print($"_OnAnimationFinished('{animationName}')");
+        if (animationStr.StartsWith("Fire-"))
 			_player.OnShootingEnded();
-		if (animationName.ToString().StartsWith("Aim-"))
+		if (animationStr.StartsWith("Aim-"))
 			_player.OnShootingReady();
+		if (animationStr.StartsWith("Death-"))
+			_player.OnDeathAnimationFinished(animationStr);
 	}
 }
