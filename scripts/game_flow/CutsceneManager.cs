@@ -97,9 +97,12 @@ public partial class CutsceneManager : Node
 
 	public void SkipCutscene()
 	{
+		bool cutsceneWasSkipped = false;
 		if (_currentCutscene != null)
-			_currentCutscene.SkipCutscene();
-		ForceCutsceneEnd();
+            cutsceneWasSkipped = _currentCutscene.SkipCutscene();
+
+		if (cutsceneWasSkipped)
+			ForceCutsceneEnd();
 	}
 
 	private void ForceCutsceneEnd()

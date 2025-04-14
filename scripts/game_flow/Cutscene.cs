@@ -61,9 +61,9 @@ public partial class Cutscene : Node
     {
         if (_currentInstructionIndex >= 0)
         {
-            var currentInstruciton = Instructions[_currentInstructionIndex];
-            if (!string.IsNullOrEmpty(currentInstruciton.AnimationFlag))
-                currentInstruciton.TargetActor.SetAnimationFlag(currentInstruciton.AnimationFlag, false);
+            var currentInstruction = Instructions[_currentInstructionIndex];
+            if (!string.IsNullOrEmpty(currentInstruction.AnimationFlag))
+                currentInstruction.TargetActor.SetAnimationFlag(currentInstruction.AnimationFlag, false);
         }
 
         _currentInstructionIndex++;
@@ -75,6 +75,20 @@ public partial class Cutscene : Node
         }
 
         var nextInstruction = Instructions[_currentInstructionIndex];
+        //GD.Print($"nextInstruction; nextInstruction.Name={nextInstruction.Name}, index={_currentInstructionIndex}, type={nextInstruction.InstructionType}");
+        switch (nextInstruction.InstructionType)
+        {
+            case GameConstants.CutsceneInstructionType.InGameInstruction:
+                HandleInGameCutsceneInstruction(nextInstruction);
+                break;
+            case GameConstants.CutsceneInstructionType.FmvCutscene:
+                HandleFmvCutsceneInstruction(nextInstruction);
+                break;
+        }
+    }
+
+    private void HandleInGameCutsceneInstruction(CutsceneInstruction nextInstruction)
+    {
         if (nextInstruction.EndType == GameConstants.CutsceneInstructionEndType.EndAfterTime)
             _currentInstructionTimeRemaining = nextInstruction.EndTimer;
         else
@@ -92,9 +106,25 @@ public partial class Cutscene : Node
             GhodAudioManager.PlayVoiceClip(_voiceLines[_currentInstructionIndex]);
     }
 
+    private void HandleFmvCutsceneInstruction(CutsceneInstruction nextInstruction)
+    {
+        if(nextInstruction.FmvStream == null)
+        {
+            GD.PrintErr("Cutscene instruction was type 'FmvVideo' but no video parameter was provided in the 'FmvStream' field. Skipping video!");
+            NextInstruction();
+            return;
+        }
+
+        nextInstruction.EndType = GameConstants.CutsceneInstructionEndType.EndWhenVideoEnds;
+        _currentInstructionTimeRemaining = 0;
+
+        var fmvManager = GetNode<FmvManager>(GameConstants.NodePaths.FromSceneRoot.FmvPlayer);
+        fmvManager.PlayVideo(nextInstruction.FmvStream, NextInstruction);
+    }
+
     public override void _Process(double delta)
     {
-        if (!_initialized || _skipped)
+        if (!_initialized || _skipped || CurrentlyWatchingFmv())
             return;
 
         if (_currentInstructionTimeRemaining > 0)
@@ -107,10 +137,10 @@ public partial class Cutscene : Node
         if (_isCurrentActorMoving)
         {
             var reachedDestination = Instructions[_currentInstructionIndex].TargetActor.MoveTowardsPosition(delta);
+            if (reachedDestination)
+                _isCurrentActorMoving = false;
             if (reachedDestination && Instructions[_currentInstructionIndex].EndType == GameConstants.CutsceneInstructionEndType.EndWhenMovementEnds)
                 NextInstruction();
-            else if (reachedDestination)
-                _isCurrentActorMoving = false;
         }
     }
 
@@ -119,20 +149,42 @@ public partial class Cutscene : Node
         return _initialized && _currentInstructionIndex >= (Instructions?.Length ?? 0);
     }
 
-    public void SkipCutscene()
+    public bool SkipCutscene()
     {
         if (_skipped)
-            return;
+            return false;
 
-        _skipped = true;
+        if (CurrentlyWatchingFmv())
+        {
+            var fmvPlayer = GetNode<FmvManager>(GameConstants.NodePaths.FromSceneRoot.FmvPlayer);
+            fmvPlayer.SkipVideo();
+            return false;
+        }
 
         for (; _currentInstructionIndex < Instructions.Length; _currentInstructionIndex++)
         {
             var currentInstruction = Instructions[_currentInstructionIndex];
+            
+            if (CurrentlyWatchingFmv())
+            {
+                _currentInstructionIndex--;
+                NextInstruction();
+                return false;
+            }
             if (currentInstruction.TargetActor != null && !currentInstruction.MoveToPosition.Equals(Vector3.Zero))
                 currentInstruction.TargetActor.MoveToPositionInstantly(currentInstruction.MoveToPosition);
+            
         }
 
         GD.Print("Cutscene skipped!");
+        _skipped = true;
+        return true;
+    }
+
+    private bool CurrentlyWatchingFmv()
+    {
+        if (Instructions == null || _currentInstructionIndex >= Instructions.Length) return false;
+
+        return Instructions[_currentInstructionIndex].InstructionType == GameConstants.CutsceneInstructionType.FmvCutscene;
     }
 }

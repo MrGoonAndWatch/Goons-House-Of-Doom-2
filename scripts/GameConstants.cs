@@ -30,10 +30,22 @@ public partial class GameConstants : GodotObject
         public static Color Red   = Color.Color8(255, 0, 0);
     }
 
+    public enum CutsceneTriggerType
+    {
+        OnSceneLoaded = 0,
+    }
+
+    public enum CutsceneInstructionType
+    {
+        InGameInstruction = 0,
+        FmvCutscene = 1,
+    }
+
     public enum CutsceneInstructionEndType
     {
         EndAfterTime,
-        EndWhenMovementEnds
+        EndWhenMovementEnds,
+        EndWhenVideoEnds,
     }
 
     public enum GameDifficulty
@@ -214,6 +226,7 @@ public partial class GameConstants : GodotObject
             public const string PlayerStatus = "/root/root/PlayerStatus";
             public const string SaveGameUi = Player + "/save_game_ui";
             public const string CutsceneManager = Player + "/cutscene_ui";
+            public const string FmvPlayer = Player + "/fmv_cutscene_ui";
             public const string GammaCorrectionPlayer = Player + "/GammaCorrection/GammaRect";
             public const string GammaCorrectionSolo = SceneRoot + "/GammaCorrection/GammaRect";
             public const string RoomInfo = SceneRoot + "/room_info";

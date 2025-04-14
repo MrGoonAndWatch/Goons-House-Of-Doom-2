@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=25 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="8_64i7v"]
 [ext_resource type="Script" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
 [ext_resource type="PackedScene" uid="uid://cegxkqddyvfme" path="res://prefabs/debug_console.tscn" id="10_1ehqn"]
+[ext_resource type="Script" path="res://scripts/game_flow/FmvManager.cs" id="10_5ldjw"]
 [ext_resource type="Shader" path="res://shaders/cc0/ps1-model.gdshader" id="11_mfdbx"]
 [ext_resource type="Script" path="res://scripts/player/PlayerAnimationControl.cs" id="13_0urwd"]
 
@@ -168,6 +169,27 @@ visible = false
 visible = false
 _notesStatusUi = NodePath("../PlayerInventoryUi/Notes")
 
+[node name="fmv_cutscene_ui" type="Control" parent="." node_paths=PackedStringArray("_fmvPlayer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("10_5ldjw")
+_fmvPlayer = NodePath("VideoStreamPlayer")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="fmv_cutscene_ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand = true
+
 [node name="GammaCorrection" parent="." instance=ExtResource("8_64i7v")]
 
 [node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "EquipSlot", "InventoryStatusUi")]
@@ -213,7 +235,7 @@ bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(0.135057, 0.0825111, -0.0168072, 0.987253)
 bones/5/rotation = Quaternion(-0.00639156, 0.00736758, -0.0729528, 0.997288)
-bones/6/rotation = Quaternion(-0.361078, -0.241504, 0.0428804, 0.8997)
+bones/6/rotation = Quaternion(-0.0718645, -0.0480654, 0.00837921, 0.99622)
 bones/7/rotation = Quaternion(-0.453578, -0.312205, 0.687603, -0.473284)
 bones/7/scale = Vector3(1, 1, 1)
 bones/9/rotation = Quaternion(0.135034, -0.0600816, 0.0169854, 0.988872)
@@ -237,9 +259,6 @@ bones/18/scale = Vector3(1, 1, 1)
 
 [node name="HumanLow" parent="human_low/ArmLow/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("ShaderMaterial_lpkus")
-
-[node name="AnimationTree" parent="human_low" index="2"]
-parameters/DeathBlender/blend_amount = 0
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
@@ -287,6 +306,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0, 0, 1)
 
+[connection signal="finished" from="fmv_cutscene_ui/VideoStreamPlayer" to="fmv_cutscene_ui" method="_OnVideoFinished"]
 [connection signal="area_entered" from="InteractHitbox" to="InteractHitbox" method="_OnAreaEntered"]
 [connection signal="area_exited" from="InteractHitbox" to="InteractHitbox" method="_OnAreaExited"]
 [connection signal="body_entered" from="InteractHitbox" to="InteractHitbox" method="_OnBodyEntered"]
