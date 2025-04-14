@@ -151,7 +151,7 @@ public partial class Player : ICutsceneActor
     public override void _PhysicsProcess(double delta)
     {
         // Note: override for when we're moving in a cutscene per cutscene instructions.
-        if (_currentTargetPosition.HasValue) {
+        if (_currentTargetPosition.HasValue && !_isCutscenePaused) {
             MoveAndSlide();
             return;
         }

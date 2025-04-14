@@ -19,6 +19,7 @@ public partial class Cutscene : Node
     private float _currentInstructionTimeRemaining;
     private bool _isCurrentActorMoving;
     private bool _skipped;
+    private bool _isCutscenePaused;
 
     private Dictionary<int, AudioStream> _voiceLines;
 
@@ -124,7 +125,7 @@ public partial class Cutscene : Node
 
     public override void _Process(double delta)
     {
-        if (!_initialized || _skipped || CurrentlyWatchingFmv())
+        if (!_initialized || _skipped || _isCutscenePaused || CurrentlyWatchingFmv())
             return;
 
         if (_currentInstructionTimeRemaining > 0)
@@ -149,8 +150,25 @@ public partial class Cutscene : Node
         return _initialized && _currentInstructionIndex >= (Instructions?.Length ?? 0);
     }
 
+    public void ToggleCutscenePause()
+    {
+        if (CurrentlyWatchingFmv())
+        {
+            var fmvPlayer = GetNode<FmvManager>(GameConstants.NodePaths.FromSceneRoot.FmvPlayer);
+            _isCutscenePaused = fmvPlayer.PlayPause();
+        }
+        else
+        {
+            _isCutscenePaused = !_isCutscenePaused;
+            if (Instructions[_currentInstructionIndex]?.TargetActor != null)
+                Instructions[_currentInstructionIndex].TargetActor.SetCutscenePaused(_isCutscenePaused);
+        }
+    }
+
     public bool SkipCutscene()
     {
+        _isCutscenePaused = false;
+
         if (_skipped)
             return false;
 

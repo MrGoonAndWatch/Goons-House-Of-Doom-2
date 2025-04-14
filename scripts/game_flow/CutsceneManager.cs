@@ -51,7 +51,13 @@ public partial class CutsceneManager : Node
 
     public override void _Process(double delta)
 	{
-		if (Input.IsActionJustPressed(GameConstants.Controls.pause.ToString()) && !DebugManager.IsDebugConsoleActive())
+		if (_currentCutscene != null && Input.IsActionJustPressed(GameConstants.Controls.pause.ToString()) && !DebugManager.IsDebugConsoleActive())
+		{
+            _currentCutscene.ToggleCutscenePause();
+			return;
+		}
+
+		if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()) && !DebugManager.IsDebugConsoleActive())
 		{
 			SkipCutscene();
 			return;
@@ -95,7 +101,8 @@ public partial class CutsceneManager : Node
         return newPos == targetPos;
     }
 
-	public void SkipCutscene()
+
+    public void SkipCutscene()
 	{
 		bool cutsceneWasSkipped = false;
 		if (_currentCutscene != null)

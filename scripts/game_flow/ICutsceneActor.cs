@@ -5,6 +5,7 @@ public abstract partial class ICutsceneActor: CharacterBody3D
     protected Vector3? _currentTargetPosition;
     private float _currentSpeed;
     private bool _rotatedToTargetPosition;
+    protected bool _isCutscenePaused;
 
     public abstract void SetAnimationFlag(string flagName, Variant value);
 
@@ -24,6 +25,11 @@ public abstract partial class ICutsceneActor: CharacterBody3D
         tween.TweenProperty(this, "rotation:y", targetAngle, 0.25f);
         tween.SetTrans(Tween.TransitionType.Linear);
         tween.TweenCallback(Callable.From(EndRotateToTargetPosition));
+    }
+
+    public void SetCutscenePaused(bool isPaused)
+    {
+        _isCutscenePaused = isPaused;
     }
 
     public bool MoveTowardsPosition(double delta)

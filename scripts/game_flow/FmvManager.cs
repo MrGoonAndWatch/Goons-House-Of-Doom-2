@@ -23,7 +23,11 @@ public partial class FmvManager : Control
         _fmvPlayer.Play();
     }
 
-    // TODO: Implement Pause/Unpause? Currently the skip button is the same as the in game pause button so need to remap that!
+    public bool PlayPause()
+    {
+        _fmvPlayer.Paused = !_fmvPlayer.Paused;
+        return _fmvPlayer.Paused;
+    }
 
     public void SkipVideo()
     {
