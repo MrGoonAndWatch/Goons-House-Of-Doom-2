@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=23 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -11,15 +11,14 @@
 [ext_resource type="Script" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
 [ext_resource type="FontFile" uid="uid://qoog8jprg8ka" path="res://prefabs/ui/ui_font.tres" id="6_f4pxk"]
 [ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
-[ext_resource type="PackedScene" uid="uid://ceo15gfbs2cse" path="res://models/human_low.tscn" id="6_xcsgj"]
 [ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
 [ext_resource type="PackedScene" uid="uid://dov4b3kwtujxh" path="res://prefabs/ui/note_reader.tscn" id="8_2pvdi"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="8_64i7v"]
 [ext_resource type="Script" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
 [ext_resource type="PackedScene" uid="uid://cegxkqddyvfme" path="res://prefabs/debug_console.tscn" id="10_1ehqn"]
 [ext_resource type="Script" path="res://scripts/game_flow/FmvManager.cs" id="10_5ldjw"]
-[ext_resource type="Shader" path="res://shaders/cc0/ps1-model.gdshader" id="11_mfdbx"]
 [ext_resource type="Script" path="res://scripts/player/PlayerAnimationControl.cs" id="13_0urwd"]
+[ext_resource type="PackedScene" uid="uid://dfkwi87y4xryk" path="res://models/protagonist.tscn" id="17_ie47q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2prw7"]
 font = ExtResource("6_f4pxk")
@@ -27,14 +26,6 @@ font_size = 34
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dadhp"]
 height = 2.1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lpkus"]
-render_priority = 0
-shader = ExtResource("11_mfdbx")
-shader_parameter/affine_mapping = false
-shader_parameter/alpha_scissor = 0.5
-shader_parameter/jitter = 0.706
-shader_parameter/resolution = Vector2i(320, 240)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
@@ -215,50 +206,40 @@ ItemBoxScroll = NodePath("../item_box/ScrollContainer")
 
 [node name="PlayerAnimationControl" type="Node3D" parent="." node_paths=PackedStringArray("_animationTree")]
 script = ExtResource("13_0urwd")
-_animationTree = NodePath("../human_low/AnimationTree")
+_animationTree = NodePath("../protagonist/AnimationTree")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
 
-[node name="human_low" parent="." instance=ExtResource("6_xcsgj")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.96, 0)
+[node name="protagonist" parent="." instance=ExtResource("17_ie47q")]
+transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
-[node name="Skeleton3D" parent="human_low/ArmLow" index="0"]
-bones/0/rotation = Quaternion(-2.5281e-07, 0.000336691, 0.000284686, 1)
-bones/0/scale = Vector3(1, 1, 1)
-bones/1/rotation = Quaternion(0.0004745, 1, 4.92726e-07, 0.000336842)
-bones/1/scale = Vector3(1, 1, 1)
-bones/2/rotation = Quaternion(-0.472447, 0.325457, 0.674514, 0.464653)
-bones/2/scale = Vector3(1, 1, 1)
-bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
-bones/3/scale = Vector3(1, 1, 1)
-bones/4/rotation = Quaternion(0.135057, 0.0825111, -0.0168072, 0.987253)
-bones/5/rotation = Quaternion(-0.00639156, 0.00736758, -0.0729528, 0.997288)
-bones/6/rotation = Quaternion(-0.0718645, -0.0480654, 0.00837921, 0.99622)
-bones/7/rotation = Quaternion(-0.453578, -0.312205, 0.687603, -0.473284)
-bones/7/scale = Vector3(1, 1, 1)
-bones/9/rotation = Quaternion(0.135034, -0.0600816, 0.0169854, 0.988872)
-bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728707, 0.997127)
-bones/10/scale = Vector3(1, 1, 1)
-bones/11/rotation = Quaternion(-0.224945, -0.0482026, 0.951451, -0.204495)
-bones/11/scale = Vector3(1, 1, 1)
-bones/12/rotation = Quaternion(0.0979959, -0.289406, -0.16221, 0.938258)
-bones/12/scale = Vector3(1, 1, 1)
-bones/13/rotation = Quaternion(-0.118536, 0.0982631, -0.00322417, 0.98807)
-bones/13/scale = Vector3(1, 1, 1)
-bones/14/rotation = Quaternion(0.689382, -0.0464487, 0.0114175, 0.722817)
-bones/14/scale = Vector3(1, 1, 1)
-bones/15/rotation = Quaternion(0.252838, -0.054622, 0.944297, 0.203452)
-bones/15/scale = Vector3(1, 1, 1)
-bones/16/rotation = Quaternion(0.112654, 0.258428, 0.152396, 0.947259)
-bones/17/rotation = Quaternion(-0.118087, -0.0367388, 0.0107796, 0.992265)
-bones/17/scale = Vector3(1, 1, 1)
-bones/18/rotation = Quaternion(0.689446, 0.0506059, -0.00811049, 0.722522)
-bones/18/scale = Vector3(1, 1, 1)
-
-[node name="HumanLow" parent="human_low/ArmLow/Skeleton3D" index="0"]
-surface_material_override/0 = SubResource("ShaderMaterial_lpkus")
+[node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
+bones/0/position = Vector3(0, -0.0690426, -0.101869)
+bones/1/rotation = Quaternion(0.0362966, 1.20758e-19, -3.78845e-18, 0.999341)
+bones/2/rotation = Quaternion(0.0243553, 5.29792e-19, 9.01428e-18, 0.999703)
+bones/3/rotation = Quaternion(-0.116244, -0.112447, 0.978711, -0.126362)
+bones/4/rotation = Quaternion(0.195199, -0.0570105, -0.0218963, 0.97886)
+bones/5/rotation = Quaternion(0.117709, -0.0674186, -0.145773, 0.979974)
+bones/6/rotation = Quaternion(0.116244, -0.112447, 0.978711, 0.126362)
+bones/7/rotation = Quaternion(0.195199, 0.0570104, 0.0218963, 0.97886)
+bones/8/rotation = Quaternion(0.117709, 0.0674186, 0.145773, 0.979974)
+bones/9/rotation = Quaternion(0.0158587, 0.00989366, 0.998443, -0.0525648)
+bones/9/scale = Vector3(1.00006, 1, 1)
+bones/10/rotation = Quaternion(-0.0782591, -7.37835e-06, -0.0524435, 0.995553)
+bones/11/rotation = Quaternion(0.598274, 0.0169696, -0.0094677, 0.801056)
+bones/11/scale = Vector3(1.00002, 1, 1)
+bones/12/rotation = Quaternion(-0.0158587, 0.00989366, 0.998443, 0.0525648)
+bones/12/scale = Vector3(1.00006, 1, 1)
+bones/13/rotation = Quaternion(-0.0782591, 7.37765e-06, 0.0524435, 0.995553)
+bones/14/rotation = Quaternion(0.598274, -0.0169696, 0.00946769, 0.801056)
+bones/14/scale = Vector3(1.00002, 1, 1)
+bones/15/position = Vector3(4.70573, -26.4547, -1.13817)
+bones/15/rotation = Quaternion(-0.00462749, 0.707092, -0.707092, 0.00462749)
+bones/16/rotation = Quaternion(-0.0335736, 0.706309, 0.706309, -0.0335736)
+bones/17/position = Vector3(-4.70573, -26.4547, -1.13817)
+bones/17/rotation = Quaternion(0.00462749, 0.707092, -0.707092, -0.00462749)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
@@ -316,4 +297,4 @@ color = Color(1, 0, 0, 1)
 [editable path="item_box/ItemSlots"]
 [editable path="PlayerInventoryUi"]
 [editable path="PlayerInventoryUi/Inventory/ItemSlots"]
-[editable path="human_low"]
+[editable path="protagonist"]
