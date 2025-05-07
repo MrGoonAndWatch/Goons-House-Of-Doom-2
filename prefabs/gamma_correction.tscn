@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bbm804mwh6x3r"]
 
-[ext_resource type="Shader" path="res://shaders/cc0/gamma-correction.gdshader" id="1_2v2aa"]
-[ext_resource type="Script" path="res://scripts/LoadGammaSettings.cs" id="2_c0dfw"]
+[ext_resource type="Shader" uid="uid://c21hlrllfpiq4" path="res://shaders/cc0/gamma-correction.gdshader" id="1_2v2aa"]
+[ext_resource type="Script" uid="uid://h4aulb2mapja" path="res://scripts/LoadGammaSettings.cs" id="2_c0dfw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mfx5f"]
 shader = ExtResource("1_2v2aa")

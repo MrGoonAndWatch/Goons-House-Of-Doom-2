@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhputn4ajftv7"]
 
-[ext_resource type="Script" path="res://scripts/CameraChange.cs" id="1_s3vuj"]
+[ext_resource type="Script" uid="uid://bfuerlacufcrr" path="res://scripts/CameraChange.cs" id="1_s3vuj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ibwqi"]
 

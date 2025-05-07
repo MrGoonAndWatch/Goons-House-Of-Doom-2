@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://b551tbih1cuj1"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/ControlsMenuUi.cs" id="1_6n72t"]
-[ext_resource type="Script" path="res://scripts/game_ui/InputMapper.cs" id="1_vrlno"]
+[ext_resource type="Script" uid="uid://30udowwdeaat" path="res://scripts/game_ui/ControlsMenuUi.cs" id="1_6n72t"]
+[ext_resource type="Script" uid="uid://eha4fj6bidyo" path="res://scripts/game_ui/InputMapper.cs" id="1_vrlno"]
 [ext_resource type="LabelSettings" uid="uid://c4eyjl7yb2bj2" path="res://materials/menu_label.tres" id="2_5uu45"]
-[ext_resource type="Script" path="res://scripts/game_ui/ControlRemapButton.cs" id="3_3uibi"]
+[ext_resource type="Script" uid="uid://u3x0lapgwoe5" path="res://scripts/game_ui/ControlRemapButton.cs" id="3_3uibi"]
 
 [node name="controls_setup" type="Control" node_paths=PackedStringArray("_inputMapper")]
 layout_mode = 3

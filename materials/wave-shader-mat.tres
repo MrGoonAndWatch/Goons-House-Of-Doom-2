@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://cnduyexd3lw0x"]
 
-[ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_emu5w"]
+[ext_resource type="Shader" uid="uid://c8g0f51c87pwn" path="res://shaders/water.gdshader" id="1_emu5w"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hg1k2"]
 seed = 1
@@ -18,7 +18,7 @@ noise = SubResource("FastNoiseLite_opbcv")
 [resource]
 render_priority = 0
 shader = ExtResource("1_emu5w")
-shader_parameter/height_scale = 0.1
-shader_parameter/color = Color(0.01, 0.03, 0.05, 1)
 shader_parameter/noise = SubResource("NoiseTexture2D_uvy25")
 shader_parameter/normalmap = SubResource("NoiseTexture2D_b7luc")
+shader_parameter/height_scale = 0.1
+shader_parameter/color = Color(0.01, 0.03, 0.05, 1)

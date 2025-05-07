@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://pcie8fsmt8tx"]
 
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="3_bsbjo"]
-[ext_resource type="Script" path="res://scripts/game_ui/GameOverScreen.cs" id="3_wo166"]
+[ext_resource type="Script" uid="uid://dowc8eac7ih7e" path="res://scripts/game_ui/GameOverScreen.cs" id="3_wo166"]
 
 [node name="root" type="SubViewportContainer"]
 

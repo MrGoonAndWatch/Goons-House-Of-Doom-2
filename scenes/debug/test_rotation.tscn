@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="1_uqswq"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_b0if0"]
-[ext_resource type="Script" path="res://scripts/debug/RotationTest.cs" id="3_6q67x"]
+[ext_resource type="Script" uid="uid://bplfimc0eitef" path="res://scripts/debug/RotationTest.cs" id="3_6q67x"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_nkymg"]
 

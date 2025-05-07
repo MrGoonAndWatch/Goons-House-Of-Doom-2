@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bijoij2s0sosu"]
 
-[ext_resource type="Script" path="res://scripts/items/ItemContainer.cs" id="1_xd12x"]
-[ext_resource type="Script" path="res://scripts/items/Garbage.cs" id="2_7cx0h"]
+[ext_resource type="Script" uid="uid://dx2tsqi1i5hbq" path="res://scripts/items/ItemContainer.cs" id="1_xd12x"]
+[ext_resource type="Script" uid="uid://dv8iarvc5a5ao" path="res://scripts/items/Garbage.cs" id="2_7cx0h"]
 [ext_resource type="Texture2D" uid="uid://cwqg5q50okehx" path="res://textures/TrashCan.png" id="3_k81mm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cbjtn"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfbslpps01evc"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/ItemSlot.cs" id="1_87pgj"]
+[ext_resource type="Script" uid="uid://ctvxhu81bjhr7" path="res://scripts/game_ui/ItemSlot.cs" id="1_87pgj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cq1dx"]
 font_color = Color(0, 0, 0, 1)

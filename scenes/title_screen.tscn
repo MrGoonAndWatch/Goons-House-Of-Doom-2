@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://bsuii6xr2tp36"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/TitleScreenUi.cs" id="1_muklk"]
+[ext_resource type="Script" uid="uid://cm7mwal5bn68e" path="res://scripts/game_ui/TitleScreenUi.cs" id="1_muklk"]
 [ext_resource type="LabelSettings" uid="uid://xrfgmfoqgxgu" path="res://prefabs/ui/title_label.tres" id="2_vbbv1"]
 [ext_resource type="FontFile" uid="uid://qoog8jprg8ka" path="res://prefabs/ui/ui_font.tres" id="3_po7kf"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="4_ovylp"]
@@ -380,6 +380,9 @@ visible = false
 [node name="OptionsMenu" parent="." instance=ExtResource("5_nmfgy")]
 visible = false
 layout_mode = 1
+
+[node name="OptionButton" parent="OptionsMenu/VBoxContainer/Resolution" index="1"]
+popup/item_0/id = 0
 
 [node name="ControlsMenu" parent="." instance=ExtResource("7_4ye8e")]
 visible = false

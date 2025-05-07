@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dfqiqnu7b0uot"]
 
-[ext_resource type="Script" path="res://scripts/puzzles/TeleportToRoomOnTouch.cs" id="1_vv42v"]
+[ext_resource type="Script" uid="uid://bubij32vejgmm" path="res://scripts/puzzles/TeleportToRoomOnTouch.cs" id="1_vv42v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wf5xy"]
 

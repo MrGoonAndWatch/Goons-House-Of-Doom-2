@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ct4akb4bcwxgd"]
 
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_1ogw6"]
-[ext_resource type="Script" path="res://scripts/game_flow/DemoEndScreen.cs" id="1_nhgkx"]
+[ext_resource type="Script" uid="uid://bgyk4yh5stxr0" path="res://scripts/game_flow/DemoEndScreen.cs" id="1_nhgkx"]
 
 [node name="DemoEndScreen" type="Control" node_paths=PackedStringArray("ReturnToTitleButton")]
 layout_mode = 3

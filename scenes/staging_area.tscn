@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_q6pqr"]
 [ext_resource type="PackedScene" uid="uid://ydnc1vlpplu5" path="res://prefabs/room_info.tscn" id="2_l3ljw"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="3_8dqh6"]
-[ext_resource type="Script" path="res://scripts/data/StagingArea.cs" id="4_frkdy"]
+[ext_resource type="Script" uid="uid://b3xyty3oc3xgw" path="res://scripts/data/StagingArea.cs" id="4_frkdy"]
 
 [node name="root" type="SubViewportContainer"]
 material = ExtResource("1_q6pqr")

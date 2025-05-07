@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c2coe4cbjwo0g"]
 
-[ext_resource type="Script" path="res://scripts/enemies/Chaser.cs" id="1_lrh4m"]
+[ext_resource type="Script" uid="uid://cqvwwtj7ld5t1" path="res://scripts/enemies/Chaser.cs" id="1_lrh4m"]
 [ext_resource type="PackedScene" uid="uid://bf20x8jx5jxxq" path="res://models/spider.tscn" id="2_ue1gt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sk8gk"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://43pj43g5wgqu"]
 
-[ext_resource type="Script" path="res://scripts/enemies/EnemySpawnPoint.cs" id="1_ghs38"]
+[ext_resource type="Script" uid="uid://b01jjdcawaisn" path="res://scripts/enemies/EnemySpawnPoint.cs" id="1_ghs38"]
 
 [node name="enemy-spawn-point" type="Node3D"]
 script = ExtResource("1_ghs38")

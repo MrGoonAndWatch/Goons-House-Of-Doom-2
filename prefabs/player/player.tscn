@@ -1,23 +1,24 @@
-[gd_scene load_steps=23 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=24 format=3 uid="uid://8gmfddm4wnbk"]
 
-[ext_resource type="Script" path="res://scripts/player/Player.cs" id="1_wlo0u"]
+[ext_resource type="Script" uid="uid://beumay7us5ig2" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
 [ext_resource type="PackedScene" uid="uid://cejaneqj6o6nl" path="res://prefabs/ui/player_inventory_ui.tscn" id="2_q6hdo"]
-[ext_resource type="Script" path="res://scripts/game_flow/CutsceneManager.cs" id="2_tl4hs"]
-[ext_resource type="Script" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
+[ext_resource type="Script" uid="uid://ce5xhh1qtotq7" path="res://scripts/game_flow/CutsceneManager.cs" id="2_tl4hs"]
+[ext_resource type="Script" uid="uid://cmsekra72kp2o" path="res://scripts/player/PlayerInteract.cs" id="3_gxx5q"]
 [ext_resource type="PackedScene" uid="uid://c2y01dsom536l" path="res://prefabs/ui/item_box.tscn" id="3_iwwv0"]
-[ext_resource type="Script" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
+[ext_resource type="Script" uid="uid://cfileigpa1f00" path="res://scripts/inventory/PlayerInventory.cs" id="4_h7s4o"]
 [ext_resource type="PackedScene" uid="uid://m4w5lovwdw6" path="res://prefabs/ui/pause_ui.tscn" id="5_q718m"]
-[ext_resource type="Script" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
+[ext_resource type="Script" uid="uid://bnmyvw3j0li5t" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
 [ext_resource type="FontFile" uid="uid://qoog8jprg8ka" path="res://prefabs/ui/ui_font.tres" id="6_f4pxk"]
-[ext_resource type="Script" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
-[ext_resource type="Script" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
+[ext_resource type="Script" uid="uid://dmbeqod47ewci" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
+[ext_resource type="Script" uid="uid://hxhr2ysd7tuh" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
 [ext_resource type="PackedScene" uid="uid://dov4b3kwtujxh" path="res://prefabs/ui/note_reader.tscn" id="8_2pvdi"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="8_64i7v"]
-[ext_resource type="Script" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
+[ext_resource type="Script" uid="uid://gmx1000anyuf" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
 [ext_resource type="PackedScene" uid="uid://cegxkqddyvfme" path="res://prefabs/debug_console.tscn" id="10_1ehqn"]
-[ext_resource type="Script" path="res://scripts/game_flow/FmvManager.cs" id="10_5ldjw"]
-[ext_resource type="Script" path="res://scripts/player/PlayerAnimationControl.cs" id="13_0urwd"]
+[ext_resource type="Script" uid="uid://lr4c1m7n6w5b" path="res://scripts/game_flow/FmvManager.cs" id="10_5ldjw"]
+[ext_resource type="Script" uid="uid://1770qhhv8840" path="res://scripts/player/PlayerAnimationControl.cs" id="13_0urwd"]
+[ext_resource type="Script" uid="uid://bs7lyqr67vatd" path="res://scripts/player/ActorLookAt.cs" id="15_408ek"]
 [ext_resource type="PackedScene" uid="uid://dfkwi87y4xryk" path="res://models/protagonist.tscn" id="17_ie47q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2prw7"]
@@ -208,6 +209,10 @@ ItemBoxScroll = NodePath("../item_box/ScrollContainer")
 script = ExtResource("13_0urwd")
 _animationTree = NodePath("../protagonist/AnimationTree")
 
+[node name="PlayerLookAt" type="Node3D" parent="." node_paths=PackedStringArray("_headLookAtModifier")]
+script = ExtResource("15_408ek")
+_headLookAtModifier = NodePath("../protagonist/protagonist/Skeleton3D/HeadLookAtModifier")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
@@ -216,30 +221,19 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
 [node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
-bones/0/position = Vector3(0, -0.0690426, -0.101869)
-bones/1/rotation = Quaternion(0.0362966, 1.20758e-19, -3.78845e-18, 0.999341)
-bones/2/rotation = Quaternion(0.0243553, 5.29792e-19, 9.01428e-18, 0.999703)
-bones/3/rotation = Quaternion(-0.116244, -0.112447, 0.978711, -0.126362)
-bones/4/rotation = Quaternion(0.195199, -0.0570105, -0.0218963, 0.97886)
-bones/5/rotation = Quaternion(0.117709, -0.0674186, -0.145773, 0.979974)
-bones/6/rotation = Quaternion(0.116244, -0.112447, 0.978711, 0.126362)
-bones/7/rotation = Quaternion(0.195199, 0.0570104, 0.0218963, 0.97886)
-bones/8/rotation = Quaternion(0.117709, 0.0674186, 0.145773, 0.979974)
-bones/9/rotation = Quaternion(0.0158587, 0.00989366, 0.998443, -0.0525648)
-bones/9/scale = Vector3(1.00006, 1, 1)
-bones/10/rotation = Quaternion(-0.0782591, -7.37835e-06, -0.0524435, 0.995553)
-bones/11/rotation = Quaternion(0.598274, 0.0169696, -0.0094677, 0.801056)
-bones/11/scale = Vector3(1.00002, 1, 1)
-bones/12/rotation = Quaternion(-0.0158587, 0.00989366, 0.998443, 0.0525648)
-bones/12/scale = Vector3(1.00006, 1, 1)
-bones/13/rotation = Quaternion(-0.0782591, 7.37765e-06, 0.0524435, 0.995553)
-bones/14/rotation = Quaternion(0.598274, -0.0169696, 0.00946769, 0.801056)
-bones/14/scale = Vector3(1.00002, 1, 1)
-bones/15/position = Vector3(4.70573, -26.4547, -1.13817)
-bones/15/rotation = Quaternion(-0.00462749, 0.707092, -0.707092, 0.00462749)
-bones/16/rotation = Quaternion(-0.0335736, 0.706309, 0.706309, -0.0335736)
-bones/17/position = Vector3(-4.70573, -26.4547, -1.13817)
-bones/17/rotation = Quaternion(0.00462749, 0.707092, -0.707092, -0.00462749)
+bones/0/position = Vector3(0, -0.0588754, -0.0691731)
+bones/1/rotation = Quaternion(0.0315883, 1.20759e-19, -3.78849e-18, 0.999501)
+bones/2/rotation = Quaternion(0.0305878, 5.2981e-19, 9.01458e-18, 0.999532)
+bones/3/rotation = Quaternion(-0.116923, -0.114921, 0.978633, -0.124097)
+bones/4/rotation = Quaternion(0.188505, -0.0555124, -0.0232823, 0.980226)
+bones/6/rotation = Quaternion(0.116923, -0.114921, 0.978633, 0.124097)
+bones/7/rotation = Quaternion(0.188505, 0.0555125, 0.0232823, 0.980226)
+bones/9/rotation = Quaternion(0.0159464, 0.00762209, 0.998523, -0.0513843)
+bones/10/rotation = Quaternion(-0.0749091, -7.38009e-06, -0.0501986, 0.995926)
+bones/11/rotation = Quaternion(0.597421, 0.0163272, -0.0103949, 0.801694)
+bones/12/rotation = Quaternion(-0.0159464, 0.00762209, 0.998523, 0.0513843)
+bones/13/rotation = Quaternion(-0.0749091, 7.38079e-06, 0.0501986, 0.995926)
+bones/14/rotation = Quaternion(0.597421, -0.0163272, 0.0103949, 0.801694)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)

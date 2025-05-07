@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dov4b3kwtujxh"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/NoteReader.cs" id="1_3a1fq"]
+[ext_resource type="Script" uid="uid://pr2lt3jmvrwd" path="res://scripts/game_ui/NoteReader.cs" id="1_3a1fq"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="2_bcxsp"]
 
 [node name="note_reader" type="Control" node_paths=PackedStringArray("_noteBackgroundImage", "_previousPageArrow", "_nextPageArrow", "_currentPageTextLabel")]

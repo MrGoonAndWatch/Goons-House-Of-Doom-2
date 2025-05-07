@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bjtaxins24mul"]
 
 [ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="1_sv751"]
-[ext_resource type="Shader" path="res://shaders/cc0/ps1-scene.gdshader" id="1_we0sd"]
+[ext_resource type="Shader" uid="uid://drfkujgeuwove" path="res://shaders/cc0/ps1-scene.gdshader" id="1_we0sd"]
 [ext_resource type="Material" uid="uid://cnduyexd3lw0x" path="res://materials/wave-shader-mat.tres" id="3_ilux6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7iluc"]

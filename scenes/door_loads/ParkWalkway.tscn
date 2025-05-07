@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_pcxls"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="4_gtbn5"]
 [ext_resource type="Environment" uid="uid://ct85ebvxy1vvm" path="res://prefabs/lighting/environments/outside_env.tres" id="4_n3ict"]
-[ext_resource type="Script" path="res://scripts/game_flow/DoorLoadMoving.cs" id="5_bgau6"]
+[ext_resource type="Script" uid="uid://d2tbbouxshhds" path="res://scripts/game_flow/DoorLoadMoving.cs" id="5_bgau6"]
 [ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="5_lu7yu"]
 
 [node name="root" type="SubViewportContainer"]

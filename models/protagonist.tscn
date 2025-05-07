@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://dfkwi87y4xryk"]
 
 [ext_resource type="PackedScene" uid="uid://brcb63qgiin1" path="res://models/protagonist_v0.1.glb" id="1_pg4l0"]
-[ext_resource type="Script" path="res://scripts/player/PlayerAnimationEventHandler.cs" id="2_ituly"]
+[ext_resource type="Script" uid="uid://djftqmi11wq6a" path="res://scripts/player/PlayerAnimationEventHandler.cs" id="2_ituly"]
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_l4gkt"]
 
@@ -102,7 +102,7 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_oc2ol"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pe6hq"]
-graph_offset = Vector2(-458.696, -9.31186)
+graph_offset = Vector2(-308.793, -23.4215)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_l4gkt")
 nodes/Add2/position = Vector2(-100, 140)
 nodes/Arms/node = SubResource("AnimationNodeStateMachine_6m5j2")
@@ -116,31 +116,38 @@ node_connections = [&"Add2", 0, &"Arms", &"Add2", 1, &"Legs", &"TimeScale", 0, &
 [node name="protagonist" instance=ExtResource("1_pg4l0")]
 
 [node name="Skeleton3D" parent="protagonist" index="0"]
-bones/0/position = Vector3(0, -0.0541238, -0.0538926)
-bones/1/rotation = Quaternion(0.0334254, 1.20759e-19, -3.78849e-18, 0.999441)
+bones/0/position = Vector3(0, -0.0457203, -0.0268686)
+bones/1/rotation = Quaternion(0.0263222, 1.20758e-19, -3.78843e-18, 0.999654)
 bones/1/scale = Vector3(1.00048, 1.00048, 1.00048)
-bones/2/rotation = Quaternion(0.0334912, 5.2981e-19, 9.0146e-18, 0.999439)
-bones/3/rotation = Quaternion(-0.117244, -0.116092, 0.978592, -0.123024)
-bones/4/rotation = Quaternion(0.185395, -0.0548161, -0.0239254, 0.980842)
+bones/2/rotation = Quaternion(0.0386504, 5.29802e-19, 9.01444e-18, 0.999253)
+bones/3/rotation = Quaternion(-0.117807, -0.118151, 0.978513, -0.121136)
+bones/4/rotation = Quaternion(0.179867, -0.0535782, -0.0250664, 0.981911)
 bones/5/rotation = Quaternion(0.117709, -0.0674186, -0.145773, 0.979974)
-bones/6/rotation = Quaternion(0.117244, -0.116092, 0.978592, 0.123024)
-bones/7/rotation = Quaternion(0.185395, 0.0548161, 0.0239254, 0.980842)
+bones/6/rotation = Quaternion(0.117807, -0.118151, 0.978513, 0.121136)
+bones/7/rotation = Quaternion(0.179867, 0.0535782, 0.0250664, 0.981911)
 bones/8/rotation = Quaternion(0.117709, 0.0674186, 0.145773, 0.979974)
-bones/9/rotation = Quaternion(0.0159893, 0.00652874, 0.998559, -0.0508106)
+bones/9/rotation = Quaternion(0.0160657, 0.00460843, 0.99862, -0.0497951)
 bones/9/scale = Vector3(1.00006, 1, 1)
-bones/10/rotation = Quaternion(-0.0732626, -7.3791e-06, -0.0490952, 0.996104)
-bones/11/rotation = Quaternion(0.596995, 0.0160115, -0.0108489, 0.802012)
+bones/10/rotation = Quaternion(-0.0702654, -7.3828e-06, -0.0470867, 0.996416)
+bones/11/rotation = Quaternion(0.596197, 0.0154288, -0.0116832, 0.802605)
 bones/11/scale = Vector3(1.00002, 1, 1)
-bones/12/rotation = Quaternion(-0.0159893, 0.00652874, 0.998559, 0.0508106)
+bones/12/rotation = Quaternion(-0.0160657, 0.00460843, 0.99862, 0.0497951)
 bones/12/scale = Vector3(1.00006, 1, 1)
-bones/13/rotation = Quaternion(-0.0732626, 7.3798e-06, 0.0490952, 0.996104)
-bones/14/rotation = Quaternion(0.596994, -0.0160111, 0.0108493, 0.802012)
+bones/13/rotation = Quaternion(-0.0702654, 7.38259e-06, 0.0470867, 0.996416)
+bones/14/rotation = Quaternion(0.596197, -0.0154288, 0.0116832, 0.802605)
 bones/14/scale = Vector3(1.00002, 1, 1)
 bones/15/position = Vector3(4.70573, -26.4547, -1.13817)
 bones/15/rotation = Quaternion(-0.00462749, 0.707092, -0.707092, 0.00462749)
 bones/16/rotation = Quaternion(-0.0335736, 0.706309, 0.706309, -0.0335736)
 bones/17/position = Vector3(-4.70573, -26.4547, -1.13817)
 bones/17/rotation = Quaternion(0.00462749, 0.707092, -0.707092, -0.00462749)
+
+[node name="HeadLookAtModifier" type="LookAtModifier3D" parent="protagonist/Skeleton3D" index="1"]
+target_node = NodePath("..")
+bone_name = "head"
+bone = 2
+forward_axis = 3
+primary_rotation_axis = 0
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 tree_root = SubResource("AnimationNodeBlendTree_pe6hq")

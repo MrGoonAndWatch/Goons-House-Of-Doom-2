@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bawbwbepm50es"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/NotePickup.cs" id="1_bvtyw"]
-[ext_resource type="Script" path="res://scripts/data/NoteData.cs" id="1_l0hk5"]
+[ext_resource type="Script" uid="uid://cfibdbu4513sj" path="res://scripts/game_ui/NotePickup.cs" id="1_bvtyw"]
+[ext_resource type="Script" uid="uid://bq3skmjo5rp7a" path="res://scripts/data/NoteData.cs" id="1_l0hk5"]
 [ext_resource type="PackedScene" uid="uid://bylix1b3casa6" path="res://prefabs/sparkle_sprite.tscn" id="1_m54ph"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nsl7e"]

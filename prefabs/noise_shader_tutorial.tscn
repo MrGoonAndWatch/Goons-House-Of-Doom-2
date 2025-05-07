@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://d17mop30osdm7"]
 
-[ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_x312a"]
+[ext_resource type="Shader" uid="uid://c8g0f51c87pwn" path="res://shaders/water.gdshader" id="1_x312a"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_3xfja"]
 
@@ -16,9 +16,10 @@ noise = SubResource("FastNoiseLite_77xbm")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nukah"]
 render_priority = 0
 shader = ExtResource("1_x312a")
-shader_parameter/height_scale = 0.5
 shader_parameter/noise = SubResource("NoiseTexture2D_7mdc8")
 shader_parameter/normalmap = SubResource("NoiseTexture2D_5ybq1")
+shader_parameter/height_scale = 0.5
+shader_parameter/color = Color(0.05, 0.11, 0.27, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7unas"]
 material = SubResource("ShaderMaterial_nukah")

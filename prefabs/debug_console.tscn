@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cegxkqddyvfme"]
 
-[ext_resource type="Script" path="res://scripts/debug/DebugConsole.cs" id="1_chw3f"]
+[ext_resource type="Script" uid="uid://bng4bvyldufyf" path="res://scripts/debug/DebugConsole.cs" id="1_chw3f"]
 
 [node name="DebugConsole" type="Node3D" node_paths=PackedStringArray("_consoleUi", "_consoleLine", "_consoleOutput")]
 script = ExtResource("1_chw3f")

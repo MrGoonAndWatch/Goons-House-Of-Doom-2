@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://ceo15gfbs2cse"]
 
 [ext_resource type="PackedScene" uid="uid://dtl1xti622d40" path="res://models/human_low.glb" id="1_ngjbo"]
-[ext_resource type="Script" path="res://scripts/player/PlayerAnimationEventHandler.cs" id="2_enwue"]
+[ext_resource type="Script" uid="uid://djftqmi11wq6a" path="res://scripts/player/PlayerAnimationEventHandler.cs" id="2_enwue"]
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_vvjd8"]
 
@@ -15,7 +15,6 @@ animation = &"Aiming-Pistol"
 animation = &"Equip-Pistol"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pcm0y"]
-animation = &"Fire-Pistol"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_txoby"]
 animation = &"Idle"
@@ -107,6 +106,7 @@ transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(97, -29)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vsrs6"]
+graph_offset = Vector2(-344.992, -91.6463)
 nodes/AddArmsLegs/node = SubResource("AnimationNodeAdd2_vvjd8")
 nodes/AddArmsLegs/position = Vector2(120, -40)
 nodes/Arms/node = SubResource("AnimationNodeStateMachine_d7jjl")
@@ -122,17 +122,18 @@ node_connections = [&"AddArmsLegs", 0, &"Arms", &"AddArmsLegs", 1, &"Legs", &"Gl
 
 [node name="Skeleton3D" parent="ArmLow" index="0"]
 bones/3/rotation = Quaternion(-0.456281, 0.632771, -0.144644, 0.608676)
-bones/4/rotation = Quaternion(0.135057, 0.082511, -0.0168072, 0.987253)
-bones/6/rotation = Quaternion(-0.0151819, -0.0101536, 0.00162025, 0.999832)
-bones/8/rotation = Quaternion(0.306278, 0.794805, 0.367842, 0.373055)
-bones/9/rotation = Quaternion(0.135035, -0.0600815, 0.0169854, 0.988872)
+bones/4/rotation = Quaternion(0.135057, 0.0825111, -0.0168072, 0.987253)
+bones/6/rotation = Quaternion(-0.212056, -0.141832, 0.0250999, 0.966585)
+bones/7/rotation = Quaternion(-0.453578, -0.312205, 0.687603, -0.473284)
+bones/9/rotation = Quaternion(0.135034, -0.0600816, 0.0169854, 0.988872)
 bones/10/rotation = Quaternion(-0.00726746, -0.0193416, 0.0728706, 0.997127)
-bones/12/rotation = Quaternion(0.0979958, -0.289406, -0.16221, 0.938258)
-bones/13/rotation = Quaternion(-0.118536, 0.0982626, -0.00322419, 0.98807)
-bones/14/rotation = Quaternion(0.689382, -0.0464481, 0.0114179, 0.722817)
+bones/11/rotation = Quaternion(-0.224945, -0.0482026, 0.951451, -0.204495)
+bones/12/rotation = Quaternion(0.0979959, -0.289406, -0.16221, 0.938258)
+bones/13/rotation = Quaternion(-0.118536, 0.0982631, -0.00322417, 0.98807)
+bones/14/rotation = Quaternion(0.689382, -0.0464487, 0.0114175, 0.722817)
 bones/16/rotation = Quaternion(0.112654, 0.258428, 0.152396, 0.947259)
-bones/17/rotation = Quaternion(-0.118087, -0.0367386, 0.0107796, 0.992265)
-bones/18/rotation = Quaternion(0.689446, 0.0506068, -0.00810963, 0.722522)
+bones/17/rotation = Quaternion(-0.118087, -0.0367388, 0.0107796, 0.992265)
+bones/18/rotation = Quaternion(0.689446, 0.0506059, -0.00811049, 0.722522)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 tree_root = SubResource("AnimationNodeBlendTree_vsrs6")

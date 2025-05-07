@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://byxkvjaw5ho8v"]
 
 [ext_resource type="PackedScene" uid="uid://qci3y34d86a1" path="res://models/third-party/cc0/Brown Door.glb" id="1_jfu0u"]
-[ext_resource type="Script" path="res://scripts/puzzles/Door.cs" id="2_5oeo1"]
+[ext_resource type="Script" uid="uid://dfn28cwe01t24" path="res://scripts/puzzles/Door.cs" id="2_5oeo1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dpp81"]
 size = Vector3(1, 1.81229, 0.25)

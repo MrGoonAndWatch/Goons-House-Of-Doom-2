@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://d0wgeleltfmyc"]
 
-[ext_resource type="Script" path="res://scripts/game_flow/DoorLoad.cs" id="1_8fn44"]
+[ext_resource type="Script" uid="uid://c86kmow7yhqoo" path="res://scripts/game_flow/DoorLoad.cs" id="1_8fn44"]
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_5073r"]
 [ext_resource type="PackedScene" uid="uid://qci3y34d86a1" path="res://models/third-party/cc0/Brown Door.glb" id="3_lmtm8"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="4_xhc14"]

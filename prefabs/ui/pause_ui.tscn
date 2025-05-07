@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://m4w5lovwdw6"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/PauseScreenUi.cs" id="1_8hvdm"]
+[ext_resource type="Script" uid="uid://q27icemsi8or" path="res://scripts/game_ui/PauseScreenUi.cs" id="1_8hvdm"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_is7b2"]
 [ext_resource type="PackedScene" uid="uid://b3plxc1qko6mn" path="res://prefabs/ui/options_menu_ui.tscn" id="3_jggi5"]
 [ext_resource type="PackedScene" uid="uid://b551tbih1cuj1" path="res://prefabs/ui/controls_setup.tscn" id="4_kpyg8"]
@@ -82,6 +82,9 @@ text = "Exit To Desktop"
 [node name="OptionsMenu" parent="." instance=ExtResource("3_jggi5")]
 visible = false
 layout_mode = 1
+
+[node name="OptionButton" parent="OptionsMenu/VBoxContainer/Resolution" index="1"]
+popup/item_0/id = 0
 
 [node name="controls_setup" parent="." node_paths=PackedStringArray("_pauseScreenUi") instance=ExtResource("4_kpyg8")]
 visible = false

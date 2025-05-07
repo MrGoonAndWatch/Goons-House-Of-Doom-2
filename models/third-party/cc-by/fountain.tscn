@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dd20tofhmprlw" path="res://models/third-party/cc-by/fountain.glb" id="1_75qlm"]
 [ext_resource type="Material" uid="uid://dmc73lasvts36" path="res://models/third-party/cc-by/fountain.tres" id="2_1k0kj"]
-[ext_resource type="Script" path="res://scripts/data/SaveOnInspect.cs" id="3_4iu3e"]
+[ext_resource type="Script" uid="uid://diuiuai03dkj8" path="res://scripts/data/SaveOnInspect.cs" id="3_4iu3e"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_i0qvr"]
 height = 3.0

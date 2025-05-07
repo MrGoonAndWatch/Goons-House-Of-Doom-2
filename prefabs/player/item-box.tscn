@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwgvmlg5wk1f"]
 
-[ext_resource type="Script" path="res://scripts/inventory/ItemBox.cs" id="1_ex4e1"]
+[ext_resource type="Script" uid="uid://bbvg2iyw3exq0" path="res://scripts/inventory/ItemBox.cs" id="1_ex4e1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_nvowp"]
 

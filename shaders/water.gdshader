@@ -28,9 +28,9 @@ float wave(vec2 position) {
 float height(vec2 position, float time) {
 	//vec2 offset = 0.01 * cos(position + time);
 	//return texture(noise, (position / 10.0) - offset).x;
-	
+
 	//return wave(position * 0.4);
-	
+
 	float d = wave((position + time) * 0.4) * 0.3;
 	d += wave((position - time) * 0.3) * 0.3;
 	d += wave((position + time) * 0.5) * 0.2;
@@ -40,7 +40,7 @@ float height(vec2 position, float time) {
 
 void vertex() {
 	//VERTEX.y += cos(VERTEX.x * 4.0) * sin(VERTEX.z * 4.0);
-	
+
 	tex_position = VERTEX.xz / 2.0 + 0.5;
 	vec2 pos = VERTEX.xz;
 	float k = height(tex_position, TIME);

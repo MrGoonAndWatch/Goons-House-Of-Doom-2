@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ugsj2wgaf3dm"]
 
-[ext_resource type="Script" path="res://scripts/audio/GhodAudioManager.cs" id="1_1an3t"]
+[ext_resource type="Script" uid="uid://2j2icfkch48y" path="res://scripts/audio/GhodAudioManager.cs" id="1_1an3t"]
 
 [node name="audio-manager" type="Node2D" node_paths=PackedStringArray("_musicPlayer", "_playerSfxPlayer", "_voicePlayer")]
 script = ExtResource("1_1an3t")

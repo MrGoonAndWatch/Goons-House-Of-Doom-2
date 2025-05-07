@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://d3c4s22bga1qp"]
 
-[ext_resource type="Script" path="res://scripts/data/MapData.cs" id="1_yar0t"]
-[ext_resource type="Script" path="res://scripts/data/MapRoomData.cs" id="2_es0xs"]
+[ext_resource type="Script" uid="uid://c0ycsk22d1aec" path="res://scripts/data/MapData.cs" id="1_yar0t"]
+[ext_resource type="Script" uid="uid://cypacuhppj8lr" path="res://scripts/data/MapRoomData.cs" id="2_es0xs"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="3_n4t2o"]
-[ext_resource type="Script" path="res://scripts/data/MapDoorData.cs" id="4_v1ulp"]
+[ext_resource type="Script" uid="uid://riqqdf2p3hjj" path="res://scripts/data/MapDoorData.cs" id="4_v1ulp"]
 [ext_resource type="Texture2D" uid="uid://b3wi04nwg2pjc" path="res://textures/PlayerArrow.png" id="5_72wfm"]
 
 [node name="DebugArea1" type="Control" node_paths=PackedStringArray("RoomData", "DoorData", "AreaLabel", "PlayerIcon")]

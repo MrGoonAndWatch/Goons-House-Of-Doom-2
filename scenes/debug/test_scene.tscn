@@ -8,7 +8,7 @@
 [ext_resource type="MeshLibrary" uid="uid://doatpfhrdrqh5" path="res://prefabs/scenery/tiles_mesh_library_4.tres" id="5_avn3s"]
 [ext_resource type="PackedScene" uid="uid://43pj43g5wgqu" path="res://prefabs/spawnables/enemies/enemy-spawn-point.tscn" id="5_etfxi"]
 [ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="6_50rh5"]
-[ext_resource type="Script" path="res://scripts/puzzles/PassCode.cs" id="7_1id0d"]
+[ext_resource type="Script" uid="uid://bi6mraa1vukre" path="res://scripts/puzzles/PassCode.cs" id="7_1id0d"]
 [ext_resource type="Material" uid="uid://c1tvta0dbmvqj" path="res://materials/flat_black_material.tres" id="9_jsbhq"]
 [ext_resource type="PackedScene" uid="uid://c30c1eao8m1df" path="res://prefabs/ui/map_pickup.tscn" id="11_gkec2"]
 

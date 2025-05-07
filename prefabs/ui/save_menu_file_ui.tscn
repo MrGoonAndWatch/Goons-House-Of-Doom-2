@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://byxjbyxscrc5o"]
 
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_3qrwh"]
-[ext_resource type="Script" path="res://scripts/game_ui/SaveFileUi.cs" id="1_p66cq"]
+[ext_resource type="Script" uid="uid://ciwqbom7ogs4p" path="res://scripts/game_ui/SaveFileUi.cs" id="1_p66cq"]
 
 [node name="SaveMenuFileUi" type="Control" node_paths=PackedStringArray("SaveFileButton")]
 custom_minimum_size = Vector2(550, 75)

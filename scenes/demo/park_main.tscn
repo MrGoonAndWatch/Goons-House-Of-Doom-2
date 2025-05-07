@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://liyia6uw63qf"]
 
-[ext_resource type="Shader" path="res://shaders/cc0/ps1-scene.gdshader" id="1_3pund"]
+[ext_resource type="Shader" uid="uid://drfkujgeuwove" path="res://shaders/cc0/ps1-scene.gdshader" id="1_3pund"]
 [ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="2_3trkq"]
 [ext_resource type="PackedScene" uid="uid://ydnc1vlpplu5" path="res://prefabs/room_info.tscn" id="2_34jn7"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="3_817eo"]

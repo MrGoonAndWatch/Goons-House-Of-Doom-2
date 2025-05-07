@@ -2,12 +2,12 @@
 
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_gqfn6"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="1_k4weh"]
-[ext_resource type="Script" path="res://scripts/data/RoomInfo.cs" id="2_aimic"]
+[ext_resource type="Script" uid="uid://crjm0hpqsh7x3" path="res://scripts/data/RoomInfo.cs" id="2_aimic"]
 [ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="2_i6rse"]
 [ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="3_0pa5d"]
-[ext_resource type="Script" path="res://scripts/game_flow/Cutscene.cs" id="4_0isfa"]
-[ext_resource type="Script" path="res://scripts/game_flow/CutsceneInstruction.cs" id="5_0mgx5"]
-[ext_resource type="Script" path="res://scripts/game_flow/CutsceneTrigger.cs" id="6_jdod4"]
+[ext_resource type="Script" uid="uid://2vt3el4f4bpe" path="res://scripts/game_flow/Cutscene.cs" id="4_0isfa"]
+[ext_resource type="Script" uid="uid://d2jhft5tdiqu4" path="res://scripts/game_flow/CutsceneInstruction.cs" id="5_0mgx5"]
+[ext_resource type="Script" uid="uid://dl8xnq5fi1aly" path="res://scripts/game_flow/CutsceneTrigger.cs" id="6_jdod4"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rqjat"]
 

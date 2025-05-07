@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://07mtxv5r76ek"]
 
-[ext_resource type="Shader" path="res://shaders/cc0/ps1-scene.gdshader" id="1_rvtkr"]
+[ext_resource type="Shader" uid="uid://drfkujgeuwove" path="res://shaders/cc0/ps1-scene.gdshader" id="1_rvtkr"]
 
 [resource]
 shader = ExtResource("1_rvtkr")

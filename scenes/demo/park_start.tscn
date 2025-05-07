@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bfyu0xk8cpccd"]
 
-[ext_resource type="Shader" path="res://shaders/cc0/ps1-scene.gdshader" id="1_rcsfp"]
+[ext_resource type="Shader" uid="uid://drfkujgeuwove" path="res://shaders/cc0/ps1-scene.gdshader" id="1_rcsfp"]
 [ext_resource type="PackedScene" uid="uid://ydnc1vlpplu5" path="res://prefabs/room_info.tscn" id="2_6dskr"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="3_8c2ba"]
 [ext_resource type="PackedScene" uid="uid://dn0fwjeoadmnu" path="res://prefabs/scenery/test_grid_map.tscn" id="4_t08px"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d4ahnp1242cuw" path="res://models/Tiles/fence.tscn" id="6_v7618"]
 [ext_resource type="PackedScene" uid="uid://bopftyjohhbi2" path="res://prefabs/puzzles/inspect_text.tscn" id="7_5q4wf"]
 [ext_resource type="PackedScene" uid="uid://dfqiqnu7b0uot" path="res://prefabs/puzzles/teleport_on_touch.tscn" id="8_xjpwy"]
-[ext_resource type="Script" path="res://scripts/audio/PlaySongOnEnterOnce.cs" id="9_p84o6"]
+[ext_resource type="Script" uid="uid://lgmb68nifisr" path="res://scripts/audio/PlaySongOnEnterOnce.cs" id="9_p84o6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o7y4s"]
 shader = ExtResource("1_rcsfp")

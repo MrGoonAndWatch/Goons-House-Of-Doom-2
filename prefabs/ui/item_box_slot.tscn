@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cj4fh5ysu4ny5"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/ItemBoxSlot.cs" id="1_5dgxo"]
+[ext_resource type="Script" uid="uid://dpkv0s8pdfvjh" path="res://scripts/game_ui/ItemBoxSlot.cs" id="1_5dgxo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4vof1"]
 font_size = 50

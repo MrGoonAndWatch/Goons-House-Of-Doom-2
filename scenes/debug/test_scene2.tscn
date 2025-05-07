@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://07mtxv5r76ek" path="res://textures/psx-scene-shader.tres" id="1_id8pr"]
 [ext_resource type="PackedScene" uid="uid://bhputn4ajftv7" path="res://prefabs/scenery/camera_change.tscn" id="1_ksj6x"]
 [ext_resource type="PackedScene" uid="uid://8gmfddm4wnbk" path="res://prefabs/player/player.tscn" id="2_6j00k"]
-[ext_resource type="Script" path="res://scripts/data/RoomInfo.cs" id="2_vbniv"]
+[ext_resource type="Script" uid="uid://crjm0hpqsh7x3" path="res://scripts/data/RoomInfo.cs" id="2_vbniv"]
 [ext_resource type="MeshLibrary" uid="uid://doatpfhrdrqh5" path="res://prefabs/scenery/tiles_mesh_library_4.tres" id="4_o2nst"]
 [ext_resource type="PackedScene" uid="uid://byxkvjaw5ho8v" path="res://prefabs/doors/test_door.tscn" id="4_vgd6f"]
 [ext_resource type="PackedScene" uid="uid://b24ook6tgly8c" path="res://prefabs/spawnables/items/item-spawn-point.tscn" id="5_qnp0j"]

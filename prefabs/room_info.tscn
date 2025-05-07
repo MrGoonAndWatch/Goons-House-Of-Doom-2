@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ydnc1vlpplu5"]
 
-[ext_resource type="Script" path="res://scripts/data/RoomInfo.cs" id="1_s76gt"]
+[ext_resource type="Script" uid="uid://crjm0hpqsh7x3" path="res://scripts/data/RoomInfo.cs" id="1_s76gt"]
 
 [node name="room_info" type="Node3D" node_paths=PackedStringArray("doors")]
 script = ExtResource("1_s76gt")

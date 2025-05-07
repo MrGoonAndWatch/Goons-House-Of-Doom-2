@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bopftyjohhbi2"]
 
-[ext_resource type="Script" path="res://scripts/puzzles/ShowTextOnInspect.cs" id="1_ckkpc"]
-[ext_resource type="Script" path="res://scripts/puzzles/ShowTextOnInspectHitbox.cs" id="2_8bce7"]
+[ext_resource type="Script" uid="uid://cbege2j64h8wd" path="res://scripts/puzzles/ShowTextOnInspect.cs" id="1_ckkpc"]
+[ext_resource type="Script" uid="uid://durr6pxd3rykb" path="res://scripts/puzzles/ShowTextOnInspectHitbox.cs" id="2_8bce7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xt4cs"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b3plxc1qko6mn"]
 
-[ext_resource type="Script" path="res://scripts/game_ui/OptionsMenuUi.cs" id="1_87jiw"]
+[ext_resource type="Script" uid="uid://dh22gdfhrk7d0" path="res://scripts/game_ui/OptionsMenuUi.cs" id="1_87jiw"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_dx8wx"]
 
 [node name="OptionsMenu" type="Control" node_paths=PackedStringArray("ResolutionPicker", "TotalVolumeSlider", "MusicVolumeSlider", "SfxVolumeSlider", "VoiceVolumeSlider", "FullscreenCheckbox", "GammaSlider")]
@@ -64,6 +64,7 @@ selected = 6
 allow_reselect = true
 item_count = 13
 popup/item_0/text = "2560x1440"
+popup/item_0/id = 0
 popup/item_1/text = "1920x1080"
 popup/item_1/id = 1
 popup/item_2/text = "1366x768"
