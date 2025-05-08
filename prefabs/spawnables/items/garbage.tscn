@@ -11,9 +11,12 @@ size = Vector3(0.1, 0.1, 0.1)
 script = ExtResource("1_xd12x")
 Item = NodePath("Item")
 
-[node name="Item" type="Area3D" parent="."]
+[node name="Item" type="Area3D" parent="." node_paths=PackedStringArray("LookAtTargetPoint")]
 script = ExtResource("2_7cx0h")
 MenuIcon = ExtResource("3_k81mm")
+LookAtTargetPoint = NodePath("../LookAtPoint")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Item"]
 shape = SubResource("BoxShape3D_cbjtn")
+
+[node name="LookAtPoint" type="Node3D" parent="."]

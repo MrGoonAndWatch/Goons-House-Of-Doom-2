@@ -4,6 +4,9 @@ public partial class NotePickup : Area3D
 {
     public NoteData NoteData;
 
+    [Export]
+    public Node3D LookAtTargetPoint;
+
     public override void _Ready()
     {
         NoteData = GetParent<NoteData>();

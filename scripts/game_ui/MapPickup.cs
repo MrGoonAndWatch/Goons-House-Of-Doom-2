@@ -4,6 +4,8 @@ public partial class MapPickup : Area3D
 {
     [Export]
     public MapPickupData MapPickupData;
+    [Export]
+    public Node3D LookAtTargetPoint;
 
     public override void _Ready()
     {

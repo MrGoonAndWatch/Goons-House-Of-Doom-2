@@ -9,6 +9,8 @@ public abstract partial class Item : Area3D
 	public int QtyOnPickup;
     [Export]
     public Texture2D MenuIcon;
+    [Export]
+    public Node3D LookAtTargetPoint;
 
     public override void _Ready() {
         if (aniSprite != null)

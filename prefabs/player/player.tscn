@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=25 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" uid="uid://beumay7us5ig2" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -30,6 +30,10 @@ height = 2.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_408ek"]
+height = 4.0
+radius = 5.0
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_playerAnimationControl", "_deathFadeUi", "_deathFadeBg", "_saveUi") groups=["player"]]
 floor_max_angle = 1.0472
@@ -209,10 +213,6 @@ ItemBoxScroll = NodePath("../item_box/ScrollContainer")
 script = ExtResource("13_0urwd")
 _animationTree = NodePath("../protagonist/AnimationTree")
 
-[node name="PlayerLookAt" type="Node3D" parent="." node_paths=PackedStringArray("_headLookAtModifier")]
-script = ExtResource("15_408ek")
-_headLookAtModifier = NodePath("../protagonist/protagonist/Skeleton3D/HeadLookAtModifier")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
@@ -221,19 +221,19 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
 [node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
-bones/0/position = Vector3(0, -0.0588754, -0.0691731)
-bones/1/rotation = Quaternion(0.0315883, 1.20759e-19, -3.78849e-18, 0.999501)
-bones/2/rotation = Quaternion(0.0305878, 5.2981e-19, 9.01458e-18, 0.999532)
-bones/3/rotation = Quaternion(-0.116923, -0.114921, 0.978633, -0.124097)
-bones/4/rotation = Quaternion(0.188505, -0.0555124, -0.0232823, 0.980226)
-bones/6/rotation = Quaternion(0.116923, -0.114921, 0.978633, 0.124097)
-bones/7/rotation = Quaternion(0.188505, 0.0555125, 0.0232823, 0.980226)
-bones/9/rotation = Quaternion(0.0159464, 0.00762209, 0.998523, -0.0513843)
-bones/10/rotation = Quaternion(-0.0749091, -7.38009e-06, -0.0501986, 0.995926)
-bones/11/rotation = Quaternion(0.597421, 0.0163272, -0.0103949, 0.801694)
-bones/12/rotation = Quaternion(-0.0159464, 0.00762209, 0.998523, 0.0513843)
-bones/13/rotation = Quaternion(-0.0749091, 7.38079e-06, 0.0501986, 0.995926)
-bones/14/rotation = Quaternion(0.597421, -0.0163272, 0.0103949, 0.801694)
+bones/0/position = Vector3(0, -0.0527948, -0.049619)
+bones/1/rotation = Quaternion(0.0326951, 1.20759e-19, -3.78849e-18, 0.999465)
+bones/2/rotation = Quaternion(0.0343016, 5.2981e-19, 9.01459e-18, 0.999412)
+bones/3/rotation = Quaternion(-0.117331, -0.116411, 0.97858, -0.122731)
+bones/4/rotation = Quaternion(0.184522, -0.0546207, -0.0241056, 0.981013)
+bones/6/rotation = Quaternion(0.117331, -0.116411, 0.97858, 0.122731)
+bones/7/rotation = Quaternion(0.184522, 0.0546207, 0.0241056, 0.981013)
+bones/9/rotation = Quaternion(0.0160014, 0.00622228, 0.998569, -0.0506497)
+bones/10/rotation = Quaternion(-0.0727973, -7.37864e-06, -0.0487834, 0.996153)
+bones/11/rotation = Quaternion(0.596873, 0.0159215, -0.0109779, 0.802103)
+bones/12/rotation = Quaternion(-0.0160013, 0.00622228, 0.998569, 0.0506497)
+bones/13/rotation = Quaternion(-0.0727973, 7.3798e-06, 0.0487834, 0.996153)
+bones/14/rotation = Quaternion(0.596871, -0.0159203, 0.0109795, 0.802104)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
@@ -261,6 +261,14 @@ target_position = Vector3(1000, 0, 0)
 
 [node name="DebugConsole" parent="." instance=ExtResource("10_1ehqn")]
 
+[node name="LookAtArea" type="Area3D" parent="." node_paths=PackedStringArray("_headLookAtModifier", "_collisionShape")]
+script = ExtResource("15_408ek")
+_headLookAtModifier = NodePath("../protagonist/protagonist/Skeleton3D/HeadLookAtModifier")
+_collisionShape = NodePath("LookAtCollisionShape")
+
+[node name="LookAtCollisionShape" type="CollisionShape3D" parent="LookAtArea"]
+shape = SubResource("CylinderShape3D_408ek")
+
 [node name="GameOverFadeUiContainer" type="Node3D" parent="."]
 
 [node name="GameOverFadeUi" type="Control" parent="GameOverFadeUiContainer"]
@@ -286,6 +294,8 @@ color = Color(1, 0, 0, 1)
 [connection signal="area_exited" from="InteractHitbox" to="InteractHitbox" method="_OnAreaExited"]
 [connection signal="body_entered" from="InteractHitbox" to="InteractHitbox" method="_OnBodyEntered"]
 [connection signal="body_exited" from="InteractHitbox" to="InteractHitbox" method="_OnBodyExited"]
+[connection signal="area_entered" from="LookAtArea" to="LookAtArea" method="_OnAreaEntered"]
+[connection signal="area_exited" from="LookAtArea" to="LookAtArea" method="_OnAreaExited"]
 
 [editable path="item_box"]
 [editable path="item_box/ItemSlots"]

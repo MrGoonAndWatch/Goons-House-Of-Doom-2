@@ -13,9 +13,13 @@ Item = NodePath("Item")
 
 [node name="SparkleSprite" parent="." instance=ExtResource("2_g0fag")]
 
-[node name="Item" type="Area3D" parent="."]
+[node name="Item" type="Area3D" parent="." node_paths=PackedStringArray("LookAtTargetPoint")]
 script = ExtResource("3_ymmnq")
 MenuIcon = ExtResource("4_b64ac")
+LookAtTargetPoint = NodePath("../LookAtPoint")
 
 [node name="ItemCollisionShape" type="CollisionShape3D" parent="Item"]
 shape = SubResource("BoxShape3D_1iqm5")
+
+[node name="LookAtPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

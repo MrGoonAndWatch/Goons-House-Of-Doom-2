@@ -1,41 +1,52 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
-public partial class ActorLookAt : Node3D
+public partial class ActorLookAt : Area3D
 {
     [Export]
     private LookAtModifier3D _headLookAtModifier;
 
-    [Export]
-    private float _maxLookAtDistance = 5;
+    private int _targetCount;
 
-    private Transform3D _bone;
-    private bool _initialized;
-    private int _boneIndex;
-    private List<Transform3D> _targetNodes;
-    private Transform3D? _currentTarget = null;
+    [Export]
+    private Vector2 _maxLookAtDistance = new Vector2(5, 4);
+    [Export]
+    private CollisionShape3D _collisionShape;
+
+    private List<Node3D> _targetNodes;
     private Vector3? _targetRotation = null;
 
     [Export]
     private float _lookSpeed = 100.0f;
+    [Export]
+    private double _timeBetweenLookAtUpdates = 1.0;
     private float _minLookSpeed = 0.001f;
-    private const double _timeBetweenLookAtUpdates = 1.0;
     private double _timeSinceLastLookAtUpdate;
 
-    private bool _isHeadMoving;
+    private Transform3D _headBoneTransform;
+
+    public override void _Ready()
+    {
+        _targetNodes = new List<Node3D>();
+        _targetRotation = Vector3.Zero;
+
+        if (_collisionShape?.Shape is CylinderShape3D)
+        {
+            (_collisionShape.Shape as CylinderShape3D).Radius = _maxLookAtDistance.X;
+            (_collisionShape.Shape as CylinderShape3D).Height = _maxLookAtDistance.Y;
+        }
+        else
+            GD.Print("[color=yellow]ActorLookAt script did not have a collision shape parameter specified or it was not a CyclinderShape3D. Using default shape values for look at range calculations.");
+
+        var playerSkeleton = _headLookAtModifier.GetNode<Skeleton3D>(_headLookAtModifier.TargetNode);
+        _headBoneTransform = playerSkeleton.GetBonePose(_headLookAtModifier.Bone);
+    }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_initialized)
-        {
-            if (TimeToUpdateLookAt(delta))
-                UpdateLookAt();
-            LookAtTarget(delta);
-        }
-        else
-            Initialize();
+        if (TimeToUpdateLookAt(delta))
+            UpdateLookAt();
+        LookAtTarget(delta);
     }
 
     private bool TimeToUpdateLookAt(double delta)
@@ -51,126 +62,90 @@ public partial class ActorLookAt : Node3D
 
     private void UpdateLookAt()
     {
-        float? closestDistance = null;
-        Transform3D? closestNode = null;
-        foreach (var node in _targetNodes)
+        if (_targetCount > 0)
         {
-            var targetNodePos = node.Origin;
-            var currentPos = GlobalTransform.Origin;
-            var currentDistance = currentPos.DistanceTo(targetNodePos);
-            if (currentDistance <= _maxLookAtDistance && (closestDistance == null || closestDistance > currentDistance))
-            {
-                //GD.Print($"Found thing to look at in UpdateLookAt! ({currentDistance}) {node}");
-                closestDistance = currentDistance;
-                closestNode = node;
-            }
-        }
+            // TODO: Calculate angle between player head bone's Up vector and vector from head bone to object.
+            var lookFromPos = _headLookAtModifier.Transform.Origin;
+            var lookToPos = _targetNodes[0].Transform.Origin;
 
-        if ((closestNode.HasValue && closestNode.Value != _currentTarget) || (closestNode == null && _currentTarget != null))
-        {
-            _isHeadMoving = true;
-            _currentTarget = closestNode;
-            Vector3? vecToTarget = null;
-            if (closestNode != null)
-            {
-                _targetRotation = vecToTarget = (closestNode.Value.Origin - GlobalTransform.Origin).Normalized();
-            }
-            GD.Print($"Set new target look at: _currentTarget={_currentTarget}\r\n\r\n vecToTarget={vecToTarget}\r\n\r\n _targetRotation={_targetRotation}");
+            var x = Vector3.Up;
         }
-        else if (_currentTarget != null)
+        else
         {
-            _isHeadMoving = true;
-            _currentTarget = null;
+            _targetRotation = Vector3.Zero;
         }
     }
 
     private void LookAtTarget(double delta)
     {
-        if (!_isHeadMoving) return;
+        if (_targetCount == 0 && _headLookAtModifier.OriginOffset == Vector3.Zero) return;
 
         var currentRotation = _headLookAtModifier.OriginOffset;
         var lookSpeed = (float)Mathf.Max(_lookSpeed * delta, _minLookSpeed);
-        if (_targetRotation == null)
-        {
-            var rotateAmount = currentRotation.Slerp(Vector3.Zero, lookSpeed);
-            if (rotateAmount.IsEqualApprox(Vector3.Zero))
-            {
-                _headLookAtModifier.OriginOffset = Vector3.Zero;
-                _isHeadMoving = false;
-            }
-            else
-                _headLookAtModifier.OriginOffset = rotateAmount;
-        }
+        
+        var rotateAmount = currentRotation.Slerp(_targetRotation.Value, lookSpeed);
+        if (rotateAmount.IsEqualApprox(_targetRotation.Value))
+            _headLookAtModifier.OriginOffset = _targetRotation.Value;
         else
-        {
-            _headLookAtModifier.OriginOffset = new Vector3(0, 0, 90);
-            _isHeadMoving = false;
-            _currentTarget = null;
-
-            var rotateAmount = currentRotation.Slerp(_targetRotation.Value, lookSpeed);
-            if (rotateAmount.IsEqualApprox(_targetRotation.Value))
-            {
-                //_headLookAtModifier.OriginOffset = _targetRotation.Value;
-                _isHeadMoving = false;
-                _currentTarget = null;
-            }
-            else
-                _headLookAtModifier.OriginOffset = rotateAmount;
-        }
-
-        //var t = _characterSkeleton.GetBonePoseRotation(_boneIndex);
-        //if (Input.IsActionPressed("ui_up"))
-        //{
-        //    t = t.Slerp(new Quaternion(new Vector3(1, 0, 0), 200), 0.1f);
-        //    _characterSkeleton.SetBonePoseRotation(_boneIndex, t);
-        //}
-        //else if (Input.IsActionPressed("ui_down"))
-        //{
-        //    t = t.Slerp(new Quaternion(new Vector3(1, 0, 0), -200), 0.1f);
-        //    _characterSkeleton.SetBonePoseRotation(_boneIndex, t);
-        //}
+            _headLookAtModifier.OriginOffset = rotateAmount;
 
         // Uncomment for big head mode :)
         //_characterSkeleton.SetBonePoseScale(_boneIndex, new Vector3(2, 2, 2));
     }
 
-    private void Initialize()
+    public void _OnAreaEntered(Area3D other)
     {
-        RefreshTargetNodes();
+        Node3D target = null;
+        bool foundValidTarget = false;
 
-        _initialized = true;
-    }
-
-    public void RefreshTargetNodes()
-    {
-        var targetNodes = new List<Transform3D>();
-        var root = GetNode(GameConstants.NodePaths.FromSceneRoot.SceneRoot);
-        PopulateTargetNodes(root, GetInstanceId(), targetNodes);
-        _targetNodes = targetNodes;
-    }
-
-    private static void PopulateTargetNodes(Node node, ulong? ignoreNodeId, List<Transform3D> targetNodes)
-    {
-        // TODO: With this code other actors will never be able to find the player to look at because their root is ignored.
-        //          ALSO REMOVING THIS WILL CAUSE JANK WITH LOOKING AT ITEMS THAT ARE IN THE INVENTORY UI.
-        if (GameConstants.RoomClearCheckBlacklist.Contains(node.GetPath().GetConcatenatedNames()))
-            return;
-        if ((ignoreNodeId == null || node.GetInstanceId() != ignoreNodeId.Value) && IsLookAtTarget(node))
-            targetNodes.Add((node as Node3D).GlobalTransform);
-        var children = node.GetChildren();
-        for (var i = 0; i < children.Count; i++)
+        if (other is Item)
         {
-            var child = children[i];
-            PopulateTargetNodes(child, ignoreNodeId, targetNodes);
+            target = (other as Item).LookAtTargetPoint;
+            foundValidTarget = true;
         }
+        else if (other is MapPickup)
+        {
+            target = (other as MapPickup).LookAtTargetPoint;
+            foundValidTarget = true;
+        }
+        else if (other is NotePickup)
+        {
+            target = (other as NotePickup).LookAtTargetPoint;
+            foundValidTarget = true;
+        }
+
+        if (target != null)
+        {
+            _targetNodes.Add(target);
+            _targetCount++;
+            //GD.Print($"Added lookAt target {target.GetParent().Name}");
+        }
+        else if (foundValidTarget)
+            GD.PrintErr($"Found LookAt object '{other.Name}' but it had a null LookAtTargetPoint. Check this prefab ({other.GetParent().Name})!!!");
     }
 
-    private static bool IsLookAtTarget(Node node)
+    public void _OnAreaExited(Area3D other)
     {
-        if (!(node is Node3D))
-            return false;
+        Node3D target = null;
+        if (other is Item)
+            target = (other as Item).LookAtTargetPoint;
+        else if (other is MapPickup)
+            target = (other as MapPickup).LookAtTargetPoint;
+        else if (other is NotePickup)
+            target = (other as NotePickup).LookAtTargetPoint;
 
-        // TODO: Eventually determine which types to check here dynamically!
-        return node is Enemy || node is Item || node is MapPickup || node is NotePickup;
+        if (target == null)
+            return;
+
+        for (var i = 0; i < _targetNodes.Count; i++)
+        {
+            if (_targetNodes[i].GetInstanceId() == target?.GetInstanceId())
+            {
+                //GD.Print($"Removed lookAt target {_targetNodes[i].GetParent().Name}");
+                _targetCount--;
+                _targetNodes.RemoveAt(i);
+                break;
+            }
+        }
     }
 }
