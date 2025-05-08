@@ -14,7 +14,7 @@ public partial class ActorLookAt : Area3D
     private CollisionShape3D _collisionShape;
 
     private List<Node3D> _targetNodes;
-    private Vector3? _targetRotation = null;
+    private Vector3 _targetRotation;
 
     [Export]
     private float _lookSpeed = 100.0f;
@@ -64,11 +64,15 @@ public partial class ActorLookAt : Area3D
     {
         if (_targetCount > 0)
         {
-            // TODO: Calculate angle between player head bone's Up vector and vector from head bone to object.
-            var lookFromPos = _headLookAtModifier.Transform.Origin;
-            var lookToPos = _targetNodes[0].Transform.Origin;
+            var lookFromPos = _headLookAtModifier.GlobalTransform.Origin;
+            var lookToPos = _targetNodes[0].GlobalTransform.Origin;
 
-            var x = Vector3.Up;
+            var vectorToLookAtPoint = (lookToPos - lookFromPos).Normalized();
+            var targetAngleRads = Vector3.Up.AngleTo(vectorToLookAtPoint);
+            
+            //GD.Print($"vectorToLookAtPoint = {Vector3.Up.AngleTo(vectorToLookAtPoint)}");
+            _targetRotation = new Vector3(0, Mathf.RadToDeg(Mathf.Cos(targetAngleRads)), Mathf.RadToDeg(Mathf.Sin(targetAngleRads)));
+            GD.Print($"Set _targetRotation to {_targetRotation} ({targetAngleRads} radians)");
         }
         else
         {
@@ -83,9 +87,9 @@ public partial class ActorLookAt : Area3D
         var currentRotation = _headLookAtModifier.OriginOffset;
         var lookSpeed = (float)Mathf.Max(_lookSpeed * delta, _minLookSpeed);
         
-        var rotateAmount = currentRotation.Slerp(_targetRotation.Value, lookSpeed);
-        if (rotateAmount.IsEqualApprox(_targetRotation.Value))
-            _headLookAtModifier.OriginOffset = _targetRotation.Value;
+        var rotateAmount = currentRotation.Slerp(_targetRotation, lookSpeed);
+        if (rotateAmount.IsEqualApprox(_targetRotation))
+            _headLookAtModifier.OriginOffset = _targetRotation;
         else
             _headLookAtModifier.OriginOffset = rotateAmount;
 
