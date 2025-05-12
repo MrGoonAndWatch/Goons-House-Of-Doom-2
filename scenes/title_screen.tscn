@@ -84,8 +84,8 @@ anchor_right = 1.0
 offset_top = 50.0
 offset_bottom = 321.0
 grow_horizontal = 2
-text = "Goon's House
-of Doom 2"
+text = "Goon's Museum
+of Doom"
 label_settings = ExtResource("2_vbbv1")
 horizontal_alignment = 1
 
@@ -115,7 +115,7 @@ offset_left = -103.0
 offset_top = -55.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "v0.1.2  "
+text = "v0.2.0  "
 label_settings = SubResource("LabelSettings_v651h")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
@@ -380,9 +380,6 @@ visible = false
 [node name="OptionsMenu" parent="." instance=ExtResource("5_nmfgy")]
 visible = false
 layout_mode = 1
-
-[node name="OptionButton" parent="OptionsMenu/VBoxContainer/Resolution" index="1"]
-popup/item_0/id = 0
 
 [node name="ControlsMenu" parent="." instance=ExtResource("7_4ye8e")]
 visible = false

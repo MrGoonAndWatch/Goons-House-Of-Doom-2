@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Goons House Of Doom 2"
-config/version="0.1.0"
+config/name="Goons Museum Of Doom"
+config/version="0.2.0"
 run/main_scene="res://scenes/title_screen.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://textures/EvilGoon.png"
