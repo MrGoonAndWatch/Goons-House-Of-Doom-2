@@ -116,25 +116,25 @@ node_connections = [&"Add2", 0, &"Arms", &"Add2", 1, &"Legs", &"TimeScale", 0, &
 [node name="protagonist" instance=ExtResource("1_pg4l0")]
 
 [node name="Skeleton3D" parent="protagonist" index="0"]
-bones/0/position = Vector3(0, -0.0715163, -0.109824)
-bones/1/rotation = Quaternion(0.0389962, 1.20756e-19, -3.78839e-18, 0.999239)
+bones/0/position = Vector3(0, -0.0720408, -0.111511)
+bones/1/rotation = Quaternion(0.0391173, 1.20756e-19, -3.78839e-18, 0.999235)
 bones/1/scale = Vector3(1.00048, 1.00048, 1.00048)
-bones/2/rotation = Quaternion(0.023794, 5.29789e-19, 9.01423e-18, 0.999717)
-bones/3/rotation = Quaternion(-0.116323, -0.112732, 0.978703, -0.126101)
-bones/4/rotation = Quaternion(0.196805, -0.0573698, -0.0215633, 0.978525)
+bones/2/rotation = Quaternion(0.0236956, 5.29789e-19, 9.01422e-18, 0.999719)
+bones/3/rotation = Quaternion(-0.116307, -0.112675, 0.978705, -0.126153)
+bones/4/rotation = Quaternion(0.197097, -0.0574351, -0.0215028, 0.978464)
 bones/5/rotation = Quaternion(0.117709, -0.0674186, -0.145773, 0.979974)
-bones/6/rotation = Quaternion(0.116323, -0.112732, 0.978703, 0.126101)
-bones/7/rotation = Quaternion(0.196805, 0.0573698, 0.0215632, 0.978525)
+bones/6/rotation = Quaternion(0.116307, -0.112675, 0.978705, 0.126153)
+bones/7/rotation = Quaternion(0.197097, 0.0574351, 0.0215027, 0.978464)
 bones/8/rotation = Quaternion(0.117709, 0.0674186, 0.145773, 0.979974)
-bones/9/rotation = Quaternion(0.0158474, 0.0101921, 0.998432, -0.0527183)
+bones/9/rotation = Quaternion(0.015843, 0.0103083, 0.998427, -0.0527782)
 bones/9/scale = Vector3(1.00006, 1, 1)
-bones/10/rotation = Quaternion(-0.0788766, -7.37776e-06, -0.0528574, 0.995482)
-bones/11/rotation = Quaternion(0.598054, 0.0168026, -0.00970919, 0.801221)
+bones/10/rotation = Quaternion(-0.0790233, -7.37823e-06, -0.0529557, 0.995465)
+bones/11/rotation = Quaternion(0.598085, 0.0168262, -0.00967501, 0.801198)
 bones/11/scale = Vector3(1.00002, 1, 1)
-bones/12/rotation = Quaternion(-0.0158474, 0.0101921, 0.998432, 0.0527183)
+bones/12/rotation = Quaternion(-0.015843, 0.0103083, 0.998427, 0.0527782)
 bones/12/scale = Vector3(1.00006, 1, 1)
-bones/13/rotation = Quaternion(-0.0788766, 7.37846e-06, 0.0528574, 0.995482)
-bones/14/rotation = Quaternion(0.598054, -0.0168025, 0.00970918, 0.801221)
+bones/13/rotation = Quaternion(-0.0790233, 7.3787e-06, 0.0529557, 0.995465)
+bones/14/rotation = Quaternion(0.598085, -0.0168262, 0.009675, 0.801198)
 bones/14/scale = Vector3(1.00002, 1, 1)
 bones/15/position = Vector3(4.70573, -26.4547, -1.13817)
 bones/15/rotation = Quaternion(-0.00462749, 0.707092, -0.707092, 0.00462749)
@@ -144,11 +144,18 @@ bones/17/rotation = Quaternion(0.00462749, 0.707092, -0.707092, -0.00462749)
 
 [node name="HeadLookAtModifier" type="LookAtModifier3D" parent="protagonist/Skeleton3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 0)
-target_node = NodePath("..")
+target_node = NodePath("LookAt")
 bone_name = "head"
 bone = 2
-forward_axis = 3
-primary_rotation_axis = 0
+use_angle_limitation = true
+symmetry_limitation = true
+primary_limit_angle = 3.14159
+primary_damp_threshold = 1.0
+secondary_limit_angle = 1.5708
+secondary_damp_threshold = 1.0
+
+[node name="LookAt" type="Node3D" parent="protagonist/Skeleton3D/HeadLookAtModifier" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 100)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 tree_root = SubResource("AnimationNodeBlendTree_pe6hq")

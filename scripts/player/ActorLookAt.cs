@@ -14,39 +14,43 @@ public partial class ActorLookAt : Area3D
     private CollisionShape3D _collisionShape;
 
     private List<Node3D> _targetNodes;
-    private Vector3 _targetRotation;
 
     [Export]
-    private float _lookSpeed = 100.0f;
+    private float _lookSpeed = 2.5f;
     [Export]
     private double _timeBetweenLookAtUpdates = 1.0;
-    private float _minLookSpeed = 0.001f;
     private double _timeSinceLastLookAtUpdate;
 
-    private Transform3D _headBoneTransform;
+    private Vector3 _initialTargetLocalPosition;
+    private Node3D _lookAtTarget;
+    private Tween _currentLookAtTween;
 
     public override void _Ready()
     {
+        _currentLookAtTween = null;
         _targetNodes = new List<Node3D>();
-        _targetRotation = Vector3.Zero;
 
+        UpdateLookAtColliderFromParams();
+
+        _lookAtTarget = _headLookAtModifier.GetNode<Node3D>(_headLookAtModifier.TargetNode);
+        _initialTargetLocalPosition = _lookAtTarget.Transform.Origin;
+    }
+
+    private void UpdateLookAtColliderFromParams()
+    {
         if (_collisionShape?.Shape is CylinderShape3D)
         {
             (_collisionShape.Shape as CylinderShape3D).Radius = _maxLookAtDistance.X;
             (_collisionShape.Shape as CylinderShape3D).Height = _maxLookAtDistance.Y;
         }
         else
-            GD.Print("[color=yellow]ActorLookAt script did not have a collision shape parameter specified or it was not a CyclinderShape3D. Using default shape values for look at range calculations.");
-
-        var playerSkeleton = _headLookAtModifier.GetNode<Skeleton3D>(_headLookAtModifier.TargetNode);
-        _headBoneTransform = playerSkeleton.GetBonePose(_headLookAtModifier.Bone);
+            GD.Print($"[color=yellow]{nameof(ActorLookAt)} script did not have a collision shape parameter specified or it was not a CyclinderShape3D. Using default shape values for look at range calculations.");
     }
 
     public override void _PhysicsProcess(double delta)
     {
         if (TimeToUpdateLookAt(delta))
             UpdateLookAt();
-        LookAtTarget(delta);
     }
 
     private bool TimeToUpdateLookAt(double delta)
@@ -62,39 +66,29 @@ public partial class ActorLookAt : Area3D
 
     private void UpdateLookAt()
     {
-        if (_targetCount > 0)
+        // TODO: Additional consideration for resetting to default position when target is out of player's cone of rotation!
+        if (_targetCount > 0 && _lookAtTarget.GlobalTransform.Origin != _targetNodes[0].GlobalTransform.Origin)
         {
-            var lookFromPos = _headLookAtModifier.GlobalTransform.Origin;
-            var lookToPos = _targetNodes[0].GlobalTransform.Origin;
-
-            var vectorToLookAtPoint = (lookToPos - lookFromPos).Normalized();
-            var targetAngleRads = Vector3.Up.AngleTo(vectorToLookAtPoint);
-            
-            //GD.Print($"vectorToLookAtPoint = {Vector3.Up.AngleTo(vectorToLookAtPoint)}");
-            _targetRotation = new Vector3(0, Mathf.RadToDeg(Mathf.Cos(targetAngleRads)), Mathf.RadToDeg(Mathf.Sin(targetAngleRads)));
-            GD.Print($"Set _targetRotation to {_targetRotation} ({targetAngleRads} radians)");
+            CreateNewLookAtTween(_targetNodes[0].GlobalTransform.Origin, true);
+            //GD.Print($"Set player look at to {_targetNodes[0].GlobalTransform.Origin}!");
         }
-        else
+        // TODO: even with equal approx this never actually reaches the position, we'll need to figure out some other snap to logic at some point!
+        else //if (!_lookAtTarget.Transform.Origin.IsEqualApprox(_initialTargetLocalPosition))
         {
-            _targetRotation = Vector3.Zero;
+            CreateNewLookAtTween(_initialTargetLocalPosition, false);
+            //GD.Print($"Reset player look at to {_initialTargetLocalPosition}! _lookAtTarget.Transform.Origin={_lookAtTarget.Transform.Origin} _initialTargetLocalPosition={_initialTargetLocalPosition}");
         }
     }
 
-    private void LookAtTarget(double delta)
+    private void CreateNewLookAtTween(Vector3 endPosition, bool isEndInGlobalCoords)
     {
-        if (_targetCount == 0 && _headLookAtModifier.OriginOffset == Vector3.Zero) return;
+        if (_currentLookAtTween != null)
+            _currentLookAtTween.Kill();
 
-        var currentRotation = _headLookAtModifier.OriginOffset;
-        var lookSpeed = (float)Mathf.Max(_lookSpeed * delta, _minLookSpeed);
-        
-        var rotateAmount = currentRotation.Slerp(_targetRotation, lookSpeed);
-        if (rotateAmount.IsEqualApprox(_targetRotation))
-            _headLookAtModifier.OriginOffset = _targetRotation;
-        else
-            _headLookAtModifier.OriginOffset = rotateAmount;
-
-        // Uncomment for big head mode :)
-        //_characterSkeleton.SetBonePoseScale(_boneIndex, new Vector3(2, 2, 2));
+        _currentLookAtTween = CreateTween();
+        var positionPropertyName = isEndInGlobalCoords ? "global_position" : "position";
+        _currentLookAtTween.TweenProperty(_lookAtTarget, positionPropertyName, endPosition, _lookSpeed);
+        _currentLookAtTween.SetTrans(Tween.TransitionType.Linear);
     }
 
     public void _OnAreaEntered(Area3D other)
