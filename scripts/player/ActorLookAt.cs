@@ -8,11 +8,6 @@ public partial class ActorLookAt : Area3D
 
     private int _targetCount;
 
-    [Export]
-    private Vector2 _maxLookAtDistance = new Vector2(5, 4);
-    [Export]
-    private CollisionShape3D _collisionShape;
-
     private List<Node3D> _targetNodes;
 
     [Export]
@@ -25,32 +20,25 @@ public partial class ActorLookAt : Area3D
     private Node3D _lookAtTarget;
     private Tween _currentLookAtTween;
 
+    private bool _isIgnoringLook;
+    [Export]
+    private float _ignoreLookRate = 0.05f;
+
     public override void _Ready()
     {
         _currentLookAtTween = null;
         _targetNodes = new List<Node3D>();
 
-        UpdateLookAtColliderFromParams();
-
         _lookAtTarget = _headLookAtModifier.GetNode<Node3D>(_headLookAtModifier.TargetNode);
         _initialTargetLocalPosition = _lookAtTarget.Transform.Origin;
-    }
-
-    private void UpdateLookAtColliderFromParams()
-    {
-        if (_collisionShape?.Shape is CylinderShape3D)
-        {
-            (_collisionShape.Shape as CylinderShape3D).Radius = _maxLookAtDistance.X;
-            (_collisionShape.Shape as CylinderShape3D).Height = _maxLookAtDistance.Y;
-        }
-        else
-            GD.Print($"[color=yellow]{nameof(ActorLookAt)} script did not have a collision shape parameter specified or it was not a CyclinderShape3D. Using default shape values for look at range calculations.");
     }
 
     public override void _PhysicsProcess(double delta)
     {
         if (TimeToUpdateLookAt(delta))
             UpdateLookAt();
+        if (_isIgnoringLook)
+            UpdateLookIgnore(delta);
     }
 
     private bool TimeToUpdateLookAt(double delta)
@@ -80,6 +68,16 @@ public partial class ActorLookAt : Area3D
         }
     }
 
+    private void UpdateLookIgnore(double delta)
+    {
+        _headLookAtModifier.Influence -= (float)(/*delta * */ _ignoreLookRate);
+        if (_headLookAtModifier.Influence <= 0)
+        {
+            _headLookAtModifier.Influence = 0;
+            _isIgnoringLook = false;
+        }
+    }
+
     private void CreateNewLookAtTween(Vector3 endPosition, bool isEndInGlobalCoords)
     {
         if (_currentLookAtTween != null)
@@ -93,6 +91,8 @@ public partial class ActorLookAt : Area3D
 
     public void _OnAreaEntered(Area3D other)
     {
+        var startingTargetCount = _targetCount;
+
         Node3D target = null;
         bool foundValidTarget = false;
 
@@ -120,6 +120,12 @@ public partial class ActorLookAt : Area3D
         }
         else if (foundValidTarget)
             GD.PrintErr($"Found LookAt object '{other.Name}' but it had a null LookAtTargetPoint. Check this prefab ({other.GetParent().Name})!!!");
+
+        if (_targetCount > 0 && _targetCount != startingTargetCount)
+        {
+            _headLookAtModifier.Influence = 1.0f;
+            _isIgnoringLook = false;
+        }
     }
 
     public void _OnAreaExited(Area3D other)
@@ -145,5 +151,8 @@ public partial class ActorLookAt : Area3D
                 break;
             }
         }
+
+        if (_targetCount == 0)
+            _isIgnoringLook = true;
     }
 }

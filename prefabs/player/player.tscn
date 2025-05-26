@@ -31,9 +31,8 @@ height = 2.1
 [sub_resource type="BoxShape3D" id="BoxShape3D_mv370"]
 size = Vector3(1, 2.1, 1)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_408ek"]
-height = 4.0
-radius = 5.0
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_408ek"]
+points = PackedVector3Array(4, 1, 4, 0, 1, 0.5, 0, 1, -0.5, 4, 1, -4, 4, -1, -4, 4, -1, 4, 0, -1, 0.5, 0, -1, -0.5)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_playerAnimationControl", "_deathFadeUi", "_deathFadeBg", "_saveUi") groups=["player"]]
 floor_max_angle = 1.0472
@@ -221,19 +220,19 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
 [node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
-bones/0/position = Vector3(0, -0.0527948, -0.049619)
-bones/1/rotation = Quaternion(0.0326951, 1.20759e-19, -3.78849e-18, 0.999465)
-bones/2/rotation = Quaternion(0.0343016, 5.2981e-19, 9.01459e-18, 0.999412)
-bones/3/rotation = Quaternion(-0.117331, -0.116411, 0.97858, -0.122731)
-bones/4/rotation = Quaternion(0.184522, -0.0546207, -0.0241056, 0.981013)
-bones/6/rotation = Quaternion(0.117331, -0.116411, 0.97858, 0.122731)
-bones/7/rotation = Quaternion(0.184522, 0.0546207, 0.0241056, 0.981013)
-bones/9/rotation = Quaternion(0.0160014, 0.00622228, 0.998569, -0.0506497)
-bones/10/rotation = Quaternion(-0.0727973, -7.37864e-06, -0.0487834, 0.996153)
-bones/11/rotation = Quaternion(0.596873, 0.0159215, -0.0109779, 0.802103)
-bones/12/rotation = Quaternion(-0.0160013, 0.00622228, 0.998569, 0.0506497)
-bones/13/rotation = Quaternion(-0.0727973, 7.3798e-06, 0.0487834, 0.996153)
-bones/14/rotation = Quaternion(0.596871, -0.0159203, 0.0109795, 0.802104)
+bones/0/position = Vector3(0, -0.109303, -0.171258)
+bones/1/rotation = Quaternion(0.0553848, 1.81094e-19, -5.68131e-18, 0.998465)
+bones/2/rotation = Quaternion(-0.00761263, 7.94055e-19, 1.35106e-17, 0.999971)
+bones/3/rotation = Quaternion(-0.173079, -0.15728, 0.9664, -0.106667)
+bones/4/rotation = Quaternion(0.289727, -0.0856806, -0.0187072, 0.953083)
+bones/6/rotation = Quaternion(0.173079, -0.15728, 0.9664, 0.106667)
+bones/7/rotation = Quaternion(0.289727, 0.0856806, 0.0187072, 0.953083)
+bones/9/rotation = Quaternion(0.0250456, 0.0159322, 0.997986, -0.0560663)
+bones/10/rotation = Quaternion(-0.0890493, -7.36996e-06, -0.0596745, 0.994238)
+bones/11/rotation = Quaternion(0.601069, 0.0271261, -0.0114115, 0.798655)
+bones/12/rotation = Quaternion(-0.0250456, 0.0159322, 0.997986, 0.0560663)
+bones/13/rotation = Quaternion(-0.0890493, 7.3695e-06, 0.0596745, 0.994238)
+bones/14/rotation = Quaternion(0.601069, -0.0271261, 0.0114115, 0.798655)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
@@ -261,13 +260,12 @@ target_position = Vector3(1000, 0, 0)
 
 [node name="DebugConsole" parent="." instance=ExtResource("10_1ehqn")]
 
-[node name="LookAtArea" type="Area3D" parent="." node_paths=PackedStringArray("_headLookAtModifier", "_collisionShape")]
+[node name="LookAtArea" type="Area3D" parent="." node_paths=PackedStringArray("_headLookAtModifier")]
 script = ExtResource("15_408ek")
 _headLookAtModifier = NodePath("../protagonist/protagonist/Skeleton3D/HeadLookAtModifier")
-_collisionShape = NodePath("LookAtCollisionShape")
 
-[node name="LookAtCollisionShape" type="CollisionShape3D" parent="LookAtArea"]
-shape = SubResource("CylinderShape3D_408ek")
+[node name="LookAtVisionCone" type="CollisionShape3D" parent="LookAtArea"]
+shape = SubResource("ConvexPolygonShape3D_408ek")
 
 [node name="GameOverFadeUiContainer" type="Node3D" parent="."]
 
