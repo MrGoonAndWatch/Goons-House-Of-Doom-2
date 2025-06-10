@@ -33,6 +33,9 @@ public partial class Player : ICutsceneActor
     private bool IsDying;
     private double _deathFadeoutTimeLeft;
 
+    private bool _holdAnalogueDirection;
+    private float _analogueControlCurrentCameraRotation;
+
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 100;
 
     private PlayerStatus _playerStatus;
@@ -183,11 +186,18 @@ public partial class Player : ICutsceneActor
         return velocity;
 	}
 
+    private void ResetAnalogueMovement()
+    {
+        _holdAnalogueDirection = false;
+        _analogueControlCurrentCameraRotation = 0;
+    }
+
     private Vector3 ProcessMovement(double delta, Vector3 velocity, Vector2 inputMovement, bool analogue)
     {
         if (_playerStatus.IsMovementPrevented())
         {
             _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
+            ResetAnalogueMovement();
             return new Vector3(0, velocity.Y, 0);
         }
 
@@ -211,9 +221,15 @@ public partial class Player : ICutsceneActor
             if (!analogue && inputMovement.Y > 0 && Input.IsActionJustPressed(Controls.run.ToString()))
                 StartQuickTurn();
 
+            if (!_holdAnalogueDirection)
+            {
+                _analogueControlCurrentCameraRotation = _camera.Rotation.Y;
+                _holdAnalogueDirection = true;
+            }
+
             var movement = analogue ?
                 // Analogue controls (i.e. move the direction you pressed relative to camera)
-                new Vector3(inputMovement.X, 0.0f, inputMovement.Y).Rotated(Vector3.Up, _camera.Rotation.Y) * ((float)delta) * SPEED * runMod * noclipMod * speedMod :
+                new Vector3(inputMovement.X, 0.0f, inputMovement.Y).Rotated(Vector3.Up, _analogueControlCurrentCameraRotation) * ((float)delta) * SPEED * runMod * noclipMod * speedMod :
                 // Tank controls (i.e. left/right = rotate, up/down = forwards/backwards)
                 -(Transform.Basis.X * inputMovement.Y * (float)delta) * SPEED * runMod * backwardsMod * noclipMod * speedMod;
 
@@ -224,6 +240,7 @@ public partial class Player : ICutsceneActor
         }
         else
         {
+            ResetAnalogueMovement();
             velocity = new Vector3(0, velocity.Y, 0);
             _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
         }
@@ -236,7 +253,7 @@ public partial class Player : ICutsceneActor
 
         if (analogue)
         {
-            var newDir = new Vector3(inputMovement.X, 0.0f, inputMovement.Y).Rotated(Vector3.Up, _camera.Rotation.Y);
+            var newDir = new Vector3(inputMovement.X, 0.0f, inputMovement.Y).Rotated(Vector3.Up, _analogueControlCurrentCameraRotation);
             LookAt(GlobalPosition + newDir);
             RotateY(1.570796f);
         }
