@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dh22gdfhrk7d0" path="res://scripts/game_ui/OptionsMenuUi.cs" id="1_87jiw"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_dx8wx"]
 
-[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("ResolutionPicker", "TotalVolumeSlider", "MusicVolumeSlider", "SfxVolumeSlider", "VoiceVolumeSlider", "FullscreenCheckbox", "GammaSlider")]
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("ResolutionPicker", "TotalVolumeSlider", "MusicVolumeSlider", "SfxVolumeSlider", "VoiceVolumeSlider", "FullscreenCheckbox", "GammaSlider", "UseAnalogueMovement", "ForceAnalogueMovement")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +18,8 @@ SfxVolumeSlider = NodePath("VBoxContainer/EffectsVolume/EffectsVolumeSlider")
 VoiceVolumeSlider = NodePath("VBoxContainer/VoiceVolume/VoiceVolumeSlider")
 FullscreenCheckbox = NodePath("VBoxContainer/FullScreen/CheckBox")
 GammaSlider = NodePath("VBoxContainer/Gamma/GammaSlider")
+UseAnalogueMovement = NodePath("VBoxContainer/UseAnalogueMovement/CheckBox")
+ForceAnalogueMovement = NodePath("VBoxContainer/ForceAnalogueMovement/CheckBox")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -32,6 +34,42 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameplayLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_dx8wx")
+text = "Gameplay"
+
+[node name="DisplayHSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="UseAnalogueMovement" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/UseAnalogueMovement"]
+layout_mode = 2
+theme = ExtResource("1_dx8wx")
+theme_type_variation = &"LabelSmall"
+text = "Use Analogue Controls"
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/UseAnalogueMovement"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("1_dx8wx")
+
+[node name="ForceAnalogueMovement" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ForceAnalogueMovement"]
+layout_mode = 2
+theme = ExtResource("1_dx8wx")
+theme_type_variation = &"LabelSmall"
+text = "Force Analogue Controls"
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/ForceAnalogueMovement"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("1_dx8wx")
 
 [node name="DisplayLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -116,7 +154,7 @@ theme_type_variation = &"LabelSmall"
 text = "Gamma    "
 
 [node name="GammaSlider" type="HSlider" parent="VBoxContainer/Gamma"]
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 75)
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
@@ -125,7 +163,7 @@ step = 0.05
 value = 1.0
 
 [node name="Spacer2" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [node name="SoundLabel" type="Label" parent="VBoxContainer"]
@@ -146,7 +184,7 @@ theme_type_variation = &"LabelSmall"
 text = "Total    "
 
 [node name="TotalVolumeSlider" type="HSlider" parent="VBoxContainer/TotalVolume"]
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 75)
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
@@ -162,7 +200,7 @@ theme_type_variation = &"LabelSmall"
 text = "Music  "
 
 [node name="MusicVolumeSlider" type="HSlider" parent="VBoxContainer/MusicVolume"]
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 75)
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
@@ -194,14 +232,14 @@ theme_type_variation = &"LabelSmall"
 text = "Voice   "
 
 [node name="VoiceVolumeSlider" type="HSlider" parent="VBoxContainer/VoiceVolume"]
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 75)
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 value = 75.0
 
 [node name="Spacer3" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [node name="Buttons" type="HBoxContainer" parent="VBoxContainer"]
@@ -221,6 +259,8 @@ layout_mode = 2
 theme = ExtResource("1_dx8wx")
 text = " Confirm "
 
+[connection signal="toggled" from="VBoxContainer/UseAnalogueMovement/CheckBox" to="." method="_OnUseAnalogueMovementSet"]
+[connection signal="toggled" from="VBoxContainer/ForceAnalogueMovement/CheckBox" to="." method="_OnUseForceAnalogueMovementSet"]
 [connection signal="item_selected" from="VBoxContainer/Resolution/OptionButton" to="." method="_OnResolutionChanged"]
 [connection signal="toggled" from="VBoxContainer/FullScreen/CheckBox" to="." method="_OnSetFullscreen"]
 [connection signal="value_changed" from="VBoxContainer/Gamma/GammaSlider" to="." method="_OnGammaChanged"]

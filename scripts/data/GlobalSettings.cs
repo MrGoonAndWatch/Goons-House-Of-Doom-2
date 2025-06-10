@@ -9,6 +9,9 @@ public partial class GlobalSettings
     public string Resolution;
     public float Gamma = 1.0f;
 
+    public bool UseAnalogueMovement;
+    public bool ForceAnalogueMovement;
+
     public GlobalSettings() { }
 
     public GlobalSettings(GlobalSettings other)
@@ -20,5 +23,7 @@ public partial class GlobalSettings
         Fullscreen = other.Fullscreen;
         Resolution = other.Resolution;
         Gamma = other.Gamma;
+        UseAnalogueMovement = other.UseAnalogueMovement;
+        ForceAnalogueMovement = other.ForceAnalogueMovement;
     }
 }

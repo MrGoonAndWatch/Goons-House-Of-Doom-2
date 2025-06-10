@@ -17,6 +17,10 @@ public partial class OptionsMenuUi : Control
     private CheckBox FullscreenCheckbox;
     [Export]
     private Slider GammaSlider;
+    [Export]
+    private CheckBox UseAnalogueMovement;
+    [Export]
+    private CheckBox ForceAnalogueMovement;
 
     private GlobalSettings _originalGlobalSettings;
     private GlobalSettings _globalSettings;
@@ -41,6 +45,8 @@ public partial class OptionsMenuUi : Control
         FullscreenCheckbox.SetPressedNoSignal(_globalSettings.Fullscreen);
         SetFullscreen();
         UpdateGamma(_globalSettings.Gamma);
+        UseAnalogueMovement.SetPressedNoSignal(_globalSettings.UseAnalogueMovement);
+        ForceAnalogueMovement.SetPressedNoSignal(_globalSettings.ForceAnalogueMovement);
     }
 
     private int GetResolutionIndex(string resolution)
@@ -162,6 +168,16 @@ public partial class OptionsMenuUi : Control
     {
         _globalSettings.Fullscreen = isFullscreen;
         SetFullscreen();
+    }
+
+    public void _OnUseAnalogueMovementSet(bool useAnalogueMovement)
+    {
+        _globalSettings.UseAnalogueMovement = useAnalogueMovement;
+    }
+
+    public void _OnUseForceAnalogueMovementSet(bool forceAnalogueMovement)
+    {
+        _globalSettings.ForceAnalogueMovement = forceAnalogueMovement;
     }
 
     private void SetFullscreen()
