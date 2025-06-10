@@ -133,7 +133,8 @@ public partial class InspectTextUi : Node
 
     private void ProcessChoiceMovement()
     {
-        var horizontalMovement = GameConstants.GetMovementVectorRaw().X;
+        (var input, var _) = GameConstants.GetMovementVectorWithDeadzone();
+        var horizontalMovement = input.X;
 
         if (!_justMovedChoice && horizontalMovement < 0)
         {

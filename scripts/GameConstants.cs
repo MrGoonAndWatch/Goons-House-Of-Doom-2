@@ -154,7 +154,11 @@ public partial class GameConstants : GodotObject
         pause,
         debug_console,
         debug_console_enter,
-        debug_console_backspace
+        debug_console_backspace,
+        left_joy,
+        right_joy,
+        up_joy,
+        down_joy,
     }
 
     public enum ControlBinding
@@ -217,6 +221,7 @@ public partial class GameConstants : GodotObject
             public const string GameOverScreen = $"{SceneRoot}/GameOver";
 
             public const string SceneRoot = "/root/root/SubViewport";
+            public const string Camera = SceneRoot + "/Camera3D";
             public const string Player = SceneRoot + "/Player";
             public const string PlayerInventory = Player + "/PlayerInventory";
             public const string PlayerStatusScreenHeader = Player + "PlayerStatusScreen/Header";
@@ -295,26 +300,42 @@ public partial class GameConstants : GodotObject
         public const string Gamma = "gamma";
     }
 
-    public static Vector2 GetMovementVectorRaw()
+    private static Vector2 GetDigitalMovementVectorRaw()
     {
         var inputDir = Input.GetVector(Controls.left.ToString(), Controls.right.ToString(), Controls.up.ToString(), Controls.down.ToString());
         return inputDir;
     }
 
-    public static Vector2 GetMovementVectorWithDeadzone()
+    private static Vector2 GetAnalogueMovementVectorRaw()
     {
-        var inputDir = GetMovementVectorRaw();
+        var inputDir = Input.GetVector(Controls.left_joy.ToString(), Controls.right_joy.ToString(), Controls.up_joy.ToString(), Controls.down_joy.ToString());
+        return inputDir;
+    }
 
-        var horizontalInput = inputDir.X;
-        // Note: For some reason the Deadzone property in the project's InputMap wasn't being respected, leading to weird menu movement some of the time.
-        if ((horizontalInput < 0 && horizontalInput > -ControllerMenuDeadzone) ||
-            (horizontalInput > 0 && horizontalInput < ControllerMenuDeadzone))
-            horizontalInput = 0;
-        var verticalInput = inputDir.Y;
-        if ((verticalInput < 0 && verticalInput > -ControllerMenuDeadzone) ||
-            (verticalInput > 0 && verticalInput < ControllerMenuDeadzone))
-            verticalInput = 0;
-        return new Vector2(horizontalInput, verticalInput);
+    // Note: For some reason the Deadzone property in the project's InputMap wasn't being respected, leading to weird menu movement some of the time.
+    private static float ApplyDeadzoneToInputReading(float input)
+    {
+        if ((input < 0 && input > -ControllerMenuDeadzone) ||
+            (input > 0 && input < ControllerMenuDeadzone))
+            return 0;
+        else
+            return input;
+    }
+
+    public static (Vector2, bool) GetMovementVectorWithDeadzone()
+    {
+        var inputDirDigital = GetDigitalMovementVectorRaw();
+        var inputDirAnalogue = GetAnalogueMovementVectorRaw();
+
+        var horizontalInputAnalogue = ApplyDeadzoneToInputReading(inputDirAnalogue.X);
+        var horizontalInputDigital = ApplyDeadzoneToInputReading(inputDirDigital.X);
+        var verticalInputAnalogue = ApplyDeadzoneToInputReading(inputDirAnalogue.Y);
+        var verticalInputDigital = ApplyDeadzoneToInputReading(inputDirDigital.Y);
+
+        if (horizontalInputAnalogue != 0 || verticalInputAnalogue != 0)
+            return (new Vector2(horizontalInputAnalogue, verticalInputAnalogue), true);
+        else
+            return (new Vector2(horizontalInputDigital, verticalInputDigital), false);
     }
 
     public static string GetCurrentRoomName(Node node)

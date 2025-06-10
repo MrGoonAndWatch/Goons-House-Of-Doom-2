@@ -27,7 +27,8 @@ public partial class Chaser : Enemy
     {
 		if (!CanMove()) return;
 
-		var movement = GameConstants.GetMovementVectorRaw().Y;
+		(var input, var _) = GameConstants.GetMovementVectorWithDeadzone();
+        var movement = input.Y;
         if (Input.IsActionPressed(GameConstants.Controls.run.ToString()) && movement > 0)
 		{
 			_chasePoint = _player.GlobalPosition;
