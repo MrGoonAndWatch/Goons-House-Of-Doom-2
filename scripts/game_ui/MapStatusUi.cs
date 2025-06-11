@@ -47,7 +47,7 @@ public partial class MapStatusUi : StatusScreenTab
     {
         if (!IsActiveTab || _currentMapNode == null) return;
 
-        var movement = GameConstants.GetMovementVectorWithDeadzone();
+        (var movement, var _) = GameConstants.GetMovementVectorWithDeadzone();
 
         if (movement.Equals(Vector2.Zero)) return;
         movement *= -1;

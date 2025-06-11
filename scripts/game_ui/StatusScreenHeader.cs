@@ -77,7 +77,7 @@ public partial class StatusScreenHeader : Control
 
     private void HandleTabSwapping()
     {
-        var inputDir = GameConstants.GetMovementVectorWithDeadzone();
+        (var inputDir, var _) = GameConstants.GetMovementVectorWithDeadzone();
         var horizontalInput = inputDir.X;
 
         if (horizontalInput > 0 && !_pressingRight)

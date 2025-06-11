@@ -87,7 +87,7 @@ public partial class PlayerInventory : Node3D
         if (EquipDirty)
             UpdateEquipUi();
 
-        var inputDir = GameConstants.GetMovementVectorRaw();
+        (var inputDir, var _) = GameConstants.GetMovementVectorWithDeadzone();
 
         if (_actionMenuOpen && !_combiningItems)
             HandleActionCursorMovement(inputDir.Y);

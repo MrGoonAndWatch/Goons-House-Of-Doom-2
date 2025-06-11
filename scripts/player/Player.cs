@@ -19,6 +19,8 @@ public partial class Player : ICutsceneActor
     [Export]
     private SaveGame _saveUi;
 
+    private Camera3D _camera;
+
     const float SPEED = 50.0f;
 	const float RUN_MODIFIER = 3.0f;
 	const float BACKWARDS_MODIFIER = 0.5f;
@@ -31,6 +33,9 @@ public partial class Player : ICutsceneActor
     private bool IsDying;
     private double _deathFadeoutTimeLeft;
 
+    private bool _holdAnalogueDirection;
+    private float _analogueControlCurrentCameraRotation;
+
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 100;
 
     private PlayerStatus _playerStatus;
@@ -39,6 +44,9 @@ public partial class Player : ICutsceneActor
 
     public override void _Ready()
     {
+        // TODO: this sucks, get the camera in a more elegant way.
+        _camera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
+
         _playerStatus = PlayerStatus.GetInstance();
         RefreshNoClip();
     }
@@ -159,9 +167,10 @@ public partial class Player : ICutsceneActor
         var velocity = Velocity;
 		velocity = ProcessGravity(delta, velocity);
 
-        var input_dir = GameConstants.GetMovementVectorWithDeadzone();
-        velocity = ProcessMovement(delta, velocity, input_dir.Y);
-        ProcessRotation(delta, input_dir.X);
+        (var input_dir, var analogue) = GameConstants.GetMovementVectorWithDeadzone();
+        velocity = ProcessMovement(delta, velocity, input_dir, analogue);
+        ProcessRotation(delta, input_dir, analogue);
+
 		Velocity = velocity;
 
 		MoveAndSlide();
@@ -177,35 +186,52 @@ public partial class Player : ICutsceneActor
         return velocity;
 	}
 
-    private Vector3 ProcessMovement(double delta, Vector3 velocity, float inputMovement)
+    private void ResetAnalogueMovement()
+    {
+        _holdAnalogueDirection = false;
+        _analogueControlCurrentCameraRotation = 0;
+    }
+
+    private Vector3 ProcessMovement(double delta, Vector3 velocity, Vector2 inputMovement, bool analogue)
     {
         if (_playerStatus.IsMovementPrevented())
         {
             _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
+            ResetAnalogueMovement();
             return new Vector3(0, velocity.Y, 0);
         }
 
-        if (inputMovement != 0 && !IsQuickTurning)
+        if (((analogue && inputMovement != Vector2.Zero) || inputMovement.Y != 0) && !IsQuickTurning)
         {
             var running = Input.IsActionPressed(Controls.run.ToString());
 
             var runMod = 1.0f;
 
-            if (running && inputMovement < 0)
+            if (running && (inputMovement.Y < 0 || analogue))
                 runMod = RUN_MODIFIER;
 
             var backwardsMod = 1.0f;
 
-            if (inputMovement > 0)
+            if (!analogue && inputMovement.Y > 0)
                 backwardsMod = BACKWARDS_MODIFIER;
 
             var noclipMod = DebugManager.IsPlayerNoClipping() ? NOCLIP_SPEED_BONUS : 1.0f;
             var speedMod = DebugManager.GetSpeedMod();
 
-            if (inputMovement > 0 && Input.IsActionJustPressed(Controls.run.ToString()))
+            if (!analogue && inputMovement.Y > 0 && Input.IsActionJustPressed(Controls.run.ToString()))
                 StartQuickTurn();
 
-            var movement = -(Transform.Basis.X * inputMovement * (float)delta) * SPEED * runMod * backwardsMod * noclipMod * speedMod;
+            if (!_holdAnalogueDirection)
+            {
+                _analogueControlCurrentCameraRotation = _camera.Rotation.Y;
+                _holdAnalogueDirection = true;
+            }
+
+            var movement = analogue ?
+                // Analogue controls (i.e. move the direction you pressed relative to camera)
+                new Vector3(inputMovement.X, 0.0f, inputMovement.Y).Rotated(Vector3.Up, _analogueControlCurrentCameraRotation) * ((float)delta) * SPEED * runMod * noclipMod * speedMod :
+                // Tank controls (i.e. left/right = rotate, up/down = forwards/backwards)
+                -(Transform.Basis.X * inputMovement.Y * (float)delta) * SPEED * runMod * backwardsMod * noclipMod * speedMod;
 
             velocity.X = movement.X;
             velocity.Z = movement.Z;
@@ -214,19 +240,29 @@ public partial class Player : ICutsceneActor
         }
         else
         {
+            ResetAnalogueMovement();
             velocity = new Vector3(0, velocity.Y, 0);
             _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
         }
         return velocity;
     }
 
-    private void ProcessRotation(double delta, float inputRotation)
+    private void ProcessRotation(double delta, Vector2 inputMovement, bool analogue)
     {
         if (_playerStatus.IsRotationPrevented()) return;
 
-        var noclipFactor = DebugManager.IsPlayerNoClipping() ? NOCLIP_SPEED_BONUS : 1;
-        if (inputRotation != 0 && !IsQuickTurning)
-            RotateY(inputRotation * ROTATION_SPEED * (float)delta * -1 * noclipFactor);
+        if (analogue)
+        {
+            var newDir = new Vector3(inputMovement.X, 0.0f, inputMovement.Y).Rotated(Vector3.Up, _analogueControlCurrentCameraRotation);
+            LookAt(GlobalPosition + newDir);
+            RotateY(1.570796f);
+        }
+        else
+        {
+            var noclipFactor = DebugManager.IsPlayerNoClipping() ? NOCLIP_SPEED_BONUS : 1;
+            if (inputMovement.X != 0 && !IsQuickTurning)
+                RotateY(inputMovement.X * ROTATION_SPEED * (float)delta * -1 * noclipFactor);
+        }
     }
 
     private void StartQuickTurn() {
