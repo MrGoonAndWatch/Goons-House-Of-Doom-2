@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static GameConstants;
 
-public partial class PlayerInteract : Node
+public partial class PlayerInteract : Area3D
 {
     [Export]
     private PlayerInventory _inventory;
