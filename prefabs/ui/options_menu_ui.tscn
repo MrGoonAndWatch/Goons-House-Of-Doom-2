@@ -11,15 +11,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_87jiw")
-ResolutionPicker = NodePath("VBoxContainer/Resolution/OptionButton")
+ResolutionPicker = NodePath("VBoxContainer/Resolution/ResolutionOptionButton")
 TotalVolumeSlider = NodePath("VBoxContainer/TotalVolume/TotalVolumeSlider")
 MusicVolumeSlider = NodePath("VBoxContainer/MusicVolume/MusicVolumeSlider")
 SfxVolumeSlider = NodePath("VBoxContainer/EffectsVolume/EffectsVolumeSlider")
 VoiceVolumeSlider = NodePath("VBoxContainer/VoiceVolume/VoiceVolumeSlider")
-FullscreenCheckbox = NodePath("VBoxContainer/FullScreen/CheckBox")
+FullscreenCheckbox = NodePath("VBoxContainer/FullScreen/FullScreenCheckBox")
 GammaSlider = NodePath("VBoxContainer/Gamma/GammaSlider")
-UseAnalogueMovement = NodePath("VBoxContainer/UseAnalogueMovement/CheckBox")
-ForceAnalogueMovement = NodePath("VBoxContainer/ForceAnalogueMovement/CheckBox")
+UseAnalogueMovement = NodePath("VBoxContainer/UseAnalogueMovement/UseAnalogueCheckBox")
+ForceAnalogueMovement = NodePath("VBoxContainer/ForceAnalogueMovement/ForceAnalogueCheckBox")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -46,13 +46,13 @@ layout_mode = 2
 [node name="UseAnalogueMovement" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/UseAnalogueMovement"]
+[node name="UseAnalogueLabel" type="Label" parent="VBoxContainer/UseAnalogueMovement"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Use Analogue Controls"
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/UseAnalogueMovement"]
+[node name="UseAnalogueCheckBox" type="CheckBox" parent="VBoxContainer/UseAnalogueMovement"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
@@ -60,13 +60,13 @@ theme = ExtResource("1_dx8wx")
 [node name="ForceAnalogueMovement" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/ForceAnalogueMovement"]
+[node name="ForceAnalogueLabel" type="Label" parent="VBoxContainer/ForceAnalogueMovement"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Force Analogue Controls"
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/ForceAnalogueMovement"]
+[node name="ForceAnalogueCheckBox" type="CheckBox" parent="VBoxContainer/ForceAnalogueMovement"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
@@ -86,13 +86,13 @@ layout_mode = 2
 [node name="Resolution" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Resolution"]
+[node name="ResolutionLabel" type="Label" parent="VBoxContainer/Resolution"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Resolution"
 
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/Resolution"]
+[node name="ResolutionOptionButton" type="OptionButton" parent="VBoxContainer/Resolution"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
@@ -133,13 +133,13 @@ popup/item_12/id = 10
 [node name="FullScreen" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/FullScreen"]
+[node name="FullScreenLabel" type="Label" parent="VBoxContainer/FullScreen"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Fullscreen"
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/FullScreen"]
+[node name="FullScreenCheckBox" type="CheckBox" parent="VBoxContainer/FullScreen"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
@@ -147,7 +147,7 @@ theme = ExtResource("1_dx8wx")
 [node name="Gamma" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Gamma"]
+[node name="GammaLabel" type="Label" parent="VBoxContainer/Gamma"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
@@ -177,7 +177,7 @@ layout_mode = 2
 [node name="TotalVolume" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TotalVolume"]
+[node name="TotalVolumeLabel" type="Label" parent="VBoxContainer/TotalVolume"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
@@ -193,7 +193,7 @@ value = 75.0
 [node name="MusicVolume" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MusicVolume"]
+[node name="MusicVolumeLabel" type="Label" parent="VBoxContainer/MusicVolume"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
@@ -209,7 +209,7 @@ value = 75.0
 [node name="EffectsVolume" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/EffectsVolume"]
+[node name="EffectsVolumeLabel" type="Label" parent="VBoxContainer/EffectsVolume"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
@@ -225,7 +225,7 @@ value = 75.0
 [node name="VoiceVolume" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/VoiceVolume"]
+[node name="VoiceVolumeLabel" type="Label" parent="VBoxContainer/VoiceVolume"]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
@@ -235,6 +235,7 @@ text = "Voice   "
 custom_minimum_size = Vector2(300, 75)
 layout_mode = 2
 size_flags_horizontal = 10
+focus_neighbor_bottom = NodePath("../../ConfirmCancelButtons/CancelButton")
 theme = ExtResource("1_dx8wx")
 value = 75.0
 
@@ -242,31 +243,38 @@ value = 75.0
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ConfirmCancelButtons" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="CancelButton" type="Button" parent="VBoxContainer/Buttons"]
+[node name="CancelButton" type="Button" parent="VBoxContainer/ConfirmCancelButtons"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../../VoiceVolume/VoiceVolumeSlider")
+focus_neighbor_right = NodePath("../ConfirmButton")
+focus_next = NodePath("../ConfirmButton")
+focus_previous = NodePath("../../VoiceVolume/VoiceVolumeSlider")
 theme = ExtResource("1_dx8wx")
 text = "  Cancel  "
 
-[node name="Spacer" type="Control" parent="VBoxContainer/Buttons"]
+[node name="Spacer" type="Control" parent="VBoxContainer/ConfirmCancelButtons"]
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 
-[node name="ConfirmButton" type="Button" parent="VBoxContainer/Buttons"]
+[node name="ConfirmButton" type="Button" parent="VBoxContainer/ConfirmCancelButtons"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../CancelButton")
+focus_neighbor_top = NodePath("../../VoiceVolume/VoiceVolumeSlider")
+focus_previous = NodePath("../CancelButton")
 theme = ExtResource("1_dx8wx")
 text = " Confirm "
 
-[connection signal="toggled" from="VBoxContainer/UseAnalogueMovement/CheckBox" to="." method="_OnUseAnalogueMovementSet"]
-[connection signal="toggled" from="VBoxContainer/ForceAnalogueMovement/CheckBox" to="." method="_OnUseForceAnalogueMovementSet"]
-[connection signal="item_selected" from="VBoxContainer/Resolution/OptionButton" to="." method="_OnResolutionChanged"]
-[connection signal="toggled" from="VBoxContainer/FullScreen/CheckBox" to="." method="_OnSetFullscreen"]
+[connection signal="toggled" from="VBoxContainer/UseAnalogueMovement/UseAnalogueCheckBox" to="." method="_OnUseAnalogueMovementSet"]
+[connection signal="toggled" from="VBoxContainer/ForceAnalogueMovement/ForceAnalogueCheckBox" to="." method="_OnUseForceAnalogueMovementSet"]
+[connection signal="item_selected" from="VBoxContainer/Resolution/ResolutionOptionButton" to="." method="_OnResolutionChanged"]
+[connection signal="toggled" from="VBoxContainer/FullScreen/FullScreenCheckBox" to="." method="_OnSetFullscreen"]
 [connection signal="value_changed" from="VBoxContainer/Gamma/GammaSlider" to="." method="_OnGammaChanged"]
 [connection signal="value_changed" from="VBoxContainer/TotalVolume/TotalVolumeSlider" to="." method="_OnTotalVolumeChanged"]
 [connection signal="value_changed" from="VBoxContainer/MusicVolume/MusicVolumeSlider" to="." method="_OnMusicVolumeChanged"]
 [connection signal="value_changed" from="VBoxContainer/EffectsVolume/EffectsVolumeSlider" to="." method="_OnSfxVolumeChanged"]
 [connection signal="value_changed" from="VBoxContainer/VoiceVolume/VoiceVolumeSlider" to="." method="_OnVoiceVolumeChanged"]
-[connection signal="pressed" from="VBoxContainer/Buttons/CancelButton" to="." method="_OnCancelPressed"]
-[connection signal="pressed" from="VBoxContainer/Buttons/ConfirmButton" to="." method="_OnConfirmPressed"]
+[connection signal="pressed" from="VBoxContainer/ConfirmCancelButtons/CancelButton" to="." method="_OnCancelPressed"]
+[connection signal="pressed" from="VBoxContainer/ConfirmCancelButtons/ConfirmButton" to="." method="_OnConfirmPressed"]
