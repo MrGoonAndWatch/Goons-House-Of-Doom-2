@@ -23,4 +23,6 @@ public partial class CutsceneInstruction : Node
 
     [Export(hintString: "Required if type is 'FmvCutscene', unused otherwise.")]
     public VideoStream FmvStream { get; set; }
+    [Export(hintString: "Required if type is 'ChangeCamera', unused otherwise.")]
+    public Node3D NewCameraTransform { get; set; }
 }

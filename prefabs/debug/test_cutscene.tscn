@@ -7,13 +7,21 @@
 [node name="TestCutscene" type="Node3D" node_paths=PackedStringArray("Instructions")]
 script = ExtResource("1_keoik")
 CutsceneId = 1
-Instructions = [NodePath("1-MoveToBush")]
+Instructions = [NodePath("1-MoveToBush"), NodePath("2-ChangeCamera"), NodePath("3-WalkOverThere")]
 
 [node name="1-MoveToBush" type="Node3D" parent="."]
 script = ExtResource("2_m82nd")
 EndType = 1
 MoveToPosition = Vector3(5.99404, 0, -13.2925)
 MoveSpeed = 600.0
+
+[node name="2-ChangeCamera" type="Node3D" parent="."]
+script = ExtResource("2_m82nd")
+InstructionType = 2
+
+[node name="3-WalkOverThere" type="Node3D" parent="."]
+script = ExtResource("2_m82nd")
+EndType = 1
 
 [node name="CutsceneTrigger" type="Node3D" parent="." node_paths=PackedStringArray("Cutscene")]
 script = ExtResource("3_jpif2")

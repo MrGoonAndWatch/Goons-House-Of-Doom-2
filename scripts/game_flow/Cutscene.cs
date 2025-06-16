@@ -87,6 +87,9 @@ public partial class Cutscene : Node
             case GameConstants.CutsceneInstructionType.FmvCutscene:
                 HandleFmvCutsceneInstruction(nextInstruction);
                 break;
+            case GameConstants.CutsceneInstructionType.ChangeCamera:
+                HandleChangeCameraInstruction(nextInstruction);
+                break;
         }
     }
 
@@ -123,6 +126,23 @@ public partial class Cutscene : Node
 
         var fmvManager = GetNode<FmvManager>(GameConstants.NodePaths.FromSceneRoot.FmvPlayer);
         fmvManager.PlayVideo(nextInstruction.FmvStream, NextInstruction);
+    }
+    
+    private void HandleChangeCameraInstruction(CutsceneInstruction nextInstruction)
+    {
+        if (nextInstruction.NewCameraTransform == null)
+        {
+            GD.PrintErr("ChangeCamera instruction found in Cutscene but no NewCameraTransform was specified! Ignoring instruction!");
+            NextInstruction();
+            return;
+        }
+        
+        // TODO: Consider adding camera as param to the Cutscene object so we don't need to do this jank GetNode call!!!
+        var camera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
+        camera.GlobalPosition = nextInstruction.NewCameraTransform.GlobalPosition;
+        camera.GlobalRotation = nextInstruction.NewCameraTransform.GlobalRotation;
+        
+        NextInstruction();
     }
 
     public override void _Process(double delta)

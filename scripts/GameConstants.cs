@@ -39,6 +39,7 @@ public partial class GameConstants : GodotObject
     {
         InGameInstruction = 0,
         FmvCutscene = 1,
+        ChangeCamera = 2,
     }
 
     public enum CutsceneInstructionEndType
