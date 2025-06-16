@@ -125,7 +125,8 @@ public partial class CutsceneManager : Node
 		if (_currentCutscene != null)
 			_playerStatus.SetWatchedCutscene(_currentCutscene.CutsceneId);
 		_cutsceneEnding = false;
-		_playerStatus.IsInCutscene = false;
+		var resetCamera = _currentCutscene?.ResetCameraOnCutsceneEnd ?? true;
+		_playerStatus.SetIsInCutscene(false, resetCamera);
 		_currentCutscene = null;
 	}
 
@@ -135,7 +136,7 @@ public partial class CutsceneManager : Node
 			return;
 
 		_cutsceneStarting = true;
-		_playerStatus.IsInCutscene = true;
+		_playerStatus.SetIsInCutscene(true);
 		_currentCutscene = cutscene;
     }
 

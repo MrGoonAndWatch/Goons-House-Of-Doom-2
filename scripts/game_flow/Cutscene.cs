@@ -10,6 +10,8 @@ public partial class Cutscene : Node
     public int CutsceneId;
     [Export]
     private CutsceneInstruction[] Instructions;
+    [Export]
+    public bool ResetCameraOnCutsceneEnd = true;
     /// <summary>
     /// Unique identifier for this cutscene.
     /// </summary>

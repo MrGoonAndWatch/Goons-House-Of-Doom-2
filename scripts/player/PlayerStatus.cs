@@ -26,7 +26,7 @@ public partial class PlayerStatus : Node
     public bool Paused;
     public bool ItemBoxOpened;
     public bool ReadyToShoot;
-    public bool IsInCutscene;
+    private bool _isInCutscene;
 
     public List<int> DeadEnemies;
     public List<GlobalEvent> TriggeredEvents;
@@ -46,6 +46,9 @@ public partial class PlayerStatus : Node
 
     private Vector3 _playerPosition;
     private float _playerAngle;
+
+    private Vector3? _storedCameraPosition;
+    private Vector3? _storedCameraRotation;
 
     private static PlayerStatus _instance;
 
@@ -92,8 +95,10 @@ public partial class PlayerStatus : Node
         Paused = false;
         ItemBoxOpened = false;
         ReadyToShoot = false;
-        IsInCutscene = false;
+        _isInCutscene = false;
         EquipedWeapon = null;
+        _storedCameraPosition = null;
+        _storedCameraRotation = null;
 
         DataSaver.ResetState();
         MapStatus.GetInstance()?.InitializeMapStatus();
@@ -123,6 +128,24 @@ public partial class PlayerStatus : Node
     }
 
     public static PlayerStatus GetInstance() { return _instance; }
+
+    public void SetIsInCutscene(bool isInCutscene, bool revertCamera = false)
+    {
+        _isInCutscene = isInCutscene;
+        if (!_isInCutscene && revertCamera)
+            ResetCamera();
+    }
+
+    private void ResetCamera()
+    {
+        // TODO: Would really prefer to not rely on the camera being named a specific thing, and also using GetNode, but w/e.
+        var camera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
+        if (_storedCameraPosition.HasValue)
+            camera.GlobalPosition = _storedCameraPosition.Value;
+        if (_storedCameraRotation.HasValue)
+            camera.GlobalRotation = _storedCameraRotation.Value;
+        //GD.Print($"ResetCamera called (camera.GlobalPosition={camera.GlobalPosition} from {_storedCameraRotation}, camera.GlobalRotation={camera.GlobalRotation} from {_storedCameraRotation})");
+    }
 
     public void SetupNewGame(GameSettings settings)
     {
@@ -289,12 +312,12 @@ public partial class PlayerStatus : Node
 
     public bool CanPause()
     {
-        return !HasAnyUiOpen() && !IsInCutscene && Health > 0;
+        return !HasAnyUiOpen() && !_isInCutscene && Health > 0;
     }
 
     public bool CanOpenMenu()
     {
-        return !IsInCutscene && !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen && !DebugManager.IsDebugConsoleActive();
+        return !_isInCutscene && !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen && !DebugManager.IsDebugConsoleActive();
     }
 
     public bool HasAnyUiOpen()
@@ -304,27 +327,44 @@ public partial class PlayerStatus : Node
 
     public bool IsRotationPrevented()
     {
-        return IsInCutscene || TakingDamage || Shooting || Health <= 0 || HasAnyUiOpen();
+        return _isInCutscene || TakingDamage || Shooting || Health <= 0 || HasAnyUiOpen();
     }
 
     public bool IsMovementPrevented()
     {
-        return IsInCutscene || TakingDamage || Aiming || Shooting || Health <= 0 || HasAnyUiOpen();
+        return _isInCutscene || TakingDamage || Aiming || Shooting || Health <= 0 || HasAnyUiOpen();
     }
 
     public bool CanInteract()
     {
-        return !IsInCutscene && !TakingDamage && !Aiming && !Shooting && Health > 0 && !HasAnyUiOpen();
+        return !_isInCutscene && !TakingDamage && !Aiming && !Shooting && Health > 0 && !HasAnyUiOpen();
     }
 
     public bool CanAim()
     {
-        return !IsInCutscene && !Aiming && !Paused && !TakingDamage && Health > 0 && !HasAnyUiOpen();
+        return !_isInCutscene && !Aiming && !Paused && !TakingDamage && Health > 0 && !HasAnyUiOpen();
     }
 
     public bool CanShoot()
     {
-        return ReadyToShoot && !IsInCutscene && !TakingDamage && Health > 0 && EquipedWeapon != null && !HasAnyUiOpen();
+        return ReadyToShoot && !_isInCutscene && !TakingDamage && Health > 0 && EquipedWeapon != null && !HasAnyUiOpen();
+    }
+
+    public static bool CanChangeCameraAngle()
+    {
+        if (_instance == null) return true;
+        
+        return !_instance._isInCutscene;
+    }
+
+    public static void StoreCameraPositioning(Vector3 cameraPosition, Vector3 cameraRotation)
+    {
+        if (_instance == null) return;
+        
+        _instance._storedCameraPosition = cameraPosition;
+        _instance._storedCameraRotation = cameraRotation;
+        
+        //GD.Print($"StoreCameraAngle called (_instance._storedCameraPosition={_instance._storedCameraPosition} , _instance._storedCameraRotation={_instance._storedCameraRotation})");
     }
 
     public bool HasAmmoInInventory(PlayerInventory playerInventory)
@@ -406,7 +446,7 @@ public partial class PlayerStatus : Node
             $"Paused={_instance.Paused}\r\n" +
             $"ItemBoxOpened={_instance.ItemBoxOpened}\r\n" +
             $"ReadyToShoot={_instance.ReadyToShoot}\r\n" +
-            $"IsInCutscene={_instance.IsInCutscene}\r\n" +
+            $"IsInCutscene={_instance._isInCutscene}\r\n" +
             $"IsRotationPrevented={_instance.IsRotationPrevented()}\r\n" +
             $"IsMovementPrevented={_instance.IsMovementPrevented()}";
     }

@@ -16,8 +16,13 @@ public partial class CameraChange : Area3D
 		if (body.IsInGroup("player"))
 		{
 			//GD.Print($"changing camera to {TargetCameraPos.Name}");
-			TargetCamera.GlobalPosition = TargetCameraPos.GlobalPosition;
-			TargetCamera.GlobalRotation = TargetCameraPos.GlobalRotation;
+			if (PlayerStatus.CanChangeCameraAngle())
+			{
+				TargetCamera.GlobalPosition = TargetCameraPos.GlobalPosition;
+				TargetCamera.GlobalRotation = TargetCameraPos.GlobalRotation;
+			}
+			else
+				PlayerStatus.StoreCameraPositioning(TargetCameraPos.GlobalPosition, TargetCameraPos.GlobalRotation);
 		}
 	}
 }

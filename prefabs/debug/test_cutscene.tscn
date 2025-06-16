@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpyb6cae3npp1"]
+
+[ext_resource type="Script" uid="uid://2vt3el4f4bpe" path="res://scripts/game_flow/Cutscene.cs" id="1_keoik"]
+[ext_resource type="Script" uid="uid://d2jhft5tdiqu4" path="res://scripts/game_flow/CutsceneInstruction.cs" id="2_m82nd"]
+[ext_resource type="Script" uid="uid://dl8xnq5fi1aly" path="res://scripts/game_flow/CutsceneTrigger.cs" id="3_jpif2"]
+
+[node name="TestCutscene" type="Node3D" node_paths=PackedStringArray("Instructions")]
+script = ExtResource("1_keoik")
+CutsceneId = 1
+Instructions = [NodePath("1-MoveToBush")]
+
+[node name="1-MoveToBush" type="Node3D" parent="."]
+script = ExtResource("2_m82nd")
+EndType = 1
+MoveToPosition = Vector3(5.99404, 0, -13.2925)
+MoveSpeed = 600.0
+
+[node name="CutsceneTrigger" type="Node3D" parent="." node_paths=PackedStringArray("Cutscene")]
+script = ExtResource("3_jpif2")
+Cutscene = NodePath("..")
