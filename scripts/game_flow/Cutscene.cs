@@ -10,7 +10,7 @@ public partial class Cutscene : Node
     public int CutsceneId;
     [Export]
     private CutsceneInstruction[] Instructions;
-    [Export]
+    [Export(hintString: "When the cutscene ends, set the camera to whatever camera the player most recently passed through during the cutscene if this is checked, otherwise leave the camera at the ending angle when the cutscene ends.")]
     public bool ResetCameraOnCutsceneEnd = true;
     /// <summary>
     /// Unique identifier for this cutscene.
@@ -213,7 +213,9 @@ public partial class Cutscene : Node
             }
             if (currentInstruction.TargetActor != null && !currentInstruction.MoveToPosition.Equals(Vector3.Zero))
                 currentInstruction.TargetActor.MoveToPositionInstantly(currentInstruction.MoveToPosition);
-            
+            if (currentInstruction.NewCameraTransform != null)
+                HandleChangeCameraInstruction(currentInstruction);
+
         }
 
         GD.Print("Cutscene skipped!");

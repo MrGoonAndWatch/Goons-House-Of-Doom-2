@@ -15,6 +15,10 @@ public partial class CutsceneManager : Node
 	private bool _cutsceneStarting;
 	private bool _cutsceneEnding;
 
+	private const float ForceCutsceneEndWaitTimeForSignalProcessing = 0.1f;
+	private float _timeUntilForceCutsceneEnd;
+	private bool _forceCutsceneEndNextFrame;
+
     private float StartTopBarYPos;
     private float EndTopBarYPos;
 	private float StartBottomBarYPos;
@@ -87,7 +91,14 @@ public partial class CutsceneManager : Node
 			if (topFinishedEnd && bottomFinishedEnd)
 				FinishCutsceneEnd();
         }
-    }
+
+		if (_forceCutsceneEndNextFrame)
+		{
+			_timeUntilForceCutsceneEnd -= (float)delta;
+			if (_timeUntilForceCutsceneEnd <= 0)
+				ForceCutsceneEnd();
+		}
+	}
 
 	private bool MoveBar(Control bar, float direction, double delta, float targetPos)
 	{
@@ -109,16 +120,20 @@ public partial class CutsceneManager : Node
             cutsceneWasSkipped = _currentCutscene.SkipCutscene();
 
 		if (cutsceneWasSkipped)
-			ForceCutsceneEnd();
+		{
+			_forceCutsceneEndNextFrame = true;
+			_timeUntilForceCutsceneEnd = ForceCutsceneEndWaitTimeForSignalProcessing;
+		}
 	}
 
 	private void ForceCutsceneEnd()
 	{
+		_forceCutsceneEndNextFrame = false;
         TopBar.SetGlobalPosition(new Vector2(TopBar.GlobalPosition.X, EndTopBarYPos));
         BottomBar.SetGlobalPosition(new Vector2(BottomBar.GlobalPosition.X, EndBottomBarYPos));
 		_cutsceneStarting = false;
         FinishCutsceneEnd();
-    }
+	}
 
 	private void FinishCutsceneEnd()
 	{
@@ -126,6 +141,7 @@ public partial class CutsceneManager : Node
 			_playerStatus.SetWatchedCutscene(_currentCutscene.CutsceneId);
 		_cutsceneEnding = false;
 		var resetCamera = _currentCutscene?.ResetCameraOnCutsceneEnd ?? true;
+		//GD.Print($"FinishOnCutsceneEnd: resetCamera={resetCamera}, _currentCutscene==null={_currentCutscene == null} _currentCutscene?.ResetCameraOnCutsceneEnd={_currentCutscene?.ResetCameraOnCutsceneEnd}");
 		_playerStatus.SetIsInCutscene(false, resetCamera);
 		_currentCutscene = null;
 	}
