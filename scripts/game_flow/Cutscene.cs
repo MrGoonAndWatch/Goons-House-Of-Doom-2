@@ -10,6 +10,8 @@ public partial class Cutscene : Node
     public int CutsceneId;
     [Export]
     private CutsceneInstruction[] Instructions;
+    [Export]
+    private SubtitleLine[] SubtitleLines;
     [Export(hintString: "When the cutscene ends, set the camera to whatever camera the player most recently passed through during the cutscene if this is checked, otherwise leave the camera at the ending angle when the cutscene ends.")]
     public bool ResetCameraOnCutsceneEnd = true;
     /// <summary>
@@ -62,21 +64,52 @@ public partial class Cutscene : Node
 
     public void NextInstruction()
     {
+        FlipActiveAnimationFlagsOff();
+
+        if (IncrementToNextCutsceneInstruction())
+            return;
+
+        ProcessNextSubtitle();
+        ProcessNextInstruction();
+    }
+
+    private void FlipActiveAnimationFlagsOff()
+    {
         if (_currentInstructionIndex >= 0)
         {
             var currentInstruction = Instructions[_currentInstructionIndex];
             if (!string.IsNullOrEmpty(currentInstruction.AnimationFlag))
                 currentInstruction.TargetActor.SetAnimationFlag(currentInstruction.AnimationFlag, false);
         }
+    }
 
+    private bool IncrementToNextCutsceneInstruction()
+    {
+        var isEndOfCutscene = false;
         _currentInstructionIndex++;
         if (_currentInstructionIndex >= Instructions.Length)
         {
             _currentInstructionTimeRemaining = 0;
             _isCurrentActorMoving = false;
-            return;
+            isEndOfCutscene = true;
         }
+        return isEndOfCutscene;
+    }
 
+    private void ProcessNextSubtitle()
+    {
+        // TODO: Fancy bells and whistles that let the subtitles have custom amounts of time on screen, but still easy to set up in editor, or maybe this is just fine as is and I'm gold plating...
+        SubtitleLine subtitleLine = null;
+        if (_currentInstructionIndex >= 0 && _currentInstructionIndex < (SubtitleLines?.Length ?? 0))
+            subtitleLine = SubtitleLines[_currentInstructionIndex];
+        //else
+        //    GD.Print($"ProcessNextSubtitle found no subtitles for index {_currentInstructionIndex}!");
+        //GD.Print($"ProcessNextSubtitle displaying subtitles for line {_currentInstructionIndex} '{subtitleLine?.SubtitleContent}'");
+        SubtitleDisplay.DisplaySubtitles(subtitleLine);
+    }
+    
+    private void ProcessNextInstruction()
+    {
         var nextInstruction = Instructions[_currentInstructionIndex];
         //GD.Print($"nextInstruction; nextInstruction.Name={nextInstruction.Name}, index={_currentInstructionIndex}, type={nextInstruction.InstructionType}");
         switch (nextInstruction.InstructionType)

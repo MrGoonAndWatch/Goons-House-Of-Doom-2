@@ -118,6 +118,7 @@ public partial class CutsceneManager : Node
 		bool cutsceneWasSkipped = false;
 		if (_currentCutscene != null)
             cutsceneWasSkipped = _currentCutscene.SkipCutscene();
+		SubtitleDisplay.HideSubtitles();
 
 		if (cutsceneWasSkipped)
 		{
@@ -158,6 +159,7 @@ public partial class CutsceneManager : Node
 
 	public void EndCutscene()
 	{
+		SubtitleDisplay.HideSubtitles();
 		_cutsceneEnding = true;
     }
 }
