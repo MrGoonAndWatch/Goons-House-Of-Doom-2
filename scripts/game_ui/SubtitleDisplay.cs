@@ -41,16 +41,22 @@ public partial class SubtitleDisplay : Control
             HideSubtitles();
             return;
         }
+        Instance.UpdateSubtitleDisplay(line);
+    }
 
+    private void UpdateSubtitleDisplay(SubtitleLine line)
+    {
         var formattedSubtitleText = line.SubtitleContent;//.Replace("\\r\\n", "\r\n").Replace("\\r", "\r").Replace("\\n", "\n");
         // TODO: Consider a smooth reveal of subtitles somehow.
-        Instance._subtitleTextDisplay.Hide();
-        Instance._subtitleTextDisplay.Text = formattedSubtitleText;
+        _subtitleTextDisplay.Hide();
+        
+        _subtitleTextDisplay.Text = formattedSubtitleText;
+        _subtitleTextDisplay.Position = new Vector2(-(_subtitleTextDisplay.Size.X / 2.0f), -250); 
         // TODO: Prefix with speaker (if settings say so).
         // TODO: Change font color per settings.
         // TODO: Special formatting rules? Like special BOLD text, italics, etc.
-        Instance._subtitleContainer.Show();
-        Instance._subtitleTextDisplay.Show();
+        _subtitleContainer.Show();
+        _subtitleTextDisplay.Show();
     }
 
     public static void RefreshSubtitleDisplaySettings()

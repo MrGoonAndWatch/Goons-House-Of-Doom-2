@@ -12,24 +12,33 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f7see")
 _subtitleContainer = NodePath("SubtitleDisplayContainer")
-_subtitleBackground = NodePath("SubtitleDisplayContainer/SubtitleBackground")
+_subtitleBackground = NodePath("SubtitleDisplayContainer/SubtitleText/SubtitleBackground")
 _subtitleTextDisplay = NodePath("SubtitleDisplayContainer/SubtitleText")
 
 [node name="SubtitleDisplayContainer" type="Control" parent="."]
-custom_minimum_size = Vector2(1500, 150)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="SubtitleBackground" type="ColorRect" parent="SubtitleDisplayContainer"]
+[node name="SubtitleText" type="Label" parent="SubtitleDisplayContainer"]
+layout_mode = 0
+offset_top = -200.0
+offset_right = 624.0
+offset_bottom = -51.0
+theme = ExtResource("2_cshew")
+theme_override_font_sizes/font_size = 54
+text = "Line 1 Line 1 Line 1 Line 1 
+Line 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubtitleBackground" type="ColorRect" parent="SubtitleDisplayContainer/SubtitleText"]
+z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,15 +46,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
-
-[node name="SubtitleText" type="Label" parent="SubtitleDisplayContainer"]
-custom_minimum_size = Vector2(1500, 150)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-theme = ExtResource("2_cshew")
-theme_override_font_sizes/font_size = 54
-text = "Line 1 Line 1 Line 1 Line 1 Line1Line1Line1Line1Line1Line1Line1Line1Line1Line1 
-Line 2"
-vertical_alignment = 1
-text_overrun_behavior = 1
