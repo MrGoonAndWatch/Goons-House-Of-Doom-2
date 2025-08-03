@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpwio1tf6decu"]
+
+[ext_resource type="Script" uid="uid://dqnp08uwr6wmj" path="res://scripts/game_ui/SubtitleDisplay.cs" id="1_f7see"]
+[ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="2_cshew"]
+
+[node name="SubtitleDisplay" type="Control" node_paths=PackedStringArray("_subtitleContainer", "_subtitleBackground", "_subtitleTextDisplay")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f7see")
+_subtitleContainer = NodePath("SubtitleDisplayContainer")
+_subtitleBackground = NodePath("SubtitleDisplayContainer/SubtitleText/SubtitleBackground")
+_subtitleTextDisplay = NodePath("SubtitleDisplayContainer/SubtitleText")
+
+[node name="SubtitleDisplayContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="SubtitleText" type="Label" parent="SubtitleDisplayContainer"]
+layout_mode = 0
+offset_top = -200.0
+offset_right = 624.0
+offset_bottom = -51.0
+theme = ExtResource("2_cshew")
+theme_override_font_sizes/font_size = 54
+text = "Line 1 Line 1 Line 1 Line 1 
+Line 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubtitleBackground" type="ColorRect" parent="SubtitleDisplayContainer/SubtitleText"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

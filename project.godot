@@ -26,6 +26,7 @@ ItemGenerator="*res://scripts/data/ItemGenerator.cs"
 LoadGameData="*res://scripts/data/LoadGameData.cs"
 AudioManager="*res://prefabs/player/audio-manager.tscn"
 DebugManager="*res://scripts/debug/DebugManager.cs"
+SubtitleDisplay="*res://prefabs/ui/SubtitleDisplay.tscn"
 
 [display]
 
