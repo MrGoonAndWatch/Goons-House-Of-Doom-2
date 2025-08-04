@@ -115,7 +115,7 @@ public partial class Cutscene : Node
 
     private void ShowNextSubtitleLine()
     {
-        if (_currentSubtitleLines.TryDequeue(out var nextSubtitleLine))
+        if (_currentSubtitleLines?.TryDequeue(out var nextSubtitleLine) ?? false)
         {
             SubtitleDisplay.DisplaySubtitles(nextSubtitleLine);
             _timeUntilNextSubtitleLine = nextSubtitleLine.SubtitleDisplayTimeInSeconds;
@@ -289,6 +289,8 @@ public partial class Cutscene : Node
 
         GD.Print("Cutscene skipped!");
         _moveToNextInstruction = false;
+        _currentSubtitleLines = null;
+        SubtitleDisplay.HideSubtitles();
         _skipped = true;
         return true;
     }
