@@ -24,6 +24,7 @@ public partial class Cutscene : Node
     private bool _isCurrentActorMoving;
     private bool _skipped;
     private bool _isCutscenePaused;
+    private bool _moveToNextInstruction;
 
     private Godot.Collections.Dictionary<int, AudioStream> _voiceLines;
     private Queue<SubtitleLine> _currentSubtitleLines;
@@ -156,7 +157,7 @@ public partial class Cutscene : Node
             _isCurrentActorMoving = false;
         if (!string.IsNullOrEmpty(nextInstruction.AnimationFlag))
             nextInstruction.TargetActor.SetAnimationFlag(nextInstruction.AnimationFlag, true);
-        if (_voiceLines.ContainsKey(_currentInstructionIndex))
+        if (_voiceLines?.ContainsKey(_currentInstructionIndex) ?? false)
             GhodAudioManager.PlayVoiceClip(_voiceLines[_currentInstructionIndex]);
     }
 
@@ -181,7 +182,7 @@ public partial class Cutscene : Node
         if (nextInstruction.NewCameraTransform == null)
         {
             GD.PrintErr("ChangeCamera instruction found in Cutscene but no NewCameraTransform was specified! Ignoring instruction!");
-            NextInstruction();
+            _moveToNextInstruction = true;
             return;
         }
         
@@ -189,8 +190,8 @@ public partial class Cutscene : Node
         var camera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
         camera.GlobalPosition = nextInstruction.NewCameraTransform.GlobalPosition;
         camera.GlobalRotation = nextInstruction.NewCameraTransform.GlobalRotation;
-        
-        NextInstruction();
+
+        _moveToNextInstruction = true;
     }
 
     public override void _Process(double delta)
@@ -218,6 +219,12 @@ public partial class Cutscene : Node
                 _isCurrentActorMoving = false;
             if (reachedDestination && Instructions[_currentInstructionIndex].EndType == GameConstants.CutsceneInstructionEndType.EndWhenMovementEnds)
                 NextInstruction();
+        }
+
+        if (_moveToNextInstruction)
+        {
+            _moveToNextInstruction = false;
+            NextInstruction();
         }
     }
 
@@ -266,6 +273,7 @@ public partial class Cutscene : Node
         for (; _currentInstructionIndex < Instructions.Length; _currentInstructionIndex++)
         {
             var currentInstruction = Instructions[_currentInstructionIndex];
+            //GD.Print($"SkipCutscene {_currentInstructionIndex+1} of {Instructions.Length} ({currentInstruction.Name})");
             
             if (CurrentlyWatchingFmv())
             {
@@ -277,10 +285,10 @@ public partial class Cutscene : Node
                 currentInstruction.TargetActor.MoveToPositionInstantly(currentInstruction.MoveToPosition);
             if (currentInstruction.NewCameraTransform != null)
                 HandleChangeCameraInstruction(currentInstruction);
-
         }
 
         GD.Print("Cutscene skipped!");
+        _moveToNextInstruction = false;
         _skipped = true;
         return true;
     }
