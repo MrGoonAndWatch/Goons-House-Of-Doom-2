@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using Godot;
-using Godot.Collections;
 
 public partial class Cutscene : Node
 {
@@ -11,7 +11,7 @@ public partial class Cutscene : Node
     [Export]
     private CutsceneInstruction[] Instructions;
     [Export]
-    private SubtitleLine[] SubtitleLines;
+    private CutsceneSubtitleInstruction[] SubtitleLines;
     [Export(hintString: "When the cutscene ends, set the camera to whatever camera the player most recently passed through during the cutscene if this is checked, otherwise leave the camera at the ending angle when the cutscene ends.")]
     public bool ResetCameraOnCutsceneEnd = true;
     /// <summary>
@@ -25,7 +25,9 @@ public partial class Cutscene : Node
     private bool _skipped;
     private bool _isCutscenePaused;
 
-    private Dictionary<int, AudioStream> _voiceLines;
+    private Godot.Collections.Dictionary<int, AudioStream> _voiceLines;
+    private Queue<SubtitleLine> _currentSubtitleLines;
+    private float _timeUntilNextSubtitleLine;
 
     public void StartCutscene()
     {
@@ -44,9 +46,9 @@ public partial class Cutscene : Node
         _initialized = true;
     }
 
-    private Dictionary<int, AudioStream> LoadVoiceLines()
+    private Godot.Collections.Dictionary<int, AudioStream> LoadVoiceLines()
     {
-        var voiceLines = new Dictionary<int, AudioStream>();
+        var voiceLines = new Godot.Collections.Dictionary<int, AudioStream>();
 
         for (var i = 0; i < Instructions.Length; i++)
         {
@@ -69,7 +71,7 @@ public partial class Cutscene : Node
         if (IncrementToNextCutsceneInstruction())
             return;
 
-        ProcessNextSubtitle();
+        ProcessNextSubtitleInstruction();
         ProcessNextInstruction();
     }
 
@@ -96,16 +98,29 @@ public partial class Cutscene : Node
         return isEndOfCutscene;
     }
 
-    private void ProcessNextSubtitle()
+    private void ProcessNextSubtitleInstruction()
     {
-        // TODO: Fancy bells and whistles that let the subtitles have custom amounts of time on screen, but still easy to set up in editor, or maybe this is just fine as is and I'm gold plating...
-        SubtitleLine subtitleLine = null;
-        if (_currentInstructionIndex >= 0 && _currentInstructionIndex < (SubtitleLines?.Length ?? 0))
-            subtitleLine = SubtitleLines[_currentInstructionIndex];
-        //else
-        //    GD.Print($"ProcessNextSubtitle found no subtitles for index {_currentInstructionIndex}!");
-        //GD.Print($"ProcessNextSubtitle displaying subtitles for line {_currentInstructionIndex} '{subtitleLine?.SubtitleContent}'");
-        SubtitleDisplay.DisplaySubtitles(subtitleLine);
+        if (_currentInstructionIndex < 0 || 
+            _currentInstructionIndex >= (SubtitleLines?.Length ?? 0) || 
+            (SubtitleLines?[_currentInstructionIndex]?.SubtitleLines?.Length ?? 0) <= 0)
+            return;
+        
+        var subtitleInstruction = SubtitleLines[_currentInstructionIndex];
+        _currentSubtitleLines = new Queue<SubtitleLine>();
+        for (var i = 0; i < subtitleInstruction.SubtitleLines.Length; i++)
+            _currentSubtitleLines.Enqueue(subtitleInstruction.SubtitleLines[i]);
+        ShowNextSubtitleLine();
+    }
+
+    private void ShowNextSubtitleLine()
+    {
+        if (_currentSubtitleLines.TryDequeue(out var nextSubtitleLine))
+        {
+            SubtitleDisplay.DisplaySubtitles(nextSubtitleLine);
+            _timeUntilNextSubtitleLine = nextSubtitleLine.SubtitleDisplayTimeInSeconds;
+        }
+        else
+            SubtitleDisplay.HideSubtitles();
     }
     
     private void ProcessNextInstruction()
@@ -180,7 +195,13 @@ public partial class Cutscene : Node
 
     public override void _Process(double delta)
     {
-        if (!_initialized || _skipped || _isCutscenePaused || CurrentlyWatchingFmv())
+        if (!_initialized || _skipped || _isCutscenePaused)
+            return;
+
+        if (_timeUntilNextSubtitleLine > 0)
+            ProcessSubtitleTiming(delta);
+        
+        if (CurrentlyWatchingFmv())
             return;
 
         if (_currentInstructionTimeRemaining > 0)
@@ -198,6 +219,14 @@ public partial class Cutscene : Node
             if (reachedDestination && Instructions[_currentInstructionIndex].EndType == GameConstants.CutsceneInstructionEndType.EndWhenMovementEnds)
                 NextInstruction();
         }
+    }
+
+    private void ProcessSubtitleTiming(double delta)
+    {
+        _timeUntilNextSubtitleLine -= (float) delta;
+
+        if (_timeUntilNextSubtitleLine <= 0)
+            ShowNextSubtitleLine();
     }
 
     public bool HasCutsceneEnded()
