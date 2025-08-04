@@ -12,6 +12,8 @@ public partial class GlobalSettings
     public bool UseAnalogueMovement;
     public bool ForceAnalogueMovement;
     public bool SubtitlesEnabled;
+    public bool SubtitlesShowSpeaker;
+    public float SubtitleBackgroundAlpha;
 
     public GlobalSettings() { }
 
@@ -32,5 +34,7 @@ public partial class GlobalSettings
         UseAnalogueMovement = other.UseAnalogueMovement;
         ForceAnalogueMovement = other.ForceAnalogueMovement;
         SubtitlesEnabled = other.SubtitlesEnabled;
+        SubtitlesShowSpeaker = other.SubtitlesShowSpeaker;
+        SubtitleBackgroundAlpha = other.SubtitleBackgroundAlpha;
     }
 }

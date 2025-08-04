@@ -4,6 +4,8 @@ using System.Linq;
 public partial class OptionsMenuUi : Control
 {
     [Export]
+    private ScrollContainer _scrollContainer;
+    [Export]
     private OptionButton ResolutionPicker;
     [Export]
     private Slider TotalVolumeSlider;
@@ -23,6 +25,15 @@ public partial class OptionsMenuUi : Control
     private CheckBox ForceAnalogueMovement;
     [Export]
     private CheckBox SubtitlesEnabled;
+    [Export]
+    private CheckBox SubtitlesShowSpeaker;
+    [Export]
+    private Slider SubtitleBackgroundAlpha;
+    [Export]
+    private Label _exampleSubtitleLabel;
+    [Export]
+    private ColorRect _exampleSubtitleBackground;
+    private const string ExampleSubtitleMessage = "Example Subtitle Text";
 
     private GlobalSettings _originalGlobalSettings;
     private GlobalSettings _globalSettings;
@@ -50,6 +61,8 @@ public partial class OptionsMenuUi : Control
         UseAnalogueMovement.SetPressedNoSignal(_globalSettings.UseAnalogueMovement);
         ForceAnalogueMovement.SetPressedNoSignal(_globalSettings.ForceAnalogueMovement);
         SubtitlesEnabled.SetPressedNoSignal(_globalSettings.SubtitlesEnabled);
+        SubtitlesShowSpeaker.SetPressedNoSignal(_globalSettings.SubtitlesShowSpeaker);
+        
     }
 
     private int GetResolutionIndex(string resolution)
@@ -67,7 +80,7 @@ public partial class OptionsMenuUi : Control
     {
         if(!_initialized && GhodAudioManager.IsInitialized())
         {
-            SyncAllVolumes();
+            SyncAllSliders();
             _initialized = true;
         }
     }
@@ -126,6 +139,7 @@ public partial class OptionsMenuUi : Control
         _globalSettings.VoiceVolume = (float) VoiceVolumeSlider.Value;
         _globalSettings.Resolution = ResolutionPicker.GetItemText(_currentResolutionIndex);
         _globalSettings.Gamma = (float)GammaSlider.Value;
+        _globalSettings.SubtitleBackgroundAlpha = (float)SubtitleBackgroundAlpha.Value;
         _originalGlobalSettings.CopyFrom(_globalSettings);
         DataSaver.GetInstance().SaveGlobalSettings(_globalSettings);
     }
@@ -133,11 +147,11 @@ public partial class OptionsMenuUi : Control
     private void RevertValues()
     {
         _globalSettings.CopyFrom(_originalGlobalSettings);
-        SyncAllVolumes();
+        SyncAllSliders();
         InitGraphics();
     }
 
-    private void SyncAllVolumes()
+    private void SyncAllSliders()
     {
         TotalVolumeSlider.Value = _globalSettings.TotalVolume;
         MusicVolumeSlider.Value = _globalSettings.MusicVolume;
@@ -149,6 +163,9 @@ public partial class OptionsMenuUi : Control
         GhodAudioManager.ChangeMusicVolume((float)MusicVolumeSlider.Value);
         GhodAudioManager.ChangeSfxVolume((float)SfxVolumeSlider.Value);
         GhodAudioManager.ChangeVoiceVolume((float)VoiceVolumeSlider.Value);
+        
+        SubtitleBackgroundAlpha.Value = _globalSettings.SubtitleBackgroundAlpha;
+        RefreshSubtitleExample();
     }
 
     public void _OnResolutionChanged(int newResolutionIndex)
@@ -186,6 +203,29 @@ public partial class OptionsMenuUi : Control
     public void _OnSetSubtitles(bool subtitlesEnabled)
     {
         _globalSettings.SubtitlesEnabled = subtitlesEnabled;
+    }
+
+    public void _OnSubtitleOpacityChanged(float newOpacity)
+    {
+        _globalSettings.SubtitleBackgroundAlpha = newOpacity;
+        RefreshSubtitleExample();
+    }
+
+    public void _OnSetSubtitlesSpeaker(bool showSpeaker)
+    {
+        _globalSettings.SubtitlesShowSpeaker = showSpeaker;
+        RefreshSubtitleExample();
+    }
+
+    private void RefreshSubtitleExample()
+    {
+        _exampleSubtitleBackground.Color = new Color(0, 0, 0, _globalSettings.SubtitleBackgroundAlpha);
+        _exampleSubtitleLabel.Text = $"{(_globalSettings.SubtitlesShowSpeaker ? "Goon: " : "")}{ExampleSubtitleMessage}";
+    }
+
+    public void _onTopMenuItemFocused()
+    {
+        _scrollContainer.SetVScroll(0);
     }
 
     private void SetFullscreen()

@@ -40,7 +40,9 @@ public partial class DataSaver : Node3D
             SfxVolume = 80.0f,
             VoiceVolume = 80.0f,
             Resolution = "1680x1050",
-            SubtitlesEnabled = true
+            SubtitlesEnabled = true,
+            SubtitlesShowSpeaker = false,
+            SubtitleBackgroundAlpha = 0.5f,
         };
 
         LoadGlobalSettingsFromFile();
