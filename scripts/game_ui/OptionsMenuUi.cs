@@ -21,6 +21,8 @@ public partial class OptionsMenuUi : Control
     private CheckBox UseAnalogueMovement;
     [Export]
     private CheckBox ForceAnalogueMovement;
+    [Export]
+    private CheckBox SubtitlesEnabled;
 
     private GlobalSettings _originalGlobalSettings;
     private GlobalSettings _globalSettings;
@@ -47,6 +49,7 @@ public partial class OptionsMenuUi : Control
         UpdateGamma(_globalSettings.Gamma);
         UseAnalogueMovement.SetPressedNoSignal(_globalSettings.UseAnalogueMovement);
         ForceAnalogueMovement.SetPressedNoSignal(_globalSettings.ForceAnalogueMovement);
+        SubtitlesEnabled.SetPressedNoSignal(_globalSettings.SubtitlesEnabled);
     }
 
     private int GetResolutionIndex(string resolution)
@@ -123,13 +126,13 @@ public partial class OptionsMenuUi : Control
         _globalSettings.VoiceVolume = (float) VoiceVolumeSlider.Value;
         _globalSettings.Resolution = ResolutionPicker.GetItemText(_currentResolutionIndex);
         _globalSettings.Gamma = (float)GammaSlider.Value;
-        _originalGlobalSettings = _globalSettings;
+        _originalGlobalSettings.CopyFrom(_globalSettings);
         DataSaver.GetInstance().SaveGlobalSettings(_globalSettings);
     }
 
     private void RevertValues()
     {
-        _globalSettings = _originalGlobalSettings;
+        _globalSettings.CopyFrom(_originalGlobalSettings);
         SyncAllVolumes();
         InitGraphics();
     }
@@ -178,6 +181,11 @@ public partial class OptionsMenuUi : Control
     public void _OnUseForceAnalogueMovementSet(bool forceAnalogueMovement)
     {
         _globalSettings.ForceAnalogueMovement = forceAnalogueMovement;
+    }
+
+    public void _OnSetSubtitles(bool subtitlesEnabled)
+    {
+        _globalSettings.SubtitlesEnabled = subtitlesEnabled;
     }
 
     private void SetFullscreen()

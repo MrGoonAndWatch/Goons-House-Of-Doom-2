@@ -11,10 +11,16 @@ public partial class GlobalSettings
 
     public bool UseAnalogueMovement;
     public bool ForceAnalogueMovement;
+    public bool SubtitlesEnabled;
 
     public GlobalSettings() { }
 
     public GlobalSettings(GlobalSettings other)
+    {
+        CopyFrom(other);
+    }
+    
+    public void CopyFrom(GlobalSettings other)
     {
         TotalVolume = other.TotalVolume;
         MusicVolume = other.MusicVolume;
@@ -25,5 +31,6 @@ public partial class GlobalSettings
         Gamma = other.Gamma;
         UseAnalogueMovement = other.UseAnalogueMovement;
         ForceAnalogueMovement = other.ForceAnalogueMovement;
+        SubtitlesEnabled = other.SubtitlesEnabled;
     }
 }
