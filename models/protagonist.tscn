@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dfkwi87y4xryk"]
+[gd_scene load_steps=40 format=3 uid="uid://dfkwi87y4xryk"]
 
 [ext_resource type="PackedScene" uid="uid://brcb63qgiin1" path="res://models/protagonist.glb" id="1_pg4l0"]
 [ext_resource type="Script" uid="uid://djftqmi11wq6a" path="res://scripts/player/PlayerAnimationEventHandler.cs" id="2_ituly"]
@@ -12,7 +12,7 @@ animation = &"default"
 animation = &"default"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5ncow"]
-animation = &"default"
+animation = &"arms_pistol_equipped"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7w0ha"]
 animation = &"default"
@@ -22,6 +22,18 @@ animation = &"default"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xhdc6"]
 animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w2pgh"]
+animation = &"pickup_floor_end"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bfxbs"]
+animation = &"pickup_floor_start"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0qlgl"]
+animation = &"pickup_table_end"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vtw6c"]
+animation = &"pickup_table_start"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jbyfn"]
 advance_mode = 2
@@ -58,6 +70,41 @@ advance_expression = "!get(\"parameters/Arms/conditions/equipPistol\")"
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w2pgh"]
+advance_mode = 2
+advance_condition = &"pickupOnGround"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0qlgl"]
+advance_mode = 2
+advance_condition = &"pickupOnGround"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_guico"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "!get(\"parameters/Arms/conditions/pickupOnGround\")"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bq7p4"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bfxbs"]
+advance_mode = 2
+advance_condition = &"pickupOnTable"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vtw6c"]
+advance_mode = 2
+advance_condition = &"pickupOnTable"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ndev2"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "!get(\"parameters/Arms/conditions/pickupOnTable\")
+"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ujswo"]
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_6m5j2"]
 states/Aim-Pistol/node = SubResource("AnimationNodeAnimation_6uwk6")
 states/Aim-Pistol/position = Vector2(339, 244)
@@ -72,8 +119,16 @@ states/Un-Aim-Pistol/node = SubResource("AnimationNodeAnimation_1n7q2")
 states/Un-Aim-Pistol/position = Vector2(184, 178)
 states/idle/node = SubResource("AnimationNodeAnimation_xhdc6")
 states/idle/position = Vector2(339, 100)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_jbyfn"), "idle", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_26euc"), "Equip-Pistol", "Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_gpjdq"), "Aim-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_ea2nc"), "Aiming-Pistol", "Un-Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_26mcu"), "Aiming-Pistol", "Fire-Pistol", SubResource("AnimationNodeStateMachineTransition_axopt"), "Fire-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_i4owa"), "Equip-Pistol", "idle", SubResource("AnimationNodeStateMachineTransition_cojkt"), "Un-Aim-Pistol", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_fj7t5")]
-graph_offset = Vector2(-169, 50)
+"states/pickup_floor end/node" = SubResource("AnimationNodeAnimation_w2pgh")
+"states/pickup_floor end/position" = Vector2(485, -46.3704)
+states/pickup_floor_start/node = SubResource("AnimationNodeAnimation_bfxbs")
+states/pickup_floor_start/position = Vector2(518, 72)
+"states/pickup_table end/node" = SubResource("AnimationNodeAnimation_0qlgl")
+"states/pickup_table end/position" = Vector2(659, -46.3704)
+states/pickup_table_start/node = SubResource("AnimationNodeAnimation_vtw6c")
+states/pickup_table_start/position = Vector2(551, 131)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_jbyfn"), "idle", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_26euc"), "Equip-Pistol", "Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_gpjdq"), "Aim-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_ea2nc"), "Aiming-Pistol", "Un-Aim-Pistol", SubResource("AnimationNodeStateMachineTransition_26mcu"), "Aiming-Pistol", "Fire-Pistol", SubResource("AnimationNodeStateMachineTransition_axopt"), "Fire-Pistol", "Aiming-Pistol", SubResource("AnimationNodeStateMachineTransition_i4owa"), "Equip-Pistol", "idle", SubResource("AnimationNodeStateMachineTransition_cojkt"), "Un-Aim-Pistol", "Equip-Pistol", SubResource("AnimationNodeStateMachineTransition_fj7t5"), "Equip-Pistol", "pickup_floor_start", SubResource("AnimationNodeStateMachineTransition_w2pgh"), "idle", "pickup_floor_start", SubResource("AnimationNodeStateMachineTransition_0qlgl"), "pickup_floor_start", "pickup_floor end", SubResource("AnimationNodeStateMachineTransition_guico"), "pickup_floor end", "idle", SubResource("AnimationNodeStateMachineTransition_bq7p4"), "idle", "pickup_table_start", SubResource("AnimationNodeStateMachineTransition_bfxbs"), "Equip-Pistol", "pickup_table_start", SubResource("AnimationNodeStateMachineTransition_vtw6c"), "pickup_table_start", "pickup_table end", SubResource("AnimationNodeStateMachineTransition_ndev2"), "pickup_table end", "idle", SubResource("AnimationNodeStateMachineTransition_ujswo")]
+graph_offset = Vector2(29, -51.1523)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_68p5d"]
 animation = &"idle"
@@ -103,13 +158,13 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_oc2ol"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pe6hq"]
-graph_offset = Vector2(-527.78, 29.2657)
+graph_offset = Vector2(-496.396, -10.8755)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_l4gkt")
 nodes/Add2/position = Vector2(-100, 140)
 nodes/Arms/node = SubResource("AnimationNodeStateMachine_6m5j2")
 nodes/Arms/position = Vector2(-460, 100)
 nodes/Legs/node = SubResource("AnimationNodeStateMachine_4tu68")
-nodes/Legs/position = Vector2(-440, 420)
+nodes/Legs/position = Vector2(-460, 500)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_oc2ol")
 nodes/TimeScale/position = Vector2(100, 140)
 node_connections = [&"Add2", 0, &"Arms", &"Add2", 1, &"Legs", &"TimeScale", 0, &"Add2", &"output", 0, &"TimeScale"]
@@ -117,30 +172,33 @@ node_connections = [&"Add2", 0, &"Arms", &"Add2", 1, &"Legs", &"TimeScale", 0, &
 [node name="protagonist" instance=ExtResource("1_pg4l0")]
 
 [node name="Skeleton3D" parent="protagonist" index="0"]
-bones/0/position = Vector3(0, -0.0820084, -0.0834849)
-bones/1/rotation = Quaternion(0.0417172, 1.81118e-19, -5.68206e-18, 0.999129)
-bones/2/rotation = Quaternion(0.00752501, 7.9428e-19, 1.35145e-17, 0.999972)
-bones/3/rotation = Quaternion(-0.174525, -0.162668, 0.96579, -0.101636)
-bones/4/rotation = Quaternion(0.272534, -0.0818519, -0.022368, 0.958397)
+bones/0/position = Vector3(-2.13434e-09, -0.0646674, -0.0277193)
+bones/0/rotation = Quaternion(-0.0189856, 3.53839e-08, -6.71906e-10, 0.99982)
+bones/1/rotation = Quaternion(0.0349496, 6.11418e-09, 2.9346e-10, 0.999389)
+bones/2/rotation = Quaternion(0.018141, -1.11157e-08, 5.36706e-09, 0.999835)
+bones/3/rotation = Quaternion(-0.175646, -0.166856, 0.965277, -0.0977159)
+bones/4/rotation = Quaternion(0.261363, -0.0793617, -0.024735, 0.961654)
 bones/5/rotation = Quaternion(0.175386, -0.100453, -0.201629, 0.958381)
-bones/6/rotation = Quaternion(0.174525, -0.162668, 0.96579, 0.101636)
-bones/7/rotation = Quaternion(0.272543, 0.0818541, 0.0223659, 0.958394)
+bones/6/rotation = Quaternion(0.175636, -0.166819, 0.965281, 0.0977509)
+bones/7/rotation = Quaternion(0.261363, 0.0793617, 0.024735, 0.961655)
 bones/8/rotation = Quaternion(0.175386, 0.100453, 0.201629, 0.958381)
-bones/9/rotation = Quaternion(0.025274, 0.0100342, 0.998224, -0.0530003)
-bones/9/scale = Vector3(1.00007, 1, 1)
-bones/10/rotation = Quaternion(-0.0801703, -7.3729e-06, -0.0537243, 0.995332)
-bones/11/rotation = Quaternion(0.599225, 0.0257366, -0.013415, 0.800055)
-bones/11/scale = Vector3(1.00003, 1, 1)
-bones/12/rotation = Quaternion(-0.025274, 0.0100342, 0.998224, 0.0530003)
-bones/12/scale = Vector3(1.00007, 1, 1)
-bones/13/rotation = Quaternion(-0.0801703, 7.37395e-06, 0.0537243, 0.995332)
-bones/14/rotation = Quaternion(0.599225, -0.0257366, 0.013415, 0.800055)
-bones/14/scale = Vector3(1.00003, 1, 1)
+bones/9/rotation = Quaternion(0.0254351, 0.00599571, 0.998364, -0.0508624)
+bones/9/scale = Vector3(1.0001, 1, 1)
+bones/10/rotation = Quaternion(-0.0741023, -7.46155e-06, -0.0496572, 0.996014)
+bones/11/rotation = Quaternion(0.597654, 0.0245872, -0.0150606, 0.801235)
+bones/11/scale = Vector3(1.00003, 0.999999, 1)
+bones/12/rotation = Quaternion(-0.0254351, 0.00599571, 0.998364, 0.0508624)
+bones/12/scale = Vector3(1.0001, 1, 1)
+bones/13/rotation = Quaternion(-0.0741023, 7.46039e-06, 0.0496572, 0.996014)
+bones/14/rotation = Quaternion(0.597654, -0.0245872, 0.0150606, 0.801235)
+bones/14/scale = Vector3(1.00003, 0.999999, 1)
 bones/15/position = Vector3(4.66002, -26.4656, -1.16752)
-bones/15/rotation = Quaternion(-0.00462749, 0.707092, -0.707092, 0.00462749)
-bones/16/rotation = Quaternion(-0.0335736, 0.706309, 0.706309, -0.0335736)
+bones/15/rotation = Quaternion(-0.00654425, 0.999979, 3.04032e-08, 8.76391e-09)
+bones/16/position = Vector3(4.60924, -11.9122, 17.2528)
+bones/16/rotation = Quaternion(-6.51059e-08, -1.14216e-08, 0.998872, -0.0474803)
 bones/17/position = Vector3(-4.66002, -26.4656, -1.16752)
-bones/17/rotation = Quaternion(0.00462749, 0.707092, -0.707092, -0.00462749)
+bones/17/rotation = Quaternion(0.00654425, 0.999979, 3.04032e-08, -8.76391e-09)
+bones/18/position = Vector3(-4.60924, -11.9122, 17.2528)
 
 [node name="HeadLookAtModifier" type="LookAtModifier3D" parent="protagonist/Skeleton3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 0)
@@ -164,6 +222,8 @@ parameters/Add2/add_amount = 0.5
 parameters/Arms/conditions/aiming = false
 parameters/Arms/conditions/equipPistol = false
 parameters/Arms/conditions/fire = false
+parameters/Arms/conditions/pickupOnGround = false
+parameters/Arms/conditions/pickupOnTable = false
 parameters/Legs/conditions/walking = false
 parameters/TimeScale/scale = 1.0
 script = ExtResource("2_ituly")

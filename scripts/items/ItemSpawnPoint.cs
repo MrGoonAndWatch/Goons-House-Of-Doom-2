@@ -7,6 +7,8 @@ public partial class ItemSpawnPoint : Node3D
     private int ItemId;
     [Export]
     private int QtyOnPickup = 1;
+    [Export]
+    private PickupType PickupType;
 
     [Export]
     private ItemSpawnType ItemSpawnOnEasy;
@@ -78,6 +80,7 @@ public partial class ItemSpawnPoint : Node3D
 
         itemContainer.Item.ItemId = ItemId;
         itemContainer.Item.QtyOnPickup = QtyOnPickup;
+        itemContainer.Item.PickupType = PickupType;
 
         AddChild(itemContainer);
     }

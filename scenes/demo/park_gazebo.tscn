@@ -75,6 +75,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14.157
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0478, -0.138678, -0.882618)
 ItemId = 1
 QtyOnPickup = 10
+PickupType = 1
 ItemSpawnOnEasy = 3
 ItemSpawnOnNormal = 3
 ItemSpawnOnHard = 3

@@ -3,10 +3,12 @@ using Godot;
 public partial class PlayerAnimationEventHandler : AnimationTree
 {
 	private Player _player;
+	private PlayerInteract _playerInteract;
 
     public override void _Ready()
 	{
         _player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
+        _playerInteract = GetNode<PlayerInteract>(GameConstants.NodePaths.FromSceneRoot.PlayerInteract);
     }
 
 	public void _OnAnimationFinished(StringName animationName)
@@ -19,5 +21,9 @@ public partial class PlayerAnimationEventHandler : AnimationTree
 			_player.OnShootingReady();
 		if (animationStr.StartsWith("Death-"))
 			_player.OnDeathAnimationFinished(animationStr);
+		if (animationStr.StartsWith("pickup_") && animationStr.EndsWith("_start"))
+			_playerInteract.OnPickupAnimationFinished();
+		if (animationStr.StartsWith("pickup_") && animationStr.EndsWith("_end"))
+			PlayerStatus.GetInstance().SetIsPickingUpItem(false);
 	}
 }

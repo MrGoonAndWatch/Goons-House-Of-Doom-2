@@ -27,6 +27,7 @@ public partial class PlayerStatus : Node
     public bool ItemBoxOpened;
     public bool ReadyToShoot;
     private bool _isInCutscene;
+    private bool _isPickingUpItem;
 
     public List<int> DeadEnemies;
     public List<GlobalEvent> TriggeredEvents;
@@ -99,6 +100,7 @@ public partial class PlayerStatus : Node
         EquipedWeapon = null;
         _storedCameraPosition = null;
         _storedCameraRotation = null;
+        _isPickingUpItem = false;
 
         DataSaver.ResetState();
         MapStatus.GetInstance()?.InitializeMapStatus();
@@ -134,6 +136,11 @@ public partial class PlayerStatus : Node
         _isInCutscene = isInCutscene;
         if (!_isInCutscene && revertCamera)
             ResetCamera();
+    }
+
+    public void SetIsPickingUpItem(bool isPickingUpItem)
+    {
+        _isPickingUpItem = isPickingUpItem;
     }
 
     private void ResetCamera()
@@ -319,12 +326,12 @@ public partial class PlayerStatus : Node
 
     public bool CanOpenMenu()
     {
-        return !_isInCutscene && !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen && !DebugManager.IsDebugConsoleActive();
+        return !_isInCutscene && !Paused && !ItemBoxOpened && !Reading && Health > 0 && !TakingDamage && !HasSaveLoadUiOpen && !_isPickingUpItem && !DebugManager.IsDebugConsoleActive();
     }
 
     public bool HasAnyUiOpen()
     {
-        return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveLoadUiOpen || DebugManager.IsDebugConsoleActive();
+        return Paused || MenuOpened || Reading || ItemBoxOpened || HasSaveLoadUiOpen || _isPickingUpItem || DebugManager.IsDebugConsoleActive();
     }
 
     public bool IsRotationPrevented()

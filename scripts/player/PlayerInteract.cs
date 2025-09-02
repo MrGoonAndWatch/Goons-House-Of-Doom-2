@@ -14,6 +14,8 @@ public partial class PlayerInteract : Area3D
     private InspectTextUi _inspectTextUi;
     [Export]
     private SaveGame _saveUi;
+    [Export]
+    private PlayerAnimationControl _playerAnimationControl;
     private PlayerStatus _playerStatus;
 
     private List<Item> _touchingItems;
@@ -25,6 +27,7 @@ public partial class PlayerInteract : Area3D
     private List<PassCode> _touchingPassCodes;
     private List<ShowTextOnInspectHitbox> _touchingShowTextOnInspects;
     private List<SaveOnInspect> _touchingSaveOnInspects;
+    private Item _itemCurrentlyBeingPickedUp;
 
     public override void _Ready()
 	{
@@ -78,6 +81,33 @@ public partial class PlayerInteract : Area3D
         _touchingPassCodes.RemoveAll(_ => true);
         _touchingShowTextOnInspects.RemoveAll(_ => true);
         _touchingSaveOnInspects.RemoveAll(_ => true);
+    }
+
+    public void OnPickupAnimationFinished()
+    {
+        // TODO: Move this logic to a separate method when the player confirms they want to pick the item up via the popup ui!
+        var remainingQty = _inventory.AddItem(_itemCurrentlyBeingPickedUp);
+        if (_itemCurrentlyBeingPickedUp.ItemId != 0 && remainingQty != _itemCurrentlyBeingPickedUp.QtyOnPickup)
+        {
+            _playerStatus.GrabItem(_itemCurrentlyBeingPickedUp.ItemId);
+        }
+
+        if (remainingQty == 0)
+            _itemCurrentlyBeingPickedUp.ForceDestroy();
+        else
+            _itemCurrentlyBeingPickedUp.QtyOnPickup = remainingQty;
+
+        RemoveItem(_itemCurrentlyBeingPickedUp);
+        
+        // NOTE: This is jank, we are using the parent's instance id because we check for ItemPickup rather than Item since Item gets instantiated inside the player's inventory.
+        //      THINGS WILL BREAK if you change the hirearchy of item prefabs.
+        var itemInstanceId = _itemCurrentlyBeingPickedUp.GetParent().GetInstanceId();
+        MapStatus.CheckForRoomCleared(itemInstanceId);
+        
+        // TODO: Move this somewhere to be called regardless of whether or not the player chooses to (or can) pick the item up!
+        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.PickupOnGround, false);
+        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.PickupOnTable, false);
+        _itemCurrentlyBeingPickedUp = null;
     }
 
     public void _OnBodyEntered(Node3D obj)
@@ -141,23 +171,25 @@ public partial class PlayerInteract : Area3D
             return;
 
         var item = validItems.First();
-        // NOTE: This is jank, we are using the parent's instance id because we check for ItemPickup rather than Item since Item gets instantiated inside the player's inventory.
-        //      THINGS WILL BREAK if you change the hirearchy of item prefabs.
-        var itemInstanceId = item.GetParent().GetInstanceId();
         
-        var remainingQty = _inventory.AddItem(item);
-        if (item.ItemId != 0 && remainingQty != item.QtyOnPickup)
+        string itemPickupAnimationFlag;
+        switch (item.PickupType)
         {
-            _playerStatus.GrabItem(item.ItemId);
+            case PickupType.AtTableLevel:
+                itemPickupAnimationFlag = GameConstants.Animation.Player.PickupOnTable;
+                break;
+            case PickupType.OnTheGround:
+            default:
+                itemPickupAnimationFlag = GameConstants.Animation.Player.PickupOnGround;
+                break;
         }
-
-        if (remainingQty == 0)
-            item.ForceDestroy();
-        else
-            item.QtyOnPickup = remainingQty;
-
-        RemoveItem(item);
-        MapStatus.CheckForRoomCleared(itemInstanceId);
+        
+        _playerAnimationControl.SetAnimationVariable(itemPickupAnimationFlag, true);
+        _itemCurrentlyBeingPickedUp = item;
+        PlayerStatus.GetInstance().SetIsPickingUpItem(true);
+        
+        // TODO: Determine if we want to apply this pickup animation to picking up notes, maps, and other non-item interactions.
+        //      If so, it will involve some branching logic to know which type of thing to act on when we do process the input from the popup UI.
     }
 
     private void PickupCurrentNote()

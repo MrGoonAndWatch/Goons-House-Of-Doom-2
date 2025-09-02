@@ -7,6 +7,8 @@ public abstract partial class Item : Area3D
 
     public int ItemId;
 	public int QtyOnPickup;
+    public GameConstants.PickupType PickupType;
+    
     [Export]
     public Texture2D MenuIcon;
     [Export]

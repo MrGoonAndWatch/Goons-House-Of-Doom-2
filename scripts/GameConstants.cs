@@ -191,6 +191,12 @@ public partial class GameConstants : GodotObject
         Rotated270Degrees = 270
     }
 
+    public enum PickupType
+    {
+        OnTheGround = 0,
+        AtTableLevel = 1
+    }
+
     public static Dictionary<GameDifficulty, Dictionary<PassCodeType, string>> PassCodeLookup = new()
     {
         { GameDifficulty.Easy, new Dictionary<PassCodeType, string> {
@@ -250,6 +256,9 @@ public partial class GameConstants : GodotObject
             public const string EquipPistol = "parameters/Arms/conditions/equipPistol";
             public const string Aiming = "parameters/Arms/conditions/aiming";
             public const string Fire = "parameters/Arms/conditions/fire";
+            
+            public const string PickupOnGround = "parameters/Arms/conditions/pickupOnGround";
+            public const string PickupOnTable = "parameters/Arms/conditions/pickupOnTable";
 
             public const string DeathBlendAmount = "parameters/DeathStateMachine/conditions/death-generic";
             public const string DeathGeneric = "parameters/";
