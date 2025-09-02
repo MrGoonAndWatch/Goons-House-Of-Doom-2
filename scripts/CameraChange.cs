@@ -8,6 +8,12 @@ public partial class CameraChange : Area3D
 	[Export]
 	private Node3D TargetCameraPos;
 
+	public override void _Ready()
+	{
+		if (TargetCamera == null)
+			TargetCamera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
+	}
+	
 	public void OnBodyEntered(Node3D body)
 	{
 		if (TargetCameraPos == null || TargetCamera == null)

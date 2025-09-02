@@ -42,7 +42,7 @@ ControlsMenu = NodePath("ControlsMenu")
 Credits = NodePath("Credits")
 InitFocusMainMenu = NodePath("MainMenu/VBoxContainer/NewGame_Button")
 InitFocusNewGame = NodePath("NewGameMenu/VBoxContainer/DifficultyContainer/EasyButton")
-InitFocusOptions = NodePath("OptionsMenu/VBoxContainer/UseAnalogueMovement/UseAnalogueCheckBox")
+InitFocusOptions = NodePath("OptionsMenu/ScrollContainer/VBoxContainer/UseAnalogueMovement/CheckBoxContainer/UseAnalogueCheckBox")
 InitFocusControls = NodePath("ControlsMenu/ControlsRemap/Forwards/Forwards (Keyboard)")
 InitFocusCredits = NodePath("Credits/BackButtonContainer/CreditsBackButton")
 ItemRandomizerCheckbox = NodePath("NewGameMenu/VBoxContainer/ItemRandomizer/ItemRandomizerCheckBox")
@@ -115,7 +115,7 @@ offset_left = -103.0
 offset_top = -55.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "v0.2.0  "
+text = "v0.3.0  "
 label_settings = SubResource("LabelSettings_v651h")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
