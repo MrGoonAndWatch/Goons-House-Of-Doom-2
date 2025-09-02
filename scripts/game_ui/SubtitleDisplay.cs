@@ -10,6 +10,11 @@ public partial class SubtitleDisplay : Control
     private ColorRect _subtitleBackground;
     [Export]
     private Label _subtitleTextDisplay;
+
+    [Export]
+    private float SubtitleYSpacePerLine = 75.0f;
+    [Export]
+    private float SubtitleExtraYSpacing = 150.0f;
     
     public override void _Ready()
     {
@@ -24,7 +29,6 @@ public partial class SubtitleDisplay : Control
         if (_subtitleContainer == null)
             _subtitleContainer = this;
         HideSubtitles();
-        RefreshSubtitleDisplaySettings();
     }
 
     public static void HideSubtitles()
@@ -36,7 +40,9 @@ public partial class SubtitleDisplay : Control
 
     public static void DisplaySubtitles(SubtitleLine line)
     {
-        if (Instance == null) return;
+        if (Instance == null || !(DataSaver.GetGlobalSettings()?.SubtitlesEnabled ?? true))
+            return;
+        
         if (line == null) {
             HideSubtitles();
             return;
@@ -47,20 +53,21 @@ public partial class SubtitleDisplay : Control
     private void UpdateSubtitleDisplay(SubtitleLine line)
     {
         var formattedSubtitleText = line.SubtitleContent;//.Replace("\\r\\n", "\r\n").Replace("\\r", "\r").Replace("\\n", "\n");
-        // TODO: Consider a smooth reveal of subtitles somehow.
+        
         _subtitleTextDisplay.Hide();
+
+        if (DataSaver.GetGlobalSettings().SubtitlesShowSpeaker && !string.IsNullOrEmpty(line.CharacterSpeaking))
+            formattedSubtitleText = $"{line.CharacterSpeaking}: {formattedSubtitleText}";
         
         _subtitleTextDisplay.Text = formattedSubtitleText;
-        _subtitleTextDisplay.Position = new Vector2(-(_subtitleTextDisplay.Size.X / 2.0f), -250); 
-        // TODO: Prefix with speaker (if settings say so).
+        var lineCount = line.SubtitleContent.Contains('\n') ? 2 : 1;
+        _subtitleTextDisplay.Position = new Vector2(-(_subtitleTextDisplay.Size.X / 2.0f), -(lineCount * SubtitleYSpacePerLine)-SubtitleExtraYSpacing);
+        _subtitleBackground.Color = new Color(0, 0, 0, DataSaver.GetGlobalSettings().SubtitleBackgroundAlpha);
         // TODO: Change font color per settings.
         // TODO: Special formatting rules? Like special BOLD text, italics, etc.
+        
+        // TODO: Consider a smooth reveal of subtitles somehow.
         _subtitleContainer.Show();
         _subtitleTextDisplay.Show();
-    }
-
-    public static void RefreshSubtitleDisplaySettings()
-    {
-        // TODO: IMPLEMENT!!!
     }
 }

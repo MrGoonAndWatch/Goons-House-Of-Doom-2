@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using Godot;
-using Godot.Collections;
 
 public partial class Cutscene : Node
 {
@@ -11,7 +11,7 @@ public partial class Cutscene : Node
     [Export]
     private CutsceneInstruction[] Instructions;
     [Export]
-    private SubtitleLine[] SubtitleLines;
+    private CutsceneSubtitleInstruction[] SubtitleLines;
     [Export(hintString: "When the cutscene ends, set the camera to whatever camera the player most recently passed through during the cutscene if this is checked, otherwise leave the camera at the ending angle when the cutscene ends.")]
     public bool ResetCameraOnCutsceneEnd = true;
     /// <summary>
@@ -24,8 +24,11 @@ public partial class Cutscene : Node
     private bool _isCurrentActorMoving;
     private bool _skipped;
     private bool _isCutscenePaused;
+    private bool _moveToNextInstruction;
 
-    private Dictionary<int, AudioStream> _voiceLines;
+    private Godot.Collections.Dictionary<int, AudioStream> _voiceLines;
+    private Queue<SubtitleLine> _currentSubtitleLines;
+    private float _timeUntilNextSubtitleLine;
 
     public void StartCutscene()
     {
@@ -44,9 +47,9 @@ public partial class Cutscene : Node
         _initialized = true;
     }
 
-    private Dictionary<int, AudioStream> LoadVoiceLines()
+    private Godot.Collections.Dictionary<int, AudioStream> LoadVoiceLines()
     {
-        var voiceLines = new Dictionary<int, AudioStream>();
+        var voiceLines = new Godot.Collections.Dictionary<int, AudioStream>();
 
         for (var i = 0; i < Instructions.Length; i++)
         {
@@ -69,7 +72,7 @@ public partial class Cutscene : Node
         if (IncrementToNextCutsceneInstruction())
             return;
 
-        ProcessNextSubtitle();
+        ProcessNextSubtitleInstruction();
         ProcessNextInstruction();
     }
 
@@ -96,16 +99,29 @@ public partial class Cutscene : Node
         return isEndOfCutscene;
     }
 
-    private void ProcessNextSubtitle()
+    private void ProcessNextSubtitleInstruction()
     {
-        // TODO: Fancy bells and whistles that let the subtitles have custom amounts of time on screen, but still easy to set up in editor, or maybe this is just fine as is and I'm gold plating...
-        SubtitleLine subtitleLine = null;
-        if (_currentInstructionIndex >= 0 && _currentInstructionIndex < (SubtitleLines?.Length ?? 0))
-            subtitleLine = SubtitleLines[_currentInstructionIndex];
-        //else
-        //    GD.Print($"ProcessNextSubtitle found no subtitles for index {_currentInstructionIndex}!");
-        //GD.Print($"ProcessNextSubtitle displaying subtitles for line {_currentInstructionIndex} '{subtitleLine?.SubtitleContent}'");
-        SubtitleDisplay.DisplaySubtitles(subtitleLine);
+        if (_currentInstructionIndex < 0 || 
+            _currentInstructionIndex >= (SubtitleLines?.Length ?? 0) || 
+            (SubtitleLines?[_currentInstructionIndex]?.SubtitleLines?.Length ?? 0) <= 0)
+            return;
+        
+        var subtitleInstruction = SubtitleLines[_currentInstructionIndex];
+        _currentSubtitleLines = new Queue<SubtitleLine>();
+        for (var i = 0; i < subtitleInstruction.SubtitleLines.Length; i++)
+            _currentSubtitleLines.Enqueue(subtitleInstruction.SubtitleLines[i]);
+        ShowNextSubtitleLine();
+    }
+
+    private void ShowNextSubtitleLine()
+    {
+        if (_currentSubtitleLines?.TryDequeue(out var nextSubtitleLine) ?? false)
+        {
+            SubtitleDisplay.DisplaySubtitles(nextSubtitleLine);
+            _timeUntilNextSubtitleLine = nextSubtitleLine.SubtitleDisplayTimeInSeconds;
+        }
+        else
+            SubtitleDisplay.HideSubtitles();
     }
     
     private void ProcessNextInstruction()
@@ -141,7 +157,7 @@ public partial class Cutscene : Node
             _isCurrentActorMoving = false;
         if (!string.IsNullOrEmpty(nextInstruction.AnimationFlag))
             nextInstruction.TargetActor.SetAnimationFlag(nextInstruction.AnimationFlag, true);
-        if (_voiceLines.ContainsKey(_currentInstructionIndex))
+        if (_voiceLines?.ContainsKey(_currentInstructionIndex) ?? false)
             GhodAudioManager.PlayVoiceClip(_voiceLines[_currentInstructionIndex]);
     }
 
@@ -166,7 +182,7 @@ public partial class Cutscene : Node
         if (nextInstruction.NewCameraTransform == null)
         {
             GD.PrintErr("ChangeCamera instruction found in Cutscene but no NewCameraTransform was specified! Ignoring instruction!");
-            NextInstruction();
+            _moveToNextInstruction = true;
             return;
         }
         
@@ -174,13 +190,19 @@ public partial class Cutscene : Node
         var camera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
         camera.GlobalPosition = nextInstruction.NewCameraTransform.GlobalPosition;
         camera.GlobalRotation = nextInstruction.NewCameraTransform.GlobalRotation;
-        
-        NextInstruction();
+
+        _moveToNextInstruction = true;
     }
 
     public override void _Process(double delta)
     {
-        if (!_initialized || _skipped || _isCutscenePaused || CurrentlyWatchingFmv())
+        if (!_initialized || _skipped || _isCutscenePaused)
+            return;
+
+        if (_timeUntilNextSubtitleLine > 0)
+            ProcessSubtitleTiming(delta);
+        
+        if (CurrentlyWatchingFmv())
             return;
 
         if (_currentInstructionTimeRemaining > 0)
@@ -198,6 +220,20 @@ public partial class Cutscene : Node
             if (reachedDestination && Instructions[_currentInstructionIndex].EndType == GameConstants.CutsceneInstructionEndType.EndWhenMovementEnds)
                 NextInstruction();
         }
+
+        if (_moveToNextInstruction)
+        {
+            _moveToNextInstruction = false;
+            NextInstruction();
+        }
+    }
+
+    private void ProcessSubtitleTiming(double delta)
+    {
+        _timeUntilNextSubtitleLine -= (float) delta;
+
+        if (_timeUntilNextSubtitleLine <= 0)
+            ShowNextSubtitleLine();
     }
 
     public bool HasCutsceneEnded()
@@ -237,6 +273,7 @@ public partial class Cutscene : Node
         for (; _currentInstructionIndex < Instructions.Length; _currentInstructionIndex++)
         {
             var currentInstruction = Instructions[_currentInstructionIndex];
+            //GD.Print($"SkipCutscene {_currentInstructionIndex+1} of {Instructions.Length} ({currentInstruction.Name})");
             
             if (CurrentlyWatchingFmv())
             {
@@ -248,10 +285,12 @@ public partial class Cutscene : Node
                 currentInstruction.TargetActor.MoveToPositionInstantly(currentInstruction.MoveToPosition);
             if (currentInstruction.NewCameraTransform != null)
                 HandleChangeCameraInstruction(currentInstruction);
-
         }
 
         GD.Print("Cutscene skipped!");
+        _moveToNextInstruction = false;
+        _currentSubtitleLines = null;
+        SubtitleDisplay.HideSubtitles();
         _skipped = true;
         return true;
     }

@@ -28,12 +28,11 @@ grow_vertical = 0
 [node name="SubtitleText" type="Label" parent="SubtitleDisplayContainer"]
 layout_mode = 0
 offset_top = -200.0
-offset_right = 624.0
-offset_bottom = -51.0
+offset_right = 765.0
+offset_bottom = -125.0
 theme = ExtResource("2_cshew")
 theme_override_font_sizes/font_size = 54
-text = "Line 1 Line 1 Line 1 Line 1 
-Line 2"
+text = "Line 1 Line 1 Line 1 Line 1 Line 2"
 horizontal_alignment = 1
 vertical_alignment = 1
 

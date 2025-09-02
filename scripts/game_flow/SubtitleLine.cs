@@ -7,5 +7,5 @@ public partial class SubtitleLine : Node
     [Export]
     public string CharacterSpeaking;
     [Export]
-    public Color SubtitleColor = Color.Color8(255, 255, 255);
+    public float SubtitleDisplayTimeInSeconds = 1.0f;
 }

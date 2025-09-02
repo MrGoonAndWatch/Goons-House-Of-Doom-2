@@ -16,7 +16,7 @@ script = ExtResource("1_8hvdm")
 PauseMenu = NodePath("PauseMenu")
 OptionsMenu = NodePath("OptionsMenu")
 DefaultPauseMenuFocus = NodePath("PauseMenu/Resume Button")
-DefaultOptionsMenuFocus = NodePath("OptionsMenu/VBoxContainer/UseAnalogueMovement/UseAnalogueCheckBox")
+DefaultOptionsMenuFocus = NodePath("OptionsMenu/ScrollContainer/VBoxContainer/UseAnalogueMovement/CheckBoxContainer/UseAnalogueCheckBox")
 ControlsMenu = NodePath("controls_setup")
 
 [node name="InventoryBg" type="ColorRect" parent="."]

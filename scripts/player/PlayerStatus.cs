@@ -144,6 +144,8 @@ public partial class PlayerStatus : Node
             camera.GlobalPosition = _storedCameraPosition.Value;
         if (_storedCameraRotation.HasValue)
             camera.GlobalRotation = _storedCameraRotation.Value;
+        _storedCameraPosition = null;
+        _storedCameraRotation = null;
         //GD.Print($"ResetCamera called (camera.GlobalPosition={camera.GlobalPosition} from {_storedCameraRotation}, camera.GlobalRotation={camera.GlobalRotation} from {_storedCameraRotation})");
     }
 
