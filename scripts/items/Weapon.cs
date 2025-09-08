@@ -26,6 +26,7 @@ public abstract partial class Weapon : Item
     public abstract bool IsHitscan();
     public abstract float GetDamagePerHit();
     public abstract string GetEquipAnimationName();
+    public abstract string GetFireAnimationName();
     public abstract Type GetAmmoType();
 
     public override bool IsStackable()
@@ -55,7 +56,7 @@ public abstract partial class Weapon : Item
         return true;
     }
 
-    public void ShootWeapon(PlayerInventory playerInventory, RayCast3D hitscanRay, PlayerAnimationControl playerAnimationControl)
+    public float ShootWeapon(PlayerInventory playerInventory, RayCast3D hitscanRay, PlayerAnimationControl playerAnimationControl)
     {
         var playerStatus = PlayerStatus.GetInstance();
         if (GetAmmo() > 0)
@@ -85,5 +86,7 @@ public abstract partial class Weapon : Item
         {
             // TODO: Play no ammo click.
         }
+
+        return PlayerAnimationControl.GetShootAnimationDuration(this);
     }
 }

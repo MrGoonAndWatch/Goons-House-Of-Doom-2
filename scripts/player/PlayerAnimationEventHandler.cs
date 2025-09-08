@@ -16,10 +16,11 @@ public partial class PlayerAnimationEventHandler : AnimationTree
 	{
 		var animationStr = animationName.ToString();
         //GD.Print($"_OnAnimationFinished('{animationName}')");
-        if (animationStr.StartsWith("Fire-"))
-			_player.OnShootingEnded();
-		if (animationStr.StartsWith("Aim-"))
-			_player.OnShootingReady();
+        // TODO: If I change my mind about using timers for triggers like aiming instead of signals, uncomment these.
+        //if (animationStr.StartsWith("Fire-"))
+		//	_player.OnShootingEnded();
+		//if (animationStr.StartsWith("Aim-"))
+		//	_player.OnShootingReady();
 		if (animationStr.StartsWith("Death-"))
 			_player.OnDeathAnimationFinished(animationStr);
 		if (animationStr.StartsWith("pickup_") && animationStr.EndsWith("_start"))

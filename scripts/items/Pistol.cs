@@ -17,6 +17,11 @@ public partial class Pistol : Weapon
         return GameConstants.Animation.Player.EquipPistol;
     }
 
+    public override string GetFireAnimationName()
+    {
+        return GameConstants.Animation.Player.Fire;
+    }
+
     public override string GetItemName()
     {
         return "Pistol";

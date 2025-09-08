@@ -277,6 +277,8 @@ public partial class PlayerStatus : Node
     {
         if (!forceEquip && EquipedWeapon != null && EquipedWeapon.ItemId == weapon.ItemId)
         {
+            var player = GetNode<Player>(NodePaths.FromSceneRoot.Player);
+            player.EndAiming();
             _playerAnimationControl.UnequipWeapon(weapon);
             EquipedWeapon = null;
         }

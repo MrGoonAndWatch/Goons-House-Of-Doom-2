@@ -33,6 +33,8 @@ public partial class Player : ICutsceneActor
 
     private bool _holdAnalogueDirection;
     private float _analogueControlCurrentCameraRotation;
+    private float _timeUntilAimIsFinished;
+    private float _timeUntilShootIsFinished;
 
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 100;
 
@@ -54,8 +56,8 @@ public partial class Player : ICutsceneActor
     public override void _Process(double delta)
     {
         HandlePauseMenu();
-        HandleAiming();
-        HandleShooting();
+        HandleAiming(delta);
+        HandleShooting(delta);
         HandleDeath(delta);
     }
 
@@ -75,15 +77,25 @@ public partial class Player : ICutsceneActor
         }
     }
 
-    private void HandleAiming()
+    private void HandleAiming(double delta)
     {
         if (_playerStatus.EquipedWeapon == null) return;
+
+        if (_timeUntilAimIsFinished > 0)
+        {
+            _timeUntilAimIsFinished -= (float)delta;
+            if (_timeUntilAimIsFinished <= 0)
+                OnShootingReady();
+        }
 
         if (_playerStatus.CanAim() && Input.IsActionPressed(Controls.aim.ToString()))
         {
             _playerStatus.Aiming = true;
             _playerStatus.ReadyToShoot = false;
             _playerAnimationControl.StartAiming();
+            _timeUntilAimIsFinished = PlayerAnimationControl.GetAimAnimationDuration();
+            if (_timeUntilAimIsFinished == 0)
+                OnShootingReady();
         }
         else if (!_playerStatus.HasAnyUiOpen() && _playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
             EndAiming();
@@ -95,7 +107,7 @@ public partial class Player : ICutsceneActor
         CollisionMask = noClipping ? (uint)0 : 1;
     }
 
-    public void OnShootingReady()
+    private void OnShootingReady()
     {
         _playerStatus.ReadyToShoot = true;
     }
@@ -106,13 +118,24 @@ public partial class Player : ICutsceneActor
         _playerAnimationControl.StopAiming();
     }
 
-    private void HandleShooting()
+    private void HandleShooting(double delta)
     {
+        if (_timeUntilShootIsFinished > 0)
+        {
+            _timeUntilShootIsFinished -= (float)delta;
+            if (_timeUntilShootIsFinished <= 0)
+                OnShootingEnded();
+        }
+
         if (_playerStatus.CanShoot() && _playerStatus.Aiming && Input.IsActionJustPressed(Controls.confirm.ToString()))
-            _playerStatus.EquipedWeapon.ShootWeapon(_playerInventory, _hitscanRay, _playerAnimationControl);
+        {
+            _timeUntilShootIsFinished = _playerStatus.EquipedWeapon.ShootWeapon(_playerInventory, _hitscanRay, _playerAnimationControl);
+            if (_timeUntilAimIsFinished == 0)
+                OnShootingEnded();
+        }
     }
 
-    public void OnShootingEnded()
+    private void OnShootingEnded()
     {
         _playerAnimationControl.OnShootingEnded();
         _playerStatus.ReadyToShoot = true;

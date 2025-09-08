@@ -1,10 +1,18 @@
 using Godot;
+using Godot.Collections;
 
 using PickupType = GameConstants.PickupType;
 using Animation = GameConstants.Animation;
 
 public partial class PlayerAnimationControl : Node3D
 {
+    private static Dictionary<string, float> AnimationDurations = new Dictionary<string, float>()
+    {
+        { Animation.Player.Aiming, 0.5f },
+        { Animation.Player.Fire, 0.5f }
+    };
+    
+    
     private static PlayerAnimationControl Instance;
     
     private AnimationTree _animationTree;
@@ -46,6 +54,22 @@ public partial class PlayerAnimationControl : Node3D
         return valid;
     }
 
+    public static float GetAimAnimationDuration()
+    {
+        return GetAnimationDuration(Animation.Player.Aiming);
+    }
+
+    public static float GetShootAnimationDuration(Weapon weapon)
+    {
+        var animationName = weapon.GetFireAnimationName();
+        return GetAnimationDuration(animationName);
+    }
+
+    private static float GetAnimationDuration(string animation)
+    {
+        return AnimationDurations.ContainsKey(animation) ? AnimationDurations[animation] : 0;
+    }
+
     public void StopMoving()
     {
         UpdateMovementFlags(false, false);
@@ -68,7 +92,6 @@ public partial class PlayerAnimationControl : Node3D
 
     public void UnequipWeapon(Weapon weapon)
     {
-        StopAiming();
         SetAnimationVariable(weapon.GetEquipAnimationName(), false);
     }
 
