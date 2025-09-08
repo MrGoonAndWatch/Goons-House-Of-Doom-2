@@ -17,7 +17,6 @@ Item = NodePath("Item")
 script = ExtResource("3_ymmnq")
 MenuIcon = ExtResource("4_b64ac")
 LookAtTargetPoint = NodePath("../LookAtPoint")
-PickupType = null
 
 [node name="ItemCollisionShape" type="CollisionShape3D" parent="Item"]
 shape = SubResource("BoxShape3D_1iqm5")

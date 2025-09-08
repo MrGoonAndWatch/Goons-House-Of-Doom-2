@@ -210,7 +210,7 @@ public partial class PlayerStatus : Node
     public void TriggeredEvent(GlobalEvent eventTriggered)
     {
         // TODO: Apply this to anything that a triggered event can effect!!!
-        var doors = ProcessGameState.FindObjectsOfType<Door>(GetTree().Root);
+        var doors = FindObjectsOfType<Door>(GetTree().Root);
         foreach (var door in doors) {
             door.OnEvent(eventTriggered);
         }
@@ -302,21 +302,6 @@ public partial class PlayerStatus : Node
         }
 
         var weight = EquipedWeapon == null ? 0 : 1;
-    }
-
-    public HealthStatus GetHealthStatus()
-    {
-        if (Health == 0)
-            return HealthStatus.Dead;
-        if (Health <= 1)
-            return HealthStatus.Special;
-        if (Health <= 20)
-            return HealthStatus.SpeedyBoi;
-        if (Health <= 40)
-            return HealthStatus.BadTummyAche;
-        if (Health <= 80)
-            return HealthStatus.TummyAche;
-        return HealthStatus.Healthy;
     }
 
     public bool CanPause()

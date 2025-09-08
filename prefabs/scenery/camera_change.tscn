@@ -9,5 +9,6 @@ script = ExtResource("1_s3vuj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ibwqi")
+debug_color = Color(0.877506, 0.000403336, 0.831445, 1)
 
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]

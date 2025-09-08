@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=24 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" uid="uid://beumay7us5ig2" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://bnmyvw3j0li5t" path="res://scripts/inventory/PlayerItemBoxControl.cs" id="6_aqktm"]
 [ext_resource type="FontFile" uid="uid://qoog8jprg8ka" path="res://prefabs/ui/ui_font.tres" id="6_f4pxk"]
 [ext_resource type="Script" uid="uid://dmbeqod47ewci" path="res://scripts/game_ui/InspectTextUi.cs" id="6_fksfj"]
-[ext_resource type="Script" uid="uid://hxhr2ysd7tuh" path="res://scripts/data/ProcessGameState.cs" id="8_0mwpg"]
 [ext_resource type="PackedScene" uid="uid://dov4b3kwtujxh" path="res://prefabs/ui/note_reader.tscn" id="8_2pvdi"]
 [ext_resource type="PackedScene" uid="uid://bbm804mwh6x3r" path="res://prefabs/gamma_correction.tscn" id="8_64i7v"]
 [ext_resource type="Script" uid="uid://gmx1000anyuf" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
@@ -220,19 +219,33 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
 [node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
-bones/0/position = Vector3(0, -0.0693298, -0.0427125)
-bones/1/rotation = Quaternion(0.0401591, 1.81119e-19, -5.6821e-18, 0.999193)
-bones/2/rotation = Quaternion(0.0152997, 7.94352e-19, 1.35157e-17, 0.999883)
-bones/3/rotation = Quaternion(-0.175345, -0.16573, 0.965418, -0.0987713)
-bones/4/rotation = Quaternion(0.264369, -0.0800322, -0.0240988, 0.960793)
-bones/6/rotation = Quaternion(0.175345, -0.16573, 0.965418, 0.0987713)
-bones/7/rotation = Quaternion(0.264369, 0.0800322, 0.0240988, 0.960793)
-bones/9/rotation = Quaternion(0.0253921, 0.00706219, 0.998329, -0.0514311)
-bones/10/rotation = Quaternion(-0.0756705, -7.37407e-06, -0.0507088, 0.995843)
-bones/11/rotation = Quaternion(0.598045, 0.0248704, -0.0146562, 0.800943)
-bones/12/rotation = Quaternion(-0.0253921, 0.00706218, 0.998329, 0.0514311)
-bones/13/rotation = Quaternion(-0.0756705, 7.37545e-06, 0.0507088, 0.995843)
-bones/14/rotation = Quaternion(0.598049, -0.0248742, 0.0146505, 0.800939)
+bones/0/position = Vector3(-3.33384e-09, -0.0698794, -0.0444803)
+bones/0/rotation = Quaternion(-0.0189856, 3.53839e-08, -6.71906e-10, 0.99982)
+bones/1/rotation = Quaternion(0.0369323, 6.11475e-09, 2.81329e-10, 0.999318)
+bones/2/rotation = Quaternion(0.0149626, -1.11327e-08, 5.3317e-09, 0.999888)
+bones/3/rotation = Quaternion(-0.175296, -0.16555, 0.965441, -0.0989397)
+bones/4/rotation = Quaternion(0.264723, -0.080111, -0.024024, 0.960691)
+bones/5/rotation = Quaternion(0.175386, -0.100453, -0.201629, 0.958381)
+bones/6/rotation = Quaternion(0.175313, -0.165611, 0.965433, 0.098882)
+bones/7/rotation = Quaternion(0.264723, 0.0801109, 0.024024, 0.960691)
+bones/8/rotation = Quaternion(0.175386, 0.100453, 0.201629, 0.958381)
+bones/9/rotation = Quaternion(0.0253867, 0.00719533, 0.998324, -0.0515015)
+bones/9/scale = Vector3(1.0001, 1, 1)
+bones/10/rotation = Quaternion(-0.0758503, -7.46331e-06, -0.0508286, 0.995823)
+bones/11/rotation = Quaternion(0.598091, 0.0249039, -0.0146082, 0.800908)
+bones/11/scale = Vector3(1.00003, 0.999999, 1)
+bones/12/rotation = Quaternion(-0.0253868, 0.00719533, 0.998324, 0.0515015)
+bones/12/scale = Vector3(1.0001, 1, 1)
+bones/13/rotation = Quaternion(-0.0758503, 7.46273e-06, 0.0508286, 0.995823)
+bones/14/rotation = Quaternion(0.598091, -0.0249038, 0.0146081, 0.800908)
+bones/14/scale = Vector3(1.00003, 0.999999, 1)
+bones/15/position = Vector3(4.66002, -26.4656, -1.16752)
+bones/15/rotation = Quaternion(-0.00654425, 0.999979, 3.04032e-08, 8.76391e-09)
+bones/16/position = Vector3(4.60924, -11.9122, 17.2528)
+bones/16/rotation = Quaternion(-6.51059e-08, -1.14216e-08, 0.998872, -0.0474803)
+bones/17/position = Vector3(-4.66002, -26.4656, -1.16752)
+bones/17/rotation = Quaternion(0.00654425, 0.999979, 3.04032e-08, -8.76391e-09)
+bones/18/position = Vector3(-4.60924, -11.9122, 17.2528)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi", "_playerAnimationControl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
@@ -251,9 +264,6 @@ script = ExtResource("6_fksfj")
 DescriptiveText = NodePath("../descriptive_text")
 TextBox = NodePath("../descriptive_text/descriptive_text_container/descriptive_text_label")
 AdvanceTextCooldown = 0.1
-
-[node name="ProcessGameState" type="Node3D" parent="."]
-script = ExtResource("8_0mwpg")
 
 [node name="WeaponHitscan" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52849, 0, 0)

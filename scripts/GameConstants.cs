@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 
+
 public partial class GameConstants : GodotObject
 {
     public const float GreenMedicineHp = 25.0f;
@@ -55,17 +56,6 @@ public partial class GameConstants : GodotObject
         Normal,
         Hard,
         Impossible
-    }
-
-    public enum HealthStatus
-    {
-        None = 0,
-        Dead,
-        Special,
-        SpeedyBoi,
-        BadTummyAche,
-        TummyAche,
-        Healthy
     }
 
     public enum MenuActionType
@@ -386,5 +376,19 @@ public partial class GameConstants : GodotObject
             if (list[i] == value)
                 return true;
         return false;
+    }
+    
+    public static System.Collections.Generic.List<T> FindObjectsOfType<T>(Node parent) where T: class
+    {
+        var matchingNodes = new System.Collections.Generic.List<T>();
+
+        var children = parent.GetChildren();
+        foreach (var node in children)
+        {
+            if (node is T) matchingNodes.Add(node as T);
+            matchingNodes.AddRange(FindObjectsOfType<T>(node));
+        }
+
+        return matchingNodes;
     }
 }
