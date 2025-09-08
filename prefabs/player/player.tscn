@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene load_steps=23 format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" uid="uid://beumay7us5ig2" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://gmx1000anyuf" path="res://scripts/debug/DebugUi.cs" id="9_a87b7"]
 [ext_resource type="PackedScene" uid="uid://cegxkqddyvfme" path="res://prefabs/debug_console.tscn" id="10_1ehqn"]
 [ext_resource type="Script" uid="uid://lr4c1m7n6w5b" path="res://scripts/game_flow/FmvManager.cs" id="10_5ldjw"]
-[ext_resource type="Script" uid="uid://1770qhhv8840" path="res://scripts/player/PlayerAnimationControl.cs" id="13_0urwd"]
 [ext_resource type="Script" uid="uid://bs7lyqr67vatd" path="res://scripts/player/ActorLookAt.cs" id="15_408ek"]
 [ext_resource type="PackedScene" uid="uid://dfkwi87y4xryk" path="res://models/protagonist.tscn" id="17_ie47q"]
 
@@ -33,13 +32,12 @@ size = Vector3(1, 2.1, 1)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_408ek"]
 points = PackedVector3Array(4, 1, 4, 0, 1, 0.5, 0, 1, -0.5, 4, 1, -4, 4, -1, -4, 4, -1, 4, 0, -1, 0.5, 0, -1, -0.5)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_playerAnimationControl", "_deathFadeUi", "_deathFadeBg", "_saveUi") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_deathFadeUi", "_deathFadeBg", "_saveUi") groups=["player"]]
 floor_max_angle = 1.0472
 script = ExtResource("1_wlo0u")
 _pauseScreenUi = NodePath("pause_ui")
 _hitscanRay = NodePath("WeaponHitscan")
 _playerInventory = NodePath("PlayerInventory")
-_playerAnimationControl = NodePath("PlayerAnimationControl")
 _deathFadeUi = NodePath("GameOverFadeUiContainer/GameOverFadeUi")
 _deathFadeBg = NodePath("GameOverFadeUiContainer/GameOverFadeUi/ColorRect")
 _saveUi = NodePath("save_game_ui")
@@ -207,10 +205,6 @@ InventoryCursor = NodePath("../item_box/ItemSlots/ItemCursor")
 ItemBoxCursor = NodePath("../item_box/ItemBoxCursor")
 ItemBoxScroll = NodePath("../item_box/ScrollContainer")
 
-[node name="PlayerAnimationControl" type="Node3D" parent="." node_paths=PackedStringArray("_animationTree")]
-script = ExtResource("13_0urwd")
-_animationTree = NodePath("../protagonist/AnimationTree")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
@@ -219,33 +213,19 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
 [node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
-bones/0/position = Vector3(-3.33384e-09, -0.0698794, -0.0444803)
-bones/0/rotation = Quaternion(-0.0189856, 3.53839e-08, -6.71906e-10, 0.99982)
-bones/1/rotation = Quaternion(0.0369323, 6.11475e-09, 2.81329e-10, 0.999318)
-bones/2/rotation = Quaternion(0.0149626, -1.11327e-08, 5.3317e-09, 0.999888)
-bones/3/rotation = Quaternion(-0.175296, -0.16555, 0.965441, -0.0989397)
-bones/4/rotation = Quaternion(0.264723, -0.080111, -0.024024, 0.960691)
-bones/5/rotation = Quaternion(0.175386, -0.100453, -0.201629, 0.958381)
-bones/6/rotation = Quaternion(0.175313, -0.165611, 0.965433, 0.098882)
-bones/7/rotation = Quaternion(0.264723, 0.0801109, 0.024024, 0.960691)
-bones/8/rotation = Quaternion(0.175386, 0.100453, 0.201629, 0.958381)
-bones/9/rotation = Quaternion(0.0253867, 0.00719533, 0.998324, -0.0515015)
-bones/9/scale = Vector3(1.0001, 1, 1)
-bones/10/rotation = Quaternion(-0.0758503, -7.46331e-06, -0.0508286, 0.995823)
-bones/11/rotation = Quaternion(0.598091, 0.0249039, -0.0146082, 0.800908)
-bones/11/scale = Vector3(1.00003, 0.999999, 1)
-bones/12/rotation = Quaternion(-0.0253868, 0.00719533, 0.998324, 0.0515015)
-bones/12/scale = Vector3(1.0001, 1, 1)
-bones/13/rotation = Quaternion(-0.0758503, 7.46273e-06, 0.0508286, 0.995823)
-bones/14/rotation = Quaternion(0.598091, -0.0249038, 0.0146081, 0.800908)
-bones/14/scale = Vector3(1.00003, 0.999999, 1)
-bones/15/position = Vector3(4.66002, -26.4656, -1.16752)
-bones/15/rotation = Quaternion(-0.00654425, 0.999979, 3.04032e-08, 8.76391e-09)
-bones/16/position = Vector3(4.60924, -11.9122, 17.2528)
-bones/16/rotation = Quaternion(-6.51059e-08, -1.14216e-08, 0.998872, -0.0474803)
-bones/17/position = Vector3(-4.66002, -26.4656, -1.16752)
-bones/17/rotation = Quaternion(0.00654425, 0.999979, 3.04032e-08, -8.76391e-09)
-bones/18/position = Vector3(-4.60924, -11.9122, 17.2528)
+bones/0/position = Vector3(-1.05873e-08, -0.101397, -0.145835)
+bones/1/rotation = Quaternion(0.0502964, 6.11797e-09, 1.9951e-10, 0.998734)
+bones/2/rotation = Quaternion(-0.00436503, -1.12337e-08, 5.11554e-09, 0.999991)
+bones/3/rotation = Quaternion(-0.173267, -0.15798, 0.966324, -0.106015)
+bones/4/rotation = Quaternion(0.284968, -0.084621, -0.0197229, 0.954591)
+bones/6/rotation = Quaternion(0.173267, -0.15798, 0.966324, 0.106015)
+bones/7/rotation = Quaternion(0.284968, 0.084621, 0.0197229, 0.954591)
+bones/9/rotation = Quaternion(0.0251055, 0.0143632, 0.998053, -0.0552565)
+bones/10/rotation = Quaternion(-0.0867192, -7.4718e-06, -0.0581122, 0.994537)
+bones/11/rotation = Quaternion(0.600906, 0.0270006, -0.0115934, 0.798779)
+bones/12/rotation = Quaternion(-0.0251056, 0.0143632, 0.998053, 0.0552565)
+bones/13/rotation = Quaternion(-0.0867192, 7.4619e-06, 0.0581122, 0.994537)
+bones/14/rotation = Quaternion(0.600906, -0.0270005, 0.0115934, 0.798779)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi", "_playerAnimationControl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
@@ -254,7 +234,7 @@ _inventory = NodePath("../PlayerInventory")
 _noteReader = NodePath("../note_reader")
 _inspectTextUi = NodePath("../InspectTextUI")
 _saveUi = NodePath("../save_game_ui")
-_playerAnimationControl = NodePath("../PlayerAnimationControl")
+_playerAnimationControl = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractHitbox"]
 shape = SubResource("BoxShape3D_mv370")

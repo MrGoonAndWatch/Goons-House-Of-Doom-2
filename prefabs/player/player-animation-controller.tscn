@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce1rxgheiinlb"]
+
+[ext_resource type="Script" uid="uid://1770qhhv8840" path="res://scripts/player/PlayerAnimationControl.cs" id="1_jg5ii"]
+
+[node name="Player-animation-controller" type="Node3D"]
+script = ExtResource("1_jg5ii")

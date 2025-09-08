@@ -14,7 +14,7 @@ public partial class PlayerInteract : Area3D
     private InspectTextUi _inspectTextUi;
     [Export]
     private SaveGame _saveUi;
-    [Export]
+    
     private PlayerAnimationControl _playerAnimationControl;
     private PlayerStatus _playerStatus;
 
@@ -31,6 +31,7 @@ public partial class PlayerInteract : Area3D
 
     public override void _Ready()
 	{
+        _playerAnimationControl = PlayerAnimationControl.GetInstance();
         _playerStatus = PlayerStatus.GetInstance();
         _touchingItems = new List<Item>();
         _touchingNotes = new List<NotePickup>();
@@ -105,8 +106,7 @@ public partial class PlayerInteract : Area3D
         MapStatus.CheckForRoomCleared(itemInstanceId);
         
         // TODO: Move this somewhere to be called regardless of whether or not the player chooses to (or can) pick the item up!
-        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.PickupOnGround, false);
-        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.PickupOnTable, false);
+        _playerAnimationControl.EndPickup();
         _itemCurrentlyBeingPickedUp = null;
     }
 
@@ -172,19 +172,7 @@ public partial class PlayerInteract : Area3D
 
         var item = validItems.First();
         
-        string itemPickupAnimationFlag;
-        switch (item.PickupType)
-        {
-            case PickupType.AtTableLevel:
-                itemPickupAnimationFlag = GameConstants.Animation.Player.PickupOnTable;
-                break;
-            case PickupType.OnTheGround:
-            default:
-                itemPickupAnimationFlag = GameConstants.Animation.Player.PickupOnGround;
-                break;
-        }
-        
-        _playerAnimationControl.SetAnimationVariable(itemPickupAnimationFlag, true);
+        _playerAnimationControl.BeginPickup(item.PickupType);
         _itemCurrentlyBeingPickedUp = item;
         PlayerStatus.GetInstance().SetIsPickingUpItem(true);
         

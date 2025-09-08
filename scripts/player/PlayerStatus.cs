@@ -6,12 +6,10 @@ using static GameConstants;
 public partial class PlayerStatus : Node
 {
     public GameSettings GameSettings;
-
     public Weapon EquipedWeapon;
-    //public Animator PlayerAnimator;
-    // TODO: Need to hook this up with non-export since this is an autoloaded component.
-    [Export]
-    private Node3D GameOverUi;
+    
+    private PlayerAnimationControl _playerAnimationControl;
+    private bool _initialized;
 
     public double Health;
     public const double MaxHealth = 100;
@@ -108,25 +106,15 @@ public partial class PlayerStatus : Node
 
     public override void _Process(double delta)
     {
-        // if (Input.IsActionJustPressed("DEBUG_Save"))
-        // {
-        //     GameDifficulty = (GameDifficulty)((((int)GetInstance().GameDifficulty) + 1) % Enum.GetValues(typeof(GameDifficulty)).Length);
-        // }
-        // if (Input.IsActionJustPressed("DEBUG_Load"))
-        // {
-        //     RandomizerEnabled = !RandomizerEnabled;
-        //     var settings = new RandomizerSettings
-        //     {
-        //         AllowSpawnsOnEmptyEnemySlotsForDifficulty = true,
-        //         AllowSpawnsOnEmptyItemSlotsForDifficulty = true,
-        //         RandomizeEnemies = true,
-        //         RandomizeItems = true,
-        //     };
-        //     if(RandomizerEnabled)
-        //         RandomizerSeed = RandomizerSeed.GenerateRandomizer(settings);
-        // }
+        if (!_initialized) Initialize();
         ProcessExitInput();
         ProcessHitCooldown(delta);
+    }
+
+    private void Initialize()
+    {
+        _playerAnimationControl = PlayerAnimationControl.GetInstance();
+        _initialized = true;
     }
 
     public static PlayerStatus GetInstance() { return _instance; }
@@ -228,7 +216,6 @@ public partial class PlayerStatus : Node
         //SoundManager.PlayHitSfx();
         TakingDamage = true;
         AddHealth(-damage);
-        //PlayerAnimator.SetBool(hitAnimationVariable, true);
         // TODO: Instead of a hard coded cooldown should have event handling from the animator to check when hittable again.
         _remainingHitCooldown = HitCooldown;
     }
@@ -288,20 +275,16 @@ public partial class PlayerStatus : Node
 
     public void EquipWeapon(Weapon weapon, bool forceEquip = false)
     {
-        var player = GetNode<Player>(NodePaths.FromSceneRoot.Player);
-
         if (!forceEquip && EquipedWeapon != null && EquipedWeapon.ItemId == weapon.ItemId)
         {
-            player.WeaponUnequipped(weapon);
+            _playerAnimationControl.UnequipWeapon(weapon);
             EquipedWeapon = null;
         }
         else
         {
-            player.WeaponEquipped(weapon);
+            _playerAnimationControl.EquipWeapon(weapon);
             EquipedWeapon = weapon;
         }
-
-        var weight = EquipedWeapon == null ? 0 : 1;
     }
 
     public bool CanPause()

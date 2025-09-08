@@ -27,6 +27,7 @@ LoadGameData="*res://scripts/data/LoadGameData.cs"
 AudioManager="*res://prefabs/player/audio-manager.tscn"
 DebugManager="*res://scripts/debug/DebugManager.cs"
 SubtitleDisplay="*res://prefabs/ui/SubtitleDisplay.tscn"
+PlayerAnimationController="*res://prefabs/player/player-animation-controller.tscn"
 
 [display]
 

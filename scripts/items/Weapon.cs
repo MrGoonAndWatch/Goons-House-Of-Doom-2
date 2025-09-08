@@ -61,7 +61,7 @@ public abstract partial class Weapon : Item
         if (GetAmmo() > 0)
         {
             playerStatus.ReadyToShoot = false;
-            playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Fire, true);
+            PlayerAnimationControl.FireWeapon();
             PlaySfx();
             AddAmmo(-1);
             playerInventory.SetAllDirty();

@@ -9,6 +9,7 @@ public partial class PlayerAnimationEventHandler : AnimationTree
 	{
         _player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
         _playerInteract = GetNode<PlayerInteract>(GameConstants.NodePaths.FromSceneRoot.PlayerInteract);
+        PlayerAnimationControl.GetInstance().Init(this);
     }
 
 	public void _OnAnimationFinished(StringName animationName)

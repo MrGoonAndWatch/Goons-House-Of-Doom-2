@@ -242,6 +242,7 @@ public partial class GameConstants : GodotObject
             public const string IdleLegs = "parameters/Legs/conditions/idle";
             public const string IdleHands = "parameters/Arms/conditions/idle";
             public const string Walking = "parameters/Legs/conditions/walking";
+            public const string Running = "parameters/Legs/conditions/running";
             
             public const string EquipPistol = "parameters/Arms/conditions/equipPistol";
             public const string Aiming = "parameters/Arms/conditions/aiming";

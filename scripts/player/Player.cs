@@ -11,8 +11,6 @@ public partial class Player : ICutsceneActor
     [Export]
     private PlayerInventory _playerInventory;
     [Export]
-    private PlayerAnimationControl _playerAnimationControl;
-    [Export]
     private Control _deathFadeUi;
     [Export]
     private ColorRect _deathFadeBg;
@@ -39,6 +37,7 @@ public partial class Player : ICutsceneActor
     private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 100;
 
     private PlayerStatus _playerStatus;
+    private PlayerAnimationControl _playerAnimationControl;
 
     private const float NOCLIP_SPEED_BONUS = 5.0f;
 
@@ -48,6 +47,7 @@ public partial class Player : ICutsceneActor
         _camera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
 
         _playerStatus = PlayerStatus.GetInstance();
+        _playerAnimationControl = PlayerAnimationControl.GetInstance();
         RefreshNoClip();
     }
 
@@ -83,7 +83,7 @@ public partial class Player : ICutsceneActor
         {
             _playerStatus.Aiming = true;
             _playerStatus.ReadyToShoot = false;
-            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Aiming, true);
+            _playerAnimationControl.StartAiming();
         }
         else if (!_playerStatus.HasAnyUiOpen() && _playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
             EndAiming();
@@ -95,29 +95,15 @@ public partial class Player : ICutsceneActor
         CollisionMask = noClipping ? (uint)0 : 1;
     }
 
-    public void WeaponEquipped(Weapon weapon)
-    {
-        if (weapon == null) return;
-
-        _playerAnimationControl.SetAnimationVariable(weapon.GetEquipAnimationName(), true);
-    }
-
-    public void WeaponUnequipped(Weapon weapon)
-    {
-        if (weapon == null) return;
-        EndAiming();
-        _playerAnimationControl.SetAnimationVariable(weapon.GetEquipAnimationName(), false);
-    }
-
     public void OnShootingReady()
     {
         _playerStatus.ReadyToShoot = true;
     }
 
-    private void EndAiming()
+    public void EndAiming()
     {
         _playerStatus.Aiming = false;
-        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Aiming, false);
+        _playerAnimationControl.StopAiming();
     }
 
     private void HandleShooting()
@@ -128,7 +114,7 @@ public partial class Player : ICutsceneActor
 
     public void OnShootingEnded()
     {
-        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Fire, false);
+        _playerAnimationControl.OnShootingEnded();
         _playerStatus.ReadyToShoot = true;
     }
 
@@ -196,7 +182,7 @@ public partial class Player : ICutsceneActor
     {
         if (_playerStatus.IsMovementPrevented())
         {
-            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
+            _playerAnimationControl.StopMoving();
             ResetAnalogueMovement();
             return new Vector3(0, velocity.Y, 0);
         }
@@ -236,13 +222,17 @@ public partial class Player : ICutsceneActor
             velocity.X = movement.X;
             velocity.Z = movement.Z;
 
-            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, true);
+            // TODO: Don't spam call this, or maybe put logic in animation control to not redundantly call?
+            if (running)
+                _playerAnimationControl.StartRunning();
+            else
+                _playerAnimationControl.StartWalking();
         }
         else
         {
             ResetAnalogueMovement();
             velocity = new Vector3(0, velocity.Y, 0);
-            _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.Walking, false);
+            _playerAnimationControl.StopMoving();
         }
         return velocity;
     }
@@ -304,8 +294,7 @@ public partial class Player : ICutsceneActor
 
     public void StartDeath()
     {
-        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.DeathBlendAmount, 1.0);
-        _playerAnimationControl.SetAnimationVariable(GameConstants.Animation.Player.DeathGeneric, true);
+        _playerAnimationControl.GenericDeath();
 
         // TODO: remove this line when we have real death animations playing!
         OnDeathAnimationFinished("");
