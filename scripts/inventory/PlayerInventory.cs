@@ -26,6 +26,7 @@ public partial class PlayerInventory : Node3D
     private int _currentItemIndex;
     private bool _actionMenuOpen;
     private bool _combiningItems;
+    private bool _examiningItem;
 
     private bool _pressingLeft;
     private bool _pressingRight;
@@ -87,12 +88,15 @@ public partial class PlayerInventory : Node3D
         if (EquipDirty)
             UpdateEquipUi();
 
-        (var inputDir, var _) = GameConstants.GetMovementVectorWithDeadzone();
-
-        if (_actionMenuOpen && !_combiningItems)
-            HandleActionCursorMovement(inputDir.Y);
-        else
-            HandleItemCursorMovement(inputDir.X, inputDir.Y);
+        if (!_examiningItem)
+        {
+            (var inputDir, var _) = GameConstants.GetMovementVectorWithDeadzone();
+            
+            if (_actionMenuOpen && !_combiningItems)
+                HandleActionCursorMovement(inputDir.Y);
+            else
+                HandleItemCursorMovement(inputDir.X, inputDir.Y);
+        }
 
         if (Input.IsActionJustPressed(GameConstants.Controls.confirm.ToString()))
             HandleConfirmPressed();
@@ -157,6 +161,12 @@ public partial class PlayerInventory : Node3D
     {
         if (_combiningItems)
             _combiningItems = false;
+        else if (_examiningItem)
+        {
+            _examiningItem = false;
+            InventoryStatusUi.ToggleOff();
+            ExamineText.Text = "";
+        }
         else if (_actionMenuOpen)
             CloseActionMenu();
         else
@@ -327,9 +337,11 @@ public partial class PlayerInventory : Node3D
         if (currentItem == null)
             return;
 
+        InventoryStatusUi.ToggleOn(currentItem.GetExamineModelPrefab());
         ExamineTexture.Texture = currentItem.MenuIcon;
         ExamineTexture.Modulate = GameConstants.Colors.White;
         ExamineText.Text = currentItem.GetDescription();
+        _examiningItem = true;
     }
 
     void CombineItems(int itemA, int itemB)

@@ -30,6 +30,11 @@ public partial class PistolAmmo : Item
         return GameConstants.ItemPrefabLookup[GameConstants.ItemSpawnType.PistolAmmo];
     }
 
+    public override string GetExamineModelPrefab()
+    {
+        return "res://models/shambler.tscn";
+    }
+
     public override bool IsStackable()
     {
         return true;

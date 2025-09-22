@@ -106,8 +106,11 @@ visible = false
 [node name="PlayerInventoryUi" parent="." instance=ExtResource("2_q6hdo")]
 visible = false
 
-[node name="Inventory" parent="PlayerInventoryUi" index="1" node_paths=PackedStringArray("playerInventory")]
-playerInventory = NodePath("../../PlayerInventory")
+[node name="Inventory" parent="PlayerInventoryUi" index="1" node_paths=PackedStringArray("_playerInventory")]
+_playerInventory = NodePath("../../PlayerInventory")
+
+[node name="SubViewport" parent="PlayerInventoryUi/Inventory/ItemWindow/SubViewportContainer" index="0"]
+render_target_update_mode = 0
 
 [node name="Notes" parent="PlayerInventoryUi" index="2" node_paths=PackedStringArray("NoteReader")]
 NoteReader = NodePath("../../note_reader")
@@ -213,19 +216,33 @@ shape = SubResource("CapsuleShape3D_dadhp")
 transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
 [node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
-bones/0/position = Vector3(-1.2133e-08, -0.108113, -0.167433)
-bones/1/rotation = Quaternion(0.0556211, 6.11894e-09, 1.66885e-10, 0.998452)
-bones/2/rotation = Quaternion(-0.00669436, -1.12456e-08, 5.08936e-09, 0.999978)
-bones/3/rotation = Quaternion(-0.172973, -0.156886, 0.966442, -0.107035)
-bones/4/rotation = Quaternion(0.289151, -0.0855521, -0.0188304, 0.953267)
-bones/6/rotation = Quaternion(0.172973, -0.156886, 0.966442, 0.107035)
-bones/7/rotation = Quaternion(0.289151, 0.0855521, 0.0188304, 0.953267)
-bones/9/rotation = Quaternion(0.0250611, 0.0155254, 0.998004, -0.0558561)
-bones/10/rotation = Quaternion(-0.0885264, -7.47084e-06, -0.0593233, 0.994306)
-bones/11/rotation = Quaternion(0.600437, 0.0266448, -0.0121072, 0.799137)
-bones/12/rotation = Quaternion(-0.0250611, 0.0155254, 0.998004, 0.0558562)
-bones/13/rotation = Quaternion(-0.0885264, 7.47171e-06, 0.0593233, 0.994306)
-bones/14/rotation = Quaternion(0.600437, -0.0266447, 0.0121072, 0.799137)
+bones/0/position = Vector3(-2.30974e-09, -0.0654295, -0.0301701)
+bones/0/rotation = Quaternion(-0.0189856, 3.53839e-08, -6.71906e-10, 0.99982)
+bones/1/rotation = Quaternion(0.0352219, 6.11426e-09, 2.91794e-10, 0.99938)
+bones/2/rotation = Quaternion(0.0176527, -1.11183e-08, 5.36163e-09, 0.999844)
+bones/3/rotation = Quaternion(-0.175599, -0.166681, 0.965299, -0.0978803)
+bones/4/rotation = Quaternion(0.261854, -0.0794714, -0.0246311, 0.961514)
+bones/5/rotation = Quaternion(0.175386, -0.100453, -0.201629, 0.958381)
+bones/6/rotation = Quaternion(0.175587, -0.166635, 0.965305, 0.0979234)
+bones/7/rotation = Quaternion(0.261854, 0.0794713, 0.0246311, 0.961514)
+bones/8/rotation = Quaternion(0.175386, 0.100453, 0.201629, 0.958381)
+bones/9/rotation = Quaternion(0.0254277, 0.00617901, 0.998358, -0.0509602)
+bones/9/scale = Vector3(1.0001, 1, 1)
+bones/10/rotation = Quaternion(-0.0743688, -7.46192e-06, -0.0498358, 0.995985)
+bones/11/rotation = Quaternion(0.597694, 0.0246157, -0.0150201, 0.801206)
+bones/11/scale = Vector3(1.00003, 0.999999, 1)
+bones/12/rotation = Quaternion(-0.0254277, 0.00617901, 0.998358, 0.0509602)
+bones/12/scale = Vector3(1.0001, 1, 1)
+bones/13/rotation = Quaternion(-0.0743688, 7.46065e-06, 0.0498358, 0.995985)
+bones/14/rotation = Quaternion(0.597694, -0.0246156, 0.0150201, 0.801206)
+bones/14/scale = Vector3(1.00003, 0.999999, 1)
+bones/15/position = Vector3(4.66002, -26.4656, -1.16752)
+bones/15/rotation = Quaternion(-0.00654425, 0.999979, 3.04032e-08, 8.76391e-09)
+bones/16/position = Vector3(4.60924, -11.9122, 17.2528)
+bones/16/rotation = Quaternion(-6.51059e-08, -1.14216e-08, 0.998872, -0.0474803)
+bones/17/position = Vector3(-4.66002, -26.4656, -1.16752)
+bones/17/rotation = Quaternion(0.00654425, 0.999979, 3.04032e-08, -8.76391e-09)
+bones/18/position = Vector3(-4.60924, -11.9122, 17.2528)
 
 [node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)

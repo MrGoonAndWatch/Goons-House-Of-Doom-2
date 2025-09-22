@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cejaneqj6o6nl"]
+[gd_scene load_steps=14 format=3 uid="uid://cejaneqj6o6nl"]
 
 [ext_resource type="Script" uid="uid://1662uqqf8vqk" path="res://scripts/game_ui/StatusScreenHeader.cs" id="1_6nsos"]
 [ext_resource type="PackedScene" uid="uid://dm1r6v5ighikj" path="res://prefabs/ui/inventory_item_slots.tscn" id="1_8u6o3"]
@@ -9,6 +9,10 @@
 [ext_resource type="Script" uid="uid://du46ikbhtd4uq" path="res://scripts/game_ui/NotesStatusUi.cs" id="4_br3k6"]
 [ext_resource type="Script" uid="uid://0gh5rf4ynofn" path="res://scripts/game_ui/MapStatusUi.cs" id="5_2aby6"]
 [ext_resource type="PackedScene" uid="uid://p02f6pm2kp7m" path="res://prefabs/ui/menu_note.tscn" id="6_v1v5b"]
+
+[sub_resource type="Environment" id="Environment_simcl"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_jng7x"]
 font_size = 24
@@ -37,8 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0.454902, 1)
 
-[node name="Inventory" type="Control" parent="." node_paths=PackedStringArray("StatusScreenHeader")]
-visible = false
+[node name="Inventory" type="Control" parent="." node_paths=PackedStringArray("_subViewportContainer", "_examineCamera", "_examineObjectContainer", "_examineObjectLight", "StatusScreenHeader")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,6 +49,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_11ul4")
+_subViewportContainer = NodePath("ItemWindow/SubViewportContainer")
+_examineCamera = NodePath("ItemWindow/SubViewportContainer/SubViewport/ItemExamineRoot/Camera3D")
+_examineObjectContainer = NodePath("ItemWindow/SubViewportContainer/SubViewport/ItemExamineRoot")
+_examineObjectLight = NodePath("ItemWindow/SubViewportContainer/SubViewport/ItemExamineRoot/SpotLight3D")
 StatusScreenHeader = NodePath("../Header")
 
 [node name="ItemWindow" type="Control" parent="Inventory"]
@@ -55,76 +62,98 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -216.0
-offset_top = -229.0
-offset_right = -176.0
-offset_bottom = -189.0
+offset_left = -425.0
+offset_top = -250.0
+offset_right = 375.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ItemBg" type="ColorRect" parent="Inventory/ItemWindow"]
+[node name="ColorRect" type="ColorRect" parent="Inventory/ItemWindow"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 5.825
-anchor_top = 2.9
-anchor_right = 5.825
-anchor_bottom = 2.9
-offset_left = -233.0
-offset_top = -116.0
-offset_right = 233.0
-offset_bottom = 116.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="ItemTextureRect" type="TextureRect" parent="Inventory/ItemWindow"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Inventory/ItemWindow"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 6.075
-anchor_top = 2.875
-anchor_right = 6.075
-anchor_bottom = 2.875
-offset_left = -103.0
-offset_top = -103.0
-offset_right = 103.0
-offset_bottom = 103.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ItemDescription" type="Control" parent="Inventory"]
+[node name="SubViewport" type="SubViewport" parent="Inventory/ItemWindow/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(800, 500)
+render_target_update_mode = 4
+
+[node name="ItemExamineRoot" type="Node3D" parent="Inventory/ItemWindow/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1000, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Inventory/ItemWindow/SubViewportContainer/SubViewport/ItemExamineRoot"]
+visible = false
+environment = SubResource("Environment_simcl")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Inventory/ItemWindow/SubViewportContainer/SubViewport/ItemExamineRoot"]
+transform = Transform3D(1, 0, 0, 0, 0.813456, 0.581626, 0, -0.581626, 0.813456, 0, 1.88815, 0)
+visible = false
+
+[node name="ItemTextureRect" type="TextureRect" parent="Inventory/ItemWindow"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -210.0
-offset_top = 103.0
-offset_right = -170.0
-offset_bottom = 143.0
+offset_left = -103.0
+offset_top = -103.0
+offset_right = 103.0
+offset_bottom = 103.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="ItemDescription" type="Control" parent="Inventory"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -425.0
+offset_top = -200.0
+offset_right = 375.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+
 [node name="ColorRect" type="ColorRect" parent="Inventory/ItemDescription"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 5.825
-anchor_top = 0.5
-anchor_right = 5.825
-anchor_bottom = 0.5
-offset_left = -233.0
-offset_top = -20.0
-offset_right = 233.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="ItemDescriptionLabel" type="Label" parent="Inventory/ItemDescription"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 5.825
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 5.825
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -227.0
-offset_top = -20.0
-offset_right = 226.0
-offset_bottom = 20.0
+offset_left = -380.0
+offset_top = -29.0
+offset_right = 380.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 42
 text = "Pee pee poo poo"
 vertical_alignment = 1
 
@@ -138,9 +167,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -554.0
+offset_left = -500.0
 offset_top = -117.0
-offset_right = -424.0
+offset_right = -370.0
 offset_bottom = 121.0
 grow_horizontal = 0
 grow_vertical = 2
@@ -426,6 +455,7 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="Map" type="Control" parent="." node_paths=PackedStringArray("StatusScreenHeader")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

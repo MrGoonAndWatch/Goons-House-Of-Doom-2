@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm8so7rf36ew5"]
+
+[ext_resource type="PackedScene" uid="uid://dtl1xti622d40" path="res://models/human_low.glb" id="1_jwpmx"]
+
+[node name="HumanLowInspect" type="Node3D"]
+
+[node name="human_low" parent="." instance=ExtResource("1_jwpmx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.125, 0)

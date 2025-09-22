@@ -24,6 +24,10 @@ public abstract partial class Item : Area3D
 
     protected const string ItemPrefabFolderPath = "res://prefabs/spawnables/items/";
 
+    public virtual string GetExamineModelPrefab()
+    {
+        return "res://models/human_low_inspect.tscn";
+    }
     public abstract string GetPrefabPath();
     public abstract bool IsStackable();
     public abstract int? GetMaxStackSize();
