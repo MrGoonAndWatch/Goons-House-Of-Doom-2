@@ -125,11 +125,11 @@ public partial class GameConstants : GodotObject
 
     public static Dictionary<ItemSpawnType, string> ItemPrefabLookup = new Dictionary<ItemSpawnType, string>()
     {
-        {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}/green-juice.tscn"},
-        {ItemSpawnType.Pistol, $"{ItemPrefabFolderPath}/pistol.tscn"},
-        {ItemSpawnType.PistolAmmo, $"{ItemPrefabFolderPath}/pistol-ammo.tscn"},
-        {ItemSpawnType.BigKey, $"{ItemPrefabFolderPath}/big-key.tscn" },
-        {ItemSpawnType.MuseumFrontDoorKey, $"{ItemPrefabFolderPath}/museum-front-door-key.tscn" }
+        {ItemSpawnType.GreenJuice, $"{ItemPrefabFolderPath}green-juice.tscn"},
+        {ItemSpawnType.Pistol, $"{ItemPrefabFolderPath}pistol.tscn"},
+        {ItemSpawnType.PistolAmmo, $"{ItemPrefabFolderPath}pistol-ammo.tscn"},
+        {ItemSpawnType.BigKey, $"{ItemPrefabFolderPath}big-key.tscn" },
+        {ItemSpawnType.MuseumFrontDoorKey, $"{ItemPrefabFolderPath}museum-front-door-key.tscn" }
     };
 
     public enum Controls
