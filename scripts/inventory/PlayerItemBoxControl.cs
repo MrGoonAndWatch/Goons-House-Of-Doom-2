@@ -72,15 +72,25 @@ public partial class PlayerItemBoxControl : Node3D
     {
         if (_inItemBox)
         {
+            var selectedInvSlot = PlayerItems[_currentInventorySlot];
+            var selectedBoxSlot = ItemBoxItems[_currentItemBoxSlot];
+            
             // If we just swapped the currently equipped weapon in to the item box, unequip it.
-            if(_playerStatus.EquipedWeapon != null && PlayerItems[_currentInventorySlot].Item != null &&
-                PlayerItems[_currentInventorySlot].Item.ItemId == _playerStatus.EquipedWeapon.ItemId)
+            if(_playerStatus.EquipedWeapon != null && selectedInvSlot.Item != null &&
+               selectedInvSlot.Item.ItemId == _playerStatus.EquipedWeapon.ItemId)
             {
                 _playerStatus.EquipWeapon(_playerStatus.EquipedWeapon);
                 _playerInventory.EquipDirty = true;
             }
 
-            PlayerItems[_currentInventorySlot].SwapItemSlots(ItemBoxItems[_currentItemBoxSlot]);
+            // If the swapped items are the same type _and_ stackable, combine them, otherwise swap them.
+            if (selectedInvSlot?.Item?.IsStackableWith(selectedBoxSlot?.Item) ?? false)
+                ItemSlot.StackItemSlots(selectedInvSlot, selectedBoxSlot);
+            else
+                PlayerItems[_currentInventorySlot].SwapItemSlots(ItemBoxItems[_currentItemBoxSlot]);
+
+            selectedInvSlot?.UpdateUi();
+            selectedBoxSlot?.UpdateUi();
             BackToPlayerInventory();
             _playerInventory.SyncInventory(PlayerItems);
         }

@@ -16,19 +16,23 @@ public partial class ItemSlot : Control
         Item = null;
     }
 
+    public static void StackItemSlots(ItemSlot itemA, ItemSlot itemB)
+    {
+        var maxStackSize = itemB.Item.GetMaxStackSize() ?? int.MaxValue;
+        var availableQty = maxStackSize - itemB.Qty;
+        var qtyTransferred = Math.Min(itemA.Qty, availableQty);
+        itemB.Qty += qtyTransferred;
+
+        itemA.Qty -= qtyTransferred;
+        if (itemA.Qty <= 0)
+            itemA.DiscardItem();
+    }
+
     public void Combine(ItemSlot itemB)
     {
-        var maxStackSize = itemB.Item.GetMaxStackSize();
-        if (Item.GetType() == itemB.Item.GetType() && Item.IsStackable() && maxStackSize.HasValue)
+        if (Item.IsStackableWith(itemB?.Item))
         {
-            var availableQty = maxStackSize.Value - itemB.Qty;
-            var qtyTransferred = Math.Min(Qty, availableQty);
-            itemB.Qty += qtyTransferred;
-
-            Qty -= qtyTransferred;
-            if (Qty <= 0)
-                DiscardItem();
-
+            StackItemSlots(this, itemB);
             return;
         }
 

@@ -30,6 +30,13 @@ public abstract partial class Item : Area3D
     }
     public abstract string GetPrefabPath();
     public abstract bool IsStackable();
+    public virtual bool IsStackableWith(Item otherItem)
+    {
+        GD.Print($"Is {GetPrefabPath()} stackable w/ {otherItem?.GetPrefabPath()}?..");
+        if (otherItem == null) return false;
+        GD.Print(GetPrefabPath() == otherItem.GetPrefabPath());
+        return GetPrefabPath() == otherItem.GetPrefabPath();
+    }
     public abstract int? GetMaxStackSize();
 
     public abstract bool UseItem();
