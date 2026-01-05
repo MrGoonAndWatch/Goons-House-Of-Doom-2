@@ -13,7 +13,7 @@ config_version=5
 config/name="Goons Museum Of Doom"
 config/version="0.2.0"
 run/main_scene="res://scenes/title_screen.tscn"
-config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://textures/EvilGoon.png"
 
 [autoload]
