@@ -16,7 +16,7 @@ public partial class ItemGenerator : Node3D
         Instance = this;
     }
 
-    public static Item CreateItem(string itemType)
+    public static Item CreateItem(string itemType, int itemId)
     {
         if (Instance == null)
         {
@@ -35,6 +35,7 @@ public partial class ItemGenerator : Node3D
         var itemContainer = itemObj as ItemContainer;
         if (itemContainer == null)
             throw new ApplicationException("Could not find item at the root on resource for prefab: " + itemType);
+        itemContainer.Item.ItemId = itemId;
         return itemContainer.Item;
     }
 }

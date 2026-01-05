@@ -163,9 +163,10 @@ public partial class DataSaver : Node3D
         var foundEquippedWeaponIndex = false;
         if (playerStatus.EquipedWeapon != null)
         {
-            for (var i = 0; i < playerInventory.Items.Length; i++)
+            for (var i = 0; !foundEquippedWeaponIndex && i < playerInventory.Items.Length; i++)
                 if (playerInventory.Items[i].Item != null && playerStatus.EquipedWeapon.ItemId == playerInventory.Items[i].Item.ItemId)
                 {
+                    GD.Print($"Found currently equipped weapon at inventory slot {i} (item id {playerInventory.Items[i].Item.ItemId}). EquippedWeapon = {playerStatus.EquipedWeapon.ItemId}");
                     _gameState.EquipedWeaponIndex = i;
                     foundEquippedWeaponIndex = true;
                 }
@@ -187,6 +188,7 @@ public partial class DataSaver : Node3D
                 {
                     ItemType = itemSlot.Item.GetPrefabPath(),
                     Qty = (itemSlot.Item is Weapon) ? (itemSlot.Item as Weapon).Ammo : itemSlot.Qty,
+                    ItemId = itemSlot.Item.ItemId,
                 };
             inventoryData.Add(itemState);
         }
@@ -207,6 +209,7 @@ public partial class DataSaver : Node3D
                 {
                     ItemType = itemSlot.Item.GetPrefabPath(),
                     Qty = (itemSlot.Item is Weapon) ? (itemSlot.Item as Weapon).Ammo : itemSlot.Qty,
+                    ItemId = itemSlot.Item.ItemId,
                 };
             itemBoxData.Add(itemState);
         }
@@ -297,7 +300,7 @@ public partial class DataSaver : Node3D
                 continue;
             }
 
-            var item = ItemGenerator.CreateItem(_gameState.Inventory[i].ItemType);
+            var item = ItemGenerator.CreateItem(_gameState.Inventory[i].ItemType, _gameState.Inventory[i].ItemId);
             playerInventory.Items[i].InitUi(item, _gameState.Inventory[i].Qty);
             playerItemBox.PlayerItems[i].InitUi(item, _gameState.Inventory[i].Qty);
             playerInventory.ItemDirty[i] = true;
@@ -317,7 +320,7 @@ public partial class DataSaver : Node3D
 
             GD.Print($"Found Item '{_gameState.ItemBox[i].ItemType}' in item box slot {i}");
 
-            var item = ItemGenerator.CreateItem(_gameState.ItemBox[i].ItemType);
+            var item = ItemGenerator.CreateItem(_gameState.ItemBox[i].ItemType, _gameState.Inventory[i].ItemId);
             playerItemBox.ItemBoxItems[i].InitUi(item, _gameState.ItemBox[i].Qty);
         }
     }
@@ -350,5 +353,6 @@ public partial class DataSaver : Node3D
     {
         public string ItemType;
         public int Qty;
+        public int ItemId;
     }
 }

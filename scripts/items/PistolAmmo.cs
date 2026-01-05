@@ -5,7 +5,7 @@ public partial class PistolAmmo : Item
         // TODO: Setup Combos w/ other items.
         return new ComboResult
         {
-            ItemA = ItemGenerator.CreateItem(GameConstants.GarbagePrefabPath),
+            ItemA = ItemGenerator.CreateItem(GameConstants.GarbagePrefabPath, 0),
             ItemB = null,
         };
     }

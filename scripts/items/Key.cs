@@ -33,7 +33,7 @@ public abstract partial class Key : Item
     {
         return new ComboResult
         {
-            ItemA = ItemGenerator.CreateItem(new Garbage().GetPrefabPath()),
+            ItemA = ItemGenerator.CreateItem(new Garbage().GetPrefabPath(), 0),
             ItemB = null,
         };
     }
