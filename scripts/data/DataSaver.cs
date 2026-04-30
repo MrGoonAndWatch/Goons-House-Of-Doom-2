@@ -135,6 +135,9 @@ public partial class DataSaver : Node3D
         var settingsJson = JsonConvert.SerializeObject(_globalSettings);
         fileAccess.StoreString(settingsJson);
         fileAccess.Close();
+        
+        var player = GetNodeOrNull<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
+        player?.RefreshGlobalSettings();
     }
 
     public void SaveGameStateFromScene(PlayerStatus playerStatus, PlayerInventory playerInventory, SceneLoadData sceneLoadData, PlayerItemBoxControl playerItemBox, MapStatus mapStatus)

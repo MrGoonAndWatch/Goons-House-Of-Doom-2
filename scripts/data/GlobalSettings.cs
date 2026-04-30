@@ -32,7 +32,7 @@ public partial class GlobalSettings
         Resolution = other.Resolution;
         Gamma = other.Gamma;
         UseAnalogueMovement = other.UseAnalogueMovement;
-        ForceAnalogueMovement = other.ForceAnalogueMovement;
+        ForceAnalogueMovement = other.UseAnalogueMovement && other.ForceAnalogueMovement;
         SubtitlesEnabled = other.SubtitlesEnabled;
         SubtitlesShowSpeaker = other.SubtitlesShowSpeaker;
         SubtitleBackgroundAlpha = other.SubtitleBackgroundAlpha;

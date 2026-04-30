@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3plxc1qko6mn"]
+[gd_scene format=3 uid="uid://b3plxc1qko6mn"]
 
 [ext_resource type="Script" uid="uid://dh22gdfhrk7d0" path="res://scripts/game_ui/OptionsMenuUi.cs" id="1_87jiw"]
 [ext_resource type="Theme" uid="uid://b3qa6hry4qucs" path="res://prefabs/ui/ui_theme.tres" id="1_dx8wx"]
 
-[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("_scrollContainer", "ResolutionPicker", "TotalVolumeSlider", "MusicVolumeSlider", "SfxVolumeSlider", "VoiceVolumeSlider", "FullscreenCheckbox", "GammaSlider", "UseAnalogueMovement", "ForceAnalogueMovement", "SubtitlesEnabled", "SubtitlesShowSpeaker", "SubtitleBackgroundAlpha", "_exampleSubtitleLabel", "_exampleSubtitleBackground")]
+[node name="OptionsMenu" type="Control" unique_id=1067491233 node_paths=PackedStringArray("_scrollContainer", "ResolutionPicker", "TotalVolumeSlider", "MusicVolumeSlider", "SfxVolumeSlider", "VoiceVolumeSlider", "FullscreenCheckbox", "GammaSlider", "UseAnalogueMovement", "ForceAnalogueMovement", "SubtitlesEnabled", "SubtitlesShowSpeaker", "SubtitleBackgroundAlpha", "_exampleSubtitleLabel", "_exampleSubtitleBackground")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,7 +27,7 @@ SubtitleBackgroundAlpha = NodePath("ScrollContainer/VBoxContainer/SubtitleOpacit
 _exampleSubtitleLabel = NodePath("ScrollContainer/VBoxContainer/ExampleSubtitle/ExampleSubtitleLabel")
 _exampleSubtitleBackground = NodePath("ScrollContainer/VBoxContainer/ExampleSubtitle/ExampleSubtitleLabel/ExampleSubtitleBg")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=76332374]
 clip_contents = false
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 1
@@ -43,87 +43,87 @@ grow_vertical = 2
 follow_focus = true
 vertical_scroll_mode = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1827215343]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GameplayLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="GameplayLabel" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1458155651]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 text = "Gameplay"
 
-[node name="DisplayHSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+[node name="DisplayHSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=1372168577]
 layout_mode = 2
 
-[node name="UseAnalogueMovement" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="UseAnalogueMovement" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1279538914]
 layout_mode = 2
 
-[node name="UseAnalogueLabel" type="Label" parent="ScrollContainer/VBoxContainer/UseAnalogueMovement"]
+[node name="UseAnalogueLabel" type="Label" parent="ScrollContainer/VBoxContainer/UseAnalogueMovement" unique_id=1233099664]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Use Analogue Controls"
 
-[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/UseAnalogueMovement"]
+[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/UseAnalogueMovement" unique_id=1971186385]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="UseAnalogueCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/UseAnalogueMovement/CheckBoxContainer"]
+[node name="UseAnalogueCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/UseAnalogueMovement/CheckBoxContainer" unique_id=79233866]
 layout_mode = 0
 offset_right = 24.0
 offset_bottom = 47.0
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 
-[node name="ForceAnalogueMovement" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ForceAnalogueMovement" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=474248301]
 layout_mode = 2
 
-[node name="ForceAnalogueLabel" type="Label" parent="ScrollContainer/VBoxContainer/ForceAnalogueMovement"]
+[node name="ForceAnalogueLabel" type="Label" parent="ScrollContainer/VBoxContainer/ForceAnalogueMovement" unique_id=611762410]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Force Analogue Controls"
 
-[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/ForceAnalogueMovement"]
+[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/ForceAnalogueMovement" unique_id=1823495506]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="ForceAnalogueCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/ForceAnalogueMovement/CheckBoxContainer"]
+[node name="ForceAnalogueCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/ForceAnalogueMovement/CheckBoxContainer" unique_id=604785714]
 layout_mode = 0
 offset_right = 24.0
 offset_bottom = 47.0
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 
-[node name="Spacer" type="Control" parent="ScrollContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=45500166]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="DisplayLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="DisplayLabel" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1835592259]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 text = "Display"
 
-[node name="DisplayHSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+[node name="DisplayHSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=729417200]
 layout_mode = 2
 
-[node name="Resolution" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="Resolution" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1878129472]
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="ScrollContainer/VBoxContainer/Resolution"]
+[node name="ResolutionLabel" type="Label" parent="ScrollContainer/VBoxContainer/Resolution" unique_id=1089237936]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Resolution"
 
-[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/Resolution"]
+[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/Resolution" unique_id=254851463]
 custom_minimum_size = Vector2(205, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="ResolutionOptionButton" type="OptionButton" parent="ScrollContainer/VBoxContainer/Resolution/SliderContainer"]
+[node name="ResolutionOptionButton" type="OptionButton" parent="ScrollContainer/VBoxContainer/Resolution/SliderContainer" unique_id=1148754322]
 layout_mode = 0
 offset_right = 175.0
 offset_bottom = 49.0
@@ -163,42 +163,42 @@ popup/item_11/id = 9
 popup/item_12/text = "640x480"
 popup/item_12/id = 10
 
-[node name="FullScreen" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="FullScreen" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1423443436]
 layout_mode = 2
 
-[node name="FullScreenLabel" type="Label" parent="ScrollContainer/VBoxContainer/FullScreen"]
+[node name="FullScreenLabel" type="Label" parent="ScrollContainer/VBoxContainer/FullScreen" unique_id=1500343306]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Fullscreen"
 
-[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/FullScreen"]
+[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/FullScreen" unique_id=616460709]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="FullScreenCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/FullScreen/CheckBoxContainer"]
+[node name="FullScreenCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/FullScreen/CheckBoxContainer" unique_id=731560486]
 layout_mode = 0
 offset_right = 24.0
 offset_bottom = 47.0
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 
-[node name="Gamma" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="Gamma" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1935214120]
 layout_mode = 2
 
-[node name="GammaLabel" type="Label" parent="ScrollContainer/VBoxContainer/Gamma"]
+[node name="GammaLabel" type="Label" parent="ScrollContainer/VBoxContainer/Gamma" unique_id=1811157268]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Gamma    "
 
-[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/Gamma"]
+[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/Gamma" unique_id=1905379150]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="GammaSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/Gamma/SliderContainer"]
+[node name="GammaSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/Gamma/SliderContainer" unique_id=1558648910]
 custom_minimum_size = Vector2(300, 75)
 layout_mode = 0
 offset_right = 300.0
@@ -209,33 +209,33 @@ max_value = 2.0
 step = 0.05
 value = 1.0
 
-[node name="Spacer2" type="Control" parent="ScrollContainer/VBoxContainer"]
+[node name="Spacer2" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=52654890]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="SoundLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="SoundLabel" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1951946208]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 text = "Sound"
 
-[node name="SoundHSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+[node name="SoundHSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=379693587]
 layout_mode = 2
 
-[node name="TotalVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="TotalVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=921661794]
 layout_mode = 2
 
-[node name="TotalVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/TotalVolume"]
+[node name="TotalVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/TotalVolume" unique_id=96171725]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Total    "
 
-[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/TotalVolume"]
+[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/TotalVolume" unique_id=1761044042]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="TotalVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/TotalVolume/SliderContainer"]
+[node name="TotalVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/TotalVolume/SliderContainer" unique_id=252354297]
 custom_minimum_size = Vector2(300, 75)
 layout_mode = 0
 offset_right = 300.0
@@ -244,21 +244,21 @@ size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 value = 75.0
 
-[node name="MusicVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="MusicVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1318369427]
 layout_mode = 2
 
-[node name="MusicVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/MusicVolume"]
+[node name="MusicVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/MusicVolume" unique_id=351307568]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Music  "
 
-[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/MusicVolume"]
+[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/MusicVolume" unique_id=1551458466]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="MusicVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/MusicVolume/SliderContainer"]
+[node name="MusicVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/MusicVolume/SliderContainer" unique_id=358050174]
 custom_minimum_size = Vector2(300, 75)
 layout_mode = 0
 offset_right = 300.0
@@ -267,21 +267,21 @@ size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 value = 75.0
 
-[node name="EffectsVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="EffectsVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1379421072]
 layout_mode = 2
 
-[node name="EffectsVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/EffectsVolume"]
+[node name="EffectsVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/EffectsVolume" unique_id=1554354615]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Effects "
 
-[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/EffectsVolume"]
+[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/EffectsVolume" unique_id=707321642]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="EffectsVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/EffectsVolume/SliderContainer"]
+[node name="EffectsVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/EffectsVolume/SliderContainer" unique_id=1105004716]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 0
 offset_right = 300.0
@@ -290,21 +290,21 @@ size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 value = 75.0
 
-[node name="VoiceVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="VoiceVolume" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=2060351875]
 layout_mode = 2
 
-[node name="VoiceVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/VoiceVolume"]
+[node name="VoiceVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/VoiceVolume" unique_id=1933489939]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Voice   "
 
-[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/VoiceVolume"]
+[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/VoiceVolume" unique_id=1239419501]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="VoiceVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/VoiceVolume/SliderContainer"]
+[node name="VoiceVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/VoiceVolume/SliderContainer" unique_id=718005394]
 custom_minimum_size = Vector2(300, 75)
 layout_mode = 0
 offset_right = 300.0
@@ -313,42 +313,42 @@ size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 value = 75.0
 
-[node name="Subtitles" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="Subtitles" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=212680490]
 layout_mode = 2
 
-[node name="SubtitlesLabel" type="Label" parent="ScrollContainer/VBoxContainer/Subtitles"]
+[node name="SubtitlesLabel" type="Label" parent="ScrollContainer/VBoxContainer/Subtitles" unique_id=1717743422]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Subtitles"
 
-[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/Subtitles"]
+[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/Subtitles" unique_id=550239257]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="SubtitlesCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/Subtitles/CheckBoxContainer"]
+[node name="SubtitlesCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/Subtitles/CheckBoxContainer" unique_id=1781508714]
 layout_mode = 0
 offset_right = 24.0
 offset_bottom = 47.0
 size_flags_horizontal = 10
 theme = ExtResource("1_dx8wx")
 
-[node name="SubtitleOpacity" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="SubtitleOpacity" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1048533635]
 layout_mode = 2
 
-[node name="SubtitleOpacityLabel" type="Label" parent="ScrollContainer/VBoxContainer/SubtitleOpacity"]
+[node name="SubtitleOpacityLabel" type="Label" parent="ScrollContainer/VBoxContainer/SubtitleOpacity" unique_id=1152745082]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Subtitle Background"
 
-[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/SubtitleOpacity"]
+[node name="SliderContainer" type="Control" parent="ScrollContainer/VBoxContainer/SubtitleOpacity" unique_id=2002758132]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="SubtitleOpacitySlider" type="HSlider" parent="ScrollContainer/VBoxContainer/SubtitleOpacity/SliderContainer"]
+[node name="SubtitleOpacitySlider" type="HSlider" parent="ScrollContainer/VBoxContainer/SubtitleOpacity/SliderContainer" unique_id=215179065]
 custom_minimum_size = Vector2(300, 75)
 layout_mode = 0
 offset_right = 300.0
@@ -359,21 +359,21 @@ max_value = 1.0
 step = 0.1
 value = 0.5
 
-[node name="SubtitlesSpeaker" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="SubtitlesSpeaker" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=633582399]
 layout_mode = 2
 
-[node name="SubtitlesSpeakerLabel" type="Label" parent="ScrollContainer/VBoxContainer/SubtitlesSpeaker"]
+[node name="SubtitlesSpeakerLabel" type="Label" parent="ScrollContainer/VBoxContainer/SubtitlesSpeaker" unique_id=402878607]
 layout_mode = 2
 theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Speaker In Subtitles"
 
-[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/SubtitlesSpeaker"]
+[node name="CheckBoxContainer" type="Control" parent="ScrollContainer/VBoxContainer/SubtitlesSpeaker" unique_id=1224215654]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="SubtitlesSpeakerCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/SubtitlesSpeaker/CheckBoxContainer"]
+[node name="SubtitlesSpeakerCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/SubtitlesSpeaker/CheckBoxContainer" unique_id=1481074875]
 layout_mode = 0
 offset_right = 24.0
 offset_bottom = 47.0
@@ -382,10 +382,10 @@ focus_neighbor_bottom = NodePath("../../../ConfirmCancelButtons/CancelButton")
 focus_next = NodePath("../../../ConfirmCancelButtons/CancelButton")
 theme = ExtResource("1_dx8wx")
 
-[node name="ExampleSubtitle" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ExampleSubtitle" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1004048240]
 layout_mode = 2
 
-[node name="ExampleSubtitleLabel" type="Label" parent="ScrollContainer/VBoxContainer/ExampleSubtitle"]
+[node name="ExampleSubtitleLabel" type="Label" parent="ScrollContainer/VBoxContainer/ExampleSubtitle" unique_id=287177192]
 z_index = 100
 layout_mode = 2
 size_flags_horizontal = 6
@@ -393,7 +393,7 @@ theme = ExtResource("1_dx8wx")
 theme_type_variation = &"LabelSmall"
 text = "Example Subtitle Text"
 
-[node name="ExampleSubtitleBg" type="ColorRect" parent="ScrollContainer/VBoxContainer/ExampleSubtitle/ExampleSubtitleLabel"]
+[node name="ExampleSubtitleBg" type="ColorRect" parent="ScrollContainer/VBoxContainer/ExampleSubtitle/ExampleSubtitleLabel" unique_id=2030589162]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -403,15 +403,15 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="Spacer3" type="Control" parent="ScrollContainer/VBoxContainer"]
+[node name="Spacer3" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=259354568]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="ConfirmCancelButtons" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ConfirmCancelButtons" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1831663310]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="CancelButton" type="Button" parent="ScrollContainer/VBoxContainer/ConfirmCancelButtons"]
+[node name="CancelButton" type="Button" parent="ScrollContainer/VBoxContainer/ConfirmCancelButtons" unique_id=2138977855]
 layout_mode = 2
 focus_neighbor_top = NodePath("../../SubtitlesSpeaker/CheckBoxContainer/SubtitlesSpeakerCheckBox")
 focus_neighbor_right = NodePath("../ConfirmButton")
@@ -420,11 +420,11 @@ focus_previous = NodePath("../../SubtitlesSpeaker/CheckBoxContainer/SubtitlesSpe
 theme = ExtResource("1_dx8wx")
 text = "  Cancel  "
 
-[node name="Spacer" type="Control" parent="ScrollContainer/VBoxContainer/ConfirmCancelButtons"]
+[node name="Spacer" type="Control" parent="ScrollContainer/VBoxContainer/ConfirmCancelButtons" unique_id=1186475018]
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 
-[node name="ConfirmButton" type="Button" parent="ScrollContainer/VBoxContainer/ConfirmCancelButtons"]
+[node name="ConfirmButton" type="Button" parent="ScrollContainer/VBoxContainer/ConfirmCancelButtons" unique_id=1132977581]
 layout_mode = 2
 focus_neighbor_left = NodePath("../CancelButton")
 focus_neighbor_top = NodePath("../../SubtitlesSpeaker/CheckBoxContainer/SubtitlesSpeakerCheckBox")

@@ -40,6 +40,7 @@ public partial class Player : ICutsceneActor
 
     private PlayerStatus _playerStatus;
     private PlayerAnimationControl _playerAnimationControl;
+    private GlobalSettings _settings;
 
     private const float NOCLIP_SPEED_BONUS = 5.0f;
 
@@ -50,6 +51,7 @@ public partial class Player : ICutsceneActor
 
         _playerStatus = PlayerStatus.GetInstance();
         _playerAnimationControl = PlayerAnimationControl.GetInstance();
+        RefreshGlobalSettings();
         RefreshNoClip();
     }
 
@@ -99,6 +101,11 @@ public partial class Player : ICutsceneActor
         }
         else if (!_playerStatus.HasAnyUiOpen() && _playerStatus.Aiming && !Input.IsActionPressed(Controls.aim.ToString()))
             EndAiming();
+    }
+
+    public void RefreshGlobalSettings()
+    {
+        _settings = DataSaver.GetGlobalSettings();
     }
 
     public void RefreshNoClip()
@@ -177,6 +184,12 @@ public partial class Player : ICutsceneActor
 		velocity = ProcessGravity(delta, velocity);
 
         (var input_dir, var analogue) = GameConstants.GetMovementVectorWithDeadzone();
+        
+        if (!_settings.UseAnalogueMovement)
+            analogue = false;
+        else if (_settings.ForceAnalogueMovement)
+            analogue = true;
+        
         velocity = ProcessMovement(delta, velocity, input_dir, analogue);
         ProcessRotation(delta, input_dir, analogue);
 
@@ -263,6 +276,7 @@ public partial class Player : ICutsceneActor
     private void ProcessRotation(double delta, Vector2 inputMovement, bool analogue)
     {
         if (_playerStatus.IsRotationPrevented()) return;
+        if (inputMovement == Vector2.Zero) return;
 
         if (analogue)
         {

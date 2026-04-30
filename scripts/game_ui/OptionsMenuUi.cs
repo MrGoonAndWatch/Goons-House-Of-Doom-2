@@ -60,6 +60,7 @@ public partial class OptionsMenuUi : Control
         UpdateGamma(_globalSettings.Gamma);
         UseAnalogueMovement.SetPressedNoSignal(_globalSettings.UseAnalogueMovement);
         ForceAnalogueMovement.SetPressedNoSignal(_globalSettings.ForceAnalogueMovement);
+        ForceAnalogueMovement.Disabled = !_globalSettings.UseAnalogueMovement;
         SubtitlesEnabled.SetPressedNoSignal(_globalSettings.SubtitlesEnabled);
         SubtitlesShowSpeaker.SetPressedNoSignal(_globalSettings.SubtitlesShowSpeaker);
         
@@ -193,6 +194,7 @@ public partial class OptionsMenuUi : Control
     public void _OnUseAnalogueMovementSet(bool useAnalogueMovement)
     {
         _globalSettings.UseAnalogueMovement = useAnalogueMovement;
+        ForceAnalogueMovement.Disabled = !_globalSettings.UseAnalogueMovement;
     }
 
     public void _OnUseForceAnalogueMovementSet(bool forceAnalogueMovement)
