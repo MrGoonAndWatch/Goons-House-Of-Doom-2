@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public partial class MapStatusUi : StatusScreenTab
 {
-    private const float MapScrollSpeed = 400;
+    private const float MapScrollSpeed = 200;
+    private const float FastMapScrollMultiplier = 4;
 
     private Dictionary<int, int> _mapIdToChildIndexLookup;
     private bool _initialized;
@@ -52,7 +53,11 @@ public partial class MapStatusUi : StatusScreenTab
         if (movement.Equals(Vector2.Zero)) return;
         movement *= -1;
 
-        var newPos = _currentMapNode.Position + (movement * MapScrollSpeed * (float)delta);
+        var fastScrollMultiplier = 1.0f;
+        if(Input.IsActionPressed(GameConstants.Controls.run.ToString()))
+            fastScrollMultiplier = FastMapScrollMultiplier;
+
+        var newPos = _currentMapNode.Position + (movement * MapScrollSpeed * fastScrollMultiplier * (float)delta);
         _currentMapNode.SetPosition(newPos);
     }
 
