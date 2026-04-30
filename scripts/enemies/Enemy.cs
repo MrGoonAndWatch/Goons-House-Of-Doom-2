@@ -14,7 +14,7 @@ public abstract partial class Enemy : CharacterBody3D
     private float _damage = 20.0f;
     [Export]
     public float _maxHp = 1.0f;
-    private float _currentHp;
+    protected float _currentHp;
 
     protected bool _isAttacking;
     private bool _hitPlayerThisAttack;
@@ -96,7 +96,7 @@ public abstract partial class Enemy : CharacterBody3D
         }
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         _currentHp -= damage;
         if (_currentHp < 0)

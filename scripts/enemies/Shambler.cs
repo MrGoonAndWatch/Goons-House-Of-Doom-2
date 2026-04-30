@@ -15,6 +15,7 @@ public partial class Shambler : Enemy
     private float _attackRangeSquared;
 
     private float _postAttackIdleTime;
+    private bool _alwaysAggro;
 
     public override void _Ready()
     {
@@ -40,8 +41,14 @@ public partial class Shambler : Enemy
         }
 
         var distanceToPlayerSquared = GlobalPosition.DistanceSquaredTo(_player.GlobalPosition);
-        if (distanceToPlayerSquared <= _chaseDistanceSquared)
+        if (_alwaysAggro || distanceToPlayerSquared <= _chaseDistanceSquared)
             HandleChasePlayer(distanceToPlayerSquared, delta);
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        _alwaysAggro = true;
+        base.TakeDamage(damage);
     }
 
     private void HandleChasePlayer(float distanceToPlayerSquared, double delta)
@@ -49,7 +56,7 @@ public partial class Shambler : Enemy
         _rayCast.LookAt(_player.GlobalPosition);
         _rayCast.ForceRaycastUpdate();
         var lineOfSightCollider = _rayCast.GetCollider();
-        if (lineOfSightCollider != null && !(lineOfSightCollider is Player)) return;
+        if (!_alwaysAggro && lineOfSightCollider != null && !(lineOfSightCollider is Player)) return;
 
         if (distanceToPlayerSquared > _attackRangeSquared)
         {
