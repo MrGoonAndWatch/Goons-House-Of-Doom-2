@@ -20,6 +20,7 @@ public partial class PlayerStatus : Node
     public bool TakingDamage;
     public bool Aiming;
     public bool Shooting;
+    public bool Running;
     public bool HasSaveLoadUiOpen;
     public bool Paused;
     public bool ItemBoxOpened;

@@ -23,11 +23,13 @@ public abstract partial class Enemy : CharacterBody3D
     protected float _attackTime;
     protected const float AttackDuration = 2.0f;
 
+    protected PlayerStatus _playerStatus;
     protected Player _player;
 
     public override void _Ready()
 	{
         _currentHp = _maxHp;
+        _playerStatus = PlayerStatus.GetInstance();
         _player = GetNode<Player>(GameConstants.NodePaths.FromSceneRoot.Player);
     }
 

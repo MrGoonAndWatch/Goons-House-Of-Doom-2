@@ -51,16 +51,28 @@ public partial class Player : ICutsceneActor
 
         _playerStatus = PlayerStatus.GetInstance();
         _playerAnimationControl = PlayerAnimationControl.GetInstance();
+        _playerStatus.Running = Input.IsActionPressed(Controls.run.ToString());
+        _playerAnimationControl.StopMoving();
+
         RefreshGlobalSettings();
         RefreshNoClip();
     }
 
     public override void _Process(double delta)
     {
+        HandleRunning();
         HandlePauseMenu();
         HandleAiming(delta);
         HandleShooting(delta);
         HandleDeath(delta);
+    }
+
+    private void HandleRunning()
+    {
+        if (Input.IsActionJustPressed(Controls.run.ToString()))
+            _playerStatus.Running = true;
+        else if (Input.IsActionJustReleased(Controls.run.ToString()))
+            _playerStatus.Running = false;
     }
 
     private void HandlePauseMenu()
@@ -114,6 +126,11 @@ public partial class Player : ICutsceneActor
         CollisionMask = noClipping ? (uint)0 : 1;
     }
 
+    public bool IsMoving()
+    {
+        return Velocity != Vector3.Zero;
+    }
+
     private void OnShootingReady()
     {
         _playerStatus.ReadyToShoot = true;
@@ -146,6 +163,7 @@ public partial class Player : ICutsceneActor
     {
         _playerAnimationControl.OnShootingEnded();
         _playerStatus.ReadyToShoot = true;
+        _playerStatus.Shooting = false;
     }
 
     private void HandleDeath(double delta)
@@ -225,11 +243,9 @@ public partial class Player : ICutsceneActor
 
         if (((analogue && inputMovement != Vector2.Zero) || inputMovement.Y != 0) && !IsQuickTurning)
         {
-            var running = Input.IsActionPressed(Controls.run.ToString());
-
             var runMod = 1.0f;
 
-            if (running && (inputMovement.Y < 0 || analogue))
+            if (_playerStatus.Running && (inputMovement.Y < 0 || analogue))
                 runMod = RUN_MODIFIER;
 
             var backwardsMod = 1.0f;
@@ -257,11 +273,11 @@ public partial class Player : ICutsceneActor
 
             velocity.X = movement.X;
             velocity.Z = movement.Z;
-
-            // TODO: Don't spam call this, or maybe put logic in animation control to not redundantly call?
-            if (running)
+            
+            // TODO: would ideally not want to spam setting these animation flags, but setting them alongside the flipping of the "Running" flag does not seem to work.
+            if (_playerStatus.Running)
                 _playerAnimationControl.StartRunning();
-            else
+            else if (!_playerStatus.Running)
                 _playerAnimationControl.StartWalking();
         }
         else

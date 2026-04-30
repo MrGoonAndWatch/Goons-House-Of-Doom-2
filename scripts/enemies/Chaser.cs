@@ -9,6 +9,10 @@ public partial class Chaser : Enemy
 	[Export]
 	private float _minWanderDistance = 1.0f;
 
+	[Export]
+	private float _runGracePeriodSeconds = 3.0f;
+
+	private double _runGracePeriodSecondsRemaining;
 	private Vector3 _wanderPoint;
 	private Vector3 _chasePoint;
 	private bool _chasing;
@@ -18,6 +22,7 @@ public partial class Chaser : Enemy
 	public override void _Ready()
 	{
 		base._Ready();
+		_runGracePeriodSecondsRemaining = _runGracePeriodSeconds;
 		_rng = new RandomNumberGenerator();
 		_chasePoint = Vector3.Zero;
 		PickNewWanderPoint();
@@ -26,10 +31,12 @@ public partial class Chaser : Enemy
     public override void _PhysicsProcess(double delta)
     {
 		if (!CanMove()) return;
+		
+		if (_runGracePeriodSecondsRemaining > 0)
+			_runGracePeriodSecondsRemaining -= delta;
 
-		(var input, var _) = GameConstants.GetMovementVectorWithDeadzone();
-        var movement = input.Y;
-        if (Input.IsActionPressed(GameConstants.Controls.run.ToString()) && movement > 0)
+        if (_playerStatus.Shooting || 
+            (_runGracePeriodSecondsRemaining <= 0 && _playerStatus.Running && _player.IsMoving()))
 		{
 			_chasePoint = _player.GlobalPosition;
 			_chasing = true;
