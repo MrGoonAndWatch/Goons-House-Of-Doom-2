@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfyu0xk8cpccd"]
+[gd_scene load_steps=12 format=3 uid="uid://bfyu0xk8cpccd"]
 
 [ext_resource type="Shader" uid="uid://drfkujgeuwove" path="res://shaders/cc0/ps1-scene.gdshader" id="1_rcsfp"]
 [ext_resource type="PackedScene" uid="uid://ydnc1vlpplu5" path="res://prefabs/room_info.tscn" id="2_6dskr"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bopftyjohhbi2" path="res://prefabs/puzzles/inspect_text.tscn" id="7_5q4wf"]
 [ext_resource type="PackedScene" uid="uid://dfqiqnu7b0uot" path="res://prefabs/puzzles/teleport_on_touch.tscn" id="8_xjpwy"]
 [ext_resource type="Script" uid="uid://lgmb68nifisr" path="res://scripts/audio/PlaySongOnEnterOnce.cs" id="9_p84o6"]
+[ext_resource type="PackedScene" uid="uid://cwgvmlg5wk1f" path="res://prefabs/player/item-box.tscn" id="10_ax2mw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o7y4s"]
 shader = ExtResource("1_rcsfp")
@@ -63,3 +64,6 @@ DoorLoadType = 2
 [node name="play_demo_song" type="Node3D" parent="SubViewport"]
 script = ExtResource("9_p84o6")
 EventToTrigger = 2
+
+[node name="item-box" parent="SubViewport" instance=ExtResource("10_ax2mw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9186904, 0.014945269, -5)

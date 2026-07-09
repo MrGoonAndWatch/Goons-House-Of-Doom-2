@@ -47,8 +47,8 @@ public partial class PlayerStatus : Node
     private Vector3 _playerPosition;
     private float _playerAngle;
 
-    private Vector3? _storedCameraPosition;
-    private Vector3? _storedCameraRotation;
+    private CameraPosition _currentCameraPosition;
+    private CameraPosition _storedCameraPosition;
 
     private static PlayerStatus _instance;
 
@@ -98,7 +98,6 @@ public partial class PlayerStatus : Node
         _isInCutscene = false;
         EquipedWeapon = null;
         _storedCameraPosition = null;
-        _storedCameraRotation = null;
         _isPickingUpItem = false;
 
         DataSaver.ResetState();
@@ -136,12 +135,9 @@ public partial class PlayerStatus : Node
     {
         // TODO: Would really prefer to not rely on the camera being named a specific thing, and also using GetNode, but w/e.
         var camera = GetNode<Camera3D>(GameConstants.NodePaths.FromSceneRoot.Camera);
-        if (_storedCameraPosition.HasValue)
-            camera.GlobalPosition = _storedCameraPosition.Value;
-        if (_storedCameraRotation.HasValue)
-            camera.GlobalRotation = _storedCameraRotation.Value;
+        if (_storedCameraPosition != null)
+            ChangeCamera(_storedCameraPosition, camera);
         _storedCameraPosition = null;
-        _storedCameraRotation = null;
         //GD.Print($"ResetCamera called (camera.GlobalPosition={camera.GlobalPosition} from {_storedCameraRotation}, camera.GlobalRotation={camera.GlobalRotation} from {_storedCameraRotation})");
     }
 
@@ -337,14 +333,21 @@ public partial class PlayerStatus : Node
         return !_instance._isInCutscene;
     }
 
-    public static void StoreCameraPositioning(Vector3 cameraPosition, Vector3 cameraRotation)
+    public static void ChangeCamera(CameraPosition cameraPosition, Camera3D camera)
     {
         if (_instance == null) return;
         
+        if (_instance._currentCameraPosition != null && IsInstanceValid(_instance._currentCameraPosition))
+            _instance._currentCameraPosition.Deactivate();
+        cameraPosition.Activate(camera);
+        _instance._currentCameraPosition = cameraPosition;
+    }
+
+    public static void StoreCameraPositioning(CameraPosition cameraPosition)
+    {
+        if (_instance == null) return;
+
         _instance._storedCameraPosition = cameraPosition;
-        _instance._storedCameraRotation = cameraRotation;
-        
-        //GD.Print($"StoreCameraAngle called (_instance._storedCameraPosition={_instance._storedCameraPosition} , _instance._storedCameraRotation={_instance._storedCameraRotation})");
     }
 
     public bool HasAmmoInInventory(PlayerInventory playerInventory)

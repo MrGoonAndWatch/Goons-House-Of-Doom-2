@@ -6,7 +6,7 @@ public partial class CameraChange : Area3D
 	private Camera3D TargetCamera;
 
 	[Export]
-	private Node3D TargetCameraPos;
+	private CameraPosition TargetCameraPos;
 
 	public override void _Ready()
 	{
@@ -23,12 +23,9 @@ public partial class CameraChange : Area3D
 		{
 			//GD.Print($"changing camera to {TargetCameraPos.Name}");
 			if (PlayerStatus.CanChangeCameraAngle())
-			{
-				TargetCamera.GlobalPosition = TargetCameraPos.GlobalPosition;
-				TargetCamera.GlobalRotation = TargetCameraPos.GlobalRotation;
-			}
+				PlayerStatus.ChangeCamera(TargetCameraPos, TargetCamera);
 			else
-				PlayerStatus.StoreCameraPositioning(TargetCameraPos.GlobalPosition, TargetCameraPos.GlobalRotation);
+				PlayerStatus.StoreCameraPositioning(TargetCameraPos);
 		}
 	}
 }
