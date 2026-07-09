@@ -107,6 +107,30 @@ public partial class GameConstants : GodotObject
         MuseumFrontDoorKey = 6,
     }
 
+    public enum HealthStatus
+    {
+        Healthy = 1,
+        Injured = 2,
+        ReallyInjured = 3,
+        Dying = 4,
+    }
+
+    public static Dictionary<HealthStatus, Color> HealthStatusColors = new Dictionary<HealthStatus, Color>
+    {
+        { HealthStatus.Healthy, Color.Color8(0, 128, 0) },
+        { HealthStatus.Injured, Color.Color8(128, 128, 0) },
+        { HealthStatus.ReallyInjured, Color.Color8(255, 128, 0) },
+        { HealthStatus.Dying, Color.Color8(255, 0, 0) },
+    };
+
+    public static Dictionary<HealthStatus, string> HealthStatusDisplayLabels = new Dictionary<HealthStatus, string>
+    {
+        { HealthStatus.Healthy, "Healthy" },
+        { HealthStatus.Injured, "Injured" },
+        { HealthStatus.ReallyInjured, "Really Injured" },
+        { HealthStatus.Dying, "Dying" },
+    };
+
     private const string EnemyPrefabFolder = "res://prefabs/spawnables/enemies/";
 
     public static Dictionary<EnemySpawnType, string> EnemyPrefabLookup = new Dictionary<EnemySpawnType, string>()

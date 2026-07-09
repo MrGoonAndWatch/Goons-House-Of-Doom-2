@@ -22,6 +22,10 @@ public partial class PlayerInventory : Node3D
     private TextureRect EquipSlot;
     [Export]
     private InventoryStatusUi InventoryStatusUi;
+    [Export]
+    private ColorRect PlayerHealthBarUi;
+    [Export]
+    private Label PlayerHealthLabel;
 
     private int _currentItemIndex;
     private bool _actionMenuOpen;
@@ -67,6 +71,7 @@ public partial class PlayerInventory : Node3D
         CloseActionMenu();
         _currentItemIndex = 0;
         UpdateItemCursorPosition();
+        RefreshHealthUi();
     }
 
     public override void _Process(double delta)
@@ -305,6 +310,7 @@ public partial class PlayerInventory : Node3D
                 var usedItem = Items[_currentItemIndex].Item.UseItem();
                 if (usedItem)
                     UsedItem();
+                RefreshHealthUi();
                 RefreshItemUi();
                 CloseActionMenu();
                 InventoryStatusUi.ToggleMenu();
@@ -446,6 +452,25 @@ public partial class PlayerInventory : Node3D
             Items[_currentItemIndex].DiscardItem();
         ItemDirty[_currentItemIndex] = true;
         SyncedWithItemBox = false;
+    }
+
+    private void RefreshHealthUi()
+    {
+        var playerHealthStatus = PlayerStatus.GetHealthStatus();
+
+        if (GameConstants.HealthStatusColors.ContainsKey(playerHealthStatus) && PlayerHealthBarUi != null)
+        {
+            PlayerHealthBarUi.Color = GameConstants.HealthStatusColors[playerHealthStatus];
+            if (PlayerHealthLabel != null)
+                PlayerHealthLabel.LabelSettings.FontColor = GameConstants.HealthStatusColors[playerHealthStatus];
+        }
+        else
+            GD.PrintErr($"Unable to set player health bar UI, UI container is missing or status '{playerHealthStatus}' has no value in consts!");
+        
+        if (GameConstants.HealthStatusDisplayLabels.ContainsKey(playerHealthStatus) && PlayerHealthLabel != null)
+            PlayerHealthLabel.Text = GameConstants.HealthStatusDisplayLabels[playerHealthStatus];
+        else
+            GD.PrintErr($"Unable to set player health bar text, label is missing or status '{playerHealthStatus}' has no value in consts!");
     }
 
     public void RefreshItemUi()

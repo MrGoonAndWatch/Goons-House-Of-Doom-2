@@ -387,6 +387,17 @@ public partial class PlayerStatus : Node
         _instance.NotesCollected.Add(noteData.Clone());
     }
 
+    public static HealthStatus GetHealthStatus()
+    {
+        if (_instance == null) return HealthStatus.Healthy;
+
+        var hpPercent = _instance.Health / MaxHealth;
+        if (hpPercent > 0.8) return HealthStatus.Healthy;
+        if (hpPercent > 0.6) return HealthStatus.Injured;
+        if (hpPercent > 0.2) return HealthStatus.ReallyInjured;
+        return HealthStatus.Dying;
+    }
+
     public void UseKey(Key key)
     {
         var playerInteract = GetNode<PlayerInteract>(NodePaths.FromSceneRoot.PlayerInteract);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://8gmfddm4wnbk"]
+[gd_scene format=3 uid="uid://8gmfddm4wnbk"]
 
 [ext_resource type="Script" uid="uid://beumay7us5ig2" path="res://scripts/player/Player.cs" id="1_wlo0u"]
 [ext_resource type="PackedScene" uid="uid://83omm7sbk1ws" path="res://prefabs/ui/save_game_ui.tscn" id="2_biyvh"]
@@ -32,7 +32,7 @@ size = Vector3(1, 2.1, 1)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_408ek"]
 points = PackedVector3Array(4, 1, 4, 0, 1, 0.5, 0, 1, -0.5, 4, 1, -4, 4, -1, -4, 4, -1, 4, 0, -1, 0.5, 0, -1, -0.5)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_deathFadeUi", "_deathFadeBg", "_saveUi") groups=["player"]]
+[node name="Player" type="CharacterBody3D" unique_id=492569011 node_paths=PackedStringArray("_pauseScreenUi", "_hitscanRay", "_playerInventory", "_deathFadeUi", "_deathFadeBg", "_saveUi") groups=["player"]]
 floor_max_angle = 1.0472
 script = ExtResource("1_wlo0u")
 _pauseScreenUi = NodePath("pause_ui")
@@ -42,7 +42,7 @@ _deathFadeUi = NodePath("GameOverFadeUiContainer/GameOverFadeUi")
 _deathFadeBg = NodePath("GameOverFadeUiContainer/GameOverFadeUi/ColorRect")
 _saveUi = NodePath("save_game_ui")
 
-[node name="DEBUG_UI" type="Control" parent="." node_paths=PackedStringArray("PlayerPositionLabel", "PlayerRotationLabel")]
+[node name="DEBUG_UI" type="Control" parent="." unique_id=12265107 node_paths=PackedStringArray("PlayerPositionLabel", "PlayerRotationLabel")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -54,68 +54,75 @@ script = ExtResource("9_a87b7")
 PlayerPositionLabel = NodePath("ColorRect/PlayerPositionLabel")
 PlayerRotationLabel = NodePath("ColorRect/PlayerRotationLabel")
 
-[node name="ColorRect" type="ColorRect" parent="DEBUG_UI"]
+[node name="ColorRect" type="ColorRect" parent="DEBUG_UI" unique_id=212155834]
 layout_mode = 0
 offset_right = 150.0
 offset_bottom = 50.0
 color = Color(0, 0, 0, 1)
 
-[node name="PlayerPositionLabel" type="Label" parent="DEBUG_UI/ColorRect"]
+[node name="PlayerPositionLabel" type="Label" parent="DEBUG_UI/ColorRect" unique_id=2135558911]
 layout_mode = 0
 offset_right = 53.0
 offset_bottom = 23.0
 text = "AAAAA"
 
-[node name="PlayerRotationLabel" type="Label" parent="DEBUG_UI/ColorRect"]
+[node name="PlayerRotationLabel" type="Label" parent="DEBUG_UI/ColorRect" unique_id=1147248056]
 layout_mode = 0
 offset_top = 20.0
 offset_right = 53.0
 offset_bottom = 43.0
 text = "AAAAA"
 
-[node name="cutscene_ui" type="Control" parent="." node_paths=PackedStringArray("TopBar", "BottomBar")]
-layout_direction = 2
+[node name="cutscene_ui" type="Control" parent="." unique_id=232615814 node_paths=PackedStringArray("TopBar", "BottomBar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+layout_direction = 2
 script = ExtResource("2_tl4hs")
 TopBar = NodePath("top_bar")
 BottomBar = NodePath("bottom_bar")
 CinematicBarSpeed = 250.0
 
-[node name="top_bar" type="ColorRect" parent="cutscene_ui"]
+[node name="top_bar" type="ColorRect" parent="cutscene_ui" unique_id=564722656]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 0
 offset_bottom = 100.0
 color = Color(0, 0, 0, 1)
 
-[node name="bottom_bar" type="ColorRect" parent="cutscene_ui"]
+[node name="bottom_bar" type="ColorRect" parent="cutscene_ui" unique_id=794602104]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 0
 offset_bottom = 100.0
 color = Color(0, 0, 0, 1)
 
-[node name="save_game_ui" parent="." instance=ExtResource("2_biyvh")]
+[node name="save_game_ui" parent="." unique_id=11917361 instance=ExtResource("2_biyvh")]
 
-[node name="item_box" parent="." instance=ExtResource("3_iwwv0")]
+[node name="item_box" parent="." unique_id=824221180 instance=ExtResource("3_iwwv0")]
 visible = false
 
-[node name="PlayerInventoryUi" parent="." instance=ExtResource("2_q6hdo")]
+[node name="ItemBoxCursor" parent="item_box" index="1"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 960.0
+offset_bottom = 110.0
+
+[node name="PlayerInventoryUi" parent="." unique_id=684613824 instance=ExtResource("2_q6hdo")]
 visible = false
 
-[node name="Inventory" parent="PlayerInventoryUi" index="1" node_paths=PackedStringArray("_playerInventory")]
+[node name="Inventory" parent="PlayerInventoryUi" index="1" unique_id=1966247931 node_paths=PackedStringArray("_playerInventory")]
 _playerInventory = NodePath("../../PlayerInventory")
 
-[node name="SubViewport" parent="PlayerInventoryUi/Inventory/ItemWindow/SubViewportContainer" index="0"]
+[node name="SubViewport" parent="PlayerInventoryUi/Inventory/ItemWindow/SubViewportContainer" parent_id_path=PackedInt32Array(684613824, 2084187995) index="0" unique_id=104119710]
 render_target_update_mode = 0
 
-[node name="Notes" parent="PlayerInventoryUi" index="2" node_paths=PackedStringArray("NoteReader")]
+[node name="Notes" parent="PlayerInventoryUi" index="2" unique_id=1735907536 node_paths=PackedStringArray("NoteReader")]
 NoteReader = NodePath("../../note_reader")
 
-[node name="descriptive_text" type="Control" parent="."]
+[node name="descriptive_text" type="Control" parent="." unique_id=2146677746]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -124,7 +131,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="descriptive_text_container" type="Control" parent="descriptive_text"]
+[node name="descriptive_text_container" type="Control" parent="descriptive_text" unique_id=157898460]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -137,7 +144,7 @@ offset_right = 500.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="descriptive_text_bg" type="ColorRect" parent="descriptive_text/descriptive_text_container"]
+[node name="descriptive_text_bg" type="ColorRect" parent="descriptive_text/descriptive_text_container" unique_id=1503433120]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -145,7 +152,7 @@ offset_bottom = 60.0
 grow_horizontal = 2
 color = Color(0.145098, 0.145098, 0.145098, 0.521569)
 
-[node name="descriptive_text_label" type="Label" parent="descriptive_text/descriptive_text_container"]
+[node name="descriptive_text_label" type="Label" parent="descriptive_text/descriptive_text_container" unique_id=739451977]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 1
 anchors_preset = 10
@@ -157,14 +164,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
-[node name="pause_ui" parent="." instance=ExtResource("5_q718m")]
+[node name="pause_ui" parent="." unique_id=1405496043 instance=ExtResource("5_q718m")]
 visible = false
 
-[node name="note_reader" parent="." node_paths=PackedStringArray("_notesStatusUi") instance=ExtResource("8_2pvdi")]
+[node name="note_reader" parent="." unique_id=1263539922 node_paths=PackedStringArray("_notesStatusUi") instance=ExtResource("8_2pvdi")]
 visible = false
 _notesStatusUi = NodePath("../PlayerInventoryUi/Notes")
 
-[node name="fmv_cutscene_ui" type="Control" parent="." node_paths=PackedStringArray("_fmvPlayer")]
+[node name="fmv_cutscene_ui" type="Control" parent="." unique_id=986745614 node_paths=PackedStringArray("_fmvPlayer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,7 +183,7 @@ size_flags_vertical = 3
 script = ExtResource("10_5ldjw")
 _fmvPlayer = NodePath("VideoStreamPlayer")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="fmv_cutscene_ui"]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="fmv_cutscene_ui" unique_id=752166891]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,9 +192,9 @@ grow_horizontal = 2
 grow_vertical = 2
 expand = true
 
-[node name="GammaCorrection" parent="." instance=ExtResource("8_64i7v")]
+[node name="GammaCorrection" parent="." unique_id=2127863396 instance=ExtResource("8_64i7v")]
 
-[node name="PlayerInventory" type="Node3D" parent="." node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "EquipSlot", "InventoryStatusUi")]
+[node name="PlayerInventory" type="Node3D" parent="." unique_id=502497770 node_paths=PackedStringArray("ExamineText", "ExamineTexture", "Items", "ItemCursor", "MenuActionRoot", "MenuActions", "ActionCursor", "EquipSlot", "InventoryStatusUi", "PlayerHealthBarUi", "PlayerHealthLabel")]
 script = ExtResource("4_h7s4o")
 ExamineText = NodePath("../PlayerInventoryUi/Inventory/ItemDescription/ItemDescriptionLabel")
 ExamineTexture = NodePath("../PlayerInventoryUi/Inventory/ItemWindow/ItemTextureRect")
@@ -198,8 +205,10 @@ MenuActions = [NodePath("../PlayerInventoryUi/Inventory/Actions/Action-Use"), No
 ActionCursor = NodePath("../PlayerInventoryUi/Inventory/Actions/ActionCursor")
 EquipSlot = NodePath("../PlayerInventoryUi/Inventory/EquippedItem/TextureRect")
 InventoryStatusUi = NodePath("../PlayerInventoryUi/Inventory")
+PlayerHealthBarUi = NodePath("../PlayerInventoryUi/Inventory/StatusBar/StatusImg")
+PlayerHealthLabel = NodePath("../PlayerInventoryUi/Inventory/StatusBar/StatusText")
 
-[node name="PlayerItemBoxControl" type="Node3D" parent="." node_paths=PackedStringArray("ItemBoxUi", "PlayerItems", "ItemBoxItems", "InventoryCursor", "ItemBoxCursor", "ItemBoxScroll")]
+[node name="PlayerItemBoxControl" type="Node3D" parent="." unique_id=1215134183 node_paths=PackedStringArray("ItemBoxUi", "PlayerItems", "ItemBoxItems", "InventoryCursor", "ItemBoxCursor", "ItemBoxScroll")]
 script = ExtResource("6_aqktm")
 ItemBoxUi = NodePath("../item_box")
 PlayerItems = [NodePath("../item_box/ItemSlots/ItemSlot-1"), NodePath("../item_box/ItemSlots/ItemSlot-2"), NodePath("../item_box/ItemSlots/ItemSlot-3"), NodePath("../item_box/ItemSlots/ItemSlot-4"), NodePath("../item_box/ItemSlots/ItemSlot-5"), NodePath("../item_box/ItemSlots/ItemSlot-6")]
@@ -208,43 +217,43 @@ InventoryCursor = NodePath("../item_box/ItemSlots/ItemCursor")
 ItemBoxCursor = NodePath("../item_box/ItemBoxCursor")
 ItemBoxScroll = NodePath("../item_box/ScrollContainer")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1437929106]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.078, 0)
 shape = SubResource("CapsuleShape3D_dadhp")
 
-[node name="protagonist" parent="." instance=ExtResource("17_ie47q")]
+[node name="protagonist" parent="." unique_id=947490954 instance=ExtResource("17_ie47q")]
 transform = Transform3D(-1.5299e-09, 0, 0.035, 0, 0.035, 0, -0.035, 0, -1.5299e-09, 0, -0.979299, 0)
 
 [node name="Skeleton3D" parent="protagonist/protagonist" index="0"]
-bones/0/position = Vector3(-2.30974e-09, -0.0654295, -0.0301701)
-bones/0/rotation = Quaternion(-0.0189856, 3.53839e-08, -6.71906e-10, 0.99982)
-bones/1/rotation = Quaternion(0.0352219, 6.11426e-09, 2.91794e-10, 0.99938)
-bones/2/rotation = Quaternion(0.0176527, -1.11183e-08, 5.36163e-09, 0.999844)
-bones/3/rotation = Quaternion(-0.175599, -0.166681, 0.965299, -0.0978803)
-bones/4/rotation = Quaternion(0.261854, -0.0794714, -0.0246311, 0.961514)
-bones/5/rotation = Quaternion(0.175386, -0.100453, -0.201629, 0.958381)
-bones/6/rotation = Quaternion(0.175587, -0.166635, 0.965305, 0.0979234)
-bones/7/rotation = Quaternion(0.261854, 0.0794713, 0.0246311, 0.961514)
-bones/8/rotation = Quaternion(0.175386, 0.100453, 0.201629, 0.958381)
-bones/9/rotation = Quaternion(0.0254277, 0.00617901, 0.998358, -0.0509602)
-bones/9/scale = Vector3(1.0001, 1, 1)
-bones/10/rotation = Quaternion(-0.0743688, -7.46192e-06, -0.0498358, 0.995985)
-bones/11/rotation = Quaternion(0.597694, 0.0246157, -0.0150201, 0.801206)
-bones/11/scale = Vector3(1.00003, 0.999999, 1)
-bones/12/rotation = Quaternion(-0.0254277, 0.00617901, 0.998358, 0.0509602)
-bones/12/scale = Vector3(1.0001, 1, 1)
-bones/13/rotation = Quaternion(-0.0743688, 7.46065e-06, 0.0498358, 0.995985)
-bones/14/rotation = Quaternion(0.597694, -0.0246156, 0.0150201, 0.801206)
-bones/14/scale = Vector3(1.00003, 0.999999, 1)
-bones/15/position = Vector3(4.66002, -26.4656, -1.16752)
-bones/15/rotation = Quaternion(-0.00654425, 0.999979, 3.04032e-08, 8.76391e-09)
-bones/16/position = Vector3(4.60924, -11.9122, 17.2528)
-bones/16/rotation = Quaternion(-6.51059e-08, -1.14216e-08, 0.998872, -0.0474803)
-bones/17/position = Vector3(-4.66002, -26.4656, -1.16752)
-bones/17/rotation = Quaternion(0.00654425, 0.999979, 3.04032e-08, -8.76391e-09)
-bones/18/position = Vector3(-4.60924, -11.9122, 17.2528)
+bones/0/position = Vector3(-2.805863e-09, -0.06758529, -0.037102662)
+bones/0/rotation = Quaternion(-0.018985612, 3.5383884e-08, -6.719063e-10, 0.99981976)
+bones/1/rotation = Quaternion(0.03602953, 6.1144907e-09, 2.8685285e-10, 0.9993508)
+bones/2/rotation = Quaternion(0.016320594, -1.1125468e-08, 5.3468168e-09, 0.9998669)
+bones/3/rotation = Quaternion(-0.17545761, -0.16615225, 0.96536547, -0.09837562)
+bones/4/rotation = Quaternion(0.26324448, -0.07978133, -0.024336996, 0.96111655)
+bones/5/rotation = Quaternion(0.17538564, -0.100453235, -0.20162876, 0.95838135)
+bones/6/rotation = Quaternion(0.1754522, -0.1661324, 0.9653679, 0.098394096)
+bones/7/rotation = Quaternion(0.26324442, 0.07978129, 0.02433698, 0.96111655)
+bones/8/rotation = Quaternion(0.17538562, 0.10045325, 0.2016287, 0.9583814)
+bones/9/rotation = Quaternion(0.025407493, 0.0066791326, 0.99834156, -0.051226743)
+bones/9/scale = Vector3(1.0001029, 1.0000004, 1)
+bones/10/rotation = Quaternion(-0.07509576, -7.462966e-06, -0.05032294, 0.9959058)
+bones/11/rotation = Quaternion(0.5978543, 0.024731796, -0.014854253, 0.8010854)
+bones/11/scale = Vector3(1.0000277, 0.9999994, 0.9999999)
+bones/12/rotation = Quaternion(-0.025407542, 0.006679129, 0.9983415, 0.05122674)
+bones/12/scale = Vector3(1.0001029, 1.0000004, 1.0000002)
+bones/13/rotation = Quaternion(-0.07509576, 7.4617583e-06, 0.05032294, 0.9959058)
+bones/14/rotation = Quaternion(0.5978544, -0.024731778, 0.01485424, 0.8010855)
+bones/14/scale = Vector3(1.0000277, 0.9999993, 1)
+bones/15/position = Vector3(4.660015, -26.465569, -1.1675202)
+bones/15/rotation = Quaternion(-0.006544254, 0.9999786, 3.0403246e-08, 8.763909e-09)
+bones/16/position = Vector3(4.6092405, -11.912197, 17.252762)
+bones/16/rotation = Quaternion(-6.510594e-08, -1.1421584e-08, 0.9988722, -0.04748028)
+bones/17/position = Vector3(-4.660015, -26.465569, -1.1675202)
+bones/17/rotation = Quaternion(0.006544254, 0.9999786, 3.0403246e-08, -8.763909e-09)
+bones/18/position = Vector3(-4.6092405, -11.912197, 17.252762)
 
-[node name="InteractHitbox" type="Area3D" parent="." node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
+[node name="InteractHitbox" type="Area3D" parent="." unique_id=167221231 node_paths=PackedStringArray("_inventory", "_noteReader", "_inspectTextUi", "_saveUi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499985, 0.078, 0)
 script = ExtResource("3_gxx5q")
 _inventory = NodePath("../PlayerInventory")
@@ -252,31 +261,31 @@ _noteReader = NodePath("../note_reader")
 _inspectTextUi = NodePath("../InspectTextUI")
 _saveUi = NodePath("../save_game_ui")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractHitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractHitbox" unique_id=93984438]
 shape = SubResource("BoxShape3D_mv370")
 
-[node name="InspectTextUI" type="Node3D" parent="." node_paths=PackedStringArray("DescriptiveText", "TextBox")]
+[node name="InspectTextUI" type="Node3D" parent="." unique_id=1061737824 node_paths=PackedStringArray("DescriptiveText", "TextBox")]
 script = ExtResource("6_fksfj")
 DescriptiveText = NodePath("../descriptive_text")
 TextBox = NodePath("../descriptive_text/descriptive_text_container/descriptive_text_label")
 AdvanceTextCooldown = 0.1
 
-[node name="WeaponHitscan" type="RayCast3D" parent="."]
+[node name="WeaponHitscan" type="RayCast3D" parent="." unique_id=813804688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52849, 0, 0)
 target_position = Vector3(1000, 0, 0)
 
-[node name="DebugConsole" parent="." instance=ExtResource("10_1ehqn")]
+[node name="DebugConsole" parent="." unique_id=1588070313 instance=ExtResource("10_1ehqn")]
 
-[node name="LookAtArea" type="Area3D" parent="." node_paths=PackedStringArray("_headLookAtModifier")]
+[node name="LookAtArea" type="Area3D" parent="." unique_id=941093316 node_paths=PackedStringArray("_headLookAtModifier")]
 script = ExtResource("15_408ek")
 _headLookAtModifier = NodePath("../protagonist/protagonist/Skeleton3D/HeadLookAtModifier")
 
-[node name="LookAtVisionCone" type="CollisionShape3D" parent="LookAtArea"]
+[node name="LookAtVisionCone" type="CollisionShape3D" parent="LookAtArea" unique_id=656926516]
 shape = SubResource("ConvexPolygonShape3D_408ek")
 
-[node name="GameOverFadeUiContainer" type="Node3D" parent="."]
+[node name="GameOverFadeUiContainer" type="Node3D" parent="." unique_id=1255791619]
 
-[node name="GameOverFadeUi" type="Control" parent="GameOverFadeUiContainer"]
+[node name="GameOverFadeUi" type="Control" parent="GameOverFadeUiContainer" unique_id=924158537]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -285,7 +294,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="GameOverFadeUiContainer/GameOverFadeUi"]
+[node name="ColorRect" type="ColorRect" parent="GameOverFadeUiContainer/GameOverFadeUi" unique_id=1666369397]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

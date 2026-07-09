@@ -99,8 +99,8 @@ ItemSpawnOnImpossible = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0478, -0.37725, -7.64958)
 ItemId = 3
 QtyOnPickup = 6
-ItemSpawnOnEasy = 4
-ItemSpawnOnNormal = 1
+ItemSpawnOnEasy = 2
+ItemSpawnOnNormal = 2
 ItemSpawnOnHard = 1
 ItemSpawnOnImpossible = 1
 
