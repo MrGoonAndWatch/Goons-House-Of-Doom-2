@@ -39,9 +39,14 @@ public abstract partial class ICutsceneActor: CharacterBody3D
             if (!_rotatedToTargetPosition)
                 return false;
 
-            var direction = (_currentTargetPosition.Value - Position).Normalized();
+            var positionXZ = new Vector3(Position.X, 0, Position.Z);
+            var targetXZ = new Vector3(_currentTargetPosition.Value.X, 0, _currentTargetPosition.Value.Z);
+            var direction = (targetXZ - positionXZ).Normalized();
             Velocity = direction * _currentSpeed * (float) delta;
-            var reachedPosition = Position.DistanceSquaredTo(_currentTargetPosition.Value) <= 0.01;
+            var distanceSquared = positionXZ.DistanceSquaredTo(targetXZ);
+            var reachedPosition = distanceSquared <= 0.05;
+            
+            //GD.Print($"MoveTowardsPosition: positionXZ={positionXZ},  targetXZ={targetXZ}, distanceSquared={distanceSquared} reachedPosition={reachedPosition}");
             
             if (reachedPosition)
             {
